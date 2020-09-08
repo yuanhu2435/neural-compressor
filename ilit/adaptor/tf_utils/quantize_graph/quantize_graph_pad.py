@@ -25,22 +25,15 @@ class FuseNodeStartWithPad(QuantizeNodeBase):
     def _apply_pad_conv_fusion(self):
         for _, value in self.node_name_mapping.items():
             if value.node.op in ("Pad") and self.node_name_mapping[
-                    value.
-                    output[0]].node.op == "Conv2D" and self._find_relu_node(
-                        value.node):
+                    value.output[0]].node.op == "Conv2D":
                 paddings_tensor = tensor_util.MakeNdarray(
                     self.node_name_mapping[value.node.input[1]].node.
                     attr["value"].tensor).flatten()
-                if any(paddings_tensor):
-                    new_node = node_def_pb2.NodeDef()
-                    new_node.CopyFrom(value.node)
-                    self.add_output_graph_node(new_node)
-                else:
-                    self.node_name_mapping[
-                        value.output[0]].node.input[0] = value.node.input[0]
-                    helper.set_attr_int_list(
-                        self.node_name_mapping[value.output[0]].node,
-                        "padding_list", paddings_tensor)
+                self.node_name_mapping[
+                    value.output[0]].node.input[0] = value.node.input[0]
+                helper.set_attr_int_list(
+                    self.node_name_mapping[value.output[0]].node,
+                    "padding_list", paddings_tensor)
             else:
                 new_node = node_def_pb2.NodeDef()
                 new_node.CopyFrom(value.node)
