@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                1.3.1
+                1.4
               </div>
             
           
@@ -191,7 +191,7 @@
             
   <section id="transform">
 <h1>Transform<a class="headerlink" href="#transform" title="Permalink to this headline">¶</a></h1>
-<p>LPOT supports built-in preprocessing methods on different framework backends. Refer to <a class="reference external" href="https://github.com/intel/lpot/tree/ccdb6aec0a95a66b2c747f92a34018e78a91b459/examples/helloworld/tf_example1">this HelloWorld example</a> on how to configure a transform in a dataloader.</p>
+<p>LPOT supports built-in preprocessing methods on different framework backends. Refer to <a class="reference external" href="https://github.com/intel/lpot/tree/4939eb6527920867c16ffa9f9342df6fdc81f93f/examples/helloworld/tf_example1">this HelloWorld example</a> on how to configure a transform in a dataloader.</p>
 <section id="transform-support-list">
 <h2>Transform support list<a class="headerlink" href="#transform-support-list" title="Permalink to this headline">¶</a></h2>
 <section id="tensorflow">
@@ -277,6 +277,12 @@
 <td align="left"><strong>perm</strong> (list): A permutation of the dimensions of input image</td>
 <td align="left">Transpose image according perm</td>
 <td align="left">Transpose: <br> &ensp;&ensp; perm: [1, 2, 0]</td>
+</tr>
+<tr>
+<td align="left">ResizeWithRatio(min_dim, max_dim, padding)</td>
+<td align="left"><strong>min_dim</strong> (int, default=800): Resizes the image such that its smaller dimension == min_dim <br> <strong>max_dim</strong> (int, default=1365): Ensures that the image longest side does not exceed this value <br> <strong>padding</strong> (bool, default=False): If true, pads image with zeros so its size is max_dim x max_dim</td>
+<td align="left">Resize image with aspect ratio and pad it to max shape(optional). If the image is padded, the label will be processed at the same time. The input image should be np.array or tf.Tensor.</td>
+<td align="left">ResizeWithRatio: <br> &ensp;&ensp; min_dim: 800 <br> &ensp;&ensp; max_dim: 1365 <br> &ensp;&ensp; padding: True</td>
 </tr>
 <tr>
 <td align="left">CropToBoundingBox(offset_height, offset_width, target_height, target_width)</td>
@@ -466,6 +472,12 @@
 <td align="left">Align image channel, now just support [H,W,4]-&gt;[H,W,3] and [H,W,3]-&gt;[H,W], input image must be PIL Image</td>
 <td align="left">AlignImageChannel: <br> &ensp;&ensp; dim: 3</td>
 </tr>
+<tr>
+<td align="left">ResizeWithRatio(min_dim, max_dim, padding)</td>
+<td align="left"><strong>min_dim</strong> (int, default=800): Resizes the image such that its smaller dimension == min_dim <br> <strong>max_dim</strong> (int, default=1365): Ensures that the image longest side does not exceed this value <br> <strong>padding</strong> (bool, default=False): If true, pads image with zeros so its size is max_dim x max_dim</td>
+<td align="left">Resize image with aspect ratio and pad it to max shape(optional). If the image is padded, the label will be processed at the same time. The input image should be np.array.</td>
+<td align="left">ResizeWithRatio: <br> &ensp;&ensp; min_dim: 800 <br> &ensp;&ensp; max_dim: 1365 <br> &ensp;&ensp; padding: True</td>
+</tr>
 </tbody>
 </table></section>
 <section id="mxnet">
@@ -576,6 +588,12 @@
 <td align="left">Convert np.array to NDArray</td>
 <td align="left">ToNDArray: {}</td>
 </tr>
+<tr>
+<td align="left">ResizeWithRatio(min_dim, max_dim, padding)</td>
+<td align="left"><strong>min_dim</strong> (int, default=800): Resizes the image such that its smaller dimension == min_dim <br> <strong>max_dim</strong> (int, default=1365): Ensures that the image longest side does not exceed this value <br> <strong>padding</strong> (bool, default=False): If true, pads image with zeros so its size is max_dim x max_dim</td>
+<td align="left">Resize image with aspect ratio and pad it to max shape(optional). If the image is padded, the label will be processed at the same time. The input image should be np.array.</td>
+<td align="left">ResizeWithRatio: <br> &ensp;&ensp; min_dim: 800 <br> &ensp;&ensp; max_dim: 1365 <br> &ensp;&ensp; padding: True</td>
+</tr>
 </tbody>
 </table></section>
 <section id="onnxrt">
@@ -679,6 +697,12 @@
 <td align="left"><strong>dtype</strong> (str, default ='float32') :The target data type</td>
 <td align="left">Convert image to given dtype</td>
 <td align="left">Cast: <br> &ensp;&ensp; dtype: float32</td>
+</tr>
+<tr>
+<td align="left">ResizeWithRatio(min_dim, max_dim, padding)</td>
+<td align="left"><strong>min_dim</strong> (int, default=800): Resizes the image such that its smaller dimension == min_dim <br> <strong>max_dim</strong> (int, default=1365): Ensures that the image longest side does not exceed this value <br> <strong>padding</strong> (bool, default=False): If true, pads image with zeros so its size is max_dim x max_dim</td>
+<td align="left">Resize image with aspect ratio and pad it to max shape(optional). If the image is padded, the label will be processed at the same time. The input image should be np.array.</td>
+<td align="left">ResizeWithRatio: <br> &ensp;&ensp; min_dim: 800 <br> &ensp;&ensp; max_dim: 1365 <br> &ensp;&ensp; padding: True</td>
 </tr>
 </tbody>
 </table></section>

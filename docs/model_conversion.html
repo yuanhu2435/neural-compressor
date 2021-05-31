@@ -8,7 +8,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Dynamic Quantization &mdash; Intel® Low Precision Optimization Tool  documentation</title>
+  <title>Model Conversion &mdash; Intel® Low Precision Optimization Tool  documentation</title>
   
 
   
@@ -43,8 +43,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Pruning" href="pruning.html" />
-    <link rel="prev" title="QAT" href="QAT.html" /> 
+    <link rel="next" title="TensorBoard" href="tensorboard.html" />
+    <link rel="prev" title="Graph Optimization" href="graph_optimization.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -104,12 +104,16 @@
 <li class="toctree-l3"><a class="reference internal" href="Quantization.html">Quantization</a></li>
 <li class="toctree-l3"><a class="reference internal" href="PTQ.html">PTQ</a></li>
 <li class="toctree-l3"><a class="reference internal" href="QAT.html">QAT</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Dynamic Quantization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dynamic_quantization.html">Dynamic Quantization</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pruning.html">Pruning</a></li>
 <li class="toctree-l3"><a class="reference internal" href="benchmark.html">Benchmarking</a></li>
 <li class="toctree-l3"><a class="reference internal" href="mixed_precision.html">Mixed Precision</a></li>
 <li class="toctree-l3"><a class="reference internal" href="graph_optimization.html">Graph Optimization</a></li>
-<li class="toctree-l3"><a class="reference internal" href="model_conversion.html">Model Conversion</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Model Conversion</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#how-to-use-it">How to use it</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="tensorboard.html">TensorBoard</a></li>
 </ul>
 </li>
@@ -171,13 +175,13 @@
         
           <li><a href="doclist.html">Developer Documentation</a> &raquo;</li>
         
-      <li>Dynamic Quantization</li>
+      <li>Model Conversion</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="../_sources/docs/dynamic_quantization.md.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/docs/model_conversion.md.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -190,36 +194,34 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="dynamic-quantization">
-<h1>Dynamic Quantization<a class="headerlink" href="#dynamic-quantization" title="Permalink to this headline">¶</a></h1>
-<blockquote>
-<div><p><strong>Note</strong></p>
-</div></blockquote>
-<blockquote>
-<div><p>Dynamic quantization currently only supports the onnxruntime backend.</p>
-</div></blockquote>
-<p>As a <a class="reference internal" href="Quantization.html"><span class="doc">quantization</span></a> class, dynamic quantization allows users to determine the scale factor for activations dynamically based on the data range that’s observed at runtime as opposed to using other methods that entail multiplying a float point value by some scale factor and then rounding the result to a whole number. As noted in <a class="reference external" href="https://pytorch.org/tutorials/recipes/recipes/dynamic_quantization.html">PyTorch documentation</a>, this “ensures that the scale factor is ‘tuned’ so that as much signal as possible about each observed dataset is preserved.” Since it does not use a lot of tuning parameters, dynamic quantization is a good match for NLP models.</p>
-<p>The onnxruntime bert_base model provides an example where users can create a specific quantization method like the following yaml:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">model</span><span class="p">:</span>                                               <span class="c1"># mandatory. used to specify model specific information.</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bert</span> 
-  <span class="nt">framework</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">onnxrt_integerops</span>                       <span class="c1"># mandatory. possible values are tensorflow, mxnet, pytorch, pytorch_ipex, onnxrt_integerops and onnxrt_qlinearops.</span>
-
-<span class="nt">quantization</span><span class="p">:</span>
-  <span class="nt">approach</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">post_training_dynamic_quant</span>              <span class="c1"># optional. default value is post_training_static_quant</span>
-                                                     <span class="c1"># possible value is post_training_static_quant, </span>
-                                                     <span class="c1"># post_training_dynamic_quant</span>
-                                                     <span class="c1"># quant_aware_training                                 </span>
-  <span class="nt">calibration</span><span class="p">:</span>
-    <span class="nt">sampling_size</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8, 16, 32</span>
-
-<span class="nt">tuning</span><span class="p">:</span>
-  <span class="nt">accuracy_criterion</span><span class="p">:</span>
-    <span class="nt">relative</span><span class="p">:</span>  <span class="l l-Scalar l-Scalar-Plain">0.01</span>                                  <span class="c1"># optional. default value is relative, other value is absolute. this example allows relative accuracy loss: 1%.</span>
-  <span class="nt">exit_policy</span><span class="p">:</span>
-    <span class="nt">timeout</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>                                       <span class="c1"># optional. tuning timeout (seconds). default value is 0 which means early stop. combine with max_trials field to decide when to exit.</span>
-  <span class="nt">random_seed</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9527</span>                                  <span class="c1"># optional. random seed for deterministic tuning.</span>
+  <section id="model-conversion">
+<h1>Model Conversion<a class="headerlink" href="#model-conversion" title="Permalink to this headline">¶</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Model conversion is used to convert different TensorFlow model format to another.</p>
+<p>Now it supports QAT(quantization aware training) model to default(quantized) model. In the future, we will add tflite to default model support.</p>
+</section>
+<section id="how-to-use-it">
+<h2>How to use it<a class="headerlink" href="#how-to-use-it" title="Permalink to this headline">¶</a></h2>
+<p>See the following example which demonstrate model conversion API usage.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="kn">import</span> <span class="n">ModelConversion</span><span class="p">,</span> <span class="n">common</span>
+    <span class="n">conversion</span> <span class="o">=</span> <span class="n">ModelConversion</span><span class="p">()</span>
+    <span class="n">conversion</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="s1">&#39;QAT&#39;</span>
+    <span class="n">conversion</span><span class="o">.</span><span class="n">destination</span> <span class="o">=</span> <span class="s1">&#39;default&#39;</span>
+    <span class="n">conversion</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="s1">&#39;/path/to/trained/saved_model&#39;</span><span class="p">)</span>
+    <span class="n">q_model</span> <span class="o">=</span> <span class="n">conversion</span><span class="p">()</span>
+    <span class="n">q_model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;/path/to/quantized/saved_model&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>After this conversion is done, user could measure the accuracy or performance on quantized model.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>  <span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="kn">import</span> <span class="n">Benchmark</span><span class="p">,</span> <span class="n">common</span>
+  <span class="n">evaluator</span> <span class="o">=</span> <span class="n">Benchmark</span><span class="p">(</span><span class="s1">&#39;/path/to/yaml&#39;</span><span class="p">)</span>
+  <span class="n">evaluator</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="s1">&#39;/path/to/quantized/saved_model&#39;</span><span class="p">)</span>
+  <span class="n">evaluator</span><span class="o">.</span><span class="n">b_dataloader</span> <span class="o">=</span> <span class="o">...</span>       <span class="c1"># create benchmark dataloder like examples/tensorflow/qat/benchmark.py</span>
+  <span class="n">evaluator</span><span class="p">(</span><span class="s1">&#39;accuracy&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
@@ -228,8 +230,8 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="pruning.html" class="btn btn-neutral float-right" title="Pruning" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="QAT.html" class="btn btn-neutral float-left" title="QAT" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tensorboard.html" class="btn btn-neutral float-right" title="TensorBoard" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="graph_optimization.html" class="btn btn-neutral float-left" title="Graph Optimization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

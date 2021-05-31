@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                1.3.1
+                1.4
               </div>
             
           
@@ -192,8 +192,12 @@
 <td align="left">path to current UX workspace</td>
 </tr>
 <tr>
-<td align="left"><strong>models</strong></td>
-<td align="left">list of models to benchmark</td>
+<td align="left"><strong>input_model</strong></td>
+<td align="left">input model to benchmark</td>
+</tr>
+<tr>
+<td align="left"><strong>optimized_model</strong></td>
+<td align="left">optimized model to benchmark</td>
 </tr>
 </tbody>
 </table><blockquote>
@@ -201,6 +205,7 @@
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{
     &quot;precision&quot;: &quot;fp32&quot;,  // Model datatype
     &quot;path&quot;: &quot;/path/to/fp32_model.pb&quot;  // Model path
+    &quot;mods&quot;: [&quot;benchmark&quot;, &quot;accuracy&quot;] // Benchmark mode
 }
 </pre></div>
 </div>
@@ -212,16 +217,14 @@
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;configuration_id&quot;</span><span class="p">,</span>
    <span class="nt">&quot;workspace_path&quot;</span><span class="p">:</span> <span class="s2">&quot;/path/to/workspace&quot;</span><span class="p">,</span>
-   <span class="nt">&quot;models&quot;</span><span class="p">:</span> <span class="p">[</span>
-       <span class="p">{</span>
-           <span class="nt">&quot;precision&quot;</span><span class="p">:</span> <span class="s2">&quot;fp32&quot;</span><span class="p">,</span>
-           <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/path/to/fp32_model.pb&quot;</span>
-       <span class="p">},</span>
-       <span class="p">{</span>
-           <span class="nt">&quot;precision&quot;</span><span class="p">:</span> <span class="s2">&quot;int8&quot;</span><span class="p">,</span>
-           <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/path/to/int8_model.pb&quot;</span>
-       <span class="p">}</span>
-   <span class="p">]</span>
+   <span class="nt">&quot;input_model&quot;</span><span class="p">:</span> <span class="p">{</span>
+       <span class="nt">&quot;precision&quot;</span><span class="p">:</span> <span class="s2">&quot;fp32&quot;</span><span class="p">,</span>
+       <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/localdisk/fp32.pb&quot;</span>
+   <span class="p">},</span>
+   <span class="nt">&quot;optimized_model&quot;</span><span class="p">:</span> <span class="p">{</span>
+       <span class="nt">&quot;precision&quot;</span><span class="p">:</span> <span class="s2">&quot;int8&quot;</span><span class="p">,</span>
+       <span class="nt">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;/localdisk/int8.pb&quot;</span>
+   <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -239,9 +242,25 @@
 <li><p><strong>Subject</strong>: <code class="docutils literal notranslate"><span class="pre">benchmark_progress</span></code></p>
 <p><strong>Data</strong>:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{
-    &quot;id&quot;: &quot;22b60ef39915ff4931936ca43b8c3ead&quot;,
-    &quot;perf_throughput_fp32&quot;: &lt;float&gt;,
-    &quot;progress&quot;: &quot;1/2&quot;
+    &quot;id&quot;: &quot;configuration_id&quot;,
+    &quot;execution_details&quot;: {
+        &quot;input_model_benchmark&quot;: {
+            &quot;performance&quot;: {
+                &quot;instances&quot;: 7,
+                &quot;cores_per_instance&quot;: 4,
+                &quot;model_path&quot;: &quot;/localdisk/fp32.pb&quot;,
+                &quot;precision&quot;: &quot;fp32&quot;,
+                &quot;mode&quot;: &quot;performance&quot;,
+                &quot;batch_size&quot;: 1,
+                &quot;framework&quot;: &quot;tensorflow&quot;,
+                &quot;config_path&quot;: &quot;/path/to/workspace/workloads/&lt;model_name&gt;_&lt;configuration_id&gt;/config.yaml&quot;,
+                &quot;benchmark_script&quot;: &quot;/localdisk/lpot/ux/components/benchmark/benchmark_model.py&quot;,
+                &quot;command&quot;: &quot;python /localdisk/lpot/ux/components/benchmark/benchmark_model.py --config /path/to/workspace/workloads/&lt;model_name&gt;_&lt;configuration_id&gt;/config.yaml --input-graph /localdisk/fp32.pb --mode performance --framework tensorflow&quot;
+            }
+        }
+    },
+    &quot;progress&quot;: &quot;1/2&quot;,
+    &quot;perf_throughput_input_model&quot;: &lt;float&gt;
 }
 </pre></div>
 </div>
@@ -249,10 +268,40 @@
 <li><p><strong>Subject</strong>: <code class="docutils literal notranslate"><span class="pre">benchmark_progress</span></code></p>
 <p><strong>Data</strong>:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{
-    &quot;id&quot;: &quot;22b60ef39915ff4931936ca43b8c3ead&quot;,
-    &quot;perf_throughput_fp32&quot;: &lt;float&gt;,
+    &quot;id&quot;: &quot;configuration_id&quot;,
+    &quot;execution_details&quot;: {
+        &quot;input_model_benchmark&quot;: {
+            &quot;performance&quot;: {
+                &quot;instances&quot;: 7,
+                &quot;cores_per_instance&quot;: 4,
+                &quot;model_path&quot;: &quot;/localdisk/fp32.pb&quot;,
+                &quot;precision&quot;: &quot;fp32&quot;,
+                &quot;mode&quot;: &quot;performance&quot;,
+                &quot;batch_size&quot;: 1,
+                &quot;framework&quot;: &quot;tensorflow&quot;,
+                &quot;config_path&quot;: &quot;/path/to/workspace/workloads/&lt;model_name&gt;_&lt;configuration_id&gt;/config.yaml&quot;,
+                &quot;benchmark_script&quot;: &quot;/localdisk/lpot/ux/components/benchmark/benchmark_model.py&quot;,
+                &quot;command&quot;: &quot;python /localdisk/lpot/ux/components/benchmark/benchmark_model.py --config /path/to/workspace/workloads/&lt;model_name&gt;_&lt;configuration_id&gt;/config.yaml --input-graph /localdisk/fp32.pb --mode performance --framework tensorflow&quot;
+            }
+        },
+        &quot;optimized_model_benchmark&quot;: {
+            &quot;performance&quot;: {
+                &quot;instances&quot;: 7,
+                &quot;cores_per_instance&quot;: 4,
+                &quot;model_path&quot;: &quot;/localdisk/int8.pb&quot;,
+                &quot;precision&quot;: &quot;int8&quot;,
+                &quot;mode&quot;: &quot;performance&quot;,
+                &quot;batch_size&quot;: 1,
+                &quot;framework&quot;: &quot;tensorflow&quot;,
+                &quot;config_path&quot;: &quot;/path/to/workspace/workloads/&lt;model_name&gt;_&lt;configuration_id&gt;/config.yaml&quot;,
+                &quot;benchmark_script&quot;: &quot;/localdisk/lpot/ux/components/benchmark/benchmark_model.py&quot;,
+                &quot;command&quot;: &quot;python /localdisk/lpot/ux/components/benchmark/benchmark_model.py --config /path/to/workspace/workloads/&lt;model_name&gt;_&lt;configuration_id&gt;/config.yaml --input-graph /localdisk/int8.pb --mode performance --framework tensorflow&quot;
+            }
+        }
+    },
     &quot;progress&quot;: &quot;2/2&quot;,
-    &quot;perf_throughput_int8&quot;: &lt;float&gt;
+    &quot;perf_throughput_input_model&quot;: &lt;float&gt;,
+    &quot;perf_throughput_optimized_model&quot;: &lt;float&gt;
 }
 </pre></div>
 </div>
@@ -260,10 +309,40 @@
 <li><p><strong>Subject</strong>: <code class="docutils literal notranslate"><span class="pre">benchmark_finish</span></code></p>
 <p><strong>Data</strong>:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{
-    &quot;id&quot;: &quot;22b60ef39915ff4931936ca43b8c3ead&quot;,
-    &quot;perf_throughput_fp32&quot;: &lt;float&gt;,
+    &quot;id&quot;: &quot;configuration_id&quot;,
+    &quot;execution_details&quot;: {
+        &quot;input_model_benchmark&quot;: {
+            &quot;performance&quot;: {
+                &quot;instances&quot;: 7,
+                &quot;cores_per_instance&quot;: 4,
+                &quot;model_path&quot;: &quot;/localdisk/fp32.pb&quot;,
+                &quot;precision&quot;: &quot;fp32&quot;,
+                &quot;mode&quot;: &quot;performance&quot;,
+                &quot;batch_size&quot;: 1,
+                &quot;framework&quot;: &quot;tensorflow&quot;,
+                &quot;config_path&quot;: &quot;/path/to/workspace/workloads/&lt;model_name&gt;_&lt;configuration_id&gt;/config.yaml&quot;,
+                &quot;benchmark_script&quot;: &quot;/localdisk/lpot/ux/components/benchmark/benchmark_model.py&quot;,
+                &quot;command&quot;: &quot;python /localdisk/lpot/ux/components/benchmark/benchmark_model.py --config /path/to/workspace/workloads/&lt;model_name&gt;_&lt;configuration_id&gt;/config.yaml --input-graph /localdisk/fp32.pb --mode performance --framework tensorflow&quot;
+            }
+        },
+        &quot;optimized_model_benchmark&quot;: {
+            &quot;performance&quot;: {
+                &quot;instances&quot;: 7,
+                &quot;cores_per_instance&quot;: 4,
+                &quot;model_path&quot;: &quot;/localdisk/int8.pb&quot;,
+                &quot;precision&quot;: &quot;int8&quot;,
+                &quot;mode&quot;: &quot;performance&quot;,
+                &quot;batch_size&quot;: 1,
+                &quot;framework&quot;: &quot;tensorflow&quot;,
+                &quot;config_path&quot;: &quot;/path/to/workspace/workloads/&lt;model_name&gt;_&lt;configuration_id&gt;/config.yaml&quot;,
+                &quot;benchmark_script&quot;: &quot;/localdisk/lpot/ux/components/benchmark/benchmark_model.py&quot;,
+                &quot;command&quot;: &quot;python /localdisk/lpot/ux/components/benchmark/benchmark_model.py --config /path/to/workspace/workloads/&lt;model_name&gt;_&lt;configuration_id&gt;/config.yaml --input-graph /localdisk/int8.pb --mode performance --framework tensorflow&quot;
+            }
+        }
+    },
     &quot;progress&quot;: &quot;2/2&quot;,
-    &quot;perf_throughput_int8&quot;: &lt;float&gt;
+    &quot;perf_throughput_input_model&quot;: &lt;float&gt;,
+    &quot;perf_throughput_optimized_model&quot;: &lt;float&gt;
 }
 </pre></div>
 </div>

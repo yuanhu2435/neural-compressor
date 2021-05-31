@@ -43,7 +43,7 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="TensorBoard" href="tensorboard.html" />
+    <link rel="next" title="Model Conversion" href="model_conversion.html" />
     <link rel="prev" title="Mixed Precision" href="mixed_precision.html" /> 
 </head>
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                1.3.1
+                1.4
               </div>
             
           
@@ -111,8 +111,10 @@
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Graph Optimization</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#how-to-use-it">How to use it</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#examples">Examples</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="model_conversion.html">Model Conversion</a></li>
 <li class="toctree-l3"><a class="reference internal" href="tensorboard.html">TensorBoard</a></li>
 </ul>
 </li>
@@ -263,6 +265,78 @@ e.g, <code class="docutils literal notranslate"><span class="pre">FORCE_BF16=1</
 </section>
 </section>
 </section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<section id="id1">
+<h3>FP32 optimization<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>The below example demonstrate how to speed up the Resnet50 FP32 throughput performance via Graph Optimization.</p>
+<ol class="simple">
+<li><p>Download the pre-trained ResNet-50 model with below command.</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  wget https://storage.googleapis.com/intel-optimized-tensorflow/models/v1_6/resnet50_fp32_pretrained_model.pb
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>Measure the performance on original FP32 model.</p></li>
+</ol>
+<p>First of all, we create the <strong>resnet50_measurement.yaml</strong> with below settings for leveraging LPOT Benchmark API.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span>  <span class="nt">model</span><span class="p">:</span>
+    <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">resnet50_v1</span>
+    <span class="nt">framework</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tensorflow</span>
+
+  <span class="nt">evaluation</span><span class="p">:</span>
+    <span class="nt">performance</span><span class="p">:</span>
+      <span class="nt">configs</span><span class="p">:</span>
+        <span class="nt">cores_per_instance</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">28</span>
+        <span class="nt">num_of_instance</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+      <span class="nt">dataloader</span><span class="p">:</span>
+        <span class="nt">batch_size</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span>
+        <span class="nt">dataset</span><span class="p">:</span>
+          <span class="nt">dummy</span><span class="p">:</span>
+            <span class="nt">shape</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">1000</span><span class="p p-Indicator">,</span> <span class="nv">224</span><span class="p p-Indicator">,</span> <span class="nv">224</span><span class="p p-Indicator">,</span> <span class="nv">3</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+<p>Then, we can leverage the Benchmark API to measure the performance.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="kn">import</span> <span class="n">Benchmark</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Benchmark</span><span class="p">(</span><span class="s1">&#39;/path/to/resnet50_measurement.yaml&#39;</span><span class="p">)</span>
+<span class="n">evaluator</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;/path/to/resnet50_fp32_pretrained_model.pb&#39;</span>
+<span class="n">evaluator</span><span class="p">(</span><span class="s1">&#39;performance&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We got below performance result under Intel Xeon Scalable processor Cascade Lake 8280.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>performance mode benchmark result:
+<span class="m">2021</span>-05-28 <span class="m">15</span>:16:11 <span class="o">[</span>INFO<span class="o">]</span> Batch <span class="nv">size</span> <span class="o">=</span> <span class="m">100</span>
+<span class="m">2021</span>-05-28 <span class="m">15</span>:16:11 <span class="o">[</span>INFO<span class="o">]</span> Latency: <span class="m">7</span>.165 ms
+<span class="m">2021</span>-05-28 <span class="m">15</span>:16:11 <span class="o">[</span>INFO<span class="o">]</span> Throughput: <span class="m">139</span>.567 images/sec
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>Re-Measure the performance on optimized FP32 model.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="kn">import</span> <span class="n">Graph_Optimization</span>
+
+<span class="n">graph_optimizer</span> <span class="o">=</span> <span class="n">Graph_Optimization</span><span class="p">()</span>
+<span class="n">graph_optimizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;/path/to/resnet50_fp32_pretrained_model.pb&#39;</span>
+<span class="n">output_graph</span> <span class="o">=</span> <span class="n">graph_optimizer</span><span class="p">()</span>
+<span class="n">output_graph</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;/path/to/fp32_optimized_model&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then, We measure the optimized performance via LPOT Benchmark API again.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="kn">import</span> <span class="n">Benchmark</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Benchmark</span><span class="p">(</span><span class="s1">&#39;/path/to/resnet50_measurement.yaml&#39;</span><span class="p">)</span>
+<span class="n">evaluator</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;/path/to/fp32_optimized_model&#39;</span>
+<span class="n">evaluator</span><span class="p">(</span><span class="s1">&#39;performance&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now, the throughput has been improved ~2.3x (325.99 vs 139.56) compared with the initial data.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>performance mode benchmark result:
+<span class="m">2021</span>-05-28 <span class="m">15</span>:16:41 <span class="o">[</span>INFO<span class="o">]</span> Batch <span class="nv">size</span> <span class="o">=</span> <span class="m">100</span>
+<span class="m">2021</span>-05-28 <span class="m">15</span>:16:41 <span class="o">[</span>INFO<span class="o">]</span> Latency: <span class="m">3</span>.068 ms
+<span class="m">2021</span>-05-28 <span class="m">15</span>:16:41 <span class="o">[</span>INFO<span class="o">]</span> Throughput: <span class="m">325</span>.992 images/sec
+</pre></div>
+</div>
+</section>
+</section>
 </section>
 
 
@@ -271,7 +345,7 @@ e.g, <code class="docutils literal notranslate"><span class="pre">FORCE_BF16=1</
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="tensorboard.html" class="btn btn-neutral float-right" title="TensorBoard" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="model_conversion.html" class="btn btn-neutral float-right" title="Model Conversion" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="mixed_precision.html" class="btn btn-neutral float-left" title="Mixed Precision" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 

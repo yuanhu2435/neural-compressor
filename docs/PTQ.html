@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                1.3.1
+                1.4
               </div>
             
           
@@ -113,6 +113,7 @@
 <li class="toctree-l3"><a class="reference internal" href="benchmark.html">Benchmarking</a></li>
 <li class="toctree-l3"><a class="reference internal" href="mixed_precision.html">Mixed Precision</a></li>
 <li class="toctree-l3"><a class="reference internal" href="graph_optimization.html">Graph Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="model_conversion.html">Model Conversion</a></li>
 <li class="toctree-l3"><a class="reference internal" href="tensorboard.html">TensorBoard</a></li>
 </ul>
 </li>
@@ -197,7 +198,7 @@
 <h1>PTQ<a class="headerlink" href="#ptq" title="Permalink to this headline">¶</a></h1>
 <section id="design">
 <h2>Design<a class="headerlink" href="#design" title="Permalink to this headline">¶</a></h2>
-<p>Post-training static quantization (PTQ) involves not just converting the weights from <strong>float</strong> to <strong>int</strong>, but also first feeding batches of data through the network and computing the resulting distributions of the different activations. Sspecifically, this is done by inserting observer modules at different points that record this data. These distributions are then used to determine specifically how the different activations should be quantized at inference time. A simple technique would be to simply divide the entire range of activations into 256 levels, but we support more sophisticated methods as well. This additional step allows us to pass quantized values between operations instead of converting these values to floats - and then back to ints - between every operation, resulting in a significant speed-up.</p>
+<p>Post-training static quantization (PTQ) involves not just converting the weights from <strong>float</strong> to <strong>int</strong>, but also first feeding batches of data through the network and computing the resulting distributions of the different activations. Specifically, this is done by inserting observer modules at different points that record this data. These distributions are used to determine specifically how the different activations should be quantized at inference time. A simple technique would be simply divide the entire range of activations into 256 levels, but we support more sophisticated methods as well. This additional step allows us to pass quantized values between operations instead of converting these values to floats - and then back to ints - between every operation, resulting in a significant speed-up.</p>
 </section>
 <section id="pytorch-usage">
 <h2>PyTorch Usage<a class="headerlink" href="#pytorch-usage" title="Permalink to this headline">¶</a></h2>
@@ -555,7 +556,7 @@ Size (MB): 3.631847
 </section>
 <section id="example">
 <h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
-<p>View a <a class="reference external" href="https://github.com/intel/lpot/tree/ccdb6aec0a95a66b2c747f92a34018e78a91b459/examples/pytorch/image_recognition/imagenet/cpu/ptq">PTQ example of PyTorch resnet50</a>.</p>
+<p>View a <a class="reference external" href="https://github.com/intel/lpot/tree/4939eb6527920867c16ffa9f9342df6fdc81f93f/examples/pytorch/eager/image_recognition/imagenet/cpu/ptq">PTQ example of PyTorch resnet50</a>.</p>
 </section>
 </section>
 </section>

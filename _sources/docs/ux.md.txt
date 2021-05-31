@@ -1,6 +1,8 @@
 LPOT UX
 =======
 
+LPOT UX is only available on Linux based hosts.
+
 ## Start the UX
 
 1. Start the LPOT UX server:
@@ -66,6 +68,30 @@ If you choose **custom** in the Dataset or Metric section, the appropriate code 
 
 Follow the comments in the generated code template to fill in required methods with your own code.
 
+## Bert model configuration
+![Bert model Wizard](imgs/ux/model_create_bert.png "Bert model Wizard")   
+* Follow [instructions](https://github.com/intel/lpot/blob/master/examples/tensorflow/nlp/bert/README.md) to:
+   * install Intel Tensorflow 1.15 up2
+   * prepare dataset and a frozen pb model 
+* In the **Create low precision model**:
+   * select created frozen model
+   * choose NLP as model domain
+   * select input_file, batch_size in inputs (in that order)
+   * choose **custom** in output and enter `IteratorGetNext:3, unstack:0, unstack:1` in input field
+   * in **Calibration/label_file**, select **dev-v1.1.json** file from created dataset
+   * in **Calibration/dataset location**, select **evel.tf_record** file from created dataset
+   * in **Evaluation/Transforms/label_file**, select **dev-v1.1.json** file from created dataset  
+   * in **Evaluation/Transforms/vocab_file**, select **vocab.txt** file from created dataset
+   * click **Finish** or change Advanced parameters
+
+## Model Graph Display
+For Tensorflow frozen pb models there will be a new button available ![Show graph](imgs/ux/show_graph_button.png "Show graph").
+
+Click it to display graph of selected model:
+
+![Bert model graph](imgs/ux/graph_bert.png "Bert model graph").
+
+
 ## Tuning
 
 Now that you have created a Model Configuration, you can do the following:
@@ -79,14 +105,3 @@ Now that you have created a Model Configuration, you can do the following:
       - The **Accuracy** section displays comparisons in accuracy metrics between the original and tuned models.
       - **Model size** compares the sizes of both models.
       - When automatic benchmarking is finished, **Throughput** shows the performance gain from tuning. 
-
-## Advanced options
-### TLS connection encryption
-
-You can provide your own certificate and key to the server in order to use TLS-encrypted communication between the UI and the server.
-
-Add two parameters to the server start command:
-
-```
-lpot_ux --certfile path_to_cert.crt --keyfile path_to_private_key.key
-```
