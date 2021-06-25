@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>PTQ &mdash; Intel® Low Precision Optimization Tool  documentation</title>
@@ -14,8 +13,6 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
 
   
@@ -33,7 +30,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -68,7 +64,7 @@
             
             
               <div class="version">
-                1.4
+                1.4.1
               </div>
             
           
@@ -194,15 +190,15 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="ptq">
+  <div class="section" id="ptq">
 <h1>PTQ<a class="headerlink" href="#ptq" title="Permalink to this headline">¶</a></h1>
-<section id="design">
+<div class="section" id="design">
 <h2>Design<a class="headerlink" href="#design" title="Permalink to this headline">¶</a></h2>
 <p>Post-training static quantization (PTQ) involves not just converting the weights from <strong>float</strong> to <strong>int</strong>, but also first feeding batches of data through the network and computing the resulting distributions of the different activations. Specifically, this is done by inserting observer modules at different points that record this data. These distributions are used to determine specifically how the different activations should be quantized at inference time. A simple technique would be simply divide the entire range of activations into 256 levels, but we support more sophisticated methods as well. This additional step allows us to pass quantized values between operations instead of converting these values to floats - and then back to ints - between every operation, resulting in a significant speed-up.</p>
-</section>
-<section id="pytorch-usage">
+</div>
+<div class="section" id="pytorch-usage">
 <h2>PyTorch Usage<a class="headerlink" href="#pytorch-usage" title="Permalink to this headline">¶</a></h2>
-<section id="mobilenetv2-model-architecture">
+<div class="section" id="mobilenetv2-model-architecture">
 <h3>MobileNetV2 Model Architecture<a class="headerlink" href="#mobilenetv2-model-architecture" title="Permalink to this headline">¶</a></h3>
 <p>Define the pre-trained MobileNetV2 model architecture. The following
 shows several notable modifications that can be used to enable quantization:</p>
@@ -367,8 +363,8 @@ shows several notable modifications that can be used to enable quantization:</p>
                         <span class="n">torch</span><span class="o">.</span><span class="n">quantization</span><span class="o">.</span><span class="n">fuse_modules</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">conv</span><span class="p">,</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">idx</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)],</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 </div>
-</section>
-<section id="helper-functions">
+</div>
+<div class="section" id="helper-functions">
 <h3>Helper Functions<a class="headerlink" href="#helper-functions" title="Permalink to this headline">¶</a></h3>
 <p>Define several helper functions to help with the model evaluation:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">AverageMeter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -446,8 +442,8 @@ shows several notable modifications that can be used to enable quantization:</p>
     <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;temp.p&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-</section>
-<section id="id1">
+</div>
+<div class="section" id="id1">
 <h3>PTQ<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">num_calibration_batches</span> <span class="o">=</span> <span class="mi">10</span>
 
@@ -553,13 +549,13 @@ Size (MB): 3.631847
 </pre></div>
 </div>
 <p>Changing just this quantization configuration method resulted in an increase of the accuracy to over 76%!</p>
-</section>
-<section id="example">
+</div>
+<div class="section" id="example">
 <h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
-<p>View a <a class="reference external" href="https://github.com/intel/lpot/tree/968fb136464aa4d89131c62aa5f01a7392571cdf/examples/pytorch/eager/image_recognition/imagenet/cpu/ptq">PTQ example of PyTorch resnet50</a>.</p>
-</section>
-</section>
-</section>
+<p>View a <a class="reference external" href="https://github.com/intel/lpot/tree/cd8bdedadf185c0f0739dc7b232a415186b00578/examples/pytorch/eager/image_recognition/imagenet/cpu/ptq">PTQ example of PyTorch resnet50</a>.</p>
+</div>
+</div>
+</div>
 
 
            </div>

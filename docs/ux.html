@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>LPOT UX &mdash; Intel® Low Precision Optimization Tool  documentation</title>
@@ -14,8 +13,6 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
 
   
@@ -33,7 +30,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -68,7 +64,7 @@
             
             
               <div class="version">
-                1.4
+                1.4.1
               </div>
             
           
@@ -196,10 +192,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="lpot-ux">
+  <div class="section" id="lpot-ux">
 <h1>LPOT UX<a class="headerlink" href="#lpot-ux" title="Permalink to this headline">¶</a></h1>
 <p>LPOT UX is only available on Linux based hosts.</p>
-<section id="start-the-ux">
+<div class="section" id="start-the-ux">
 <h2>Start the UX<a class="headerlink" href="#start-the-ux" title="Permalink to this headline">¶</a></h2>
 <ol>
 <li><p>Start the LPOT UX server:</p>
@@ -217,16 +213,16 @@ Then open address http://localhost:5000/?token=338174d13706855fc6924cec7b3a8ae8
 <p>Make certain that requested port forwarding is set up (depending on your OS) and then open the address in your web browser.</p>
 </li>
 </ol>
-</section>
-<section id="my-models-list">
+</div>
+<div class="section" id="my-models-list">
 <h2>My Models list<a class="headerlink" href="#my-models-list" title="Permalink to this headline">¶</a></h2>
 <p>This view lists all Model Configurations defined on a given server.</p>
 <p>You can create a new model using pre-defined models by using a New Model Wizard or <strong>Examples</strong>:</p>
 <p><img alt="My models list" src="../_images/my_models.png" /></p>
-</section>
-<section id="new-model-configuration-from-new-model-wizard">
+</div>
+<div class="section" id="new-model-configuration-from-new-model-wizard">
 <h2>New Model Configuration from New Model Wizard<a class="headerlink" href="#new-model-configuration-from-new-model-wizard" title="Permalink to this headline">¶</a></h2>
-<section id="basic-parameters">
+<div class="section" id="basic-parameters">
 <h3>Basic parameters<a class="headerlink" href="#basic-parameters" title="Permalink to this headline">¶</a></h3>
 <ol>
 <li><p>If all related files are located in one directory, point your Workspace there.</p>
@@ -238,14 +234,14 @@ button (on the top-left part of UX) and navigate to the desired directory. Click
 <img alt="Basic parameters wizard" src="../_images/wizard_basic.png" /></p></li>
 <li><p>Either save this configuration (by clicking <strong>Save</strong>), or change some advanced parameters (by clicking <strong>Next</strong>).</p></li>
 </ol>
-</section>
-<section id="advanced-parameters">
+</div>
+<div class="section" id="advanced-parameters">
 <h3>Advanced parameters<a class="headerlink" href="#advanced-parameters" title="Permalink to this headline">¶</a></h3>
 <p>From the advanced parameters page, you can configure more features such as tuning, quantization, and benchmarking.</p>
 <p><img alt="Advanced parameters wizard" src="../_images/wizard_advanced.png" /></p>
-</section>
-</section>
-<section id="new-model-configuration-from-examples">
+</div>
+</div>
+<div class="section" id="new-model-configuration-from-examples">
 <h2>New Model Configuration from Examples<a class="headerlink" href="#new-model-configuration-from-examples" title="Permalink to this headline">¶</a></h2>
 <p><img alt="Examples" src="../_images/examples.png" /></p>
 <p>Included are models you can use to test tuning. Visit <strong>Examples</strong> to:</p>
@@ -254,17 +250,17 @@ button (on the top-left part of UX) and navigate to the desired directory. Click
 <li><p>Download a predefined configuration file for models.</p></li>
 </ul>
 <p>When both models and configurations are downloaded, you can point to the Dataset to be used and then click <strong>Add to my models</strong>. A new model will be added to the <strong>My models</strong> list, ready for tuning.</p>
-</section>
-<section id="custom-dataset-or-metric">
+</div>
+<div class="section" id="custom-dataset-or-metric">
 <h2>Custom dataset or metric<a class="headerlink" href="#custom-dataset-or-metric" title="Permalink to this headline">¶</a></h2>
 <p>If you choose <strong>custom</strong> in the Dataset or Metric section, the appropriate code templates will be generated for you to fill in with your code. The path to the template will be available by clicking the <strong>Copy code template path</strong> button located in the right-most column in the <strong>My models</strong> list.</p>
 <p>Follow the comments in the generated code template to fill in required methods with your own code.</p>
-</section>
-<section id="bert-model-configuration">
+</div>
+<div class="section" id="bert-model-configuration">
 <h2>Bert model configuration<a class="headerlink" href="#bert-model-configuration" title="Permalink to this headline">¶</a></h2>
 <p><img alt="Bert model Wizard" src="../_images/model_create_bert.png" /></p>
 <ul class="simple">
-<li><p>Follow <a class="reference external" href="https://github.com/intel/lpot/blob/master/examples/tensorflow/nlp/bert/README.md">instructions</a> to:</p>
+<li><p>Follow <a class="reference external" href="../examples/tensorflow/nlp/bert_large_squad/README">instructions</a> to:</p>
 <ul>
 <li><p>install Intel Tensorflow 1.15 up2</p></li>
 <li><p>prepare dataset and a frozen pb model</p></li>
@@ -284,14 +280,14 @@ button (on the top-left part of UX) and navigate to the desired directory. Click
 </ul>
 </li>
 </ul>
-</section>
-<section id="model-graph-display">
+</div>
+<div class="section" id="model-graph-display">
 <h2>Model Graph Display<a class="headerlink" href="#model-graph-display" title="Permalink to this headline">¶</a></h2>
 <p>For Tensorflow frozen pb models there will be a new button available <img alt="Show graph" src="../_images/show_graph_button.png" />.</p>
 <p>Click it to display graph of selected model:</p>
 <p><img alt="Bert model graph" src="../_images/graph_bert.png" />.</p>
-</section>
-<section id="tuning">
+</div>
+<div class="section" id="tuning">
 <h2>Tuning<a class="headerlink" href="#tuning" title="Permalink to this headline">¶</a></h2>
 <p>Now that you have created a Model Configuration, you can do the following:</p>
 <ul class="simple">
@@ -311,8 +307,8 @@ button (on the top-left part of UX) and navigate to the desired directory. Click
 </ul>
 </li>
 </ul>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

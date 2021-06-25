@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Benchmarking &mdash; Intel® Low Precision Optimization Tool  documentation</title>
@@ -14,8 +13,6 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
 
   
@@ -33,7 +30,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -68,7 +64,7 @@
             
             
               <div class="version">
-                1.4
+                1.4.1
               </div>
             
           
@@ -194,11 +190,11 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="benchmarking">
+  <div class="section" id="benchmarking">
 <h1>Benchmarking<a class="headerlink" href="#benchmarking" title="Permalink to this headline">¶</a></h1>
 <p>The benchmarking feature of LPOT is used to measure the model performance with the objective settings; the user can get the performance of the models between the float32 model and the quantized low precision model in the same scenarios that they configured in Yaml. Benchmarking is always used after a quantization process.</p>
 <p>The following examples show how to use benchmarking.</p>
-<section id="config-evaluation-filed-in-a-yaml-file">
+<div class="section" id="config-evaluation-filed-in-a-yaml-file">
 <h2>Config evaluation filed in a yaml file<a class="headerlink" href="#config-evaluation-filed-in-a-yaml-file" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">evaluation</span><span class="p">:</span>                                          <span class="c1"># optional. required if user doesn&#39;t provide eval_func in lpot.Quantization.</span>
   <span class="nt">accuracy</span><span class="p">:</span>                                          <span class="c1"># optional. required if user doesn&#39;t provide eval_func in lpot.Quantization.</span>
@@ -238,8 +234,8 @@
 </pre></div>
 </div>
 <p>The above example config two sub-fields named ‘accuracy’ and ‘performance’ which indicates that the benchmark module will get the accuracy and performance of the model. The user can also remove the performance field to only get model accuracy or performance. It’s flexible enough to configure the benchmark you want.</p>
-</section>
-<section id="use-a-user-specific-dataloader-to-run-benchmark">
+</div>
+<div class="section" id="use-a-user-specific-dataloader-to-run-benchmark">
 <h2>Use a user-specific dataloader to run benchmark<a class="headerlink" href="#use-a-user-specific-dataloader-to-run-benchmark" title="Permalink to this headline">¶</a></h2>
 <p>In this case, configure your dataloader and LPOT will construct an evaluation function to run the benchmarking. The user can also register the postprocess transform and metric to get the accuracy.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">()</span> <span class="c1">#  dataset class that implement __getitem__ method or __iter__ method</span>
@@ -252,12 +248,12 @@
 <span class="n">results</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">()</span>
 </pre></div>
 </div>
-<section id="examples">
+<div class="section" id="examples">
 <h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
-<p>Refer to the <a class="reference external" href="https://github.com/intel/lpot/blob/968fb136464aa4d89131c62aa5f01a7392571cdf/docs/../examples/tensorflow/image_recognition/run_benchmark.sh">Benchmark example</a>.</p>
-</section>
-</section>
-</section>
+<p>Refer to the <a class="reference external" href="https://github.com/intel/lpot/blob/cd8bdedadf185c0f0739dc7b232a415186b00578/docs/../examples/tensorflow/image_recognition/run_benchmark.sh">Benchmark example</a>.</p>
+</div>
+</div>
+</div>
 
 
            </div>

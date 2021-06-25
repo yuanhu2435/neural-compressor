@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Quantization Support Matrix &mdash; Intel® Low Precision Optimization Tool  documentation</title>
@@ -14,8 +13,6 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
 
   
@@ -33,7 +30,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -66,7 +62,7 @@
             
             
               <div class="version">
-                1.4
+                1.4.1
               </div>
             
           
@@ -169,7 +165,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="quantization-support-matrix">
+  <div class="section" id="quantization-support-matrix">
 <h1>Quantization Support Matrix<a class="headerlink" href="#quantization-support-matrix" title="Permalink to this headline">¶</a></h1>
 <p>This document provides a quantization support matrix for the following frameworks listed below:</p>
 <table border="1" class="docutils">
@@ -213,7 +209,7 @@
 <td align="right">Activation (uint8)</td>
 </tr>
 </tbody>
-</table><section id="tensorflow">
+</table><div class="section" id="tensorflow">
 <h2>TensorFlow<a class="headerlink" href="#tensorflow" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Symmetric Quantization</p>
@@ -223,8 +219,8 @@
 </ul>
 </li>
 </ul>
-</section>
-<section id="pytorch">
+</div>
+<div class="section" id="pytorch">
 <h2>PyTorch<a class="headerlink" href="#pytorch" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Symmetric Quantization</p>
@@ -239,8 +235,8 @@
 </ul>
 </li>
 </ul>
-</section>
-<section id="pytorch-ipex">
+</div>
+<div class="section" id="pytorch-ipex">
 <h2>PyTorch IPEX<a class="headerlink" href="#pytorch-ipex" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Symmetric Quantization</p>
@@ -250,8 +246,8 @@
 </ul>
 </li>
 </ul>
-</section>
-<section id="mxnet">
+</div>
+<div class="section" id="mxnet">
 <h2>MXNet<a class="headerlink" href="#mxnet" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Symmetric Quantization</p>
@@ -261,8 +257,8 @@
 </ul>
 </li>
 </ul>
-</section>
-<section id="onnx-runtime">
+</div>
+<div class="section" id="onnx-runtime">
 <h2>ONNX Runtime<a class="headerlink" href="#onnx-runtime" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Symmetric Quantization</p>
@@ -276,16 +272,16 @@
 </ul>
 </li>
 </ul>
-</section>
-<section id="reference">
+</div>
+<div class="section" id="reference">
 <h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>oneDNN: <a class="reference external" href="https://software.intel.com/content/www/us/en/develop/articles/lower-numerical-precision-deep-learning-inference-and-training.html">Lower Numerical Precision Deep Learning Inference and Training</a></p></li>
 <li><p>FBGEMM: <a class="reference external" href="https://github.com/pytorch/pytorch/blob/master/torch/quantization/observer.py">FBGEMM Quantization</a></p></li>
 <li><p>MLAS:  <a class="reference external" href="https://github.com/microsoft/onnxruntime/blob/master/onnxruntime/python/tools/quantization/onnx_quantizer.py">MLAS Quantization</a></p></li>
 </ul>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Getting Started &mdash; Intel® Low Precision Optimization Tool  documentation</title>
@@ -14,8 +13,6 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
 
   
@@ -33,7 +30,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -66,7 +62,7 @@
             
             
               <div class="version">
-                1.4
+                1.4.1
               </div>
             
           
@@ -169,9 +165,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="getting-started">
+  <div class="section" id="getting-started">
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
-<section id="installation">
+<div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>The Intel® LPOT library is released as part of the
 <a class="reference external" href="https://software.intel.com/content/www/us/en/develop/tools/oneapi/ai-analytics-toolkit.html">Intel® oneAPI AI Analytics Toolkit</a> (AI Kit).
@@ -180,12 +176,12 @@ machine optimizations all in one place for ease of development. Along with
 LPOT, the AI Kit includes Intel-optimized versions of deep learning frameworks
 (such as TensorFlow and PyTorch) and high-performing Python libraries to
 streamline end-to-end data science and AI workflows on Intel architectures.</p>
-<section id="linux-installation">
+<div class="section" id="linux-installation">
 <h3>Linux Installation<a class="headerlink" href="#linux-installation" title="Permalink to this headline">¶</a></h3>
 <p>You can install just the LPOT library from binary or source, or you can get
 the Intel-optimized framework together with the LPOT library by installing the
 Intel® oneAPI AI Analytics Toolkit.</p>
-<section id="install-from-binary">
+<div class="section" id="install-from-binary">
 <h4>Install from binary<a class="headerlink" href="#install-from-binary" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-Shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># install from pip</span>
 pip install lpot
@@ -194,8 +190,8 @@ pip install lpot
 conda install lpot -c conda-forge -c intel 
 </pre></div>
 </div>
-</section>
-<section id="install-from-source">
+</div>
+<div class="section" id="install-from-source">
 <h4>Install from source<a class="headerlink" href="#install-from-source" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-Shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/intel/lpot.git
 <span class="nb">cd</span> lpot
@@ -203,8 +199,8 @@ pip install -r requirements.txt
 python setup.py install
 </pre></div>
 </div>
-</section>
-<section id="install-from-ai-kit">
+</div>
+<div class="section" id="install-from-ai-kit">
 <h4>Install from AI Kit<a class="headerlink" href="#install-from-ai-kit" title="Permalink to this headline">¶</a></h4>
 <p>The AI Kit, which includes the LPOT
 library, is distributed through many common channels,
@@ -226,9 +222,9 @@ for post-installation instructions.</p>
 <td></td>
 </tr>
 </tbody>
-</table></section>
-</section>
-<section id="windows-installation">
+</table></div>
+</div>
+<div class="section" id="windows-installation">
 <h3>Windows Installation<a class="headerlink" href="#windows-installation" title="Permalink to this headline">¶</a></h3>
 <p><strong>Prerequisites</strong></p>
 <p>The following prerequisites and requirements must be satisfied for a successful installation:</p>
@@ -243,7 +239,7 @@ conda activate lpot
 </div>
 </li>
 </ul>
-<section id="id1">
+<div class="section" id="id1">
 <h4>Install from binary<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-Shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># install from pip</span>
 pip install lpot
@@ -252,8 +248,8 @@ pip install lpot
 conda install lpot -c conda-forge -c intel 
 </pre></div>
 </div>
-</section>
-<section id="id2">
+</div>
+<div class="section" id="id2">
 <h4>Install from source<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/intel/lpot.git
 <span class="nb">cd</span> lpot
@@ -261,26 +257,26 @@ pip install -r requirements.txt
 python setup.py install
 </pre></div>
 </div>
-</section>
-</section>
-</section>
-<section id="tutorials-and-examples">
+</div>
+</div>
+</div>
+<div class="section" id="tutorials-and-examples">
 <h2>Tutorials and Examples<a class="headerlink" href="#tutorials-and-examples" title="Permalink to this headline">¶</a></h2>
 <p>Read the following resources to learn how to use LPOT.</p>
-<section id="tutorial">
+<div class="section" id="tutorial">
 <h3>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h3>
 <p>The <a class="reference internal" href="docs/tutorial.html"><span class="doc">Tutorial</span></a> provides comprehensive instructions on how to utilize Intel® Low Precision Optimization Tool’s features with examples.</p>
-</section>
-<section id="examples">
+</div>
+<div class="section" id="examples">
 <h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference internal" href="examples_readme.html"><span class="doc">Examples</span></a> are provided to demonstrate the usage of Intel® Low Precision Optimization Tool in different frameworks: TensorFlow, PyTorch, MXNet, and ONNX Runtime. Hello World examples are also available.</p>
-</section>
-</section>
-<section id="developer-documentation">
+</div>
+</div>
+<div class="section" id="developer-documentation">
 <h2>Developer Documentation<a class="headerlink" href="#developer-documentation" title="Permalink to this headline">¶</a></h2>
 <p>View LPOT <a class="reference internal" href="docs/doclist.html">Documentation</a> for getting started, deep dive, and advanced resources to help you use and develop LPOT.</p>
-</section>
-<section id="system-requirements">
+</div>
+<div class="section" id="system-requirements">
 <h2>System Requirements<a class="headerlink" href="#system-requirements" title="Permalink to this headline">¶</a></h2>
 <p>Intel® Low Precision Optimization Tool supports systems based on <a class="reference external" href="https://en.wikipedia.org/wiki/X86-64">Intel 64 architecture or compatible processors</a>, specially optimized for the following CPUs:</p>
 <ul class="simple">
@@ -288,7 +284,7 @@ python setup.py install
 <li><p>future Intel Xeon Scalable processor (code name Sapphire Rapids)</p></li>
 </ul>
 <p>Intel® Low Precision Optimization Tool requires installing the pertinent Intel-optimized framework version for TensorFlow, PyTorch, and MXNet.</p>
-<section id="validated-hardware-software-environment">
+<div class="section" id="validated-hardware-software-environment">
 <h3>Validated Hardware/Software Environment<a class="headerlink" href="#validated-hardware-software-environment" title="Permalink to this headline">¶</a></h3>
 <table class="docutils">
 <thead>
@@ -348,9 +344,9 @@ python setup.py install
     <td class="tg-7zrl">1.6.0</td>
   </tr>
 </tbody>
-</table></section>
-</section>
-<section id="validated-models">
+</table></div>
+</div>
+<div class="section" id="validated-models">
 <h2>Validated Models<a class="headerlink" href="#validated-models" title="Permalink to this headline">¶</a></h2>
 <p>Intel® Low Precision Optimization Tool provides numerous examples to show promising accuracy loss with the best performance gain. A full quantized model list on various frameworks is available in the <a class="reference internal" href="docs/full_model_list.html"><span class="doc">Model List</span></a>.</p>
 <table class="docutils">
@@ -611,8 +607,8 @@ python setup.py install
     <td>2.69x</td>
   </tr>
 </tbody>
-</table></section>
-</section>
+</table></div>
+</div>
 
 
            </div>

@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Adaptor &mdash; Intel® Low Precision Optimization Tool  documentation</title>
@@ -14,8 +13,6 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
 
   
@@ -33,7 +30,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -68,7 +64,7 @@
             
             
               <div class="version">
-                1.4
+                1.4.1
               </div>
             
           
@@ -187,16 +183,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="adaptor">
+  <div class="section" id="adaptor">
 <h1>Adaptor<a class="headerlink" href="#adaptor" title="Permalink to this headline">¶</a></h1>
-<section id="introduction">
+<div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <p>Intel® Low Precision Optimization Tool (LPOT) built the low-precision inference
 solution on popular Deep Learning frameworks such as TensorFlow, PyTorch,
 MXNet, and ONNX Runtime. The adaptor layer is the bridge between the LPOT
 tuning strategy and vanilla framework quantization APIs.</p>
-</section>
-<section id="adaptor-design">
+</div>
+<div class="section" id="adaptor-design">
 <h2>Adaptor Design<a class="headerlink" href="#adaptor-design" title="Permalink to this headline">¶</a></h2>
 <p>LPOT supports a new adaptor extension by
 implementing a subclass <code class="docutils literal notranslate"><span class="pre">Adaptor</span></code> class in the lpot.adaptor package
@@ -227,9 +223,9 @@ and registering this strategy by the <code class="docutils literal notranslate">
 <li><p><code class="docutils literal notranslate"><span class="pre">query_fw_capability</span></code> function is used to run a query framework quantization capability and intersects with the user yaml configuration.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">query_fused_patterns</span></code> function is used to run a query framework graph fusion capability and decide the fusion tuning space.</p></li>
 </ul>
-<section id="query-api">
+<div class="section" id="query-api">
 <h3>Query API<a class="headerlink" href="#query-api" title="Permalink to this headline">¶</a></h3>
-<section id="background">
+<div class="section" id="background">
 <h4>Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h4>
 <p>Besides the adaptor API, we also introduced the Query API which describes the
 behavior of a specific framework. With this API, LPOT can easily query the
@@ -240,9 +236,9 @@ following information on the current runtime framework.</p>
 <li><p>The supported sequence of each quantizable op.</p></li>
 <li><p>The instance of each sequence.</p></li>
 </ul>
-<p>In the past, the above information was generally defined and hidden in every corner of the code which made effective maintenance difficult. With the Query API, we only need to create one unified yaml file and call the corresponding API to get the information. For example, the <a class="reference external" href="https://github.com/intel/lpot/blob/968fb136464aa4d89131c62aa5f01a7392571cdf/docs/../lpot/adaptor/tensorflow.yaml">tensorflow.yaml</a> keeps the current Tensorflow framework ability. We recommend that the end user not make modifications if requirements are not clear.</p>
-</section>
-<section id="unify-config-introduction">
+<p>In the past, the above information was generally defined and hidden in every corner of the code which made effective maintenance difficult. With the Query API, we only need to create one unified yaml file and call the corresponding API to get the information. For example, the <a class="reference external" href="https://github.com/intel/lpot/blob/cd8bdedadf185c0f0739dc7b232a415186b00578/docs/../lpot/adaptor/tensorflow.yaml">tensorflow.yaml</a> keeps the current Tensorflow framework ability. We recommend that the end user not make modifications if requirements are not clear.</p>
+</div>
+<div class="section" id="unify-config-introduction">
 <h4>Unify Config Introduction<a class="headerlink" href="#unify-config-introduction" title="Permalink to this headline">¶</a></h4>
 <p>Below is a fragment of the Tensorflow configuration file.</p>
 <ul class="simple">
@@ -380,14 +376,14 @@ following information on the current runtime framework.</p>
   <span class="p p-Indicator">]</span>
 </pre></div>
 </div>
-</section>
-<section id="query-api-introduction">
+</div>
+<div class="section" id="query-api-introduction">
 <h4>Query API Introduction<a class="headerlink" href="#query-api-introduction" title="Permalink to this headline">¶</a></h4>
-<p>The abstract class <code class="docutils literal notranslate"><span class="pre">QueryBackendCapability</span></code> is defined in <a class="reference external" href="https://github.com/intel/lpot/blob/968fb136464aa4d89131c62aa5f01a7392571cdf/docs/../lpot/adaptor/query.py">query.py</a>. Each framework should inherit it and implement the member function if needed. Refer to Tensorflow implementation <a class="reference external" href="https://github.com/intel/lpot/blob/968fb136464aa4d89131c62aa5f01a7392571cdf/docs/../lpot/adaptor/tensorflow.py">TensorflowQuery</a>.</p>
-</section>
-</section>
-</section>
-<section id="customize-a-new-framework-backend">
+<p>The abstract class <code class="docutils literal notranslate"><span class="pre">QueryBackendCapability</span></code> is defined in <a class="reference external" href="https://github.com/intel/lpot/blob/cd8bdedadf185c0f0739dc7b232a415186b00578/docs/../lpot/adaptor/query.py">query.py</a>. Each framework should inherit it and implement the member function if needed. Refer to Tensorflow implementation <a class="reference external" href="https://github.com/intel/lpot/blob/cd8bdedadf185c0f0739dc7b232a415186b00578/docs/../lpot/adaptor/tensorflow.py">TensorflowQuery</a>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="customize-a-new-framework-backend">
 <h2>Customize a New Framework Backend<a class="headerlink" href="#customize-a-new-framework-backend" title="Permalink to this headline">¶</a></h2>
 <p>Look at onnxruntime as an example. ONNX Runtime is a backend proposed by Microsoft, and is based on the MLAS kernel by default.
 Onnxruntime already has <a class="reference external" href="https://github.com/microsoft/onnxruntime/tree/master/onnxruntime/python/tools/quantization">quantization tools</a>, so the question becomes how to integrate onnxruntime quantization tools into LPOT.</p>
@@ -475,11 +471,11 @@ the original model:</p>
 </div></blockquote>
 </li>
 <li><p>Do quantization</p>
-<p>This part depends on your backend implementations. Refer to <a class="reference external" href="https://github.com/intel/lpot/blob/968fb136464aa4d89131c62aa5f01a7392571cdf/docs/../lpot/adaptor/onnxrt.py">onnxruntime</a> as an example.</p>
+<p>This part depends on your backend implementations. Refer to <a class="reference external" href="https://github.com/intel/lpot/blob/cd8bdedadf185c0f0739dc7b232a415186b00578/docs/../lpot/adaptor/onnxrt.py">onnxruntime</a> as an example.</p>
 </li>
 </ol>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

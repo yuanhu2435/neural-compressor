@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Tuning Strategies &mdash; Intel® Low Precision Optimization Tool  documentation</title>
@@ -14,8 +13,6 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
 
   
@@ -33,7 +30,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -68,7 +64,7 @@
             
             
               <div class="version">
-                1.4
+                1.4.1
               </div>
             
           
@@ -188,9 +184,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="tuning-strategies">
+  <div class="section" id="tuning-strategies">
 <h1>Tuning Strategies<a class="headerlink" href="#tuning-strategies" title="Permalink to this headline">¶</a></h1>
-<section id="introduction">
+<div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <p>Intel® Low Precision Optimization Tool aims to help users quickly deploy
 the low-precision inference solution on popular Deep Learning frameworks
@@ -199,8 +195,8 @@ automatically optimizes low-precision recipes for deep learning models to
 achieve optimal product objectives, such as inference performance and memory
 usage, with expected accuracy criteria. Currently, it supports <code class="docutils literal notranslate"><span class="pre">Basic</span></code>, <code class="docutils literal notranslate"><span class="pre">Bayesian</span></code>, <code class="docutils literal notranslate"><span class="pre">Exhaustive</span></code>, <code class="docutils literal notranslate"><span class="pre">MSE</span></code>, <code class="docutils literal notranslate"><span class="pre">Random</span></code>, and <code class="docutils literal notranslate"><span class="pre">TPE</span></code> strategies. <code class="docutils literal notranslate"><span class="pre">Basic</span></code> is
 the default strategy.</p>
-</section>
-<section id="strategy-design">
+</div>
+<div class="section" id="strategy-design">
 <h2>Strategy Design<a class="headerlink" href="#strategy-design" title="Permalink to this headline">¶</a></h2>
 <p>Each strategy generates the next quantization configuration according to its
 logic and the last quantization result. The function of strategies is shown
@@ -216,11 +212,11 @@ strategy then generates the quantization config according to its location
 and logic with tuning strategy configurations from the <code class="docutils literal notranslate"><span class="pre">yaml</span></code> configuration
 file. All strategies finish the tuning processing when the <code class="docutils literal notranslate"><span class="pre">timeout</span></code> or <code class="docutils literal notranslate"><span class="pre">max_trails</span></code> is reached. The default value of <code class="docutils literal notranslate"><span class="pre">timeout</span></code> is 0; if reached, the
 tuning phase stops when the <code class="docutils literal notranslate"><span class="pre">accuracy</span></code> criteria is met.</p>
-</section>
-<section id="configurations">
+</div>
+<div class="section" id="configurations">
 <h2>Configurations<a class="headerlink" href="#configurations" title="Permalink to this headline">¶</a></h2>
-<p>Detailed configuration templates can be found <a class="reference external" href="https://github.com/intel/lpot/tree/968fb136464aa4d89131c62aa5f01a7392571cdf/docs/../lpot/template">here</a>.</p>
-<section id="model-specific-configurations">
+<p>Detailed configuration templates can be found <a class="reference external" href="https://github.com/intel/lpot/tree/cd8bdedadf185c0f0739dc7b232a415186b00578/docs/../lpot/template">here</a>.</p>
+<div class="section" id="model-specific-configurations">
 <h3>Model-specific configurations<a class="headerlink" href="#model-specific-configurations" title="Permalink to this headline">¶</a></h3>
 <p>For model-specific configurations, users can set the quantization approach.
 For post-training static quantization, users can also set calibration and
@@ -268,8 +264,8 @@ quantization-related parameters for model-wise and op-wise:</p>
        <span class="p p-Indicator">}</span>
 </pre></div>
 </div>
-</section>
-<section id="strategy-tuning-part-related-configurations">
+</div>
+<div class="section" id="strategy-tuning-part-related-configurations">
 <h3>Strategy tuning part-related configurations<a class="headerlink" href="#strategy-tuning-part-related-configurations" title="Permalink to this headline">¶</a></h3>
 <p>In strategy tuning part-related configurations, users can choose a specific
 tuning strategy and then set the accuracy criterion and optimization
@@ -290,10 +286,10 @@ by changing the <code class="docutils literal notranslate"><span class="pre">exi
   <span class="nt">tensorboard</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>                                  <span class="c1"># optional. dump tensor distribution in evaluation phase for debug purpose. default value is False.</span>
 </pre></div>
 </div>
-</section>
-<section id="basic">
+</div>
+<div class="section" id="basic">
 <h3>Basic<a class="headerlink" href="#basic" title="Permalink to this headline">¶</a></h3>
-<section id="design">
+<div class="section" id="design">
 <h4>Design<a class="headerlink" href="#design" title="Permalink to this headline">¶</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">Basic</span></code> strategy is designed for most models to do quantization. It includes
 three steps. First, <code class="docutils literal notranslate"><span class="pre">Basic</span></code> strategy tries all model-wise tuning configs to
@@ -305,8 +301,8 @@ accuracy and then sorts accordingly. In the final step, Basic tries to
 incrementally fallback multiple OPs to high precision according to the
 sorted OP list that is generated in the second step until the accuracy
 goal is achieved.</p>
-</section>
-<section id="usage">
+</div>
+<div class="section" id="usage">
 <h4>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">Basic</span></code> is the default strategy. It can be used by default if you don’t add
 the <code class="docutils literal notranslate"><span class="pre">strategy</span></code> field in your <code class="docutils literal notranslate"><span class="pre">yaml</span></code> configuration file. Classical settings in the configuration file are shown below:</p>
@@ -318,11 +314,11 @@ the <code class="docutils literal notranslate"><span class="pre">strategy</span>
   <span class="nt">random_seed</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9527</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="bayesian">
+</div>
+</div>
+<div class="section" id="bayesian">
 <h3>Bayesian<a class="headerlink" href="#bayesian" title="Permalink to this headline">¶</a></h3>
-<section id="id1">
+<div class="section" id="id1">
 <h4>Design<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">Bayesian</span></code> optimization is a sequential design strategy for the global
 optimization of black-box functions. This strategy comes from the <a class="reference external" href="https://github.com/fmfn/BayesianOptimization">Bayesian
@@ -335,8 +331,8 @@ improvement. For now, <code class="docutils literal notranslate"><span class="pr
 without fallback phase. In order to obtain a quantized model with good accuracy
 and better performance in a short time, we don’t add datatype as a tuning
 parameter into <code class="docutils literal notranslate"><span class="pre">Bayesian</span></code>.</p>
-</section>
-<section id="id2">
+</div>
+<div class="section" id="id2">
 <h4>Usage<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
 <p>For the <code class="docutils literal notranslate"><span class="pre">Bayesian</span></code> strategy, set the <code class="docutils literal notranslate"><span class="pre">timeout</span></code> or <code class="docutils literal notranslate"><span class="pre">max_trials</span></code> to a non-zero
 value as shown in the below example. This is because the param space for <code class="docutils literal notranslate"><span class="pre">bayesian</span></code> can be very small so the accuracy goal might not be reached which
@@ -353,11 +349,11 @@ can make the tuning never end. Additionally, if the log level is set to <code cl
     <span class="nt">max_trials</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="mse">
+</div>
+</div>
+<div class="section" id="mse">
 <h3>MSE<a class="headerlink" href="#mse" title="Permalink to this headline">¶</a></h3>
-<section id="id3">
+<div class="section" id="id3">
 <h4>Design<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">MSE</span></code> and <code class="docutils literal notranslate"><span class="pre">Basic</span></code> strategies share similar ideas. The primary difference
 between the two strategies is the way sorted op lists are generated in step
@@ -366,8 +362,8 @@ models and the quantized model based on the best model-wise tuning
 configuration. It then calculates the MSE (Mean Squared Error) for each
 operator, sorts those operators according to the MSE value, and performs
 the op-wise fallback in this order.</p>
-</section>
-<section id="id4">
+</div>
+<div class="section" id="id4">
 <h4>Usage<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">MSE</span></code> is similar to <code class="docutils literal notranslate"><span class="pre">Basic</span></code> but the specific strategy name of <code class="docutils literal notranslate"><span class="pre">mse</span></code> must be
 included.</p>
@@ -381,11 +377,11 @@ included.</p>
   <span class="nt">random_seed</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9527</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="tpe">
+</div>
+</div>
+<div class="section" id="tpe">
 <h3>TPE<a class="headerlink" href="#tpe" title="Permalink to this headline">¶</a></h3>
-<section id="id5">
+<div class="section" id="id5">
 <h4>Design<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">TPE</span></code> uses sequential model-based optimization methods (SMBOs). **Sequential
 ** refers to running trials one after another and selecting a better
@@ -424,8 +420,8 @@ requires evaluation of a generated model–which means accuracy measurements
 on a dataset and latency measurements using a benchmark–this process can
 take from 24 hours to few days to complete, depending on the model.</p>
 </div></blockquote>
-</section>
-<section id="id6">
+</div>
+<div class="section" id="id6">
 <h4>Usage<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">TPE</span></code> usage is similar to <code class="docutils literal notranslate"><span class="pre">Bayesian</span></code>:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">tuning</span><span class="p">:</span>
@@ -440,18 +436,18 @@ take from 24 hours to few days to complete, depending on the model.</p>
     <span class="nt">max_trials</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="exhaustive">
+</div>
+</div>
+<div class="section" id="exhaustive">
 <h3>Exhaustive<a class="headerlink" href="#exhaustive" title="Permalink to this headline">¶</a></h3>
-<section id="id7">
+<div class="section" id="id7">
 <h4>Design<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">Exhaustive</span></code> strategy is used to sequentially traverse all possible tuning
 configurations in a tuning space. From the perspective of the impact on
 performance, we currently only traverse all possible quantize tuning
 configs. Same reason as <code class="docutils literal notranslate"><span class="pre">Bayesian</span></code>, fallback datatypes are not included for now.</p>
-</section>
-<section id="id8">
+</div>
+<div class="section" id="id8">
 <h4>Usage<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">Exhaustive</span></code> usage is similar to <code class="docutils literal notranslate"><span class="pre">Basic</span></code>:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">tuning</span><span class="p">:</span>
@@ -464,17 +460,17 @@ configs. Same reason as <code class="docutils literal notranslate"><span class="
   <span class="nt">random_seed</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9527</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="random">
+</div>
+</div>
+<div class="section" id="random">
 <h3>Random<a class="headerlink" href="#random" title="Permalink to this headline">¶</a></h3>
-<section id="id9">
+<div class="section" id="id9">
 <h4>Design<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">Random</span></code> strategy is used to randomly choose tuning configurations from the
 tuning space. As with <code class="docutils literal notranslate"><span class="pre">Exhaustive</span></code> strategy, it also only considers quantize
 tuning configs to generate a better-performance quantized model.</p>
-</section>
-<section id="id10">
+</div>
+<div class="section" id="id10">
 <h4>Usage<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">Random</span></code> usage is similar to <code class="docutils literal notranslate"><span class="pre">Basic</span></code>:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">tuning</span><span class="p">:</span>
@@ -487,10 +483,10 @@ tuning configs to generate a better-performance quantized model.</p>
   <span class="nt">random_seed</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9527</span>
 </pre></div>
 </div>
-</section>
-</section>
-</section>
-<section id="customize-a-new-tuning-strategy">
+</div>
+</div>
+</div>
+<div class="section" id="customize-a-new-tuning-strategy">
 <h2>Customize a New Tuning Strategy<a class="headerlink" href="#customize-a-new-tuning-strategy" title="Permalink to this headline">¶</a></h2>
 <p>Intel® Low Precision Optimization Tool supports new strategy extension by implementing a subclass of <code class="docutils literal notranslate"><span class="pre">TuneStrategy</span></code> class in lpot.strategy package
 and registering this strategy by <code class="docutils literal notranslate"><span class="pre">strategy_registry</span></code> decorator.</p>
@@ -508,9 +504,9 @@ and registering this strategy by <code class="docutils literal notranslate"><spa
 <p>The <code class="docutils literal notranslate"><span class="pre">next_tune_cfg</span></code> function is used to yield the next tune configuration according to some algorithm or strategy. <code class="docutils literal notranslate"><span class="pre">TuneStrategy</span></code> base class will traverse
 all the tuning space till a quantization configuration meets pre-defined accuracy criterion.</p>
 <p>If the traverse behavior of <code class="docutils literal notranslate"><span class="pre">TuneStrategy</span></code> base class does not meet new strategy requirement, it could re-implement <code class="docutils literal notranslate"><span class="pre">traverse</span></code> function with self own logic.
-An example like this is under <a class="reference external" href="https://github.com/intel/lpot/blob/968fb136464aa4d89131c62aa5f01a7392571cdf/docs/../lpot/strategy/strategy.py">TPE Strategy</a>.</p>
-</section>
-</section>
+An example like this is under <a class="reference external" href="https://github.com/intel/lpot/blob/cd8bdedadf185c0f0739dc7b232a415186b00578/docs/../lpot/strategy/strategy.py">TPE Strategy</a>.</p>
+</div>
+</div>
 
 
            </div>

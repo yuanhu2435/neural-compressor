@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Metrics &mdash; Intel® Low Precision Optimization Tool  documentation</title>
@@ -14,8 +13,6 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
 
   
@@ -33,7 +30,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -68,7 +64,7 @@
             
             
               <div class="version">
-                1.4
+                1.4.1
               </div>
             
           
@@ -190,12 +186,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="metrics">
+  <div class="section" id="metrics">
 <h1>Metrics<a class="headerlink" href="#metrics" title="Permalink to this headline">¶</a></h1>
 <p>In terms of evaluating the performance of a specific model, we should have general metrics to measure the performance of different models. Different frameworks always have their own Metric module but with different features and APIs. LPOT Metrics supports code-free configuration through a yaml file, with built-in metrics, so that LPOT can achieve performance and accuracy without code changes from the user. In special cases, users can also register their own metric classes through the LPOT method.</p>
-<section id="how-to-use-metrics">
+<div class="section" id="how-to-use-metrics">
 <h2>How to use Metrics<a class="headerlink" href="#how-to-use-metrics" title="Permalink to this headline">¶</a></h2>
-<section id="config-built-in-metric-in-a-yaml-file">
+<div class="section" id="config-built-in-metric-in-a-yaml-file">
 <h3>Config built-in metric in a yaml file<a class="headerlink" href="#config-built-in-metric-in-a-yaml-file" title="Permalink to this headline">¶</a></h3>
 <p>Users can specify an LPOT built-in metric such as shown below:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">evaluation</span><span class="p">:</span>
@@ -204,8 +200,8 @@
       <span class="nt">topk</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
 </pre></div>
 </div>
-</section>
-<section id="config-custom-metric-in-code">
+</div>
+<div class="section" id="config-custom-metric-in-code">
 <h3>Config custom metric in code<a class="headerlink" href="#config-custom-metric-in-code" title="Permalink to this headline">¶</a></h3>
 <p>Users can also register their own metric as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Metric</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -234,13 +230,13 @@
 <span class="n">q_model</span> <span class="o">=</span> <span class="n">quantizer</span><span class="p">()</span>
 </pre></div>
 </div>
-</section>
-</section>
-<section id="built-in-metric-support-list">
+</div>
+</div>
+<div class="section" id="built-in-metric-support-list">
 <h2>Built-in metric support list<a class="headerlink" href="#built-in-metric-support-list" title="Permalink to this headline">¶</a></h2>
 <p>LPOT supports some built-in metrics that are popularly used in industry.</p>
-<p>Refer to <a class="reference external" href="https://github.com/intel/lpot/tree/968fb136464aa4d89131c62aa5f01a7392571cdf/examples/helloworld/tf_example1">this HelloWorld example</a> on how to config a built-in metric.</p>
-<section id="tensorflow">
+<p>Refer to <a class="reference external" href="https://github.com/intel/lpot/tree/cd8bdedadf185c0f0739dc7b232a415186b00578/examples/helloworld/tf_example1">this HelloWorld example</a> on how to config a built-in metric.</p>
+<div class="section" id="tensorflow">
 <h3>TensorFlow<a class="headerlink" href="#tensorflow" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <thead>
@@ -285,7 +281,7 @@
 <td align="left">RMSE(compare_label)</td>
 <td align="left">compare_label (bool, default=True): Whether to compare label. False if there are no labels and will use FP32 preds as labels</td>
 <td align="left">preds, labels</td>
-<td align="left">Computes Root Mean Squred Error (RMSE) loss.</td>
+<td align="left">Computes Root Mean Square Error (RMSE) loss.</td>
 <td align="left">metric: <br> &ensp;&ensp; RMSE: {}</td>
 </tr>
 <tr>
@@ -304,24 +300,24 @@
 </tr>
 <tr>
 <td align="left">mAP( anno_path, iou_thrs, map_points)</td>
-<td align="left">anno_path (str): Annotation path. <br>iou_thrs (float or str, default=0.5): Minimal value for intersection over union that allows to make decision that prediction bounding box is true positive. You can specify one float value between 0 to 1 or string "05:0.05:0.95" for standard COCO thresholds.<br> map_points (int, default=0): The way to calculate mAP. 101 for 101-point interpolated AP, 11 for 11-point interpolated AP, 0 for area under PR curve.</td>
+<td align="left">anno_path (str): Annotation path. The annotation file should be a yaml file, please refer to <a href="../examples/tensorflow/object_detection/label_map.yaml">label_map</a> for its format. <br>iou_thrs (float or str, default=0.5): Minimal value for intersection over union that allows to make decision that prediction bounding box is true positive. You can specify one float value between 0 to 1 or string "05:0.05:0.95" for standard COCO thresholds.<br> map_points (int, default=0): The way to calculate mAP. 101 for 101-point interpolated AP, 11 for 11-point interpolated AP, 0 for area under PR curve.</td>
 <td align="left">preds, labels</td>
 <td align="left">preds is a tuple which supports 2 length: 3 and 4. <br> If its length is 3, it should contain boxes, scores, classes in turn. <br> If its length is 4, it should contain target_boxes_num, boxes, scores, classes in turn <br> labels is a tuple which contains bbox, str_label, int_label, image_id inturn <br> the length of one of str_label and int_label can be 0</td>
-<td align="left">metric: <br> &ensp;&ensp; mAP: <br> &ensp;&ensp;&ensp;&ensp; anno_path: /path/to/annotation <br> &ensp;&ensp;&ensp;&ensp; iou_thrs: 0.5 <br> &ensp;&ensp;&ensp;&ensp; map_points: 0 <br><br> If anno_path is not set, metric will use built-in coco_label_map</td>
+<td align="left">metric: <br> &ensp;&ensp; mAP: <br> &ensp;&ensp;&ensp;&ensp; anno_path: /path/to/annotation <br> &ensp;&ensp;&ensp;&ensp; iou_thrs: 0.5 <br> &ensp;&ensp;&ensp;&ensp; map_points: 0 <br><br> If anno_path is not set, metric will use official coco label id</td>
 </tr>
 <tr>
 <td align="left">COCOmAP( anno_path, iou_thrs, map_points)</td>
-<td align="left">anno_path (str): Annotation path. <br>iou_thrs (float or str): Intersection over union threshold. Set to "0.5:0.05:0.95" for standard COCO thresholds.<br> map_points (int): The way to calculate mAP. Set to 101 for 101-point interpolated AP.</td>
+<td align="left">anno_path (str): Annotation path. The annotation file should be a yaml file, please refer to <a href="../examples/tensorflow/object_detection/label_map.yaml">label_map</a> for its format. <br>iou_thrs (float or str): Intersection over union threshold. Set to "0.5:0.05:0.95" for standard COCO thresholds.<br> map_points (int): The way to calculate mAP. Set to 101 for 101-point interpolated AP.</td>
 <td align="left">preds, labels</td>
 <td align="left">preds is a tuple which supports 2 length: 3 and 4. <br> If its length is 3, it should contain boxes, scores, classes in turn. <br> If its length is 4, it should contain target_boxes_num, boxes, scores, classes in turn <br> labels is a tuple which contains bbox, str_label, int_label, image_id inturn <br> the length of one of str_label and int_label can be 0</td>
-<td align="left">metric: <br> &ensp;&ensp; COCOmAP: <br> &ensp;&ensp;&ensp;&ensp; anno_path: /path/to/annotation <br><br> If anno_path is not set, metric will use built-in coco_label_map</td>
+<td align="left">metric: <br> &ensp;&ensp; COCOmAP: <br> &ensp;&ensp;&ensp;&ensp; anno_path: /path/to/annotation <br><br> If anno_path is not set, metric will use official coco label id</td>
 </tr>
 <tr>
 <td align="left">VOCmAP( anno_path, iou_thrs, map_points)</td>
-<td align="left">anno_path(str): Annotation path. <br>iou_thrs(float or str): Intersection over union threshold. Set to 0.5.<br> map_points(int): The way to calculate mAP. The way to calculate mAP. Set to 0 for area under PR curve.</td>
+<td align="left">anno_path(str): Annotation path. The annotation file should be a yaml file, please refer to <a href="../examples/tensorflow/object_detection/label_map.yaml">label_map</a> for its format. <br>iou_thrs(float or str): Intersection over union threshold. Set to 0.5.<br> map_points(int): The way to calculate mAP. The way to calculate mAP. Set to 0 for area under PR curve.</td>
 <td align="left">preds, labels</td>
 <td align="left">preds is a tuple which supports 2 length: 3 and 4. <br> If its length is 3, it should contain boxes, scores, classes in turn. <br> If its length is 4, it should contain target_boxes_num, boxes, scores, classes in turn <br> labels is a tuple which contains bbox, str_label, int_label, image_id inturn <br> the length of one of str_label and int_label can be 0</td>
-<td align="left">metric: <br> &ensp;&ensp; VOCmAP: <br> &ensp;&ensp;&ensp;&ensp; anno_path: /path/to/annotation <br><br> If anno_path is not set, metric will use built-in coco_label_map</td>
+<td align="left">metric: <br> &ensp;&ensp; VOCmAP: <br> &ensp;&ensp;&ensp;&ensp; anno_path: /path/to/annotation <br><br> If anno_path is not set, metric will use official coco label id</td>
 </tr>
 <tr>
 <td align="left">BLEU()</td>
@@ -338,8 +334,8 @@
 <td align="left">metric: <br> &ensp;&ensp; SquadF1: {}</td>
 </tr>
 </tbody>
-</table></section>
-<section id="pytorch">
+</table></div>
+<div class="section" id="pytorch">
 <h3>PyTorch<a class="headerlink" href="#pytorch" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <thead>
@@ -384,7 +380,7 @@
 <td align="left">RMSE(compare_label)</td>
 <td align="left">compare_label(bool, default=True): Whether to compare label. False if there are no labels and will use FP32 preds as labels.</td>
 <td align="left">preds, labels</td>
-<td align="left">Computes Root Mean Squred Error (RMSE) loss.</td>
+<td align="left">Computes Root Mean Squared Error (RMSE) loss.</td>
 <td align="left">metric: <br> &ensp;&ensp; RMSE: <br> &ensp;&ensp;&ensp;&ensp; compare_label: True</td>
 </tr>
 <tr>
@@ -402,8 +398,8 @@
 <td align="left">metric: <br> &ensp;&ensp; F1: {}</td>
 </tr>
 </tbody>
-</table></section>
-<section id="mxnet">
+</table></div>
+<div class="section" id="mxnet">
 <h3>MXNet<a class="headerlink" href="#mxnet" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <thead>
@@ -448,7 +444,7 @@
 <td align="left">RMSE(compare_label)</td>
 <td align="left">compare_label(bool, default=True): Whether to compare label. False if there are no labels and will use FP32 preds as labels.</td>
 <td align="left">preds, labels</td>
-<td align="left">Computes Root Mean Squred Error (RMSE) loss.</td>
+<td align="left">Computes Root Mean Squared Error (RMSE) loss.</td>
 <td align="left">metric: <br> &ensp;&ensp; RMSE: <br> &ensp;&ensp;&ensp;&ensp; compare_label: True</td>
 </tr>
 <tr>
@@ -466,8 +462,8 @@
 <td align="left">metric: <br> &ensp;&ensp; F1: {}</td>
 </tr>
 </tbody>
-</table></section>
-<section id="onnxrt">
+</table></div>
+<div class="section" id="onnxrt">
 <h3>ONNXRT<a class="headerlink" href="#onnxrt" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <thead>
@@ -512,7 +508,7 @@
 <td align="left">RMSE(compare_label)</td>
 <td align="left">compare_label(bool, default=True): Whether to compare label. False if there are no labels and will use FP32 preds as labels.</td>
 <td align="left">preds, labels</td>
-<td align="left">Computes Root Mean Squred Error (RMSE) loss.</td>
+<td align="left">Computes Root Mean Squared Error (RMSE) loss.</td>
 <td align="left">metric: <br> &ensp;&ensp; RMSE: <br> &ensp;&ensp;&ensp;&ensp; compare_label: True</td>
 </tr>
 <tr>
@@ -531,29 +527,29 @@
 </tr>
 <tr>
 <td align="left">mAP( anno_path, iou_thrs, map_points)</td>
-<td align="left">anno_path(str): Annotation path. <br>iou_thrs(float or str, default=0.5): Minimal value for intersection over union that allows to make decision that prediction bounding box is true positive. You can specify one float value between 0 to 1 or string "05:0.05:0.95" for standard COCO thresholds.<br> map_points(int, default=0): The way to calculate mAP. 101 for 101-point interpolated AP, 11 for 11-point interpolated AP, 0 for area under PR curve.</td>
+<td align="left">anno_path(str): Annotation path. The annotation file should be a yaml file, please refer to <a href="../examples/tensorflow/object_detection/label_map.yaml">label_map</a> for its format. The annotation file should be a yaml file, please refer to <a href="../examples/tensorflow/object_detection/label_map.yaml">label_map</a> for its format. <br>iou_thrs(float or str, default=0.5): Minimal value for intersection over union that allows to make decision that prediction bounding box is true positive. You can specify one float value between 0 to 1 or string "05:0.05:0.95" for standard COCO thresholds.<br> map_points(int, default=0): The way to calculate mAP. 101 for 101-point interpolated AP, 11 for 11-point interpolated AP, 0 for area under PR curve.</td>
 <td align="left">preds, labels</td>
 <td align="left">preds is a tuple which supports 2 length: 3 and 4. <br> If its length is 3, it should contain boxes, scores, classes in turn. <br> If its length is 4, it should contain target_boxes_num, boxes, scores, classes in turn <br> labels is a tuple which contains bbox, str_label, int_label, image_id inturn <br> the length of one of str_label and int_label can be 0</td>
-<td align="left">metric: <br> &ensp;&ensp; mAP: <br> &ensp;&ensp;&ensp;&ensp; anno_path: /path/to/annotation <br> &ensp;&ensp;&ensp;&ensp; iou_thrs: 0.5 <br> &ensp;&ensp;&ensp;&ensp; map_points: 0 <br><br> If anno_path is not set, metric will use built-in coco_label_map</td>
+<td align="left">metric: <br> &ensp;&ensp; mAP: <br> &ensp;&ensp;&ensp;&ensp; anno_path: /path/to/annotation <br> &ensp;&ensp;&ensp;&ensp; iou_thrs: 0.5 <br> &ensp;&ensp;&ensp;&ensp; map_points: 0 <br><br> If anno_path is not set, metric will use official coco label id</td>
 </tr>
 <tr>
 <td align="left">COCOmAP( anno_path, iou_thrs, map_points)</td>
-<td align="left">anno_path(str): Annotation path. <br>iou_thrs(float or str): Intersection over union threshold. Set to "0.5:0.05:0.95" for standard COCO thresholds.<br> map_points(int): The way to calculate mAP. Set to 101 for 101-point interpolated AP.</td>
+<td align="left">anno_path(str): Annotation path. The annotation file should be a yaml file, please refer to <a href="../examples/tensorflow/object_detection/label_map.yaml">label_map</a> for its format. The annotation file should be a yaml file, please refer to <a href="../examples/tensorflow/object_detection/label_map.yaml">label_map</a> for its format. <br>iou_thrs(float or str): Intersection over union threshold. Set to "0.5:0.05:0.95" for standard COCO thresholds.<br> map_points(int): The way to calculate mAP. Set to 101 for 101-point interpolated AP.</td>
 <td align="left">preds, labels</td>
 <td align="left">preds is a tuple which supports 2 length: 3 and 4. <br> If its length is 3, it should contain boxes, scores, classes in turn. <br> If its length is 4, it should contain target_boxes_num, boxes, scores, classes in turn <br> labels is a tuple which contains bbox, str_label, int_label, image_id inturn <br> the length of one of str_label and int_label can be 0</td>
-<td align="left">metric: <br> &ensp;&ensp; COCOmAP: <br> &ensp;&ensp;&ensp;&ensp; anno_path: /path/to/annotation <br><br> If anno_path is not set, metric will use built-in coco_label_map</td>
+<td align="left">metric: <br> &ensp;&ensp; COCOmAP: <br> &ensp;&ensp;&ensp;&ensp; anno_path: /path/to/annotation <br><br> If anno_path is not set, metric will use official coco label id</td>
 </tr>
 <tr>
 <td align="left">VOCmAP( anno_path, iou_thrs, map_points)</td>
-<td align="left">anno_path(str): Annotation path. <br>iou_thrs(float or str): Intersection over union threshold. Set to 0.5.<br> map_points(int): The way to calculate mAP. The way to calculate mAP. Set to 0 for area under PR curve.</td>
+<td align="left">anno_path(str): Annotation path. The annotation file should be a yaml file, please refer to <a href="../examples/tensorflow/object_detection/label_map.yaml">label_map</a> for its format. The annotation file should be a yaml file, please refer to <a href="../examples/tensorflow/object_detection/label_map.yaml">label_map</a> for its format .<br>iou_thrs(float or str): Intersection over union threshold. Set to 0.5.<br> map_points(int): The way to calculate mAP. The way to calculate mAP. Set to 0 for area under PR curve.</td>
 <td align="left">preds, labels</td>
 <td align="left">preds is a tuple which supports 2 length: 3 and 4. <br> If its length is 3, it should contain boxes, scores, classes in turn. <br> If its length is 4, it should contain target_boxes_num, boxes, scores, classes in turn <br> labels is a tuple which contains bbox, str_label, int_label, image_id inturn <br> the length of one of str_label and int_label can be 0</td>
-<td align="left">metric: <br> &ensp;&ensp; VOCmAP: <br> &ensp;&ensp;&ensp;&ensp; anno_path: /path/to/annotation <br><br> If anno_path is not set, metric will use built-in coco_label_map</td>
+<td align="left">metric: <br> &ensp;&ensp; VOCmAP: <br> &ensp;&ensp;&ensp;&ensp; anno_path: /path/to/annotation <br><br> If anno_path is not set, metric will use official coco label id</td>
 </tr>
 </tbody>
-</table></section>
-</section>
-</section>
+</table></div>
+</div>
+</div>
 
 
            </div>

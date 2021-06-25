@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Model Conversion &mdash; Intel® Low Precision Optimization Tool  documentation</title>
@@ -14,8 +13,6 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
 
   
@@ -33,7 +30,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -68,7 +64,7 @@
             
             
               <div class="version">
-                1.4
+                1.4.1
               </div>
             
           
@@ -194,14 +190,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="model-conversion">
+  <div class="section" id="model-conversion">
 <h1>Model Conversion<a class="headerlink" href="#model-conversion" title="Permalink to this headline">¶</a></h1>
-<section id="introduction">
+<div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <p>Model conversion is used to convert different TensorFlow model format to another.</p>
 <p>Now it supports QAT(quantization aware training) model to default(quantized) model. In the future, we will add tflite to default model support.</p>
-</section>
-<section id="how-to-use-it">
+</div>
+<div class="section" id="how-to-use-it">
 <h2>How to use it<a class="headerlink" href="#how-to-use-it" title="Permalink to this headline">¶</a></h2>
 <p>See the following example which demonstrate model conversion API usage.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="kn">import</span> <span class="n">ModelConversion</span><span class="p">,</span> <span class="n">common</span>
@@ -217,12 +213,12 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>  <span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="kn">import</span> <span class="n">Benchmark</span><span class="p">,</span> <span class="n">common</span>
   <span class="n">evaluator</span> <span class="o">=</span> <span class="n">Benchmark</span><span class="p">(</span><span class="s1">&#39;/path/to/yaml&#39;</span><span class="p">)</span>
   <span class="n">evaluator</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="s1">&#39;/path/to/quantized/saved_model&#39;</span><span class="p">)</span>
-  <span class="n">evaluator</span><span class="o">.</span><span class="n">b_dataloader</span> <span class="o">=</span> <span class="o">...</span>       <span class="c1"># create benchmark dataloder like examples/tensorflow/qat/benchmark.py</span>
+  <span class="n">evaluator</span><span class="o">.</span><span class="n">b_dataloader</span> <span class="o">=</span> <span class="o">...</span>       <span class="c1"># create benchmark dataloader like examples/tensorflow/qat/benchmark.py</span>
   <span class="n">evaluator</span><span class="p">(</span><span class="s1">&#39;accuracy&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>

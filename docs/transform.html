@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Transform &mdash; Intel® Low Precision Optimization Tool  documentation</title>
@@ -14,8 +13,6 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
 
   
@@ -33,7 +30,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -68,7 +64,7 @@
             
             
               <div class="version">
-                1.4
+                1.4.1
               </div>
             
           
@@ -189,12 +185,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="transform">
+  <div class="section" id="transform">
 <h1>Transform<a class="headerlink" href="#transform" title="Permalink to this headline">¶</a></h1>
-<p>LPOT supports built-in preprocessing methods on different framework backends. Refer to <a class="reference external" href="https://github.com/intel/lpot/tree/968fb136464aa4d89131c62aa5f01a7392571cdf/examples/helloworld/tf_example1">this HelloWorld example</a> on how to configure a transform in a dataloader.</p>
-<section id="transform-support-list">
+<p>LPOT supports built-in preprocessing methods on different framework backends. Refer to <a class="reference external" href="https://github.com/intel/lpot/tree/cd8bdedadf185c0f0739dc7b232a415186b00578/examples/helloworld/tf_example1">this HelloWorld example</a> on how to configure a transform in a dataloader.</p>
+<div class="section" id="transform-support-list">
 <h2>Transform support list<a class="headerlink" href="#transform-support-list" title="Permalink to this headline">¶</a></h2>
-<section id="tensorflow">
+<div class="section" id="tensorflow">
 <h3>TensorFlow<a class="headerlink" href="#tensorflow" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <thead>
@@ -351,8 +347,8 @@
 <td align="left">SquadV1 <br> &ensp;&ensp; label_file: /path/to/label_file <br> &ensp;&ensp; n_best_size: 20 <br> &ensp;&ensp; max_seq_length: 384 <br> &ensp;&ensp; max_query_length: 64 <br> &ensp;&ensp; max_answer_length: 30 <br> &ensp;&ensp; do_lower_case: True <br> &ensp;&ensp; doc_stride: True</td>
 </tr>
 </tbody>
-</table></section>
-<section id="pytorch">
+</table></div>
+<div class="section" id="pytorch">
 <h3>Pytorch<a class="headerlink" href="#pytorch" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <thead>
@@ -479,8 +475,8 @@
 <td align="left">ResizeWithRatio: <br> &ensp;&ensp; min_dim: 800 <br> &ensp;&ensp; max_dim: 1365 <br> &ensp;&ensp; padding: True</td>
 </tr>
 </tbody>
-</table></section>
-<section id="mxnet">
+</table></div>
+<div class="section" id="mxnet">
 <h3>MXNet<a class="headerlink" href="#mxnet" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <thead>
@@ -595,8 +591,8 @@
 <td align="left">ResizeWithRatio: <br> &ensp;&ensp; min_dim: 800 <br> &ensp;&ensp; max_dim: 1365 <br> &ensp;&ensp; padding: True</td>
 </tr>
 </tbody>
-</table></section>
-<section id="onnxrt">
+</table></div>
+<div class="section" id="onnxrt">
 <h3>ONNXRT<a class="headerlink" href="#onnxrt" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <thead>
@@ -689,7 +685,7 @@
 <tr>
 <td align="left">ResizeCropImagenet(height, width, random_crop, resize_side, random_flip_left_right, mean_value, scale)</td>
 <td align="left"><strong>height</strong> (int): Height of the result <br> <strong>width</strong> (int): Width of the result <br> <strong>random_crop</strong> (bool, default=False): whether to random crop <br> <strong>resize_side</strong> (int, default=256):desired shape after resize operation <br> <strong>random_flip_left_right</strong> (bool, default=False): whether to random flip left and right <br> <strong>mean_value</strong> (list, default=[0.0,0.0,0.0]):mean for each channel <br> <strong>scale</strong> (float, default=1.0):std value</td>
-<td align="left">Combination of a series of transforms which is applicasble to images in Imagenet</td>
+<td align="left">Combination of a series of transforms which is applicable to images in Imagenet</td>
 <td align="left">ResizeCropImagenet: <br> &ensp;&ensp; height: 224 <br> &ensp;&ensp; width: 224 <br> &ensp;&ensp; random_crop: False <br> &ensp;&ensp; resize_side: 256 <br> &ensp;&ensp; random_flip_left_right: False <br> &ensp;&ensp; mean_value: [123.68, 116.78, 103.94] <br> &ensp;&ensp; scale: 0.017</td>
 </tr>
 <tr>
@@ -705,9 +701,9 @@
 <td align="left">ResizeWithRatio: <br> &ensp;&ensp; min_dim: 800 <br> &ensp;&ensp; max_dim: 1365 <br> &ensp;&ensp; padding: True</td>
 </tr>
 </tbody>
-</table></section>
-</section>
-</section>
+</table></div>
+</div>
+</div>
 
 
            </div>

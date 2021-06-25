@@ -4,8 +4,7 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Dataset &mdash; Intel® Low Precision Optimization Tool  documentation</title>
@@ -14,8 +13,6 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
 
   
@@ -33,7 +30,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
@@ -68,7 +64,7 @@
             
             
               <div class="version">
-                1.4
+                1.4.1
               </div>
             
           
@@ -190,13 +186,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <section id="dataset">
+  <div class="section" id="dataset">
 <h1>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h1>
 <p>Users can use LPOT built-in dataset objects as well as register their own datasets.</p>
-<section id="built-in-dataset-support-list">
+<div class="section" id="built-in-dataset-support-list">
 <h2>Built-in dataset support list<a class="headerlink" href="#built-in-dataset-support-list" title="Permalink to this headline">¶</a></h2>
-<p>LPOT supports built-in dataloaders on popular industry datasets. Refer to this <a class="reference external" href="https://github.com/intel/lpot/tree/968fb136464aa4d89131c62aa5f01a7392571cdf/examples/helloworld/tf_example6">HelloWorld example</a> to learn how to configure a built-in dataloader.</p>
-<section id="tensorflow">
+<p>LPOT supports built-in dataloaders on popular industry datasets. Refer to this <a class="reference external" href="https://github.com/intel/lpot/tree/cd8bdedadf185c0f0739dc7b232a415186b00578/examples/helloworld/tf_example6">HelloWorld example</a> to learn how to configure a built-in dataloader.</p>
+<div class="section" id="tensorflow">
 <h3>TensorFlow<a class="headerlink" href="#tensorflow" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <thead>
@@ -289,12 +285,12 @@
 <tr>
 <td align="left">bert(root, label_file, task, transform, filter)</td>
 <td align="left"><strong>root</strong> (str): path of dataset <br> <strong>label_file</strong> (str): path of label file <br> <strong>task</strong> (str, default='squad'): task type of model <br> <strong>model_type</strong> (str, default='bert'): model type, support 'bert'.<br> <strong>transform</strong> (transform object, default=None):  transform to process input data <br> <strong>filter</strong> (Filter objects, default=None): filter out examples according to specific conditions</td>
-<td align="left">This dataset supports tfrecord data, please refer to <a href="../examples/tensorflow/nlp/bert/README.md">Guide</a> to create tfrecord file first.</td>
+<td align="left">This dataset supports tfrecord data, please refer to <a href="../examples/tensorflow/nlp/bert_large_squad/README.md">Guide</a> to create tfrecord file first.</td>
 <td align="left"><strong>In yaml file:</strong> <br> dataset: <br> &ensp;&ensp; bert: <br> &ensp;&ensp;&ensp;&ensp; root: /path/to/root <br> &ensp;&ensp;&ensp;&ensp; label_file: /path/to/label_file  <br> &ensp;&ensp;&ensp;&ensp; task: squad <br> &ensp;&ensp;&ensp;&ensp; model_type: bert <br> <strong>In user code:</strong> <br> from lpot.experimental.data import DATASETS <br> datasets = DATASETS(framework) <br> dataset = datasets['bert'] (root, label_file, transform=transform)</td>
 </tr>
 </tbody>
-</table></section>
-<section id="pytorch">
+</table></div>
+<div class="section" id="pytorch">
 <h3>PyTorch<a class="headerlink" href="#pytorch" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <thead>
@@ -367,8 +363,8 @@
 <td align="left"><strong>In user code:</strong> <br> from lpot.experimental.data import DATASETS <br> datasets = DATASETS(framework) <br> dataset = datasets['bert'] (dataset, task, model_type, transform=transform, filter=None) <br> Now not support yaml implementation</td>
 </tr>
 </tbody>
-</table></section>
-<section id="mxnet">
+</table></div>
+<div class="section" id="mxnet">
 <h3>MXNet<a class="headerlink" href="#mxnet" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <thead>
@@ -435,8 +431,8 @@
 <td align="left"><strong>In yaml file:</strong> <br> dataset: <br> &ensp;&ensp; dummy_v2: <br> &ensp;&ensp;&ensp;&ensp; input_shape: [224, 224, 3] <br> &ensp;&ensp;&ensp;&ensp; low: 0.0 <br> &ensp;&ensp;&ensp;&ensp; high: 127.0 <br> &ensp;&ensp;&ensp;&ensp; dtype: float32 <br> <br> <strong>In user code:</strong> <br> from lpot.experimental.data import DATASETS <br> datasets = DATASETS(framework) <br> dataset = datasets['dummy_v2'] (input_shape, low, high, dtype, transform=None, filter=None)</td>
 </tr>
 </tbody>
-</table></section>
-<section id="onnxrt">
+</table></div>
+<div class="section" id="onnxrt">
 <h3>ONNXRT<a class="headerlink" href="#onnxrt" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
 <thead>
@@ -503,9 +499,9 @@
 <td align="left"><strong>In yaml file:</strong> <br> dataset: <br> &ensp;&ensp; dummy_v2: <br> &ensp;&ensp;&ensp;&ensp; input_shape: [224, 224, 3] <br> &ensp;&ensp;&ensp;&ensp; low: 0.0 <br> &ensp;&ensp;&ensp;&ensp; high: 127.0 <br> &ensp;&ensp;&ensp;&ensp; dtype: float32 <br> <br> <strong>In user code:</strong> <br> from lpot.experimental.data import DATASETS <br> datasets = DATASETS(framework) <br> dataset = datasets['dummy_v2'] (input_shape, low, high, dtype, transform=None, filter=None)</td>
 </tr>
 </tbody>
-</table></section>
-</section>
-<section id="user-specific-dataset">
+</table></div>
+</div>
+<div class="section" id="user-specific-dataset">
 <h2>User-specific dataset<a class="headerlink" href="#user-specific-dataset" title="Permalink to this headline">¶</a></h2>
 <p>Users can register their own datasets as follows:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Dataset</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -529,8 +525,8 @@
 <span class="n">q_model</span> <span class="o">=</span> <span class="n">quantizer</span><span class="p">()</span> 
 </pre></div>
 </div>
-</section>
-</section>
+</div>
+</div>
 
 
            </div>
