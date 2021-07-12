@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                1.4.1
+                1.5
               </div>
             
           
@@ -268,7 +268,38 @@ A common method for introducing sparsity in weights and activations is called <s
 <div class="section" id="pruning-config">
 <h3>Pruning config<a class="headerlink" href="#pruning-config" title="Permalink to this headline">¶</a></h3>
 <p>We divide the pruning into 2 kinds: <code class="docutils literal notranslate"><span class="pre">weight</span> <span class="pre">compression</span></code> and <code class="docutils literal notranslate"><span class="pre">activation</span> <span class="pre">compression</span></code>, the last is WIP. <code class="docutils literal notranslate"><span class="pre">weight</span> <span class="pre">compression</span></code> means zeroing the weight matrix.</p>
-<p>For <code class="docutils literal notranslate"><span class="pre">weight_compression</span></code>, we dived params into global parameters and local parameters in different <code class="docutils literal notranslate"><span class="pre">pruners</span></code>. Global parameters may contain <strong>start_epoch</strong> (on which epoch pruning begins), <strong>end_epoch</strong> (on which epoch pruning ends), <strong>initial_sparsity</strong> (initial sparsity goal default 0), <strong>target_sparsity</strong> (target sparsity goal) and <strong>frequency</strong> (of updating sparsity). At least one pruner instance needs to be defined under specific algos (currently only <code class="docutils literal notranslate"><span class="pre">basic_magnitude</span></code> supported). You can override all global params in a specific pruner using field names and specify names of which weight of model to be pruned. If no weight is specified, all weights of the model will be pruned.</p>
+<p>For <code class="docutils literal notranslate"><span class="pre">weight_compression</span></code>, we dived params into global parameters and local parameters in different <code class="docutils literal notranslate"><span class="pre">pruners</span></code>. Global parameters may contain <strong>start_epoch</strong> (on which epoch pruning begins), <strong>end_epoch</strong> (on which epoch pruning ends), <strong>initial_sparsity</strong> (initial sparsity goal default 0), <strong>target_sparsity</strong> (target sparsity goal) and <strong>frequency</strong> (of updating sparsity). At least one pruner instance needs to be defined under specific algos (currently <code class="docutils literal notranslate"><span class="pre">basic_magnitude</span></code> and <code class="docutils literal notranslate"><span class="pre">gradient_sensitivity</span></code> are supported). You can override all global params in a specific pruner using field names and specify names of which weight of model to be pruned. If no weight is specified, all weights of the model will be pruned.</p>
+<p>Additional parameters is required <code class="docutils literal notranslate"><span class="pre">gradient_sensitivity</span></code> prune_type, which is defined in <code class="docutils literal notranslate"><span class="pre">parameters</span></code> field:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="kt">!Pruner</span>
+    <span class="nt">start_epoch</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+    <span class="nt">end_epoch</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+    <span class="nt">prune_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gradient_sensitivity</span>
+    <span class="nt">update_frequency</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+    <span class="nt">names</span><span class="p">:</span> <span class="p p-Indicator">[</span>
+             <span class="s">&#39;bert.encoder.layer.0.attention.output.dense.weight&#39;</span><span class="p p-Indicator">,</span>
+           <span class="p p-Indicator">]</span>
+    <span class="nt">parameters</span><span class="p">:</span> <span class="p p-Indicator">{</span>
+<span class="nt">                  target</span><span class="p">:</span> <span class="nv">8</span><span class="p p-Indicator">,</span>
+<span class="nt">                  transpose</span><span class="p">:</span> <span class="nv">True</span><span class="p p-Indicator">,</span>
+<span class="nt">                  stride</span><span class="p">:</span> <span class="nv">64</span><span class="p p-Indicator">,</span>
+<span class="nt">                  index</span><span class="p">:</span> <span class="nv">0</span><span class="p p-Indicator">,</span>
+<span class="nt">                  normalize</span><span class="p">:</span> <span class="nv">True</span><span class="p p-Indicator">,</span>
+<span class="nt">                  importance_inputs</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&#39;head_mask&#39;</span><span class="p p-Indicator">],</span>
+<span class="nt">                  importance_metric</span><span class="p">:</span> <span class="nv">abs_gradient</span>
+                <span class="p p-Indicator">}</span>
+</pre></div>
+</div>
+<p>Those parameters determined how a weight is pruned, including the pruning target and the calculation of weight’s importance. it contains:</p>
+<ul class="simple">
+<li><p>target: the pruning target for weight.</p></li>
+<li><p>stride: each stride of the pruned weight.</p></li>
+<li><p>transpose: whether to transpose weight before prune.</p></li>
+<li><p>normalize: whether to normalize the calculated importance.</p></li>
+<li><p>index: the index of calculated importance.</p></li>
+<li><p>importance_inputs: inputs of the importance calculation for weight.</p></li>
+<li><p>importance_metric: the metric used in importance calculation, currently <code class="docutils literal notranslate"><span class="pre">abs_gradient</span></code> and <code class="docutils literal notranslate"><span class="pre">weighted_gradient</span></code> are supported.</p></li>
+</ul>
+<p>Use above yaml parameters as example, assume the ‘bert.encoder.layer.0.attention.output.dense.weight’ in the shape of [N, 12*64]. The target 8 and stride 64 specify weight shape after pruning will be [N, 8*64]. Transpose set to True indicates the weight is pruned at dim 1 and should be transposed to [12*64, N] before pruning. importance_input and importance_metric specify the actual input and metric to calculate importance matrix.</p>
 </div>
 </div>
 <div class="section" id="example-of-user-pass-in-training-function">

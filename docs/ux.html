@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                1.4.1
+                1.5
               </div>
             
           
@@ -200,6 +200,12 @@
 <ol>
 <li><p>Start the LPOT UX server:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>lpot_ux
+</pre></div>
+</div>
+<blockquote>
+<div><p><strong>Note</strong>: TF 2.5.0 requires setting environment variable TF_ENABLE_MKL_NATIVE_FORMAT=0 for INT8 quantization:</p>
+</div></blockquote>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nv">TF_ENABLE_MKL_NATIVE_FORMAT</span><span class="o">=</span><span class="m">0</span> lpot_ux
 </pre></div>
 </div>
 </li>

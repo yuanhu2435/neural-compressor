@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                1.4.1
+                1.5
               </div>
             
           
@@ -215,7 +215,7 @@ tuning phase stops when the <code class="docutils literal notranslate"><span cla
 </div>
 <div class="section" id="configurations">
 <h2>Configurations<a class="headerlink" href="#configurations" title="Permalink to this headline">¶</a></h2>
-<p>Detailed configuration templates can be found <a class="reference external" href="https://github.com/intel/lpot/tree/cd8bdedadf185c0f0739dc7b232a415186b00578/docs/../lpot/template">here</a>.</p>
+<p>Detailed configuration templates can be found <a class="reference external" href="https://github.com/intel/lpot/tree/b29bf6672ce58248df3488a9f5b2a4a8d923608f/docs/../lpot/template">here</a>.</p>
 <div class="section" id="model-specific-configurations">
 <h3>Model-specific configurations<a class="headerlink" href="#model-specific-configurations" title="Permalink to this headline">¶</a></h3>
 <p>For model-specific configurations, users can set the quantization approach.
@@ -485,6 +485,31 @@ tuning configs to generate a better-performance quantized model.</p>
 </div>
 </div>
 </div>
+<div class="section" id="sigopt">
+<h3>SigOpt<a class="headerlink" href="#sigopt" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id11">
+<h4>Design<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">SigOpt</span></code> strategy is to use <a class="reference external" href="https://app.sigopt.com/docs/overview/optimization">SigOpt Optimization Loop</a> method to accelerate and visualize the traversal of the tuning configurations from the tuning space. The metrics add accuracy as constraint and optimize for latency to improve the performance. <a class="reference external" href="https://app.sigopt.com/">SigOpt Projects</a> can show the result of each tuning experiment.</p>
+</div>
+<div class="section" id="id12">
+<h4>Usage<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
+<p>Compare to <code class="docutils literal notranslate"><span class="pre">Basic</span></code>, <code class="docutils literal notranslate"><span class="pre">sigopt_api_token</span></code> and <code class="docutils literal notranslate"><span class="pre">sigopt_project_id</span></code> is necessary for <code class="docutils literal notranslate"><span class="pre">SigOpt</span></code>.<code class="docutils literal notranslate"><span class="pre">sigopt_experiment_name</span></code> is optional, the default name is <code class="docutils literal notranslate"><span class="pre">lpot-tune</span></code>.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">tuning</span><span class="p">:</span>
+  <span class="nt">strategy</span><span class="p">:</span>
+    <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sigopt</span>
+    <span class="nt">sigopt_api_token</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">YOUR-ACCOUNT-API-TOKEN</span>
+    <span class="nt">sigopt_project_id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">PROJECT-ID</span>
+    <span class="nt">sigopt_experiment_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">lpot-tune</span>
+  <span class="nt">accuracy_criterion</span><span class="p">:</span>
+    <span class="nt">relative</span><span class="p">:</span>  <span class="l l-Scalar l-Scalar-Plain">0.01</span>
+  <span class="nt">exit_policy</span><span class="p">:</span>
+    <span class="nt">timeout</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
+  <span class="nt">random_seed</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9527</span>
+</pre></div>
+</div>
+<p>For details, <a class="reference internal" href="sigopt_strategy.html"><span class="doc">how to use sigopt strategy in lpot</span></a> is available.</p>
+</div>
+</div>
 </div>
 <div class="section" id="customize-a-new-tuning-strategy">
 <h2>Customize a New Tuning Strategy<a class="headerlink" href="#customize-a-new-tuning-strategy" title="Permalink to this headline">¶</a></h2>
@@ -504,7 +529,7 @@ and registering this strategy by <code class="docutils literal notranslate"><spa
 <p>The <code class="docutils literal notranslate"><span class="pre">next_tune_cfg</span></code> function is used to yield the next tune configuration according to some algorithm or strategy. <code class="docutils literal notranslate"><span class="pre">TuneStrategy</span></code> base class will traverse
 all the tuning space till a quantization configuration meets pre-defined accuracy criterion.</p>
 <p>If the traverse behavior of <code class="docutils literal notranslate"><span class="pre">TuneStrategy</span></code> base class does not meet new strategy requirement, it could re-implement <code class="docutils literal notranslate"><span class="pre">traverse</span></code> function with self own logic.
-An example like this is under <a class="reference external" href="https://github.com/intel/lpot/blob/cd8bdedadf185c0f0739dc7b232a415186b00578/docs/../lpot/strategy/strategy.py">TPE Strategy</a>.</p>
+An example like this is under <a class="reference external" href="https://github.com/intel/lpot/blob/b29bf6672ce58248df3488a9f5b2a4a8d923608f/docs/../lpot/strategy/strategy.py">TPE Strategy</a>.</p>
 </div>
 </div>
 

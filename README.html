@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                1.4.1
+                1.5
               </div>
             
           
@@ -223,15 +223,15 @@
 <h3>Supported Frameworks<a class="headerlink" href="#supported-frameworks" title="Permalink to this headline">¶</a></h3>
 <p>Supported Intel-optimized DL frameworks are:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow">TensorFlow*</a>, including <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up2">1.15.0 UP2</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up1">1.15.0 UP1</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.1.0">2.1.0</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.2.0">2.2.0</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.3.0">2.3.0</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.4.0">2.4.0</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.5.0">2.5.0</a></p></li>
+<li><p><a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow">TensorFlow*</a>, including <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up3">1.15.0 UP3</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up2">1.15.0 UP2</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up1">1.15.0 UP1</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.1.0">2.1.0</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.2.0">2.2.0</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.3.0">2.3.0</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.4.0">2.4.0</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.5.0">2.5.0</a></p></li>
 </ul>
 <blockquote>
-<div><p><strong>Note</strong>: TF 2.5.0 requires setting environment variable TF_ENABLE_MKL_NATIVE_FORMAT=0 for INT8 quantization.</p>
+<div><p><strong>Note</strong>: Intel Optimized TensorFlow 2.5.0 requires to set environment variable TF_ENABLE_MKL_NATIVE_FORMAT=0 before running LPOT quantization or deploying the quantized model.</p>
 </div></blockquote>
 <ul class="simple">
 <li><p><a class="reference external" href="https://pytorch.org/">PyTorch*</a>, including <a class="reference external" href="https://download.pytorch.org/whl/torch_stable.html">1.5.0+cpu</a>, <a class="reference external" href="https://download.pytorch.org/whl/torch_stable.html">1.6.0+cpu</a>, <a class="reference external" href="https://download.pytorch.org/whl/torch_stable.html">1.8.0+cpu</a></p></li>
 <li><p><a class="reference external" href="https://mxnet.apache.org">Apache* MXNet</a>, including <a class="reference external" href="https://github.com/apache/incubator-mxnet/tree/1.6.0">1.6.0</a>, <a class="reference external" href="https://github.com/apache/incubator-mxnet/tree/1.7.0">1.7.0</a></p></li>
-<li><p><a class="reference external" href="https://github.com/microsoft/onnxruntime">ONNX* Runtime</a>, including <a class="reference external" href="https://github.com/microsoft/onnxruntime/tree/v1.6.0">1.6.0</a></p></li>
+<li><p><a class="reference external" href="https://github.com/microsoft/onnxruntime">ONNX* Runtime</a>, including <a class="reference external" href="https://github.com/microsoft/onnxruntime/tree/v1.6.0">1.6.0</a>, <a class="reference external" href="https://github.com/microsoft/onnxruntime/tree/v1.7.0">1.7.0</a>, <a class="reference external" href="https://github.com/microsoft/onnxruntime/tree/v1.8.0">1.8.0</a></p></li>
 </ul>
 </div>
 </div>
@@ -344,7 +344,7 @@ python setup.py install
 <li><p><a class="reference internal" href="docs/dataset.html"><span class="doc">Dataset</span></a> introduces how to utilize LPOT’s built-in dataset and how to develop a custom dataset.</p></li>
 <li><p><a class="reference internal" href="docs/metric.html"><span class="doc">Metric</span></a> introduces how to utilize LPOT’s built-in metrics and how to develop a custom metric.</p></li>
 <li><p><a class="reference internal" href="docs/tutorial.html"><span class="doc">Tutorial</span></a> provides comprehensive instructions on how to utilize LPOT’s features with examples.</p></li>
-<li><p><a class="reference external" href="https://github.com/intel/lpot/tree/cd8bdedadf185c0f0739dc7b232a415186b00578/examples">Examples</a> are provided to demonstrate the usage of LPOT in different frameworks: TensorFlow, PyTorch, MXNet, and ONNX Runtime.</p></li>
+<li><p><a class="reference external" href="https://github.com/intel/lpot/tree/b29bf6672ce58248df3488a9f5b2a4a8d923608f/examples">Examples</a> are provided to demonstrate the usage of LPOT in different frameworks: TensorFlow, PyTorch, MXNet, and ONNX Runtime.</p></li>
 <li><p><a class="reference internal" href="docs/ux.html"><span class="doc">UX</span></a> is a web-based system used to simplify LPOT usage.</p></li>
 <li><p><a class="reference external" href="https://software.intel.com/content/www/us/en/develop/documentation/get-started-with-ai-linux/top.html">Intel oneAPI AI Analytics Toolkit Get Started Guide</a> explains the AI Kit components, installation and configuration guides, and instructions for building and running sample apps.</p></li>
 <li><p><a class="reference external" href="https://github.com/oneapi-src/oneAPI-samples/tree/master/AI-and-Analytics">AI and Analytics Samples</a> includes code samples for Intel oneAPI libraries.</p></li>
@@ -387,14 +387,23 @@ python setup.py install
 </thead>
 <tbody>
   <tr>
-    <td class="tg-nrix" rowspan="13">Cascade Lake<br><br>Cooper Lake<br><br>Skylake</td>
-    <td class="tg-nrix" rowspan="13">CentOS 7.8<br><br>Ubuntu 18.04</td>
-    <td class="tg-nrix" rowspan="13">3.6<br><br>3.7<br><br>3.8</td>
-    <td class="tg-cly1" rowspan="7">TensorFlow</td>
+    <td class="tg-nrix" rowspan="17">Cascade Lake<br><br>Cooper Lake<br><br>Skylake<br><br>Ice Lake</td>
+    <td class="tg-nrix" rowspan="17">CentOS 8.3<br><br>Ubuntu 18.04</td>
+    <td class="tg-nrix" rowspan="17">3.6<br><br>3.7<br><br>3.8<br><br>3.9</td>
+    <td class="tg-cly1" rowspan="9">TensorFlow</td>
+    <td class="tg-7zrl">2.5.0</td>
+  </tr>
+  <tr>
     <td class="tg-7zrl">2.4.0</td>
   </tr>
   <tr>
+    <td class="tg-7zrl">2.3.0</td>
+  </tr>
+  <tr>
     <td class="tg-7zrl">2.2.0</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">2.1.0</td>
   </tr>
   <tr>
     <td class="tg-7zrl">1.15.0 UP1</td>
@@ -403,10 +412,7 @@ python setup.py install
     <td class="tg-7zrl">1.15.0 UP2</td>
   </tr>
   <tr>
-    <td class="tg-7zrl">2.3.0</td>
-  </tr>
-  <tr>
-    <td class="tg-7zrl">2.1.0</td>
+    <td class="tg-7zrl">1.15.0 UP3</td>
   </tr>
   <tr>
     <td class="tg-7zrl">1.15.2</td>
@@ -416,7 +422,7 @@ python setup.py install
     <td class="tg-7zrl">1.5.0+cpu</td>
   </tr>
   <tr>
-    <td class="tg-7zrl">1.6.0+cpu</td>
+    <td class="tg-7zrl">1.8.0+cpu</td>
   </tr>
   <tr>
     <td class="tg-7zrl">IPEX</td>
@@ -429,8 +435,14 @@ python setup.py install
     <td class="tg-7zrl">1.6.0</td>
   </tr>
   <tr>
-    <td class="tg-7zrl">ONNX Runtime</td>
+    <td class="tg-7zrl" rowspan="3">ONNX Runtime</td>
     <td class="tg-7zrl">1.6.0</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">1.7.0</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">1.8.0</td>
   </tr>
 </tbody>
 </table></div>
