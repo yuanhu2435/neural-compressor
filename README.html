@@ -300,10 +300,10 @@ for post-installation instructions.</p>
 <p><strong>Prerequisites</strong></p>
 <p>The following prerequisites and requirements must be satisfied for a successful installation:</p>
 <ul>
-<li><p>Python version: 3.6 or 3.7 or 3.8</p></li>
+<li><p>Python version: 3.6 or 3.7 or 3.8 or 3.9</p></li>
 <li><p>Download and install <a class="reference external" href="https://anaconda.org/">anaconda</a>.</p></li>
 <li><p>Create a virtual environment named lpot in anaconda:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Here we install python 3.7 for instance. You can also choose python 3.6 &amp; 3.8.</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Here we install python 3.7 for instance. You can also choose python 3.6, 3.8, or 3.9.</span>
 conda create -n lpot <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.7
 conda activate lpot
 </pre></div>
@@ -344,7 +344,7 @@ python setup.py install
 <li><p><a class="reference internal" href="docs/dataset.html"><span class="doc">Dataset</span></a> introduces how to utilize LPOT’s built-in dataset and how to develop a custom dataset.</p></li>
 <li><p><a class="reference internal" href="docs/metric.html"><span class="doc">Metric</span></a> introduces how to utilize LPOT’s built-in metrics and how to develop a custom metric.</p></li>
 <li><p><a class="reference internal" href="docs/tutorial.html"><span class="doc">Tutorial</span></a> provides comprehensive instructions on how to utilize LPOT’s features with examples.</p></li>
-<li><p><a class="reference external" href="https://github.com/intel/lpot/tree/b29bf6672ce58248df3488a9f5b2a4a8d923608f/examples">Examples</a> are provided to demonstrate the usage of LPOT in different frameworks: TensorFlow, PyTorch, MXNet, and ONNX Runtime.</p></li>
+<li><p><a class="reference external" href="https://github.com/intel/lpot/tree/bd8d76feaba88046605626de291223c52a8e12de/examples">Examples</a> are provided to demonstrate the usage of LPOT in different frameworks: TensorFlow, PyTorch, MXNet, and ONNX Runtime.</p></li>
 <li><p><a class="reference internal" href="docs/ux.html"><span class="doc">UX</span></a> is a web-based system used to simplify LPOT usage.</p></li>
 <li><p><a class="reference external" href="https://software.intel.com/content/www/us/en/develop/documentation/get-started-with-ai-linux/top.html">Intel oneAPI AI Analytics Toolkit Get Started Guide</a> explains the AI Kit components, installation and configuration guides, and instructions for building and running sample apps.</p></li>
 <li><p><a class="reference external" href="https://github.com/oneapi-src/oneAPI-samples/tree/master/AI-and-Analytics">AI and Analytics Samples</a> includes code samples for Intel oneAPI libraries.</p></li>
@@ -369,10 +369,10 @@ python setup.py install
 <h2>System Requirements<a class="headerlink" href="#system-requirements" title="Permalink to this headline">¶</a></h2>
 <p>Intel® Low Precision Optimization Tool supports systems based on <a class="reference external" href="https://en.wikipedia.org/wiki/X86-64">Intel 64 architecture or compatible processors</a>, specially optimized for the following CPUs:</p>
 <ul class="simple">
-<li><p>Intel Xeon Scalable processor (formerly Skylake, Cascade Lake, and Cooper Lake)</p></li>
+<li><p>Intel Xeon Scalable processor (formerly Skylake, Cascade Lake, Cooper Lake, and Icelake)</p></li>
 <li><p>future Intel Xeon Scalable processor (code name Sapphire Rapids)</p></li>
 </ul>
-<p>Intel® Low Precision Optimization Tool requires installing the pertinent Intel-optimized framework version for TensorFlow, PyTorch, and MXNet.</p>
+<p>Intel® Low Precision Optimization Tool requires installing the pertinent Intel-optimized framework version for TensorFlow, PyTorch, MXNet, and ONNX runtime.</p>
 <div class="section" id="validated-hardware-software-environment">
 <h3>Validated Hardware/Software Environment<a class="headerlink" href="#validated-hardware-software-environment" title="Permalink to this headline">¶</a></h3>
 <table class="docutils">
@@ -387,9 +387,9 @@ python setup.py install
 </thead>
 <tbody>
   <tr>
-    <td class="tg-nrix" rowspan="17">Cascade Lake<br><br>Cooper Lake<br><br>Skylake<br><br>Ice Lake</td>
-    <td class="tg-nrix" rowspan="17">CentOS 8.3<br><br>Ubuntu 18.04</td>
-    <td class="tg-nrix" rowspan="17">3.6<br><br>3.7<br><br>3.8<br><br>3.9</td>
+    <td class="tg-nrix" rowspan="18">Cascade Lake<br><br>Cooper Lake<br><br>Skylake<br><br>Ice Lake</td>
+    <td class="tg-nrix" rowspan="18">CentOS 8.3<br><br>Ubuntu 18.04</td>
+    <td class="tg-nrix" rowspan="18">3.6<br><br>3.7<br><br>3.8<br><br>3.9</td>
     <td class="tg-cly1" rowspan="9">TensorFlow</td>
     <td class="tg-7zrl">2.5.0</td>
   </tr>
@@ -418,8 +418,11 @@ python setup.py install
     <td class="tg-7zrl">1.15.2</td>
   </tr>
   <tr>
-    <td class="tg-7zrl" rowspan="3">PyTorch</td>
+    <td class="tg-7zrl" rowspan="4">PyTorch</td>
     <td class="tg-7zrl">1.5.0+cpu</td>
+  </tr>
+  <tr>
+    <td class="tg-7zrl">1.6.0+cpu</td>
   </tr>
   <tr>
     <td class="tg-7zrl">1.8.0+cpu</td>
