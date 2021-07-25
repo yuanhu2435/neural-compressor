@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                1.5
+                1.5.1
               </div>
             
           
@@ -263,7 +263,7 @@ A common method for introducing sparsity in weights and activations is called <s
 <h3>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h3>
 <p>Most of pruning methods need <code class="docutils literal notranslate"><span class="pre">training</span></code> to keep the accuracy. There are two ways that Users can define the training process in <code class="docutils literal notranslate"><span class="pre">lpot</span></code>. One is completely configured in the yaml and <code class="docutils literal notranslate"><span class="pre">lpot</span></code> will create a training function automatically as the above example yaml.</p>
 <p>Or users can pass in <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">train</span></code> by themselves and insert <code class="docutils literal notranslate"><span class="pre">pruner</span></code> manually like the previous version. This is more suitable for complex and customize training function like NLP tasks especially text-generation models.</p>
-<p>We provide examples of both 2 usages. For completely Yaml config, please refer to <a class="reference external" href="https://github.com/intel/lpot/blob/bd8d76feaba88046605626de291223c52a8e12de/docs/../examples/pytorch/eager/image_recognition/imagenet/cpu/prune/conf.yaml">resnet example</a>. For users’ training function, please refer to <a class="reference external" href="https://github.com/intel/lpot/blob/bd8d76feaba88046605626de291223c52a8e12de/docs/../examples/pytorch/eager/language_translation/prune/conf.yaml">BERT example</a>.</p>
+<p>We provide examples of both 2 usages. For completely Yaml config, please refer to <a class="reference external" href="https://github.com/intel/lpot/blob/1e295885782c05f8a980d74a88c17311e03cf7aa/docs/../examples/pytorch/eager/image_recognition/imagenet/cpu/prune/conf.yaml">resnet example</a>. For users’ training function, please refer to <a class="reference external" href="https://github.com/intel/lpot/blob/1e295885782c05f8a980d74a88c17311e03cf7aa/docs/../examples/pytorch/eager/language_translation/prune/conf.yaml">BERT example</a>.</p>
 </div>
 <div class="section" id="pruning-config">
 <h3>Pruning config<a class="headerlink" href="#pruning-config" title="Permalink to this headline">¶</a></h3>

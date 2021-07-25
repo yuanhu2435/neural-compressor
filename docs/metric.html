@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                1.5
+                1.5.1
               </div>
             
           
@@ -235,7 +235,7 @@
 <div class="section" id="built-in-metric-support-list">
 <h2>Built-in metric support list<a class="headerlink" href="#built-in-metric-support-list" title="Permalink to this headline">¶</a></h2>
 <p>LPOT supports some built-in metrics that are popularly used in industry.</p>
-<p>Refer to <a class="reference external" href="https://github.com/intel/lpot/tree/bd8d76feaba88046605626de291223c52a8e12de/examples/helloworld/tf_example1">this HelloWorld example</a> on how to config a built-in metric.</p>
+<p>Refer to <a class="reference external" href="https://github.com/intel/lpot/tree/1e295885782c05f8a980d74a88c17311e03cf7aa/examples/helloworld/tf_example1">this HelloWorld example</a> on how to config a built-in metric.</p>
 <div class="section" id="tensorflow">
 <h3>TensorFlow<a class="headerlink" href="#tensorflow" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
@@ -545,6 +545,13 @@
 <td align="left">preds, labels</td>
 <td align="left">preds is a tuple which supports 2 length: 3 and 4. <br> If its length is 3, it should contain boxes, scores, classes in turn. <br> If its length is 4, it should contain target_boxes_num, boxes, scores, classes in turn <br> labels is a tuple which contains bbox, str_label, int_label, image_id inturn <br> the length of one of str_label and int_label can be 0</td>
 <td align="left">metric: <br> &ensp;&ensp; VOCmAP: <br> &ensp;&ensp;&ensp;&ensp; anno_path: /path/to/annotation <br><br> If anno_path is not set, metric will use official coco label id</td>
+</tr>
+<tr>
+<td align="left">GLUE(task)</td>
+<td align="left">task (str, default=mrpc): The name of the task. Choices include mrpc, qqp, qnli, rte, sts-b, cola, mnli, wnli.</td>
+<td align="left">preds, labels</td>
+<td align="left">Computes GLUE score for bert model.</td>
+<td align="left">metric: <br> &ensp;&ensp; GLUE: <br> &ensp;&ensp;&ensp;&ensp; task: mrpc</td>
 </tr>
 </tbody>
 </table></div>
