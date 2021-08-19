@@ -103,9 +103,9 @@
 <li class="toctree-l3"><a class="reference internal" href="dynamic_quantization.html">Dynamic Quantization</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Pruning</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#design">Design</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#usage">Usage</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#example-of-user-pass-in-training-function">Example of user pass-in training function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pruning-algorithms-supported-by-lpot">Pruning Algorithms supported by LPOT</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pruning-api">Pruning API</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#examples">Examples</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="benchmark.html">Benchmarking</a></li>
@@ -196,116 +196,273 @@
 <h1>Pruning<a class="headerlink" href="#pruning" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
-<p>Sparsity is a measure of how many percents of elements in a tensor are <a class="reference external" href="https://nervanasystems.github.io/distiller/pruning.html">exact zeros</a>. A tensor is considered sparse if most of its elements are zero. Only non-zero elements will be stored and computed so the inference process could be accelerated due to TOPS (teraoperations/second) and memory saved (acceleration needs sparse compute kernels which are a work in process).</p>
-<p>The <a href="https://en.wikipedia.org/wiki/Lp_space#When_p_=_0"><img src="http://latex.codecogs.com/svg.latex?\l_{1}&space;" title="http://latex.codecogs.com/svg.latex?\l_{1} " />-“norm” function</a> measures how many zero-elements are in a tensor <em>x</em>:
-<img src="http://latex.codecogs.com/svg.latex?\left|\left|&space;x\right|&space;\right|_{0}\doteq&space;\left|x_{1}&space;\right|^{0}&plus;&space;\left|x_{2}&space;\right|^{0}&plus;...&plus;\left|x_{n}&space;\right|^{0}&space;" title="http://latex.codecogs.com/svg.latex?\left|\left| x\right| \right|_{0}\doteq \left|x_{1} \right|^{0}+ \left|x_{2} \right|^{0}+...+\left|x_{n} \right|^{0} " />
-In other words, an element contributes either a value of 1 or 0 to (l_0).  Anything but an exact zero contributes a value of 1 - which is good. Sometimes it helps to think about density, the number of non-zero elements (NNZ) and sparsity’s complement:
-[
-density = 1 - sparsity
-]
-A common method for introducing sparsity in weights and activations is called <strong>pruning</strong>. Pruning is the application of a binary criteria to decide which weights to prune: weights which match the pruning criteria are assigned a value of zero. Pruned elements are “trimmed” from the model: we replace their values with zero and also make sure they don’t take part in the back-propagation process.</p></p>
-</div>
-<div class="section" id="design">
-<h2>Design<a class="headerlink" href="#design" title="Permalink to this headline">¶</a></h2>
-<p>The pruning process is similar to quantization-aware training (QAT). Intel® Low Precision Optimization Tool will do related model transformation during training and retrain the model to meet the accuracy goal.</p>
-<p>We implemented two kinds of object: Pruner and PrunePolicy. First, we define a sparsity goal (model-wise or op-wise, depending on whether there are ops not suitable for pruning) and the way to reach the sparsity goal (usually we increase the sparsity target linearly as the epochs). The pruner is in singleton mode, and will update the sparsity goal and schedule all PrunePolicy during different phases of training.</p>
-<p>PrunePolicy carries different pruning algos. For example, MagnitudePrunePolicy sets thresholds of absolute value so that elements whose absolute value lower than the threshold will be zeroed. The zeroing process happens at the beginning and end of each mini batch iteration.</p>
-</div>
-<div class="section" id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<p>Pruning configs need to be added into yaml as a <code class="docutils literal notranslate"><span class="pre">pruning</span></code> field.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">pruning</span><span class="p">:</span>                                             <span class="c1"># mandatory only for pruning.</span>
-  <span class="nt">train</span><span class="p">:</span>
-    <span class="nt">start_epoch</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
-    <span class="nt">end_epoch</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">10</span>
-    <span class="nt">iteration</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span>
-    <span class="nt">frequency</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
-    
-    <span class="nt">dataloader</span><span class="p">:</span>
-      <span class="nt">batch_size</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">256</span>
-      <span class="nt">dataset</span><span class="p">:</span>
-        <span class="nt">ImageFolder</span><span class="p">:</span>
-          <span class="nt">root</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/path/to/imagenet/train</span>
-      <span class="nt">transform</span><span class="p">:</span>
-        <span class="nt">RandomResizedCrop</span><span class="p">:</span>
-          <span class="nt">size</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">224</span>
-        <span class="nt">RandomHorizontalFlip</span><span class="p">:</span>
-        <span class="nt">ToTensor</span><span class="p">:</span>
-        <span class="nt">Normalize</span><span class="p">:</span>
-          <span class="nt">mean</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">0.485</span><span class="p p-Indicator">,</span> <span class="nv">0.456</span><span class="p p-Indicator">,</span> <span class="nv">0.406</span><span class="p p-Indicator">]</span>
-          <span class="nt">std</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">0.229</span><span class="p p-Indicator">,</span> <span class="nv">0.224</span><span class="p p-Indicator">,</span> <span class="nv">0.225</span><span class="p p-Indicator">]</span> 
-    <span class="nt">criterion</span><span class="p">:</span>
-      <span class="nt">CrossEntropyLoss</span><span class="p">:</span>
-        <span class="nt">reduction</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">None</span>
-    <span class="nt">optimizer</span><span class="p">:</span>
-      <span class="nt">SGD</span><span class="p">:</span>
-        <span class="nt">learning_rate</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.1</span>
-        <span class="nt">momentum</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.9</span>
-        <span class="nt">weight_decay</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.0004</span>
-        <span class="nt">nesterov</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
-
-  <span class="nt">approach</span><span class="p">:</span>
-    <span class="nt">weight_compression</span><span class="p">:</span>
-      <span class="nt">initial_sparsity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.0</span>
-      <span class="nt">target_sparsity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.3</span>
-      <span class="nt">pruners</span><span class="p">:</span>
-        <span class="p p-Indicator">-</span> <span class="kt">!Pruner</span>
-            <span class="nt">initial_sparsity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.0</span>
-            <span class="nt">target_sparsity</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.97</span>
-            <span class="nt">prune_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">basic_magnitude</span>              <span class="c1"># currently only support basic_magnitude</span>
-            <span class="nt">names</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&#39;layer1.0.conv1.weight&#39;</span><span class="p p-Indicator">]</span>         <span class="c1"># tensor name to be pruned.</span>
-            <span class="nt">start_epoch</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
-            <span class="nt">end_epoch</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">2</span>
-            <span class="nt">update_frequency</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.1</span>
-</pre></div>
-</div>
-<div class="section" id="training">
-<h3>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h3>
-<p>Most of pruning methods need <code class="docutils literal notranslate"><span class="pre">training</span></code> to keep the accuracy. There are two ways that Users can define the training process in <code class="docutils literal notranslate"><span class="pre">lpot</span></code>. One is completely configured in the yaml and <code class="docutils literal notranslate"><span class="pre">lpot</span></code> will create a training function automatically as the above example yaml.</p>
-<p>Or users can pass in <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">train</span></code> by themselves and insert <code class="docutils literal notranslate"><span class="pre">pruner</span></code> manually like the previous version. This is more suitable for complex and customize training function like NLP tasks especially text-generation models.</p>
-<p>We provide examples of both 2 usages. For completely Yaml config, please refer to <a class="reference external" href="https://github.com/intel/lpot/blob/f4c4ca35d99de940ad90ea24e1dc80e18fda8dea/docs/../examples/pytorch/eager/image_recognition/imagenet/cpu/prune/conf.yaml">resnet example</a>. For users’ training function, please refer to <a class="reference external" href="https://github.com/intel/lpot/blob/f4c4ca35d99de940ad90ea24e1dc80e18fda8dea/docs/../examples/pytorch/eager/language_translation/prune/conf.yaml">BERT example</a>.</p>
-</div>
-<div class="section" id="pruning-config">
-<h3>Pruning config<a class="headerlink" href="#pruning-config" title="Permalink to this headline">¶</a></h3>
-<p>We divide the pruning into 2 kinds: <code class="docutils literal notranslate"><span class="pre">weight</span> <span class="pre">compression</span></code> and <code class="docutils literal notranslate"><span class="pre">activation</span> <span class="pre">compression</span></code>, the last is WIP. <code class="docutils literal notranslate"><span class="pre">weight</span> <span class="pre">compression</span></code> means zeroing the weight matrix.</p>
-<p>For <code class="docutils literal notranslate"><span class="pre">weight_compression</span></code>, we dived params into global parameters and local parameters in different <code class="docutils literal notranslate"><span class="pre">pruners</span></code>. Global parameters may contain <strong>start_epoch</strong> (on which epoch pruning begins), <strong>end_epoch</strong> (on which epoch pruning ends), <strong>initial_sparsity</strong> (initial sparsity goal default 0), <strong>target_sparsity</strong> (target sparsity goal) and <strong>frequency</strong> (of updating sparsity). At least one pruner instance needs to be defined under specific algos (currently <code class="docutils literal notranslate"><span class="pre">basic_magnitude</span></code> and <code class="docutils literal notranslate"><span class="pre">gradient_sensitivity</span></code> are supported). You can override all global params in a specific pruner using field names and specify names of which weight of model to be pruned. If no weight is specified, all weights of the model will be pruned.</p>
-<p>Additional parameters is required <code class="docutils literal notranslate"><span class="pre">gradient_sensitivity</span></code> prune_type, which is defined in <code class="docutils literal notranslate"><span class="pre">parameters</span></code> field:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span> <span class="kt">!Pruner</span>
-    <span class="nt">start_epoch</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0</span>
-    <span class="nt">end_epoch</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
-    <span class="nt">prune_type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">gradient_sensitivity</span>
-    <span class="nt">update_frequency</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
-    <span class="nt">names</span><span class="p">:</span> <span class="p p-Indicator">[</span>
-             <span class="s">&#39;bert.encoder.layer.0.attention.output.dense.weight&#39;</span><span class="p p-Indicator">,</span>
-           <span class="p p-Indicator">]</span>
-    <span class="nt">parameters</span><span class="p">:</span> <span class="p p-Indicator">{</span>
-<span class="nt">                  target</span><span class="p">:</span> <span class="nv">8</span><span class="p p-Indicator">,</span>
-<span class="nt">                  transpose</span><span class="p">:</span> <span class="nv">True</span><span class="p p-Indicator">,</span>
-<span class="nt">                  stride</span><span class="p">:</span> <span class="nv">64</span><span class="p p-Indicator">,</span>
-<span class="nt">                  index</span><span class="p">:</span> <span class="nv">0</span><span class="p p-Indicator">,</span>
-<span class="nt">                  normalize</span><span class="p">:</span> <span class="nv">True</span><span class="p p-Indicator">,</span>
-<span class="nt">                  importance_inputs</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&#39;head_mask&#39;</span><span class="p p-Indicator">],</span>
-<span class="nt">                  importance_metric</span><span class="p">:</span> <span class="nv">abs_gradient</span>
-                <span class="p p-Indicator">}</span>
-</pre></div>
-</div>
-<p>Those parameters determined how a weight is pruned, including the pruning target and the calculation of weight’s importance. it contains:</p>
+<p>Network pruning is one of popular approaches of network compression, which reduces the size of a network by removing parameters with minimal drop in accuracy.</p>
 <ul class="simple">
-<li><p>target: the pruning target for weight.</p></li>
-<li><p>stride: each stride of the pruned weight.</p></li>
-<li><p>transpose: whether to transpose weight before prune.</p></li>
-<li><p>normalize: whether to normalize the calculated importance.</p></li>
-<li><p>index: the index of calculated importance.</p></li>
-<li><p>importance_inputs: inputs of the importance calculation for weight.</p></li>
-<li><p>importance_metric: the metric used in importance calculation, currently <code class="docutils literal notranslate"><span class="pre">abs_gradient</span></code> and <code class="docutils literal notranslate"><span class="pre">weighted_gradient</span></code> are supported.</p></li>
+<li><p>Structured Pruning</p></li>
 </ul>
-<p>Use above yaml parameters as example, assume the ‘bert.encoder.layer.0.attention.output.dense.weight’ in the shape of [N, 12*64]. The target 8 and stride 64 specify weight shape after pruning will be [N, 8*64]. Transpose set to True indicates the weight is pruned at dim 1 and should be transposed to [12*64, N] before pruning. importance_input and importance_metric specify the actual input and metric to calculate importance matrix.</p>
+<p>Structured pruning means pruning sparsity patterns, in which there is some structure, most often in the form of blocks.</p>
+<ul class="simple">
+<li><p>Unstructured Pruning</p></li>
+</ul>
+<p>Unstructured pruning means pruning unstructured sparsity (aka random sparsity) patterns, where the nonzero patterns are irregular and could be anywhere in the matrix.</p>
+<ul class="simple">
+<li><p>Filter/Channel Pruning</p></li>
+</ul>
+<p>Filter/Channel pruning means pruning a larger part of the network, such as filters or layers, according to some rules.</p>
+</div>
+<div class="section" id="pruning-algorithms-supported-by-lpot">
+<h2>Pruning Algorithms supported by LPOT<a class="headerlink" href="#pruning-algorithms-supported-by-lpot" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Pruning Type</th>
+<th>Algorithm</th>
+<th>PyTorch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>unstructured pruning</td>
+<td>basic_magnitude</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td></td>
+<td>pattern_lock</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>structured pruning</td>
+<td>pattern_lock</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>filter/channel pruning</td>
+<td>gradient_sensitivity</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table><p>LPOT also supports the two-shot execution of unstructured pruning and post-training quantization.</p>
+<ul class="simple">
+<li><p>basic_magnitude:</p>
+<ul>
+<li><p>The algorithm prunes the weight by the lowest absolute value at each layer with given sparsity target.</p></li>
+</ul>
+</li>
+<li><p>gradient_sensitivity:</p>
+<ul>
+<li><p>The algorithm prunes the head, intermediate layers, and hidden states in NLP model according to importance score calculated by following the paper <a class="reference external" href="https://arxiv.org/abs/2010.13382">fastformer</a>.</p></li>
+</ul>
+</li>
+<li><p>pattern_lock</p>
+<ul>
+<li><p>The algorithm takes a sparsity model as input and starts to fine tune this sparisty model and locks the sparsity pattern by freezing those zero values in weight tensor after weight update during training.</p></li>
+</ul>
+</li>
+<li><p>pruning and then post-training quantization</p>
+<ul>
+<li><p>The algorithm executes unstructured pruning and then executes post-training quantization.</p></li>
+</ul>
+</li>
+<li><p>pruning during quantization-aware training</p>
+<ul>
+<li><p>The algorithm executes unstructured pruning during quantization-aware training.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="pruning-api">
+<h2>Pruning API<a class="headerlink" href="#pruning-api" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="user-facing-api">
+<h3>User facing API<a class="headerlink" href="#user-facing-api" title="Permalink to this headline">¶</a></h3>
+<p>LPOT pruning API is defined under <code class="docutils literal notranslate"><span class="pre">lpot.experimental.Pruning</span></code>, which takes a user defined yaml file as input. The user defined yaml defines training, pruning and evaluation behaviors.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># pruning.py in lpot/experimental</span>
+<span class="k">class</span> <span class="nc">Pruning</span><span class="p">():</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf_fname</span><span class="p">):</span>
+        <span class="c1"># The initialization function of pruning, taking the path to user-defined yaml as input</span>
+        <span class="o">...</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># The main entry of pruning, executing pruning according to user configuration.</span>
+        <span class="o">...</span>
+
+    <span class="nd">@model</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_model</span><span class="p">):</span>
+        <span class="c1"># The wrapper of framework model. `user_model` is the path to framework model or framework runtime model </span>
+        <span class="nb">object</span><span class="o">.</span>
+        <span class="c1"># This attribute needs to be set before invoking self.__call__().</span>
+        <span class="o">...</span>
+
+    <span class="nd">@pruning_func</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">pruning_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_pruning_func</span><span class="p">)</span>
+        <span class="c1"># The training function provided by user. This function takes framework runtime model object as input parameter, </span>
+        <span class="c1"># and executes entire training process with self contained training hyper-parameters.</span>
+        <span class="c1"># It is optional if training could be configured by lpot built-in dataloader/optimizer/criterion.</span>
+        <span class="o">...</span>
+
+    <span class="nd">@eval_func</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">eval_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_eval_func</span><span class="p">)</span>
+        <span class="c1"># The evaluation function provided by user. This function takes framework runtime model object as input parameter and executes evaluation process.</span>
+        <span class="c1"># It is optional if evaluation could be configured by lpot built-in dataloader/optimizer/criterion.</span>
+        <span class="o">...</span>
+
+    <span class="nd">@train_dataloader</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">train_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataloader</span><span class="p">):</span>
+        <span class="c1"># The dataloader used in training phase. It is optional if training dataloader is configured in user-define yaml.</span>
+        <span class="o">...</span>
+
+    <span class="nd">@eval_dataloader</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">eval_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataloader</span><span class="p">):</span>
+        <span class="c1"># The dataloader used in evaluation phase. It is optional if training dataloader is configured in user-define yaml.</span>
+        <span class="o">...</span>
+
+    <span class="k">def</span> <span class="nf">on_epoch_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">):</span>
+        <span class="c1"># The hook point used by pruning algorithm</span>
+        <span class="o">...</span>
+
+    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># The hook point used by pruning algorithm</span>
+        <span class="o">...</span>
+
+    <span class="k">def</span> <span class="nf">on_batch_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+        <span class="c1"># The hook point used by pruning algorithm</span>
+        <span class="o">...</span>
+
+    <span class="k">def</span> <span class="nf">on_batch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># The hook point used by pruning algorithm</span>
+        <span class="o">...</span>
+
+    <span class="k">def</span> <span class="nf">on_post_grad</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># The hook point used by pruning algorithm</span>
+        <span class="o">...</span>
+</pre></div>
 </div>
 </div>
-<div class="section" id="example-of-user-pass-in-training-function">
-<h2>Example of user pass-in training function<a class="headerlink" href="#example-of-user-pass-in-training-function" title="Permalink to this headline">¶</a></h2>
-<p>Users pass a modified training function to Intel® Low Precision Optimization Tool. The following is part of example from BERT training:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">...</span>
+<div class="section" id="launcher-code">
+<h3>Launcher code<a class="headerlink" href="#launcher-code" title="Permalink to this headline">¶</a></h3>
+<p>Simplest launcher code if training behavior is defined in user-defined yaml.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="k">import</span> <span class="n">Pruning</span><span class="p">,</span> <span class="n">common</span>
+<span class="n">prune</span> <span class="o">=</span> <span class="n">Pruning</span><span class="p">(</span><span class="s1">&#39;/path/to/user/pruning/yaml&#39;</span><span class="p">)</span>
+<span class="n">prune</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">prune</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="user-defined-yaml">
+<h3>User-defined yaml<a class="headerlink" href="#user-defined-yaml" title="Permalink to this headline">¶</a></h3>
+<p>The user-defined yaml follows below syntax, note <code class="docutils literal notranslate"><span class="pre">train</span></code> section is optional if user implements <code class="docutils literal notranslate"><span class="pre">pruning_func</span></code> and sets to <code class="docutils literal notranslate"><span class="pre">pruning_func</span></code> attribute of pruning instance.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pruning:
+  train:                    # optional. No need if user implements `pruning_func` and pass to `pruning_func` attribute of pruning instance.
+    start_epoch: 0
+    end_epoch: 10
+    iteration: 100
+    frequency: 2
+    
+    dataloader:
+      batch_size: 256
+      dataset:
+        ImageFolder:
+          root: /path/to/imagenet/train
+      transform:
+        RandomResizedCrop:
+          size: 224
+        RandomHorizontalFlip:
+        ToTensor:
+        Normalize:
+          mean: [0.485, 0.456, 0.406]
+          std: [0.229, 0.224, 0.225] 
+    criterion:
+      CrossEntropyLoss:
+        reduction: None
+    optimizer:
+      SGD:
+        learning_rate: 0.1
+        momentum: 0.9
+        weight_decay: 0.0004
+        nesterov: False
+
+  approach:
+    weight_compression:
+      initial_sparsity: 0.0
+      target_sparsity: 0.3
+      pruners:
+        - !Pruner
+            initial_sparsity: 0.0
+            target_sparsity: 0.97
+            start_epoch: 0
+            end_epoch: 2
+            prune_type: basic_magnitude
+            update_frequency: 0.1
+            names: [&#39;layer1.0.conv1.weight&#39;]
+        - !Pruner
+            start_epoch: 0
+            end_epoch: 1
+            prune_type: gradient_sensitivity
+            update_frequency: 1
+            names: [
+                     &#39;bert.encoder.layer.0.attention.output.dense.weight&#39;,
+                   ]
+            parameters: {
+                          target: 8,
+                          transpose: True,
+                          stride: 64,
+                          index: 0,
+                          normalize: True,
+                          importance_inputs: [&#39;head_mask&#39;],
+                          importance_metric: abs_gradient
+                        }
+</pre></div>
+</div>
+<div class="section" id="train">
+<h4><code class="docutils literal notranslate"><span class="pre">train</span></code><a class="headerlink" href="#train" title="Permalink to this headline">¶</a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">train</span></code> section defines the training behavior, including what training hyper-parameter would be used and which dataloader is used during training.</p>
+</div>
+<div class="section" id="approach">
+<h4><code class="docutils literal notranslate"><span class="pre">approach</span></code><a class="headerlink" href="#approach" title="Permalink to this headline">¶</a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">approach</span></code> section defines which pruning algorithm is used and how to apply it during training process.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">weight</span> <span class="pre">compression</span></code>: pruning target, currently only <code class="docutils literal notranslate"><span class="pre">weight</span> <span class="pre">compression</span></code> is supported. <code class="docutils literal notranslate"><span class="pre">weight</span> <span class="pre">compression</span></code> means zeroing the weight matrix. The parameters for <code class="docutils literal notranslate"><span class="pre">weight</span> <span class="pre">compression</span></code> is divided into global parameters and local parameters in different <code class="docutils literal notranslate"><span class="pre">pruners</span></code>. Global parameters may contain <code class="docutils literal notranslate"><span class="pre">start_epoch</span></code>, <code class="docutils literal notranslate"><span class="pre">end_epoch</span></code>, <code class="docutils literal notranslate"><span class="pre">initial_sparsity</span></code>, <code class="docutils literal notranslate"><span class="pre">target_sparsity</span></code> and <code class="docutils literal notranslate"><span class="pre">frequency</span></code>.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">start_epoch</span></code>:  on which epoch pruning begins</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">end_epoch</span></code>: on which epoch pruning ends</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">initial_sparsity</span></code>: initial sparsity goal, default 0.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">target_sparsity</span></code>: target sparsity goal</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">frequency</span></code>: frequency to updating sparsity</p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Pruner</span></code>:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">prune_type</span></code>: pruning algorithm, currently <code class="docutils literal notranslate"><span class="pre">basic_magnitude</span></code> and <code class="docutils literal notranslate"><span class="pre">gradient_sensitivity</span></code> are supported.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">names</span></code>: weight name to be pruned. If no weight is specified, all weights of the model will be pruned.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">parameters</span></code>: Additional parameters is required <code class="docutils literal notranslate"><span class="pre">gradient_sensitivity</span></code> prune_type, which is defined in <code class="docutils literal notranslate"><span class="pre">parameters</span></code> field. Those parameters determined how a weight is pruned, including the pruning target and the calculation of weight’s importance. it contains:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">target</span></code>: the pruning target for weight.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stride</span></code>: each stride of the pruned weight.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">transpose</span></code>: whether to transpose weight before prune.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">normalize</span></code>: whether to normalize the calculated importance.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">index</span></code>: the index of calculated importance.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">importance_inputs</span></code>: inputs of the importance calculation for weight.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">importance_metric</span></code>: the metric used in importance calculation, currently <code class="docutils literal notranslate"><span class="pre">abs_gradient</span></code> and <code class="docutils literal notranslate"><span class="pre">weighted_gradient</span></code> are supported.</p></li>
+</ul>
+<p>Take above as an example, if we assume the ‘bert.encoder.layer.0.attention.output.dense.weight’ is the shape of [N, 12*64]. The target 8 and stride 64 is used to control the pruned weight shape to be [N, 8*64]. <code class="docutils literal notranslate"><span class="pre">Transpose</span></code> set to True indicates the weight is pruned at dim 1 and should be transposed to [12*64, N] before pruning. <code class="docutils literal notranslate"><span class="pre">importance_input</span></code> and <code class="docutils literal notranslate"><span class="pre">importance_metric</span></code> specify the actual input and metric to calculate importance matrix.</p>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="pruning-with-user-defined-pruning-func">
+<h3>Pruning with user-defined pruning_func()<a class="headerlink" href="#pruning-with-user-defined-pruning-func" title="Permalink to this headline">¶</a></h3>
+<p>User can pass the customized training/evaluation functions to <code class="docutils literal notranslate"><span class="pre">Pruning</span></code> for flexible scenarios. <code class="docutils literal notranslate"><span class="pre">Pruning</span></code>  In this case, pruning process can be done by pre-defined hooks in LPOT. User needs to put those hooks inside the training function.</p>
+<p>LPOT defines several hooks for user pass</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">on_epoch_begin</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span> <span class="p">:</span> <span class="n">Hook</span> <span class="n">executed</span> <span class="n">at</span> <span class="n">each</span> <span class="n">epoch</span> <span class="n">beginning</span>
+<span class="n">on_batch_begin</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span> <span class="p">:</span> <span class="n">Hook</span> <span class="n">executed</span> <span class="n">at</span> <span class="n">each</span> <span class="n">batch</span> <span class="n">beginning</span>
+<span class="n">on_batch_end</span><span class="p">()</span> <span class="p">:</span> <span class="n">Hook</span> <span class="n">executed</span> <span class="n">at</span> <span class="n">each</span> <span class="n">batch</span> <span class="n">end</span>
+<span class="n">on_epoch_end</span><span class="p">()</span> <span class="p">:</span> <span class="n">Hook</span> <span class="n">executed</span> <span class="n">at</span> <span class="n">each</span> <span class="n">epoch</span> <span class="n">end</span>
+</pre></div>
+</div>
+<p>Following section shows how to use hooks in user pass-in training function which is part of example from BERT training:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">pruning_func</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">num_train_epochs</span><span class="p">)):</span>
         <span class="n">pbar</span> <span class="o">=</span> <span class="n">ProgressBar</span><span class="p">(</span><span class="n">n_total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">train_dataloader</span><span class="p">),</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;Training&#39;</span><span class="p">)</span>
         <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
@@ -338,16 +495,49 @@ A common method for introducing sparsity in weights and activations is called <s
 <span class="o">...</span>
 </pre></div>
 </div>
-<p>Then users can use LPOT like the following:</p>
+<p>In this case, the launcher code is like the following:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="kn">import</span> <span class="n">Pruning</span><span class="p">,</span> <span class="n">common</span>
 <span class="n">prune</span> <span class="o">=</span> <span class="n">Pruning</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
 <span class="n">prune</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-<span class="n">prune</span><span class="o">.</span><span class="n">train_dataloader</span> <span class="o">=</span> <span class="n">train_dataloader</span>
-<span class="n">prune</span><span class="o">.</span><span class="n">pruning_func</span> <span class="o">=</span> <span class="n">train_func</span>
-<span class="n">prune</span><span class="o">.</span><span class="n">eval_dataloader</span> <span class="o">=</span> <span class="n">train_dataloader</span>
-<span class="n">prune</span><span class="o">.</span><span class="n">eval_func</span> <span class="o">=</span> <span class="n">eval_func</span>
+<span class="n">prune</span><span class="o">.</span><span class="n">pruning_func</span> <span class="o">=</span> <span class="n">pruning_func</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">prune</span><span class="p">()</span>
 </pre></div>
+</div>
+</div>
+<div class="section" id="scheduler-for-pruning-and-quantization">
+<h3>Scheduler for Pruning and Quantization<a class="headerlink" href="#scheduler-for-pruning-and-quantization" title="Permalink to this headline">¶</a></h3>
+<p>LPOT defined Scheduler to automatically pipeline execute prune and post-training quantization. After appending separate component into scheduler pipeline, scheduler executes them one by one. In following example it executes the pruning and then post-training quantization.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="kn">import</span> <span class="n">Quantization</span><span class="p">,</span> <span class="n">common</span><span class="p">,</span> <span class="n">Pruning</span><span class="p">,</span> <span class="n">Scheduler</span>
+<span class="n">prune</span> <span class="o">=</span> <span class="n">Pruning</span><span class="p">(</span><span class="n">prune_conf</span><span class="p">)</span>
+<span class="n">quantizer</span> <span class="o">=</span> <span class="n">Quantization</span><span class="p">(</span><span class="n">post_training_quantization_conf</span><span class="p">)</span>
+<span class="n">scheduler</span> <span class="o">=</span> <span class="n">Scheduler</span><span class="p">()</span>
+<span class="n">scheduler</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">scheduler</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prune</span><span class="p">)</span>
+<span class="n">scheduler</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">quantizer</span><span class="p">)</span>
+<span class="n">opt_model</span> <span class="o">=</span> <span class="n">scheduler</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="examples-in-lpot">
+<h3>Examples in LPOT<a class="headerlink" href="#examples-in-lpot" title="Permalink to this headline">¶</a></h3>
+<p>Following examples are supported in LPOT:</p>
+<ul class="simple">
+<li><p>CNN Examples:</p>
+<ul>
+<li><p><a class="reference external" href="../examples/pytorch/eager/image_recognition/imagenet/cpu/prune/README">resnet example</a>: magnitude pruning on resnet.</p></li>
+<li><p><a class="reference external" href="../examples/pytorch/eager/image_recognition/imagenet/cpu/prune_and_ptq/README">pruning and post-training quantization</a>: magnitude pruning and then post-training quantization on resnet.</p></li>
+</ul>
+</li>
+<li><p>NLP Examples:</p>
+<ul>
+<li><p><a class="reference external" href="../examples/pytorch/eager/language_translation/prune/README">BERT example</a>: magnitude pruning on distilBert</p></li>
+<li><p><a class="reference external" href="../examples/pytorch/eager/huggingface_models/README">BERT example</a>: Patten-lock and head-pruning on Bert-base.</p></li>
+</ul>
+</li>
+</ul>
 </div>
 </div>
 </div>
