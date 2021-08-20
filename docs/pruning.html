@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                1.5.1
+                1.6
               </div>
             
           
@@ -251,12 +251,12 @@
 </li>
 <li><p>gradient_sensitivity:</p>
 <ul>
-<li><p>The algorithm prunes the head, intermediate layers, and hidden states in NLP model according to importance score calculated by following the paper <a class="reference external" href="https://arxiv.org/abs/2010.13382">fastformer</a>.</p></li>
+<li><p>The algorithm prunes the head, intermediate layers, and hidden states in NLP model according to importance score calculated by following the paper <a class="reference external" href="https://arxiv.org/abs/2010.13382">FastFormers</a>.</p></li>
 </ul>
 </li>
 <li><p>pattern_lock</p>
 <ul>
-<li><p>The algorithm takes a sparsity model as input and starts to fine tune this sparisty model and locks the sparsity pattern by freezing those zero values in weight tensor after weight update during training.</p></li>
+<li><p>The algorithm takes a sparsity model as input and starts to fine tune this sparsity model and locks the sparsity pattern by freezing those zero values in weight tensor after weight update during training.</p></li>
 </ul>
 </li>
 <li><p>pruning and then post-training quantization</p>
@@ -533,8 +533,8 @@
 </li>
 <li><p>NLP Examples:</p>
 <ul>
-<li><p><a class="reference external" href="../examples/pytorch/eager/language_translation/prune/README">BERT example</a>: magnitude pruning on distilBert</p></li>
-<li><p><a class="reference external" href="../examples/pytorch/eager/huggingface_models/README">BERT example</a>: Patten-lock and head-pruning on Bert-base.</p></li>
+<li><p><a class="reference external" href="../examples/pytorch/eager/language_translation/prune/README">BERT example</a>: magnitude pruning on DistilBERT.</p></li>
+<li><p><a class="reference external" href="../examples/pytorch/eager/huggingface_models/README">BERT example</a>: Pattern-lock and head-pruning on BERT-base.</p></li>
 </ul>
 </li>
 </ul>

@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                1.5.1
+                1.6
               </div>
             
           
@@ -115,6 +115,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#system-requirements">System Requirements</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#validated-hardware-software-environment">Validated Hardware/Software Environment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#validated-models">Validated Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#validated-mlperf-models">Validated MLPerf Models</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#validated-quantized-models">Validated Quantized Models</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#validated-pruning-models">Validated Pruning Models</a></li>
 </ul>
@@ -227,14 +228,17 @@
 <h3>Supported Frameworks<a class="headerlink" href="#supported-frameworks" title="Permalink to this headline">¶</a></h3>
 <p>Supported Intel-optimized DL frameworks are:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow">TensorFlow*</a>, including <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up3">1.15.0 UP3</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up2">1.15.0 UP2</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up1">1.15.0 UP1</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.1.0">2.1.0</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.2.0">2.2.0</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.3.0">2.3.0</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.4.0">2.4.0</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.5.0">2.5.0</a></p></li>
+<li><p><a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow">TensorFlow*</a>, including <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up3">1.15.0 UP3</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up2">1.15.0 UP2</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up1">1.15.0 UP1</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.1.0">2.1.0</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.2.0">2.2.0</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.3.0">2.3.0</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.4.0">2.4.0</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.5.0">2.5.0</a>, <a class="reference external" href="https://github.com/tensorflow/tensorflow/tree/v2.6.0">Official TensorFlow 2.6.0</a></p></li>
 </ul>
 <blockquote>
 <div><p><strong>Note</strong>: Intel Optimized TensorFlow 2.5.0 requires to set environment variable TF_ENABLE_MKL_NATIVE_FORMAT=0 before running LPOT quantization or deploying the quantized model.</p>
 </div></blockquote>
+<blockquote>
+<div><p><strong>Note</strong>: From Official TensorFlow 2.6.0, oneDNN support has been upstreamed. User just need download official TensorFlow binary for CPU device and set environment variable TF_ENABLE_ONEDNN_OPTS=1 before running LPOT quantization or deploying the quantized model.</p>
+</div></blockquote>
 <ul class="simple">
 <li><p><a class="reference external" href="https://pytorch.org/">PyTorch*</a>, including <a class="reference external" href="https://download.pytorch.org/whl/torch_stable.html">1.5.0+cpu</a>, <a class="reference external" href="https://download.pytorch.org/whl/torch_stable.html">1.6.0+cpu</a>, <a class="reference external" href="https://download.pytorch.org/whl/torch_stable.html">1.8.0+cpu</a></p></li>
-<li><p><a class="reference external" href="https://mxnet.apache.org">Apache* MXNet</a>, including <a class="reference external" href="https://github.com/apache/incubator-mxnet/tree/1.6.0">1.6.0</a>, <a class="reference external" href="https://github.com/apache/incubator-mxnet/tree/1.7.0">1.7.0</a></p></li>
+<li><p><a class="reference external" href="https://mxnet.apache.org">Apache* MXNet</a>, including <a class="reference external" href="https://github.com/apache/incubator-mxnet/tree/1.6.0">1.6.0</a>, <a class="reference external" href="https://github.com/apache/incubator-mxnet/tree/1.7.0">1.7.0</a>, <a class="reference external" href="https://github.com/apache/incubator-mxnet/tree/1.8.0">1.8.0</a></p></li>
 <li><p><a class="reference external" href="https://github.com/microsoft/onnxruntime">ONNX* Runtime</a>, including <a class="reference external" href="https://github.com/microsoft/onnxruntime/tree/v1.6.0">1.6.0</a>, <a class="reference external" href="https://github.com/microsoft/onnxruntime/tree/v1.7.0">1.7.0</a>, <a class="reference external" href="https://github.com/microsoft/onnxruntime/tree/v1.8.0">1.8.0</a></p></li>
 </ul>
 </div>
@@ -348,7 +352,7 @@ python setup.py install
 <li><p><a class="reference internal" href="docs/dataset.html"><span class="doc">Dataset</span></a> introduces how to utilize LPOT’s built-in dataset and how to develop a custom dataset.</p></li>
 <li><p><a class="reference internal" href="docs/metric.html"><span class="doc">Metric</span></a> introduces how to utilize LPOT’s built-in metrics and how to develop a custom metric.</p></li>
 <li><p><a class="reference internal" href="docs/tutorial.html"><span class="doc">Tutorial</span></a> provides comprehensive instructions on how to utilize LPOT’s features with examples.</p></li>
-<li><p><a class="reference external" href="https://github.com/intel/lpot/tree/443b6d9b4f590772d8aa06a6a833c4402c0d8280/examples">Examples</a> are provided to demonstrate the usage of LPOT in different frameworks: TensorFlow, PyTorch, MXNet, and ONNX Runtime.</p></li>
+<li><p><a class="reference external" href="https://github.com/intel/lpot/tree/22ee51b969914c399bb1ee4e833040a2b5ce35e1/examples">Examples</a> are provided to demonstrate the usage of LPOT in different frameworks: TensorFlow, PyTorch, MXNet, and ONNX Runtime.</p></li>
 <li><p><a class="reference internal" href="docs/ux.html"><span class="doc">UX</span></a> is a web-based system used to simplify LPOT usage.</p></li>
 <li><p><a class="reference external" href="https://software.intel.com/content/www/us/en/develop/documentation/get-started-with-ai-linux/top.html">Intel oneAPI AI Analytics Toolkit Get Started Guide</a> explains the AI Kit components, installation and configuration guides, and instructions for building and running sample apps.</p></li>
 <li><p><a class="reference external" href="https://github.com/oneapi-src/oneAPI-samples/tree/master/AI-and-Analytics">AI and Analytics Samples</a> includes code samples for Intel oneAPI libraries.</p></li>
@@ -400,10 +404,13 @@ python setup.py install
 </thead>
 <tbody>
   <tr>
-    <td class="tg-nrix" rowspan="18">Cascade Lake<br><br>Cooper Lake<br><br>Skylake<br><br>Ice Lake</td>
-    <td class="tg-nrix" rowspan="18">CentOS 8.3<br><br>Ubuntu 18.04</td>
-    <td class="tg-nrix" rowspan="18">3.6<br><br>3.7<br><br>3.8<br><br>3.9</td>
-    <td class="tg-cly1" rowspan="9">TensorFlow</td>
+    <td class="tg-nrix" rowspan="20">Cascade Lake<br><br>Cooper Lake<br><br>Skylake<br><br>Ice Lake</td>
+    <td class="tg-nrix" rowspan="20">CentOS 8.3<br><br>Ubuntu 18.04</td>
+    <td class="tg-nrix" rowspan="20">3.6<br><br>3.7<br><br>3.8<br><br>3.9</td>
+    <td class="tg-cly1" rowspan="10">TensorFlow</td>
+    <td class="tg-7zrl">2.6.0</td>
+  </tr>
+  <tr>
     <td class="tg-7zrl">2.5.0</td>
   </tr>
   <tr>
@@ -445,6 +452,9 @@ python setup.py install
   </tr>
   <tr>
     <td class="tg-cly1" rowspan="2">MXNet</td>
+    <td class="tg-7zrl">1.8.0</td>
+  </tr>
+  <tr>
     <td class="tg-7zrl">1.7.0</td>
   </tr>
   <tr>
@@ -465,6 +475,76 @@ python setup.py install
 <div class="section" id="validated-models">
 <h3>Validated Models<a class="headerlink" href="#validated-models" title="Permalink to this headline">¶</a></h3>
 <p>Intel® Low Precision Optimization Tool provides numerous examples to show promising accuracy loss with the best performance gain. A full quantized model list on various frameworks is available in the <a class="reference internal" href="docs/full_model_list.html"><span class="doc">Model List</span></a>.</p>
+<div class="section" id="validated-mlperf-models">
+<h4>Validated MLPerf Models<a class="headerlink" href="#validated-mlperf-models" title="Permalink to this headline">¶</a></h4>
+<table>
+<thead>
+  <tr>
+    <th>Model</th>
+    <th>Framework</th>
+    <th>Support</th>
+    <th>Example</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td rowspan="2">ResNet50 v1.5</td>
+    <td>TensorFlow</td>
+    <td>Yes</td>
+    <td><a href="https://github.com/intel/lpot/tree/master/examples/tensorflow/image_recognition">Link</a></td>
+  </tr>
+  <tr>
+    <td>PyTorch</td>
+    <td>Yes</td>
+    <td><a href="https://github.com/intel/lpot/tree/master/examples/pytorch/ipex/image_recognition/imagenet/cpu/ptq">Link</a></td>
+  </tr>
+  <tr>
+    <td>DLRM</td>
+    <td>PyTorch</td>
+    <td>Yes</td>
+    <td><a href="https://github.com/intel/lpot/tree/master/examples/pytorch/fx/recommendation">Link</a></td>
+  </tr>
+  <tr>
+    <td rowspan="2">BERT-large</td>
+    <td>TensorFlow</td>
+    <td>Yes</td>
+    <td><a href="https://github.com/intel/lpot/tree/master/examples/tensorflow/nlp/bert_large_squad">Link</a></td>
+  </tr>
+  <tr>
+    <td>PyTorch</td>
+    <td>Yes</td>
+    <td><a href="https://github.com/intel/lpot/tree/master/examples/pytorch/eager/language_translation/ptq">Link</a></td>
+  </tr>
+  <tr>
+    <td rowspan="2">SSD-ResNet34</td>
+    <td>TensorFlow</td>
+    <td>WIP</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>PyTorch</td>
+    <td>Yes</td>
+    <td><a href="https://github.com/intel/lpot/tree/master/examples/pytorch/fx/object_detection/ssd_resnet34/ptq">Link</a></td>
+  </tr>
+  <tr>
+    <td>RNN-T</td>
+    <td>PyTorch</td>
+    <td>WIP</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td rowspan="2">3D-UNet</td>
+    <td>TensorFlow</td>
+    <td>WIP</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>PyTorch</td>
+    <td>Yes</td>
+    <td><a href="https://github.com/intel/lpot/tree/master/examples/pytorch/eager/medical_imaging/3d-unet">Link</a></td>
+  </tr>
+</tbody>
+</table></div>
 <div class="section" id="validated-quantized-models">
 <h4>Validated Quantized Models<a class="headerlink" href="#validated-quantized-models" title="Permalink to this headline">¶</a></h4>
 <table class="docutils">

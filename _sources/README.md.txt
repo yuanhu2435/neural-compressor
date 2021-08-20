@@ -33,12 +33,14 @@ Click the image to enlarge it.
 #### Supported Frameworks
 
 Supported Intel-optimized DL frameworks are:
-* [TensorFlow\*](https://github.com/Intel-tensorflow/tensorflow), including [1.15.0 UP3](https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up3), [1.15.0 UP2](https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up2), [1.15.0 UP1](https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up1), [2.1.0](https://github.com/Intel-tensorflow/tensorflow/tree/v2.1.0), [2.2.0](https://github.com/Intel-tensorflow/tensorflow/tree/v2.2.0), [2.3.0](https://github.com/Intel-tensorflow/tensorflow/tree/v2.3.0), [2.4.0](https://github.com/Intel-tensorflow/tensorflow/tree/v2.4.0), [2.5.0](https://github.com/Intel-tensorflow/tensorflow/tree/v2.5.0)
+* [TensorFlow\*](https://github.com/Intel-tensorflow/tensorflow), including [1.15.0 UP3](https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up3), [1.15.0 UP2](https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up2), [1.15.0 UP1](https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up1), [2.1.0](https://github.com/Intel-tensorflow/tensorflow/tree/v2.1.0), [2.2.0](https://github.com/Intel-tensorflow/tensorflow/tree/v2.2.0), [2.3.0](https://github.com/Intel-tensorflow/tensorflow/tree/v2.3.0), [2.4.0](https://github.com/Intel-tensorflow/tensorflow/tree/v2.4.0), [2.5.0](https://github.com/Intel-tensorflow/tensorflow/tree/v2.5.0), [Official TensorFlow 2.6.0](https://github.com/tensorflow/tensorflow/tree/v2.6.0)
 
 >  **Note**: Intel Optimized TensorFlow 2.5.0 requires to set environment variable TF_ENABLE_MKL_NATIVE_FORMAT=0 before running LPOT quantization or deploying the quantized model.
 
+>  **Note**: From Official TensorFlow 2.6.0, oneDNN support has been upstreamed. User just need download official TensorFlow binary for CPU device and set environment variable TF_ENABLE_ONEDNN_OPTS=1 before running LPOT quantization or deploying the quantized model.
+
 * [PyTorch\*](https://pytorch.org/), including [1.5.0+cpu](https://download.pytorch.org/whl/torch_stable.html), [1.6.0+cpu](https://download.pytorch.org/whl/torch_stable.html), [1.8.0+cpu](https://download.pytorch.org/whl/torch_stable.html)
-* [Apache\* MXNet](https://mxnet.apache.org), including [1.6.0](https://github.com/apache/incubator-mxnet/tree/1.6.0), [1.7.0](https://github.com/apache/incubator-mxnet/tree/1.7.0)
+* [Apache\* MXNet](https://mxnet.apache.org), including [1.6.0](https://github.com/apache/incubator-mxnet/tree/1.6.0), [1.7.0](https://github.com/apache/incubator-mxnet/tree/1.7.0), [1.8.0](https://github.com/apache/incubator-mxnet/tree/1.8.0)
 * [ONNX\* Runtime](https://github.com/microsoft/onnxruntime), including [1.6.0](https://github.com/microsoft/onnxruntime/tree/v1.6.0), [1.7.0](https://github.com/microsoft/onnxruntime/tree/v1.7.0), [1.8.0](https://github.com/microsoft/onnxruntime/tree/v1.8.0)
 
 
@@ -198,10 +200,13 @@ Intel® Low Precision Optimization Tool requires installing the pertinent Intel-
 </thead>
 <tbody>
   <tr>
-    <td class="tg-nrix" rowspan="18">Cascade Lake<br><br>Cooper Lake<br><br>Skylake<br><br>Ice Lake</td>
-    <td class="tg-nrix" rowspan="18">CentOS 8.3<br><br>Ubuntu 18.04</td>
-    <td class="tg-nrix" rowspan="18">3.6<br><br>3.7<br><br>3.8<br><br>3.9</td>
-    <td class="tg-cly1" rowspan="9">TensorFlow</td>
+    <td class="tg-nrix" rowspan="20">Cascade Lake<br><br>Cooper Lake<br><br>Skylake<br><br>Ice Lake</td>
+    <td class="tg-nrix" rowspan="20">CentOS 8.3<br><br>Ubuntu 18.04</td>
+    <td class="tg-nrix" rowspan="20">3.6<br><br>3.7<br><br>3.8<br><br>3.9</td>
+    <td class="tg-cly1" rowspan="10">TensorFlow</td>
+    <td class="tg-7zrl">2.6.0</td>
+  </tr>
+  <tr>
     <td class="tg-7zrl">2.5.0</td>
   </tr>
   <tr>
@@ -243,6 +248,9 @@ Intel® Low Precision Optimization Tool requires installing the pertinent Intel-
   </tr>
   <tr>
     <td class="tg-cly1" rowspan="2">MXNet</td>
+    <td class="tg-7zrl">1.8.0</td>
+  </tr>
+  <tr>
     <td class="tg-7zrl">1.7.0</td>
   </tr>
   <tr>
@@ -264,6 +272,77 @@ Intel® Low Precision Optimization Tool requires installing the pertinent Intel-
 ### Validated Models
 
 Intel® Low Precision Optimization Tool provides numerous examples to show promising accuracy loss with the best performance gain. A full quantized model list on various frameworks is available in the [Model List](docs/full_model_list.md).
+
+#### Validated MLPerf Models
+
+<table>
+<thead>
+  <tr>
+    <th>Model</th>
+    <th>Framework</th>
+    <th>Support</th>
+    <th>Example</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td rowspan="2">ResNet50 v1.5</td>
+    <td>TensorFlow</td>
+    <td>Yes</td>
+    <td><a href="https://github.com/intel/lpot/tree/master/examples/tensorflow/image_recognition">Link</a></td>
+  </tr>
+  <tr>
+    <td>PyTorch</td>
+    <td>Yes</td>
+    <td><a href="https://github.com/intel/lpot/tree/master/examples/pytorch/ipex/image_recognition/imagenet/cpu/ptq">Link</a></td>
+  </tr>
+  <tr>
+    <td>DLRM</td>
+    <td>PyTorch</td>
+    <td>Yes</td>
+    <td><a href="https://github.com/intel/lpot/tree/master/examples/pytorch/fx/recommendation">Link</a></td>
+  </tr>
+  <tr>
+    <td rowspan="2">BERT-large</td>
+    <td>TensorFlow</td>
+    <td>Yes</td>
+    <td><a href="https://github.com/intel/lpot/tree/master/examples/tensorflow/nlp/bert_large_squad">Link</a></td>
+  </tr>
+  <tr>
+    <td>PyTorch</td>
+    <td>Yes</td>
+    <td><a href="https://github.com/intel/lpot/tree/master/examples/pytorch/eager/language_translation/ptq">Link</a></td>
+  </tr>
+  <tr>
+    <td rowspan="2">SSD-ResNet34</td>
+    <td>TensorFlow</td>
+    <td>WIP</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>PyTorch</td>
+    <td>Yes</td>
+    <td><a href="https://github.com/intel/lpot/tree/master/examples/pytorch/fx/object_detection/ssd_resnet34/ptq">Link</a></td>
+  </tr>
+  <tr>
+    <td>RNN-T</td>
+    <td>PyTorch</td>
+    <td>WIP</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td rowspan="2">3D-UNet</td>
+    <td>TensorFlow</td>
+    <td>WIP</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>PyTorch</td>
+    <td>Yes</td>
+    <td><a href="https://github.com/intel/lpot/tree/master/examples/pytorch/eager/medical_imaging/3d-unet">Link</a></td>
+  </tr>
+</tbody>
+</table>
 
 #### Validated Quantized Models
 
