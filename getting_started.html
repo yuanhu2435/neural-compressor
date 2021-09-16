@@ -1,73 +1,33 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Getting Started &mdash; Intel® Low Precision Optimization Tool  documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>Getting Started &mdash; Intel® Low Precision Optimization Tool  documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="index.html" class="icon icon-home"> Intel® Low Precision Optimization Tool
-          
-
-          
           </a>
-
-          
-            
-            
               <div class="version">
                 1.6
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -75,20 +35,9 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="README.html">Introduction to Intel® LPOT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html">Introduction to Intel® Neural Compressor</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docs/tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples_readme.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docs/api-introduction.html">API Documentation</a></li>
@@ -100,86 +49,45 @@
 <li class="toctree-l1"><a class="reference external" href="https://github.com/intel/lpot">Intel® LPOT repository</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Intel® Low Precision Optimization Tool</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
       <li>Getting Started</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="_sources/getting_started.md.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <div class="section" id="getting-started">
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>The Intel® LPOT library is released as part of the
+<p>The Intel® Neural Compressor library is released as part of the
 <a class="reference external" href="https://software.intel.com/content/www/us/en/develop/tools/oneapi/ai-analytics-toolkit.html">Intel® oneAPI AI Analytics Toolkit</a> (AI Kit).
 The AI Kit provides a consolidated package of Intel’s latest deep learning and
 machine optimizations all in one place for ease of development. Along with
-LPOT, the AI Kit includes Intel-optimized versions of deep learning frameworks
+Intel® Neural Compressor, the AI Kit includes Intel-optimized versions of deep learning frameworks
 (such as TensorFlow and PyTorch) and high-performing Python libraries to
 streamline end-to-end data science and AI workflows on Intel architectures.</p>
 <div class="section" id="linux-installation">
 <h3>Linux Installation<a class="headerlink" href="#linux-installation" title="Permalink to this headline">¶</a></h3>
-<p>You can install just the LPOT library from binary or source, or you can get
-the Intel-optimized framework together with the LPOT library by installing the
+<p>You can install just the Intel® Neural Compressor library from binary or source, or you can get
+the Intel-optimized framework together with the Intel® Neural Compressor library by installing the
 Intel® oneAPI AI Analytics Toolkit.</p>
 <div class="section" id="install-from-binary">
 <h4>Install from binary<a class="headerlink" href="#install-from-binary" title="Permalink to this headline">¶</a></h4>
@@ -193,7 +101,7 @@ conda install lpot -c conda-forge -c intel
 </div>
 <div class="section" id="install-from-source">
 <h4>Install from source<a class="headerlink" href="#install-from-source" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-Shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/intel/lpot.git
+<div class="highlight-Shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/intel/neural-compressor.git
 <span class="nb">cd</span> lpot
 pip install -r requirements.txt
 python setup.py install
@@ -202,7 +110,7 @@ python setup.py install
 </div>
 <div class="section" id="install-from-ai-kit">
 <h4>Install from AI Kit<a class="headerlink" href="#install-from-ai-kit" title="Permalink to this headline">¶</a></h4>
-<p>The AI Kit, which includes the LPOT
+<p>The AI Kit, which includes the Intel® Neural Compressor
 library, is distributed through many common channels,
 including from Intel’s website, YUM, APT, Anaconda, and more.
 Select and <a class="reference external" href="https://software.intel.com/content/www/us/en/develop/tools/oneapi/ai-analytics-toolkit/download.html">download</a>
@@ -251,7 +159,7 @@ conda install lpot -c conda-forge -c intel
 </div>
 <div class="section" id="id2">
 <h4>Install from source<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/intel/lpot.git
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/intel/neural-compressor.git
 <span class="nb">cd</span> lpot
 pip install -r requirements.txt
 python setup.py install
@@ -262,28 +170,28 @@ python setup.py install
 </div>
 <div class="section" id="tutorials-and-examples">
 <h2>Tutorials and Examples<a class="headerlink" href="#tutorials-and-examples" title="Permalink to this headline">¶</a></h2>
-<p>Read the following resources to learn how to use LPOT.</p>
+<p>Read the following resources to learn how to use Intel® Neural Compressor.</p>
 <div class="section" id="tutorial">
 <h3>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h3>
-<p>The <a class="reference internal" href="docs/tutorial.html"><span class="doc">Tutorial</span></a> provides comprehensive instructions on how to utilize Intel® Low Precision Optimization Tool’s features with examples.</p>
+<p>The <a class="reference internal" href="docs/tutorial.html"><span class="doc">Tutorial</span></a> provides comprehensive instructions on how to utilize Intel® Neural Compressor’s features with examples.</p>
 </div>
 <div class="section" id="examples">
 <h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference internal" href="examples_readme.html"><span class="doc">Examples</span></a> are provided to demonstrate the usage of Intel® Low Precision Optimization Tool in different frameworks: TensorFlow, PyTorch, MXNet, and ONNX Runtime. Hello World examples are also available.</p>
+<p><a class="reference internal" href="examples_readme.html"><span class="doc">Examples</span></a> are provided to demonstrate the usage of Intel® Neural Compressor in different frameworks: TensorFlow, PyTorch, MXNet, and ONNX Runtime. Hello World examples are also available.</p>
 </div>
 </div>
 <div class="section" id="developer-documentation">
 <h2>Developer Documentation<a class="headerlink" href="#developer-documentation" title="Permalink to this headline">¶</a></h2>
-<p>View LPOT <a class="reference internal" href="docs/doclist.html">Documentation</a> for getting started, deep dive, and advanced resources to help you use and develop LPOT.</p>
+<p>View Intel® Neural Compressor <a class="reference internal" href="docs/doclist.html">Documentation</a> for getting started, deep dive, and advanced resources to help you use and develop Intel® Neural Compressor.</p>
 </div>
 <div class="section" id="system-requirements">
 <h2>System Requirements<a class="headerlink" href="#system-requirements" title="Permalink to this headline">¶</a></h2>
-<p>Intel® Low Precision Optimization Tool supports systems based on <a class="reference external" href="https://en.wikipedia.org/wiki/X86-64">Intel 64 architecture or compatible processors</a>, specially optimized for the following CPUs:</p>
+<p>Intel® Neural Compressor supports systems based on <a class="reference external" href="https://en.wikipedia.org/wiki/X86-64">Intel 64 architecture or compatible processors</a>, specially optimized for the following CPUs:</p>
 <ul class="simple">
 <li><p>Intel Xeon Scalable processor (formerly Skylake, Cascade Lake, Cooper Lake, and Icelake)</p></li>
 <li><p>future Intel Xeon Scalable processor (code name Sapphire Rapids)</p></li>
 </ul>
-<p>Intel® Low Precision Optimization Tool requires installing the pertinent Intel-optimized framework version for TensorFlow, PyTorch, MXNet and ONNX runtime.</p>
+<p>Intel® Neural Compressor requires installing the pertinent Intel-optimized framework version for TensorFlow, PyTorch, MXNet and ONNX runtime.</p>
 <div class="section" id="validated-hardware-software-environment">
 <h3>Validated Hardware/Software Environment<a class="headerlink" href="#validated-hardware-software-environment" title="Permalink to this headline">¶</a></h3>
 <table class="docutils">
@@ -363,7 +271,7 @@ python setup.py install
 </div>
 <div class="section" id="validated-models">
 <h2>Validated Models<a class="headerlink" href="#validated-models" title="Permalink to this headline">¶</a></h2>
-<p>Intel® Low Precision Optimization Tool provides numerous examples to show promising accuracy loss with the best performance gain. A full quantized model list on various frameworks is available in the <a class="reference internal" href="docs/full_model_list.html"><span class="doc">Model List</span></a>.</p>
+<p>Intel® Neural Compressor provides numerous examples to show promising accuracy loss with the best performance gain. A full quantized model list on various frameworks is available in the <a class="reference internal" href="docs/full_model_list.html"><span class="doc">Model List</span></a>.</p>
 <table class="docutils">
 <thead>
   <tr>
@@ -627,46 +535,30 @@ python setup.py install
 
 
            </div>
-           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, Intel® Low Precision Optimization Tool.
-
-    </p>
+    <p>&#169; Copyright 2021, Intel® Low Precision Optimization Tool.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

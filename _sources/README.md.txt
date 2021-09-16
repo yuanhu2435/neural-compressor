@@ -1,17 +1,17 @@
-Introduction to Intel® LPOT 
+Introduction to Intel® Neural Compressor 
 ===========================
 
-The Intel® Low Precision Optimization Tool (Intel® LPOT) is an open-source Python library that delivers a unified low-precision inference interface across multiple Intel-optimized Deep Learning (DL) frameworks on both CPUs and GPUs. It supports automatic accuracy-driven tuning strategies, along with additional objectives such as optimizing for performance, model size, and memory footprint. It also provides easy extension capability for new backends, tuning strategies, metrics, and objectives.
+The Intel® Neural Compressor (former name Intel® Neural Compressor) is an open-source Python library that delivers a unified low-precision inference interface across multiple Intel-optimized Deep Learning (DL) frameworks on both CPUs and GPUs. It supports automatic accuracy-driven tuning strategies, along with additional objectives such as optimizing for performance, model size, and memory footprint. It also provides easy extension capability for new backends, tuning strategies, metrics, and objectives.
 
 > **Note**
 >
 > GPU support is under development.
 
-**Visit the Intel® LPOT online document website at: <https://intel.github.io/lpot>.**
+**Visit the Intel® Neural Compressor online document website at: <https://intel.github.io/neural-compressor/>.**
 
 ## Architecture
 
-Intel® LPOT features an infrastructure and workflow that aids in increasing performance and faster deployments across architectures. 
+Intel® Neural Compressor features an infrastructure and workflow that aids in increasing performance and faster deployments across architectures. 
 
 
 #### Infrastructure
@@ -35,9 +35,9 @@ Click the image to enlarge it.
 Supported Intel-optimized DL frameworks are:
 * [TensorFlow\*](https://github.com/Intel-tensorflow/tensorflow), including [1.15.0 UP3](https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up3), [1.15.0 UP2](https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up2), [1.15.0 UP1](https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up1), [2.1.0](https://github.com/Intel-tensorflow/tensorflow/tree/v2.1.0), [2.2.0](https://github.com/Intel-tensorflow/tensorflow/tree/v2.2.0), [2.3.0](https://github.com/Intel-tensorflow/tensorflow/tree/v2.3.0), [2.4.0](https://github.com/Intel-tensorflow/tensorflow/tree/v2.4.0), [2.5.0](https://github.com/Intel-tensorflow/tensorflow/tree/v2.5.0), [Official TensorFlow 2.6.0](https://github.com/tensorflow/tensorflow/tree/v2.6.0)
 
->  **Note**: Intel Optimized TensorFlow 2.5.0 requires to set environment variable TF_ENABLE_MKL_NATIVE_FORMAT=0 before running LPOT quantization or deploying the quantized model.
+>  **Note**: Intel Optimized TensorFlow 2.5.0 requires to set environment variable TF_ENABLE_MKL_NATIVE_FORMAT=0 before running Intel® Neural Compressor quantization or deploying the quantized model.
 
->  **Note**: From Official TensorFlow 2.6.0, oneDNN support has been upstreamed. User just need download official TensorFlow binary for CPU device and set environment variable TF_ENABLE_ONEDNN_OPTS=1 before running LPOT quantization or deploying the quantized model.
+>  **Note**: From Official TensorFlow 2.6.0, oneDNN support has been upstreamed. User just need download official TensorFlow binary for CPU device and set environment variable TF_ENABLE_ONEDNN_OPTS=1 before running Intel® Neural Compressor quantization or deploying the quantized model.
 
 * [PyTorch\*](https://pytorch.org/), including [1.5.0+cpu](https://download.pytorch.org/whl/torch_stable.html), [1.6.0+cpu](https://download.pytorch.org/whl/torch_stable.html), [1.8.0+cpu](https://download.pytorch.org/whl/torch_stable.html)
 * [Apache\* MXNet](https://mxnet.apache.org), including [1.6.0](https://github.com/apache/incubator-mxnet/tree/1.6.0), [1.7.0](https://github.com/apache/incubator-mxnet/tree/1.7.0), [1.8.0](https://github.com/apache/incubator-mxnet/tree/1.8.0)
@@ -51,9 +51,9 @@ Select the installation based on your operating system.
 
 ### Linux Installation
 
-You can install LPOT using one of three options: Install just the LPOT library
+You can install Intel® Neural Compressor using one of three options: Install just the Intel® Neural Compressor library
 from binary or source, or get the Intel-optimized framework together with the
-LPOT library by installing the [Intel® oneAPI AI Analytics Toolkit](https://software.intel.com/content/www/us/en/develop/tools/oneapi/ai-analytics-toolkit.html).
+Intel® Neural Compressor library by installing the [Intel® oneAPI AI Analytics Toolkit](https://software.intel.com/content/www/us/en/develop/tools/oneapi/ai-analytics-toolkit.html).
 
 #### Option 1 Install from binary
 
@@ -71,7 +71,7 @@ LPOT library by installing the [Intel® oneAPI AI Analytics Toolkit](https://sof
 #### Option 2 Install from source
 
   ```Shell
-  git clone https://github.com/intel/lpot.git
+  git clone https://github.com/intel/neural-compressor.git
   cd lpot
   pip install -r requirements.txt
   python setup.py install
@@ -79,11 +79,11 @@ LPOT library by installing the [Intel® oneAPI AI Analytics Toolkit](https://sof
 
 #### Option 3 Install from AI Kit
 
-The Intel® LPOT library is released as part of the
+The Intel® Neural Compressor library is released as part of the
 [Intel® oneAPI AI Analytics Toolkit](https://software.intel.com/content/www/us/en/develop/tools/oneapi/ai-analytics-toolkit.html) (AI Kit).
 The AI Kit provides a consolidated package of Intel's latest deep learning and
 machine optimizations all in one place for ease of development. Along with
-LPOT, the AI Kit includes Intel-optimized versions of deep learning frameworks
+Intel® Neural Compressor, the AI Kit includes Intel-optimized versions of deep learning frameworks
 (such as TensorFlow and PyTorch) and high-performing Python libraries to
 streamline end-to-end data science and AI workflows on Intel architectures.
 
@@ -132,7 +132,7 @@ The following prerequisites and requirements must be satisfied for a successful 
 #### Option 2 Install from source
 
 ```shell
-git clone https://github.com/intel/lpot.git
+git clone https://github.com/intel/neural-compressor.git
 cd lpot
 pip install -r requirements.txt
 python setup.py install
@@ -142,21 +142,21 @@ python setup.py install
 
 **Get Started**
 
-* [APIs](docs/api-introduction.md) explains Intel® Low Precision Optimization Tool's API.
-* [Transform](docs/transform.md) introduces how to utilize LPOT's built-in data processing and how to develop a custom data processing method. 
-* [Dataset](docs/dataset.md) introduces how to utilize LPOT's built-in dataset and how to develop a custom dataset.
-* [Metric](docs/metric.md) introduces how to utilize LPOT's built-in metrics and how to develop a custom metric.
-* [Tutorial](docs/tutorial.md) provides comprehensive instructions on how to utilize LPOT's features with examples. 
-* [Examples](/examples) are provided to demonstrate the usage of LPOT in different frameworks: TensorFlow, PyTorch, MXNet, and ONNX Runtime.
-* [UX](docs/ux.md) is a web-based system used to simplify LPOT usage.
+* [APIs](docs/api-introduction.md) explains Intel® Neural Compressor's API.
+* [Transform](docs/transform.md) introduces how to utilize Intel® Neural Compressor's built-in data processing and how to develop a custom data processing method. 
+* [Dataset](docs/dataset.md) introduces how to utilize Intel® Neural Compressor's built-in dataset and how to develop a custom dataset.
+* [Metric](docs/metric.md) introduces how to utilize Intel® Neural Compressor's built-in metrics and how to develop a custom metric.
+* [Tutorial](docs/tutorial.md) provides comprehensive instructions on how to utilize Intel® Neural Compressor's features with examples. 
+* [Examples](/examples) are provided to demonstrate the usage of Intel® Neural Compressor in different frameworks: TensorFlow, PyTorch, MXNet, and ONNX Runtime.
+* [UX](docs/ux.md) is a web-based system used to simplify Intel® Neural Compressor usage.
 * [Intel oneAPI AI Analytics Toolkit Get Started Guide](https://software.intel.com/content/www/us/en/develop/documentation/get-started-with-ai-linux/top.html) explains the AI Kit components, installation and configuration guides, and instructions for building and running sample apps.
 * [AI and Analytics Samples](https://github.com/oneapi-src/oneAPI-samples/tree/master/AI-and-Analytics) includes code samples for Intel oneAPI libraries.
 
 **Deep Dive**
 
-* [Quantization](docs/Quantization.md) are processes that enable inference and training by performing computations at low-precision data types, such as fixed-point integers. LPOT supports Post-Training Quantization ([PTQ](docs/PTQ.md)) with [different quantization capabilities](docs/backend_quant.md) and Quantization-Aware Training ([QAT](docs/QAT.md)). Note that ([Dynamic Quantization](docs/dynamic_quantization.md)) currently has limited support.
+* [Quantization](docs/Quantization.md) are processes that enable inference and training by performing computations at low-precision data types, such as fixed-point integers. Intel® Neural Compressor supports Post-Training Quantization ([PTQ](docs/PTQ.md)) with [different quantization capabilities](docs/backend_quant.md) and Quantization-Aware Training ([QAT](docs/QAT.md)). Note that ([Dynamic Quantization](docs/dynamic_quantization.md)) currently has limited support.
 * [Pruning](docs/pruning.md) provides a common method for introducing sparsity in weights and activations.
-* [Benchmarking](docs/benchmark.md) introduces how to utilize the benchmark interface of LPOT.
+* [Benchmarking](docs/benchmark.md) introduces how to utilize the benchmark interface of Intel® Neural Compressor.
 * [Mixed precision](docs/mixed_precision.md) introduces how to enable mixed precision, including BFP16 and int8 and FP32, on Intel platforms during tuning.
 * [Graph Optimization](docs/graph_optimization.md) introduces how to enable graph optimization for FP32 and auto-mixed precision.
 * [Model Conversion](docs/model_conversion.md) introduces how to convert TensorFlow QAT model to quantized model running on Intel platforms.
@@ -164,7 +164,7 @@ python setup.py install
 
 **Advanced Topics**
 
-* [Adaptor](docs/adaptor.md) is the interface between LPOT and framework. The method to develop adaptor extension is introduced with ONNX Runtime as example. 
+* [Adaptor](docs/adaptor.md) is the interface between Intel® Neural Compressor and framework. The method to develop adaptor extension is introduced with ONNX Runtime as example. 
 * [Strategy](docs/tuning_strategies.md) can automatically optimized low-precision recipes for deep learning models to achieve optimal product objectives like inference performance and memory usage with expected accuracy criteria. The method to develop a new strategy is introduced.
 
 **Publications**
@@ -179,12 +179,12 @@ Full publication list please refers to [here](docs/publication_list.md)
 
 ## System Requirements
 
-Intel® Low Precision Optimization Tool supports systems based on [Intel 64 architecture or compatible processors](https://en.wikipedia.org/wiki/X86-64), specially optimized for the following CPUs:
+Intel® Neural Compressor supports systems based on [Intel 64 architecture or compatible processors](https://en.wikipedia.org/wiki/X86-64), specially optimized for the following CPUs:
 
 * Intel Xeon Scalable processor (formerly Skylake, Cascade Lake, Cooper Lake, and Icelake)
 * future Intel Xeon Scalable processor (code name Sapphire Rapids)
 
-Intel® Low Precision Optimization Tool requires installing the pertinent Intel-optimized framework version for TensorFlow, PyTorch, MXNet, and ONNX runtime.
+Intel® Neural Compressor requires installing the pertinent Intel-optimized framework version for TensorFlow, PyTorch, MXNet, and ONNX runtime.
 
 ### Validated Hardware/Software Environment
 
@@ -271,7 +271,7 @@ Intel® Low Precision Optimization Tool requires installing the pertinent Intel-
 
 ### Validated Models
 
-Intel® Low Precision Optimization Tool provides numerous examples to show promising accuracy loss with the best performance gain. A full quantized model list on various frameworks is available in the [Model List](docs/full_model_list.md).
+Intel® Neural Compressor provides numerous examples to show promising accuracy loss with the best performance gain. A full quantized model list on various frameworks is available in the [Model List](docs/full_model_list.md).
 
 #### Validated MLPerf Models
 
@@ -289,29 +289,29 @@ Intel® Low Precision Optimization Tool provides numerous examples to show promi
     <td rowspan="2">ResNet50 v1.5</td>
     <td>TensorFlow</td>
     <td>Yes</td>
-    <td><a href="https://github.com/intel/lpot/tree/master/examples/tensorflow/image_recognition">Link</a></td>
+    <td><a href="https://github.com/intel/neural-compressor/tree/master/examples/tensorflow/image_recognition">Link</a></td>
   </tr>
   <tr>
     <td>PyTorch</td>
     <td>Yes</td>
-    <td><a href="https://github.com/intel/lpot/tree/master/examples/pytorch/ipex/image_recognition/imagenet/cpu/ptq">Link</a></td>
+    <td><a href="https://github.com/intel/neural-compressor/tree/master/examples/pytorch/ipex/image_recognition/imagenet/cpu/ptq">Link</a></td>
   </tr>
   <tr>
     <td>DLRM</td>
     <td>PyTorch</td>
     <td>Yes</td>
-    <td><a href="https://github.com/intel/lpot/tree/master/examples/pytorch/fx/recommendation">Link</a></td>
+    <td><a href="https://github.com/intel/neural-compressor/tree/master/examples/pytorch/fx/recommendation">Link</a></td>
   </tr>
   <tr>
     <td rowspan="2">BERT-large</td>
     <td>TensorFlow</td>
     <td>Yes</td>
-    <td><a href="https://github.com/intel/lpot/tree/master/examples/tensorflow/nlp/bert_large_squad">Link</a></td>
+    <td><a href="https://github.com/intel/neural-compressor/tree/master/examples/tensorflow/nlp/bert_large_squad">Link</a></td>
   </tr>
   <tr>
     <td>PyTorch</td>
     <td>Yes</td>
-    <td><a href="https://github.com/intel/lpot/tree/master/examples/pytorch/eager/language_translation/ptq">Link</a></td>
+    <td><a href="https://github.com/intel/neural-compressor/tree/master/examples/pytorch/eager/language_translation/ptq">Link</a></td>
   </tr>
   <tr>
     <td rowspan="2">SSD-ResNet34</td>
@@ -322,7 +322,7 @@ Intel® Low Precision Optimization Tool provides numerous examples to show promi
   <tr>
     <td>PyTorch</td>
     <td>Yes</td>
-    <td><a href="https://github.com/intel/lpot/tree/master/examples/pytorch/fx/object_detection/ssd_resnet34/ptq">Link</a></td>
+    <td><a href="https://github.com/intel/neural-compressor/tree/master/examples/pytorch/fx/object_detection/ssd_resnet34/ptq">Link</a></td>
   </tr>
   <tr>
     <td>RNN-T</td>
@@ -339,7 +339,7 @@ Intel® Low Precision Optimization Tool provides numerous examples to show promi
   <tr>
     <td>PyTorch</td>
     <td>Yes</td>
-    <td><a href="https://github.com/intel/lpot/tree/master/examples/pytorch/eager/medical_imaging/3d-unet">Link</a></td>
+    <td><a href="https://github.com/intel/neural-compressor/tree/master/examples/pytorch/eager/medical_imaging/3d-unet">Link</a></td>
   </tr>
 </tbody>
 </table>
@@ -847,4 +847,4 @@ Intel® Low Precision Optimization Tool provides numerous examples to show promi
 * [Contribution Guidelines](contributions.md)
 * [Legal](legal_information.md)
 * [Security Policy](security_policy.md)
-* [Intel® LPOT Website](https://intel.github.io/lpot)
+* [Intel® Neural Compressor Website](https://intel.github.io/neural-compressor/)
