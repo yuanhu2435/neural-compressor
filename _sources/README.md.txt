@@ -184,7 +184,9 @@ Intel® Neural Compressor supports systems based on [Intel 64 architecture or co
 * Intel Xeon Scalable processor (formerly Skylake, Cascade Lake, Cooper Lake, and Icelake)
 * future Intel Xeon Scalable processor (code name Sapphire Rapids)
 
-Intel® Neural Compressor requires installing the pertinent Intel-optimized framework version for TensorFlow, PyTorch, MXNet, and ONNX runtime.
+Intel® Neural Compressor requires installing the Intel-optimized framework version for the supported DL framework you use: TensorFlow, PyTorch, MXNet, or ONNX runtime. 
+
+Note: Intel Neural Compressor supports Intel-optimized and official frameworks for some TensorFlow versions. Refer to [Supported Frameworks](#Supported-Frameworks) for specifics.
 
 ### Validated Hardware/Software Environment
 
