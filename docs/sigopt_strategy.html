@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SigOpt Strategy &mdash; Intel® Low Precision Optimization Tool  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <title>SigOpt Strategy &mdash; Intel® Neural Compressor  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -23,10 +23,10 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> Intel® Low Precision Optimization Tool
+            <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.6
+                1.7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -46,7 +46,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../contributions.html">Contribution Guidelines</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../legal_information.html">Legal Information</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../security_policy.html">Security Policy</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/intel/lpot">Intel® LPOT repository</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/intel/neural-compressor">Intel® Neural Compressor repository</a></li>
 </ul>
 
         </div>
@@ -55,7 +55,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Intel® Low Precision Optimization Tool</a>
+          <a href="../index.html">Intel® Neural Compressor</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -82,7 +82,7 @@
 <ul class="simple">
 <li><p>Each account has its own api token. Find your api token and then fill in the configure item <code class="docutils literal notranslate"><span class="pre">sigopt_api_token</span></code>.</p></li>
 <li><p>Create a new project and write the corresponding name into the configure item <code class="docutils literal notranslate"><span class="pre">sigopt_project_id</span></code>.</p></li>
-<li><p>Set the name for this experiment in configure item <code class="docutils literal notranslate"><span class="pre">sigopt_experiment_id</span></code>, the default is lpot-tune.</p></li>
+<li><p>Set the name for this experiment in configure item <code class="docutils literal notranslate"><span class="pre">sigopt_experiment_id</span></code>, the default is nc-tune.</p></li>
 </ul>
 <div class="section" id="sigopt-introduction">
 <h3>SigOpt introduction<a class="headerlink" href="#sigopt-introduction" title="Permalink to this headline">¶</a></h3>
@@ -94,17 +94,17 @@
 <li><p>Evaluate your metric</p></li>
 <li><p>Report an Observation to SigOpt</p></li>
 </ul>
-<p>In LPOT sigopt strategy, the metrics add accuracy as constraint and optimize for latency.</p>
+<p>In Neural Compressor sigopt strategy, the metrics add accuracy as constraint and optimize for latency.</p>
 </div>
-<div class="section" id="lpot-configuration">
-<h3>LPOT configuration<a class="headerlink" href="#lpot-configuration" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="neural-compressor-configuration">
+<h3>Neural Compressor configuration<a class="headerlink" href="#neural-compressor-configuration" title="Permalink to this headline">¶</a></h3>
 <p>Compare to <code class="docutils literal notranslate"><span class="pre">Basic</span></code> strategy, <code class="docutils literal notranslate"><span class="pre">sigopt_api_token</span></code> is necessary for <code class="docutils literal notranslate"><span class="pre">SigOpt</span></code> strategy. Create the corresponding project name <code class="docutils literal notranslate"><span class="pre">sigopt_project_id</span></code> in the account before using the strategy.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">tuning</span><span class="p">:</span>
   <span class="nt">strategy</span><span class="p">:</span>
     <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sigopt</span>
     <span class="nt">sigopt_api_token</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">YOUR-ACCOUNT-API-TOKEN</span>
     <span class="nt">sigopt_project_id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">PROJECT-ID</span>
-    <span class="nt">sigopt_experiment_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">lpot-tune</span>
+    <span class="nt">sigopt_experiment_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nc-tune</span>
   <span class="nt">accuracy_criterion</span><span class="p">:</span>
     <span class="nt">relative</span><span class="p">:</span>  <span class="l l-Scalar l-Scalar-Plain">0.01</span>
   <span class="nt">exit_policy</span><span class="p">:</span>
@@ -185,7 +185,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Intel® Low Precision Optimization Tool.</p>
+    <p>&#169; Copyright 2021, Intel® Neural Compressor.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

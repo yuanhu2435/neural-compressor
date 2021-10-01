@@ -1,13 +1,13 @@
 Introduction to Intel® Neural Compressor 
 ===========================
 
-The Intel® Neural Compressor (former name Intel® Low Precision Optimization Tool) is an open-source Python library that delivers a unified low-precision inference interface across multiple Intel-optimized Deep Learning (DL) frameworks on both CPUs and GPUs. It supports automatic accuracy-driven tuning strategies, along with additional objectives such as optimizing for performance, model size, and memory footprint. It also provides easy extension capability for new backends, tuning strategies, metrics, and objectives.
+Intel® Neural Compressor (formerly known as Intel® Low Precision Optimization Tool) is an open-source Python library running on Intel CPUs and GPUs, which delivers unified interfaces across multiple deep learning frameworks for popular network compression technologies, such as quantization, pruning, knowledge distillation. This tool supports automatic accuracy-driven tuning strategies to help user quickly find out the best quantized model. It also implements different weight pruning algorithms to generate pruned model with predefined sparsity goal and supports knowledge distillation to distill the knowledge from the teacher model to the student model.
 
 > **Note**
 >
 > GPU support is under development.
 
-**Visit the Intel® Neural Compressor online document website at: <https://intel.github.io/neural-compressor/>.**
+**Visit the Intel® Neural Compressor online document website at: <https://intel.github.io/neural-compressor>.**
 
 ## Architecture
 
@@ -32,17 +32,17 @@ Click the image to enlarge it.
 
 #### Supported Frameworks
 
-Supported Intel-optimized DL frameworks are:
+Supported deep learning frameworks are:
 * [TensorFlow\*](https://github.com/Intel-tensorflow/tensorflow), including [1.15.0 UP3](https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up3), [1.15.0 UP2](https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up2), [1.15.0 UP1](https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up1), [2.1.0](https://github.com/Intel-tensorflow/tensorflow/tree/v2.1.0), [2.2.0](https://github.com/Intel-tensorflow/tensorflow/tree/v2.2.0), [2.3.0](https://github.com/Intel-tensorflow/tensorflow/tree/v2.3.0), [2.4.0](https://github.com/Intel-tensorflow/tensorflow/tree/v2.4.0), [2.5.0](https://github.com/Intel-tensorflow/tensorflow/tree/v2.5.0), [Official TensorFlow 2.6.0](https://github.com/tensorflow/tensorflow/tree/v2.6.0)
 
->  **Note**: Intel Optimized TensorFlow 2.5.0 requires to set environment variable TF_ENABLE_MKL_NATIVE_FORMAT=0 before running Intel® Neural Compressor quantization or deploying the quantized model.
+>  **Note**: Intel Optimized TensorFlow 2.5.0 requires to set environment variable TF_ENABLE_MKL_NATIVE_FORMAT=0 before running Neural Compressor quantization or deploying the quantized model.
 
->  **Note**: From Official TensorFlow 2.6.0, oneDNN support has been upstreamed. User just need download official TensorFlow binary for CPU device and set environment variable TF_ENABLE_ONEDNN_OPTS=1 before running Intel® Neural Compressor quantization or deploying the quantized model.
+>  **Note**: From the official TensorFlow 2.6.0, oneDNN support has been upstreamed. Download the official TensorFlow 2.6.0 binary for the CPU device and set the environment variable TF_ENABLE_ONEDNN_OPTS=1 before running the quantization process or deploying the quantized model.
 
 * [PyTorch\*](https://pytorch.org/), including [1.5.0+cpu](https://download.pytorch.org/whl/torch_stable.html), [1.6.0+cpu](https://download.pytorch.org/whl/torch_stable.html), [1.8.0+cpu](https://download.pytorch.org/whl/torch_stable.html)
 * [Apache\* MXNet](https://mxnet.apache.org), including [1.6.0](https://github.com/apache/incubator-mxnet/tree/1.6.0), [1.7.0](https://github.com/apache/incubator-mxnet/tree/1.7.0), [1.8.0](https://github.com/apache/incubator-mxnet/tree/1.8.0)
 * [ONNX\* Runtime](https://github.com/microsoft/onnxruntime), including [1.6.0](https://github.com/microsoft/onnxruntime/tree/v1.6.0), [1.7.0](https://github.com/microsoft/onnxruntime/tree/v1.7.0), [1.8.0](https://github.com/microsoft/onnxruntime/tree/v1.8.0)
-
+* [Engine](./docs/engine.md), which is a built-in bare metal [inference engine](./engine) in Intel® Neural Compressor.
 
 ## Installation
 
@@ -51,28 +51,28 @@ Select the installation based on your operating system.
 
 ### Linux Installation
 
-You can install Intel® Neural Compressor using one of three options: Install just the Intel® Neural Compressor library
+You can install Neural Compressor using one of three options: Install just the library
 from binary or source, or get the Intel-optimized framework together with the
-Intel® Neural Compressor library by installing the [Intel® oneAPI AI Analytics Toolkit](https://software.intel.com/content/www/us/en/develop/tools/oneapi/ai-analytics-toolkit.html).
+library by installing the [Intel® oneAPI AI Analytics Toolkit](https://software.intel.com/content/www/us/en/develop/tools/oneapi/ai-analytics-toolkit.html).
 
 #### Option 1 Install from binary
 
   ```Shell
   # install stable version from pip
-  pip install lpot
+  pip install neural-compressor
 
   # install nightly version from pip
-  pip install -i https://test.pypi.org/simple/ lpot
+  pip install -i https://test.pypi.org/simple/ neural-compressor
 
   # install stable version from from conda
-  conda install lpot -c conda-forge -c intel 
+  conda install neural-compressor -c conda-forge -c intel 
   ```
 
 #### Option 2 Install from source
 
   ```Shell
   git clone https://github.com/intel/neural-compressor.git
-  cd lpot
+  cd neural-compressor
   pip install -r requirements.txt
   python setup.py install
   ```
@@ -83,7 +83,7 @@ The Intel® Neural Compressor library is released as part of the
 [Intel® oneAPI AI Analytics Toolkit](https://software.intel.com/content/www/us/en/develop/tools/oneapi/ai-analytics-toolkit.html) (AI Kit).
 The AI Kit provides a consolidated package of Intel's latest deep learning and
 machine optimizations all in one place for ease of development. Along with
-Intel® Neural Compressor, the AI Kit includes Intel-optimized versions of deep learning frameworks
+Neural Compressor, the AI Kit includes Intel-optimized versions of deep learning frameworks
 (such as TensorFlow and PyTorch) and high-performing Python libraries to
 streamline end-to-end data science and AI workflows on Intel architectures.
 
@@ -107,12 +107,12 @@ The following prerequisites and requirements must be satisfied for a successful 
 
 - Download and install [anaconda](https://anaconda.org/).
 
-- Create a virtual environment named lpot in anaconda:
+- Create a virtual environment named nc in anaconda:
 
     ```shell
     # Here we install python 3.7 for instance. You can also choose python 3.6, 3.8, or 3.9.
-    conda create -n lpot python=3.7
-    conda activate lpot
+    conda create -n nc python=3.7
+    conda activate nc
     ```
 **Installation options**
 
@@ -120,20 +120,20 @@ The following prerequisites and requirements must be satisfied for a successful 
 
   ```Shell
   # install stable version from pip
-  pip install lpot
+  pip install neural-compressor
 
   # install nightly version from pip
-  pip install -i https://test.pypi.org/simple/ lpot
+  pip install -i https://test.pypi.org/simple/ neural-compressor
 
   # install from conda
-  conda install lpot -c conda-forge -c intel 
+  conda install neural-compressor -c conda-forge -c intel 
   ```
 
 #### Option 2 Install from source
 
 ```shell
 git clone https://github.com/intel/neural-compressor.git
-cd lpot
+cd neural-compressor
 pip install -r requirements.txt
 python setup.py install
 ```
@@ -143,20 +143,22 @@ python setup.py install
 **Get Started**
 
 * [APIs](docs/api-introduction.md) explains Intel® Neural Compressor's API.
-* [Transform](docs/transform.md) introduces how to utilize Intel® Neural Compressor's built-in data processing and how to develop a custom data processing method. 
-* [Dataset](docs/dataset.md) introduces how to utilize Intel® Neural Compressor's built-in dataset and how to develop a custom dataset.
-* [Metric](docs/metric.md) introduces how to utilize Intel® Neural Compressor's built-in metrics and how to develop a custom metric.
-* [Tutorial](docs/tutorial.md) provides comprehensive instructions on how to utilize Intel® Neural Compressor's features with examples. 
-* [Examples](/examples) are provided to demonstrate the usage of Intel® Neural Compressor in different frameworks: TensorFlow, PyTorch, MXNet, and ONNX Runtime.
-* [UX](docs/ux.md) is a web-based system used to simplify Intel® Neural Compressor usage.
+* [Transform](docs/transform.md) introduces how to utilize Neural Compressor's built-in data processing and how to develop a custom data processing method. 
+* [Dataset](docs/dataset.md) introduces how to utilize Neural Compressor's built-in dataset and how to develop a custom dataset.
+* [Metric](docs/metric.md) introduces how to utilize Neural Compressor's built-in metrics and how to develop a custom metric.
+* [Tutorial](docs/tutorial.md) provides comprehensive instructions on how to utilize Neural Compressor's features with examples. 
+* [Examples](/examples) are provided to demonstrate the usage of Neural Compressor in different frameworks: TensorFlow, PyTorch, MXNet, and ONNX Runtime.
+* [Intel® Neural Compressor Bench](docs/bench.md) is a web-based system used to simplify Intel® Neural Compressor usage.
 * [Intel oneAPI AI Analytics Toolkit Get Started Guide](https://software.intel.com/content/www/us/en/develop/documentation/get-started-with-ai-linux/top.html) explains the AI Kit components, installation and configuration guides, and instructions for building and running sample apps.
 * [AI and Analytics Samples](https://github.com/oneapi-src/oneAPI-samples/tree/master/AI-and-Analytics) includes code samples for Intel oneAPI libraries.
 
 **Deep Dive**
 
-* [Quantization](docs/Quantization.md) are processes that enable inference and training by performing computations at low-precision data types, such as fixed-point integers. Intel® Neural Compressor supports Post-Training Quantization ([PTQ](docs/PTQ.md)) with [different quantization capabilities](docs/backend_quant.md) and Quantization-Aware Training ([QAT](docs/QAT.md)). Note that ([Dynamic Quantization](docs/dynamic_quantization.md)) currently has limited support.
+* [Quantization](docs/Quantization.md) are processes that enable inference and training by performing computations at low-precision data types, such as fixed-point integers. Neural Compressor supports Post-Training Quantization ([PTQ](docs/PTQ.md)) with [different quantization capabilities](docs/backend_quant.md) and Quantization-Aware Training ([QAT](docs/QAT.md)). Note that ([Dynamic Quantization](docs/dynamic_quantization.md)) currently has limited support.
 * [Pruning](docs/pruning.md) provides a common method for introducing sparsity in weights and activations.
-* [Benchmarking](docs/benchmark.md) introduces how to utilize the benchmark interface of Intel® Neural Compressor.
+* [Knowledge Distillation](docs/distillation.md) provides a common method for distilling knowledge from teacher model to student model.
+* [Distributed Training](docs/distributed.md) introduces how to leverage Horovod to do multi-node training in Intel® Neural Compressor to speed up the training time.
+* [Benchmarking](docs/benchmark.md) introduces how to utilize the benchmark interface of Neural Compressor.
 * [Mixed precision](docs/mixed_precision.md) introduces how to enable mixed precision, including BFP16 and int8 and FP32, on Intel platforms during tuning.
 * [Graph Optimization](docs/graph_optimization.md) introduces how to enable graph optimization for FP32 and auto-mixed precision.
 * [Model Conversion](docs/model_conversion.md) introduces how to convert TensorFlow QAT model to quantized model running on Intel platforms.
@@ -164,7 +166,8 @@ python setup.py install
 
 **Advanced Topics**
 
-* [Adaptor](docs/adaptor.md) is the interface between Intel® Neural Compressor and framework. The method to develop adaptor extension is introduced with ONNX Runtime as example. 
+* [Engine](docs/engine.md) is a new backend supported by Intel® Neural Compressor to support domain-specific acceleration for NLP models. 
+* [Adaptor](docs/adaptor.md) is the interface between components and framework. The method to develop adaptor extension is introduced with ONNX Runtime as example. 
 * [Strategy](docs/tuning_strategies.md) can automatically optimized low-precision recipes for deep learning models to achieve optimal product objectives like inference performance and memory usage with expected accuracy criteria. The method to develop a new strategy is introduced.
 
 **Publications**
@@ -849,4 +852,4 @@ Intel® Neural Compressor provides numerous examples to show promising accuracy 
 * [Contribution Guidelines](contributions.md)
 * [Legal](legal_information.md)
 * [Security Policy](security_policy.md)
-* [Intel® Neural Compressor Website](https://intel.github.io/neural-compressor/)
+* [Intel® Neural Compressor Website](https://intel.github.io/neural-compressor)

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Graph Optimization &mdash; Intel® Low Precision Optimization Tool  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <title>Graph Optimization &mdash; Intel® Neural Compressor  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -25,10 +25,10 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> Intel® Low Precision Optimization Tool
+            <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.6
+                1.7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -70,7 +70,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../contributions.html">Contribution Guidelines</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../legal_information.html">Legal Information</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../security_policy.html">Security Policy</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/intel/lpot">Intel® LPOT repository</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/intel/neural-compressor">Intel® Neural Compressor repository</a></li>
 </ul>
 
         </div>
@@ -79,7 +79,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Intel® Low Precision Optimization Tool</a>
+          <a href="../index.html">Intel® Neural Compressor</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -104,8 +104,8 @@
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <p>Graph optimization is primarily focused on two scenarios, shown below:</p>
 <ol class="simple">
-<li><p><strong>FP32 optimization</strong>. This is similar to the TensorFlow optimization tool <a class="reference external" href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/tools/optimize_for_inference.py">optimize_for_inference</a> while LPOT enables more optimizations (such as common subexpression elimination).</p></li>
-<li><p><strong>Auto-mixed precision optimization</strong>. LPOT generates the optimal model with auto-mixed precision (<a class="reference external" href="https://cloud.google.com/tpu/docs/bfloat16">bfloat16</a> and FP32) and allows for additional auto-tuning per accuracy requirements.</p></li>
+<li><p><strong>FP32 optimization</strong>. This is similar to the TensorFlow optimization tool <a class="reference external" href="https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/tools/optimize_for_inference.py">optimize_for_inference</a> while Neural Compressor enables more optimizations (such as common subexpression elimination).</p></li>
+<li><p><strong>Auto-mixed precision optimization</strong>. Neural Compressor generates the optimal model with auto-mixed precision (<a class="reference external" href="https://cloud.google.com/tpu/docs/bfloat16">bfloat16</a> and FP32) and allows for additional auto-tuning per accuracy requirements.</p></li>
 </ol>
 </div>
 <div class="section" id="how-to-use-it">
@@ -113,8 +113,8 @@
 <p>See the following three examples which demonstrate graph optimization API usage.</p>
 <div class="section" id="fp32-optimization">
 <h3>FP32 Optimization<a class="headerlink" href="#fp32-optimization" title="Permalink to this headline">¶</a></h3>
-<p>LPOT runs the graph optimization under FP32 Optimization by default. In other words, the <strong>precisions</strong> field is explicitly set to <strong>fp32</strong>:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="kn">import</span> <span class="n">Graph_Optimization</span>
+<p>Neural Compressor runs the graph optimization under FP32 Optimization by default. In other words, the <strong>precisions</strong> field is explicitly set to <strong>fp32</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">Graph_Optimization</span>
     <span class="n">graph_optimizer</span> <span class="o">=</span> <span class="n">Graph_Optimization</span><span class="p">()</span>
     <span class="n">graph_optimizer</span><span class="o">.</span><span class="n">precisions</span> <span class="o">=</span> <span class="s1">&#39;fp32&#39;</span> <span class="c1">#Optional, default is &#39;fp32&#39;</span>
     <span class="n">graph_optimizer</span><span class="o">.</span><span class="n">input</span> <span class="o">=</span> <span class="s1">&#39;input&#39;</span>  <span class="c1"># Optional</span>
@@ -129,7 +129,7 @@
 <div class="section" id="default-auto-mixed-precision">
 <h4>Default auto-mixed precision<a class="headerlink" href="#default-auto-mixed-precision" title="Permalink to this headline">¶</a></h4>
 <p>The only difference between this and the default mode (FP32 optimization) is that <strong>bf16</strong> must be added to the <strong>precisions</strong> field.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="kn">import</span> <span class="n">Graph_Optimization</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">Graph_Optimization</span>
     <span class="n">graph_optimizer</span> <span class="o">=</span> <span class="n">Graph_Optimization</span><span class="p">()</span>
     <span class="n">graph_optimizer</span><span class="o">.</span><span class="n">precisions</span> <span class="o">=</span> <span class="s1">&#39;bf16, fp32&#39;</span>
     <span class="n">graph_optimizer</span><span class="o">.</span><span class="n">input</span> <span class="o">=</span> <span class="s1">&#39;input&#39;</span>  <span class="c1"># Optional</span>
@@ -139,28 +139,37 @@
 </pre></div>
 </div>
 <p>Note the <strong>fp32</strong> is optional when the <strong>bf16</strong> is set to precisions field. The below example has the identical action under the hardware platform supports bf16, e.g, the CPX platform.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="kn">import</span> <span class="n">Graph_Optimization</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">Graph_Optimization</span>
     <span class="n">graph_optimizer</span> <span class="o">=</span> <span class="n">Graph_Optimization</span><span class="p">()</span>
     <span class="n">graph_optimizer</span><span class="o">.</span><span class="n">precisions</span> <span class="o">=</span> <span class="s1">&#39;bf16&#39;</span>
     <span class="n">graph_optimizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;/path/to/model&#39;</span>
     <span class="n">optimized_model</span> <span class="o">=</span> <span class="n">graph_optimizer</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>For those platforms without bf16 enabling, like CLX. LPOT also could leverage the graph optimization feature to generate the model under bf16 precision.The usage is just adding the <code class="docutils literal notranslate"><span class="pre">FORCE_BF16=1</span></code> before the cmd.
-e.g, <code class="docutils literal notranslate"><span class="pre">FORCE_BF16=1</span> <span class="pre">/path/to/executable_lpot_wrapper</span></code>. If we don’t add such prefix <code class="docutils literal notranslate"><span class="pre">FORCE_BF16=1</span></code>, the LPOT would exit consequently.</p>
+<p>For those platforms without bf16 enabling, like CLX. Neural Compressor also could leverage the graph optimization feature to generate the model under bf16 precision.The usage is just adding the <code class="docutils literal notranslate"><span class="pre">FORCE_BF16=1</span></code> before the cmd.
+e.g, <code class="docutils literal notranslate"><span class="pre">FORCE_BF16=1</span> <span class="pre">/path/to/executable_nc_wrapper</span></code>. If we do not add such prefix <code class="docutils literal notranslate"><span class="pre">FORCE_BF16=1</span></code>, the program would exit consequently.</p>
 </div>
 <div class="section" id="auto-mixed-precision-with-auto-tuning">
 <h4>Auto-mixed precision with auto-tuning<a class="headerlink" href="#auto-mixed-precision-with-auto-tuning" title="Permalink to this headline">¶</a></h4>
-<p>LPOT also supports tuning the model in graph optimization mode. The end user must replace the quantization field with graph_optimization parts such as shown below. The <strong>precisions</strong> field only supports <strong>bf16</strong> and <strong>fp32</strong>.</p>
+<p>Neural Compressor also supports tuning the model in graph optimization mode. The end user must replace the quantization field with graph_optimization parts such as shown below. The <strong>precisions</strong> field only supports <strong>bf16</strong> and <strong>fp32</strong>.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">graph_optimization</span><span class="p">:</span>
   <span class="nt">precisions</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="s">&#39;bf16&#39;</span><span class="p p-Indicator">,</span> <span class="s">&#39;fp32&#39;</span><span class="p p-Indicator">]</span>
 </pre></div>
 </div>
 <p>Note that if we remove the evaluation field from the yaml file, the graph optimization will only convert the model depending on the precisions setting.</p>
-<p>When the graph_optimization field is set and the evaluation field exists in the yaml file, LPOT executes the similar process like quantization. It means the LPOT converts op into bf16 as much as possible and checks the metric later. If the metric meets the criterion, LPOT exits or it fallbacks one op to fp32 and re-runs the above process until it meets the exit policy setting.</p>
+<p>When the graph_optimization field is set and the evaluation field exists in the yaml file, Neural Compressor executes the similar process like quantization. It converts op into bf16 as much as possible and checks the metric later. If the metric meets the criterion, Neural Compressor exits or it fallbacks one op to fp32 and re-runs the above process until it meets the exit policy setting.</p>
 <p>Below is an example of using yaml to trigger graph optimization.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="kn">import</span> <span class="n">Graph_Optimization</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">Graph_Optimization</span>
     <span class="n">graph_optimizer</span> <span class="o">=</span> <span class="n">Graph_Optimization</span><span class="p">(</span><span class="s1">&#39;/path/to/config.yaml&#39;</span><span class="p">)</span>
+    <span class="n">graph_optimizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;/path/to/model&#39;</span>
+    <span class="n">optimized_model</span> <span class="o">=</span> <span class="n">graph_optimizer</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Graph_Optimization class also support Graph_Optimization_Conf class as it’s argument.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="kn">import</span> <span class="n">Graph_Optimization</span>
+    <span class="kn">from</span> <span class="nn">lpot.conf.config</span> <span class="kn">import</span> <span class="n">Graph_Optimization_Conf</span>
+    <span class="n">conf</span> <span class="o">=</span> <span class="n">Graph_Optimization_Conf</span><span class="p">(</span><span class="s1">&#39;/path/to/config.yaml&#39;</span><span class="p">)</span>
+    <span class="n">graph_optimizer</span> <span class="o">=</span> <span class="n">Graph_Optimization</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
     <span class="n">graph_optimizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;/path/to/model&#39;</span>
     <span class="n">optimized_model</span> <span class="o">=</span> <span class="n">graph_optimizer</span><span class="p">()</span>
 </pre></div>
@@ -182,7 +191,7 @@ e.g, <code class="docutils literal notranslate"><span class="pre">FORCE_BF16=1</
 <ol class="simple">
 <li><p>Measure the performance on original FP32 model.</p></li>
 </ol>
-<p>First of all, we create the <strong>resnet50_measurement.yaml</strong> with below settings for leveraging LPOT Benchmark API.</p>
+<p>First of all, we create the <strong>resnet50_measurement.yaml</strong> with below settings for leveraging Neural Compressor Benchmark API.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span>  <span class="nt">model</span><span class="p">:</span>
     <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">resnet50_v1</span>
     <span class="nt">framework</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tensorflow</span>
@@ -200,7 +209,7 @@ e.g, <code class="docutils literal notranslate"><span class="pre">FORCE_BF16=1</
 </pre></div>
 </div>
 <p>Then, we can leverage the Benchmark API to measure the performance.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="kn">import</span> <span class="n">Benchmark</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">Benchmark</span>
 <span class="n">evaluator</span> <span class="o">=</span> <span class="n">Benchmark</span><span class="p">(</span><span class="s1">&#39;/path/to/resnet50_measurement.yaml&#39;</span><span class="p">)</span>
 <span class="n">evaluator</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;/path/to/resnet50_fp32_pretrained_model.pb&#39;</span>
 <span class="n">evaluator</span><span class="p">(</span><span class="s1">&#39;performance&#39;</span><span class="p">)</span>
@@ -216,7 +225,7 @@ e.g, <code class="docutils literal notranslate"><span class="pre">FORCE_BF16=1</
 <ol class="simple">
 <li><p>Re-Measure the performance on optimized FP32 model.</p></li>
 </ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="kn">import</span> <span class="n">Graph_Optimization</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">Graph_Optimization</span>
 
 <span class="n">graph_optimizer</span> <span class="o">=</span> <span class="n">Graph_Optimization</span><span class="p">()</span>
 <span class="n">graph_optimizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;/path/to/resnet50_fp32_pretrained_model.pb&#39;</span>
@@ -224,8 +233,8 @@ e.g, <code class="docutils literal notranslate"><span class="pre">FORCE_BF16=1</
 <span class="n">output_graph</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;/path/to/fp32_optimized_model&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Then, We measure the optimized performance via LPOT Benchmark API again.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="kn">import</span> <span class="n">Benchmark</span>
+<p>Then, We measure the optimized performance via Neural Compressor Benchmark API again.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">Benchmark</span>
 <span class="n">evaluator</span> <span class="o">=</span> <span class="n">Benchmark</span><span class="p">(</span><span class="s1">&#39;/path/to/resnet50_measurement.yaml&#39;</span><span class="p">)</span>
 <span class="n">evaluator</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;/path/to/fp32_optimized_model&#39;</span>
 <span class="n">evaluator</span><span class="p">(</span><span class="s1">&#39;performance&#39;</span><span class="p">)</span>
@@ -253,7 +262,7 @@ e.g, <code class="docutils literal notranslate"><span class="pre">FORCE_BF16=1</
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Intel® Low Precision Optimization Tool.</p>
+    <p>&#169; Copyright 2021, Intel® Neural Compressor.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

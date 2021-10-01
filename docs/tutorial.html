@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tutorial &mdash; Intel® Low Precision Optimization Tool  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <title>Tutorial &mdash; Intel® Neural Compressor  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -25,10 +25,10 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> Intel® Low Precision Optimization Tool
+            <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.6
+                1.7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -52,7 +52,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../contributions.html">Contribution Guidelines</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../legal_information.html">Legal Information</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../security_policy.html">Security Policy</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/intel/lpot">Intel® LPOT repository</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/intel/neural-compressor">Intel® Neural Compressor repository</a></li>
 </ul>
 
         </div>
@@ -61,7 +61,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Intel® Low Precision Optimization Tool</a>
+          <a href="../index.html">Intel® Neural Compressor</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -81,8 +81,8 @@
              
   <div class="section" id="tutorial">
 <h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
-<p>This tutorial provides instructions (with examples) on how to integrate models with Intel® Low Precision Optimization Tool (LPOT).</p>
-<p>The following diagram shows steps for enabling model with LPOT:</p>
+<p>This tutorial provides instructions (with examples) on how to integrate models with Intel® Neural Compressor.</p>
+<p>The following diagram shows steps for enabling model with Neural Compressor:</p>
 <p><img alt="Tutorial" src="../_images/tutorial.png" /></p>
 <div class="section" id="usage-examples">
 <h2>Usage Examples<a class="headerlink" href="#usage-examples" title="Permalink to this headline">¶</a></h2>
@@ -93,15 +93,25 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">Postprocess</span></code>      <span style="color:red"><em>optional</em></span></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Metric</span></code></p></li>
 </ul>
-<p>LPOT constructs the whole quantization/pruning process using these four components.</p>
-<p>LPOT has added built-in support for popular dataloaders/datasets and metrics to ease the preparation. Refer to <a class="reference internal" href="dataset.html"><span class="doc">dataset</span></a> and <a class="reference internal" href="metric.html"><span class="doc">metric</span></a> to learn how to use them in yaml.</p>
-<p>LPOT also supports registering custom datasets and custom metrics by code.</p>
-<p>As for model, LPOT abstract a common API, named <a class="reference external" href="https://github.com/intel/neural-compressor/blob/6e1a111de07958bdff7c914b2bd99ba039e6280f/docs/../lpot/experimental/common/model.py">lpot.experimental.common.Model</a>, to cover the case in which model, weight, and other necessary info are separately stored. Refer to <a class="reference internal" href="model.html"><span class="doc">model</span></a> to learn how to use it.</p>
-<p>Postprocess is treated as a special transform by LPOT which is only needed when a model output is mismatching with the expected input of LPOT built-in metrics. If a user is using a custom metric, the postprocess is not needed as the custom metric implementation needed ensures it can handle the model output correctly. On the other hand, the postprocess logic becomes part of the custom metric implementation.</p>
-<p>The example below shows how to enable LPOT on TensorFlow mobilenet_v1 with a built-in dataloader, dataset, and metric.</p>
+<p>Neural Compressor constructs the whole quantization/pruning process using these four components.</p>
+<p>Neural Compressor has added built-in support for popular dataloaders/datasets and metrics to ease the preparation. Refer to <a class="reference internal" href="dataset.html"><span class="doc">dataset</span></a> and <a class="reference internal" href="metric.html"><span class="doc">metric</span></a> to learn how to use them in yaml.</p>
+<p>Neural Compressor also supports registering custom datasets and custom metrics by code.</p>
+<p>As for model, Neural Compressor abstract a common API, named <a class="reference external" href="https://github.com/intel/neural-compressor/blob/7607ee46a015ee83a5e79dace8535a439d49cc8c/docs/../neural_compressor/experimental/common/model.py">neural_compressor.experimental.common.Model</a>, to cover the case in which model, weight, and other necessary info are separately stored. Refer to <a class="reference internal" href="model.html"><span class="doc">model</span></a> to learn how to use it.</p>
+<p>Postprocess is treated as a special transform by Neural Compressor which is only needed when a model output is mismatching with the expected input of Neural Compressor built-in metrics. If a user is using a custom metric, the postprocess is not needed as the custom metric implementation needed ensures it can handle the model output correctly. On the other hand, the postprocess logic becomes part of the custom metric implementation.</p>
+<p>The example below shows how to enable Neural Compressor on TensorFlow mobilenet_v1 with a built-in dataloader, dataset, and metric.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># main.py</span>
+<span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">Quantization</span><span class="p">,</span> <span class="n">common</span>
+<span class="n">quantizer</span> <span class="o">=</span> <span class="n">Quantization</span><span class="p">(</span><span class="s1">&#39;./conf.yaml&#39;</span><span class="p">)</span>
+<span class="n">quantizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="s2">&quot;./mobilenet_v1_1.0_224_frozen.pb&quot;</span><span class="p">)</span>
+<span class="n">quantized_model</span> <span class="o">=</span> <span class="n">quantizer</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Quantization also support Quantization_Conf class as it’s argument:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># main.py</span>
 <span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="kn">import</span> <span class="n">Quantization</span><span class="p">,</span> <span class="n">common</span>
-<span class="n">quantizer</span> <span class="o">=</span> <span class="n">Quantization</span><span class="p">(</span><span class="s1">&#39;./conf.yaml&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">lpot.conf.config</span> <span class="kn">import</span> <span class="n">Quantization_Conf</span>
+<span class="n">conf</span> <span class="o">=</span> <span class="n">Quantization_Conf</span><span class="p">(</span><span class="s1">&#39;./conf.yaml&#39;</span><span class="p">)</span>
+<span class="n">quantizer</span> <span class="o">=</span> <span class="n">Quantization</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
 <span class="n">quantizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="s2">&quot;./mobilenet_v1_1.0_224_frozen.pb&quot;</span><span class="p">)</span>
 <span class="n">quantized_model</span> <span class="o">=</span> <span class="n">quantizer</span><span class="p">()</span>
 </pre></div>
@@ -139,10 +149,10 @@
           <span class="nt">width</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">224</span>
 </pre></div>
 </div>
-<p>In this example, we use an LPOT built-in <code class="docutils literal notranslate"><span class="pre">ImageRecord</span></code> dataset and a <code class="docutils literal notranslate"><span class="pre">topk</span></code> metric.</p>
-<p>If the user wants to use a dataset or metric that is not supported by the LPOT built-in, the user can register a custom one as demonstrated in the below helloworld example.</p>
+<p>In this example, we use an Neural Compressor built-in <code class="docutils literal notranslate"><span class="pre">ImageRecord</span></code> dataset and a <code class="docutils literal notranslate"><span class="pre">topk</span></code> metric.</p>
+<p>If the user wants to use a dataset or metric that is not supported by built-in, the user can register a custom one as demonstrated in the below helloworld example.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># main.py</span>
-<span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="kn">import</span> <span class="n">Quantization</span><span class="p">,</span> <span class="n">common</span>
+<span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">Quantization</span><span class="p">,</span> <span class="n">common</span>
 
 <span class="k">class</span> <span class="nc">Dataset</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -188,7 +198,7 @@
 <div><p><strong>Note</strong></p>
 <p>In the customized dataset, the <code class="docutils literal notranslate"><span class="pre">__getitem__()</span></code> interface must be implemented and return a single sample and label. In this example, it returns the (image, label) pair. The user can return (image, 0) for a label-free case.</p>
 </div></blockquote>
-<p>In the customized metric, the update() function records the predicted result of each mini-batch. The result() function is invoked by LPOT at the end of the evaluation to return a scalar to reflect model accuracy. By default, this scalar is higher-is-better. If this scalar returned from the customized metric is a lower-is-better value, <code class="docutils literal notranslate"><span class="pre">tuning.accuracy_criterion.higher_is_better</span></code> in yaml should be set to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<p>In the customized metric, the update() function records the predicted result of each mini-batch. The result() function is invoked by Neural Compressor at the end of the evaluation to return a scalar to reflect model accuracy. By default, this scalar is higher-is-better. If this scalar returned from the customized metric is a lower-is-better value, <code class="docutils literal notranslate"><span class="pre">tuning.accuracy_criterion.higher_is_better</span></code> in yaml should be set to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># conf.yaml</span>
 <span class="nt">model</span><span class="p">:</span>
   <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">hello_world</span>
@@ -208,10 +218,10 @@
 <div class="section" id="helloworld-examples">
 <h2>Helloworld Examples<a class="headerlink" href="#helloworld-examples" title="Permalink to this headline">¶</a></h2>
 <ol class="simple">
-<li><p>Built-in dataloader and metric example: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/6e1a111de07958bdff7c914b2bd99ba039e6280f/examples/helloworld/tf_example1">tf_example1</a> for more details.</p></li>
-<li><p>TensorFlow checkpoint: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/6e1a111de07958bdff7c914b2bd99ba039e6280f/examples/helloworld/tf_example4">tf_example4</a> for more details.</p></li>
-<li><p>Enable benchmark for performance and accuracy measurement: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/6e1a111de07958bdff7c914b2bd99ba039e6280f/examples/helloworld/tf_example5">tf_example5</a> for more details.</p></li>
-<li><p>TensorFlow slim model: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/6e1a111de07958bdff7c914b2bd99ba039e6280f/examples/helloworld/tf_example3">tf_example3</a> for more details.</p></li>
+<li><p>Built-in dataloader and metric example: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/7607ee46a015ee83a5e79dace8535a439d49cc8c/examples/helloworld/tf_example1">tf_example1</a> for more details.</p></li>
+<li><p>TensorFlow checkpoint: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/7607ee46a015ee83a5e79dace8535a439d49cc8c/examples/helloworld/tf_example4">tf_example4</a> for more details.</p></li>
+<li><p>Enable benchmark for performance and accuracy measurement: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/7607ee46a015ee83a5e79dace8535a439d49cc8c/examples/helloworld/tf_example5">tf_example5</a> for more details.</p></li>
+<li><p>TensorFlow slim model: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/7607ee46a015ee83a5e79dace8535a439d49cc8c/examples/helloworld/tf_example3">tf_example3</a> for more details.</p></li>
 </ol>
 </div>
 </div>
@@ -227,7 +237,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Intel® Low Precision Optimization Tool.</p>
+    <p>&#169; Copyright 2021, Intel® Neural Compressor.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

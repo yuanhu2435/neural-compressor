@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Metrics &mdash; Intel® Low Precision Optimization Tool  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <title>Metrics &mdash; Intel® Neural Compressor  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -16,7 +16,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="LPOT UX" href="ux.html" />
+    <link rel="next" title="Quantization" href="Quantization.html" />
     <link rel="prev" title="Dataset" href="dataset.html" /> 
 </head>
 
@@ -25,10 +25,10 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> Intel® Low Precision Optimization Tool
+            <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.6
+                1.7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -52,7 +52,6 @@
 <li class="toctree-l4"><a class="reference internal" href="#built-in-metric-support-list">Built-in metric support list</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="ux.html">LPOT UX</a></li>
 <li class="toctree-l3"><a class="reference external" href="https://software.intel.com/content/www/us/en/develop/documentation/get-started-with-ai-linux/top.html">Intel oneAPI AI Analytics Toolkit Get Started Guide</a></li>
 <li class="toctree-l3"><a class="reference external" href="https://github.com/oneapi-src/oneAPI-samples/tree/master/AI-and-Analytics">AI and Analytics Samples</a></li>
 </ul>
@@ -65,7 +64,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../contributions.html">Contribution Guidelines</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../legal_information.html">Legal Information</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../security_policy.html">Security Policy</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/intel/lpot">Intel® LPOT repository</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/intel/neural-compressor">Intel® Neural Compressor repository</a></li>
 </ul>
 
         </div>
@@ -74,7 +73,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Intel® Low Precision Optimization Tool</a>
+          <a href="../index.html">Intel® Neural Compressor</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -95,12 +94,12 @@
              
   <div class="section" id="metrics">
 <h1>Metrics<a class="headerlink" href="#metrics" title="Permalink to this headline">¶</a></h1>
-<p>In terms of evaluating the performance of a specific model, we should have general metrics to measure the performance of different models. Different frameworks always have their own Metric module but with different features and APIs. LPOT Metrics supports code-free configuration through a yaml file, with built-in metrics, so that LPOT can achieve performance and accuracy without code changes from the user. In special cases, users can also register their own metric classes through the LPOT method.</p>
+<p>In terms of evaluating the performance of a specific model, we should have general metrics to measure the performance of different models. Different frameworks always have their own Metric module but with different features and APIs. Neural Compressor Metrics supports code-free configuration through a yaml file, with built-in metrics, so that Neural Compressor can achieve performance and accuracy without code changes from the user. In special cases, users can also register their own metric classes through below method.</p>
 <div class="section" id="how-to-use-metrics">
 <h2>How to use Metrics<a class="headerlink" href="#how-to-use-metrics" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="config-built-in-metric-in-a-yaml-file">
 <h3>Config built-in metric in a yaml file<a class="headerlink" href="#config-built-in-metric-in-a-yaml-file" title="Permalink to this headline">¶</a></h3>
-<p>Users can specify an LPOT built-in metric such as shown below:</p>
+<p>Users can specify an Neural Compressor built-in metric such as shown below:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">evaluation</span><span class="p">:</span>
   <span class="nt">accuracy</span><span class="p">:</span>
     <span class="nt">metric</span><span class="p">:</span>
@@ -129,7 +128,7 @@
 <p>The result() function returns a higher-is-better scalar to reflect model accuracy on an evaluation dataset.</p>
 <p>After defining the metric class, users need to register it with a user-defined metric name and the metric class:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
-<span class="kn">from</span> <span class="nn">lpot.quantization</span> <span class="kn">import</span> <span class="n">Quantization</span><span class="p">,</span> <span class="n">common</span>
+<span class="kn">from</span> <span class="nn">neural_compressor.quantization</span> <span class="kn">import</span> <span class="n">Quantization</span><span class="p">,</span> <span class="n">common</span>
 <span class="n">quantizer</span> <span class="o">=</span> <span class="n">Quantization</span><span class="p">(</span><span class="n">yaml_file</span><span class="p">)</span>
 <span class="n">quantizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
 <span class="n">quantizer</span><span class="o">.</span><span class="n">metric</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Metric</span><span class="p">(</span><span class="n">NewMetric</span><span class="p">,</span> <span class="s1">&#39;metric_name&#39;</span><span class="p">)</span>
@@ -141,8 +140,8 @@
 </div>
 <div class="section" id="built-in-metric-support-list">
 <h2>Built-in metric support list<a class="headerlink" href="#built-in-metric-support-list" title="Permalink to this headline">¶</a></h2>
-<p>LPOT supports some built-in metrics that are popularly used in industry.</p>
-<p>Refer to <a class="reference external" href="https://github.com/intel/neural-compressor/tree/6e1a111de07958bdff7c914b2bd99ba039e6280f/examples/helloworld/tf_example1">this HelloWorld example</a> on how to config a built-in metric.</p>
+<p>Neural Compressor supports some built-in metrics that are popularly used in industry.</p>
+<p>Refer to <a class="reference external" href="https://github.com/intel/neural-compressor/tree/7607ee46a015ee83a5e79dace8535a439d49cc8c/examples/helloworld/tf_example1">this HelloWorld example</a> on how to config a built-in metric.</p>
 <div class="section" id="tensorflow">
 <h3>TensorFlow<a class="headerlink" href="#tensorflow" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
@@ -470,13 +469,13 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="dataset.html" class="btn btn-neutral float-left" title="Dataset" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="ux.html" class="btn btn-neutral float-right" title="LPOT UX" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="Quantization.html" class="btn btn-neutral float-right" title="Quantization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Intel® Low Precision Optimization Tool.</p>
+    <p>&#169; Copyright 2021, Intel® Neural Compressor.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

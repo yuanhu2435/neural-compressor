@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Introduction to Intel Intel® Neural Compressor &mdash; Intel® Low Precision Optimization Tool  documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <title>Introduction to Intel® Neural Compressor &mdash; Intel® Neural Compressor  documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -23,10 +23,10 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> Intel® Low Precision Optimization Tool
+            <a href="index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.6
+                1.7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -46,7 +46,7 @@
 <li class="toctree-l1"><a class="reference internal" href="contributions.html">Contribution Guidelines</a></li>
 <li class="toctree-l1"><a class="reference internal" href="legal_information.html">Legal Information</a></li>
 <li class="toctree-l1"><a class="reference internal" href="security_policy.html">Security Policy</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/intel/lpot">Intel® LPOT repository</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/intel/neural-compressor">Intel® Neural Compressor repository</a></li>
 </ul>
 
         </div>
@@ -55,7 +55,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Intel® Low Precision Optimization Tool</a>
+          <a href="index.html">Intel® Neural Compressor</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -63,7 +63,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Introduction to Intel Intel® Neural Compressor</li>
+      <li>Introduction to Intel® Neural Compressor</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/welcome.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -73,9 +73,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="introduction-to-intel-intel-neural-compressor">
-<h1>Introduction to Intel Intel® Neural Compressor<a class="headerlink" href="#introduction-to-intel-intel-neural-compressor" title="Permalink to this headline">¶</a></h1>
-<p>The Intel® Neural Compressor (former name Intel® Low Precision Optimization Tool) is an open-source Python library that delivers a unified low-precision inference interface across multiple Intel-optimized Deep Learning (DL) frameworks on both CPUs and GPUs. It supports automatic accuracy-driven tuning strategies, along with additional objectives such as optimizing for performance, model size, and memory footprint. It also provides easy extension capability for new backends, tuning strategies, metrics, and objectives.</p>
+  <div class="section" id="introduction-to-intel-neural-compressor">
+<h1>Introduction to Intel® Neural Compressor<a class="headerlink" href="#introduction-to-intel-neural-compressor" title="Permalink to this headline">¶</a></h1>
+<p>Intel® Neural Compressor (formerly known as Intel® Low Precision Optimization Tool) is an open-source Python library running on Intel CPUs and GPUs, which delivers unified interfaces across multiple deep learning frameworks for popular network compression technologies, such as quantization, pruning, knowledge distillation. This tool supports automatic accuracy-driven tuning strategies to help user quickly find out the best quantized model. It also implements different weight pruning algorithms to generate pruned model with predefined sparsity goal and supports knowledge distillation to distill the knowledge from the teacher model to the student model.</p>
 <blockquote>
 <div><p><strong>Note</strong>: GPU support is under development.</p>
 </div></blockquote>
@@ -88,24 +88,25 @@
 </thead>
 <tbody>
 <tr>
-<td><img alt="Intel® Neural Compressor Infrastructure" src="./docs/imgs/infrastructure.png" title="Infrastructure" /></td>
-<td><img alt="Intel® Neural Compressor Workflow" src="./docs/imgs/workflow.png" title="Workflow" /></td>
+<td><img alt="Infrastructure" src="./docs/imgs/infrastructure.png" title="Infrastructure" /></td>
+<td><img alt="Workflow" src="./docs/imgs/workflow.png" title="Workflow" /></td>
 </tr>
 </tbody>
-</table><p>Supported Intel-optimized DL frameworks are:</p>
+</table><p>Supported deep learning frameworks are:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow">TensorFlow*</a>, including <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up3">1.15.0 UP3</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up2">1.15.0 UP2</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up1">1.15.0 UP1</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.1.0">2.1.0</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.2.0">2.2.0</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.3.0">2.3.0</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.4.0">2.4.0</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.5.0">2.5.0</a>, <a class="reference external" href="https://github.com/tensorflow/tensorflow/tree/v2.6.0">Official TensorFlow 2.6.0</a></p></li>
 </ul>
 <blockquote>
-<div><p><strong>Note</strong>: Intel Optimized TensorFlow 2.5.0 requires to set environment variable TF_ENABLE_MKL_NATIVE_FORMAT=0 before running Intel® Neural Compressor quantization or deploying the quantized model.</p>
+<div><p><strong>Note</strong>: Intel Optimized TensorFlow 2.5.0 requires setting environment variable TF_ENABLE_MKL_NATIVE_FORMAT=0 before running quantization process or deploying the quantized model.</p>
 </div></blockquote>
 <blockquote>
-<div><p><strong>Note</strong>: From Official TensorFlow 2.6.0, oneDNN support has been upstreamed. User just need download official TensorFlow binary for CPU device and set environment variable TF_ENABLE_ONEDNN_OPTS=1 before running Intel® Neural Compressor quantization or deploying the quantized model.</p>
+<div><p><strong>Note</strong>: From the official TensorFlow 2.6.0, oneDNN support has been upstreamed. Download the official TensorFlow 2.6.0 binary for the CPU device and set the environment variable TF_ENABLE_ONEDNN_OPTS=1 before running the quantization process or deploying the quantized model.</p>
 </div></blockquote>
 <ul class="simple">
 <li><p><a class="reference external" href="https://pytorch.org/">PyTorch*</a>, including <a class="reference external" href="https://download.pytorch.org/whl/torch_stable.html">1.5.0+cpu</a>, <a class="reference external" href="https://download.pytorch.org/whl/torch_stable.html">1.6.0+cpu</a>, <a class="reference external" href="https://download.pytorch.org/whl/torch_stable.html">1.8.0+cpu</a></p></li>
 <li><p><a class="reference external" href="https://mxnet.apache.org">Apache* MXNet</a>, including <a class="reference external" href="https://github.com/apache/incubator-mxnet/tree/1.6.0">1.6.0</a>, <a class="reference external" href="https://github.com/apache/incubator-mxnet/tree/1.7.0">1.7.0</a>, <a class="reference external" href="https://github.com/apache/incubator-mxnet/tree/1.8.0">1.8.0</a></p></li>
 <li><p><a class="reference external" href="https://github.com/microsoft/onnxruntime">ONNX* Runtime</a>, including <a class="reference external" href="https://github.com/microsoft/onnxruntime/tree/v1.6.0">1.6.0</a>, <a class="reference external" href="https://github.com/microsoft/onnxruntime/tree/v1.7.0">1.7.0</a>, <a class="reference external" href="https://github.com/microsoft/onnxruntime/tree/v1.8.0">1.8.0</a></p></li>
+<li><p><a class="reference internal" href="docs/engine.html"><span class="doc">Engine</span></a>, which is a built-in bare metal <a class="reference external" href="https://github.com/intel/neural-compressor/tree/7607ee46a015ee83a5e79dace8535a439d49cc8c/./engine">inference engine</a> in Intel® Neural Compressor.</p></li>
 </ul>
 <p><a class="reference internal" href="getting_started.html"><span class="doc">Get started</span></a> with installation, tutorials, examples, and more!</p>
 <p>View the Intel® Neural Compressor repo at: <a class="reference external" href="https://github.com/intel/neural-compressor">https://github.com/intel/neural-compressor</a>.</p>
@@ -119,7 +120,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Intel® Low Precision Optimization Tool.</p>
+    <p>&#169; Copyright 2021, Intel® Neural Compressor.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

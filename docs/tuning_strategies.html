@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tuning Strategies &mdash; Intel® Low Precision Optimization Tool  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <title>Tuning Strategies &mdash; Intel® Neural Compressor  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -25,10 +25,10 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> Intel® Low Precision Optimization Tool
+            <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.6
+                1.7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -63,7 +63,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../contributions.html">Contribution Guidelines</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../legal_information.html">Legal Information</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../security_policy.html">Security Policy</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/intel/lpot">Intel® LPOT repository</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/intel/neural-compressor">Intel® Neural Compressor repository</a></li>
 </ul>
 
         </div>
@@ -72,7 +72,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Intel® Low Precision Optimization Tool</a>
+          <a href="../index.html">Intel® Neural Compressor</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -95,7 +95,7 @@
 <h1>Tuning Strategies<a class="headerlink" href="#tuning-strategies" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
-<p>Intel® Low Precision Optimization Tool aims to help users quickly deploy
+<p>Intel® Neural Compressor aims to help users quickly deploy
 the low-precision inference solution on popular Deep Learning frameworks
 such as TensorFlow, PyTorch, and MxNet. Using built-in strategies, it
 automatically optimizes low-precision recipes for deep learning models to
@@ -111,7 +111,7 @@ below:</p>
 <p><img alt="Tuning Strategy" src="../_images/strategy.png" /></p>
 <p>Strategies begin with an adaptor layer (Framework Adaptor) where the user
 passes a framework-specific model to initialize an instance of the
-<code class="docutils literal notranslate"><span class="pre">lpot.Quantization()</span> <span class="pre">class</span></code>; strategies call the <code class="docutils literal notranslate"><span class="pre">self.adaptor.query_fw_capability(model)</span></code> to get the framework and
+<code class="docutils literal notranslate"><span class="pre">neural_compressor.Quantization()</span> <span class="pre">class</span></code>; strategies call the <code class="docutils literal notranslate"><span class="pre">self.adaptor.query_fw_capability(model)</span></code> to get the framework and
 model-specific quantization capabilities. From there, each strategy merges
 model-specific configurations in a <code class="docutils literal notranslate"><span class="pre">yaml</span></code> configuration file to filter some
 capability from the first step in order to generate the tuning space. Each
@@ -122,7 +122,7 @@ tuning phase stops when the <code class="docutils literal notranslate"><span cla
 </div>
 <div class="section" id="configurations">
 <h2>Configurations<a class="headerlink" href="#configurations" title="Permalink to this headline">¶</a></h2>
-<p>Detailed configuration templates can be found <a class="reference external" href="https://github.com/intel/neural-compressor/tree/6e1a111de07958bdff7c914b2bd99ba039e6280f/docs/../lpot/template">here</a>.</p>
+<p>Detailed configuration templates can be found <a class="reference external" href="https://github.com/intel/neural-compressor/tree/7607ee46a015ee83a5e79dace8535a439d49cc8c/docs/../neural_compressor/template">here</a>.</p>
 <div class="section" id="model-specific-configurations">
 <h3>Model-specific configurations<a class="headerlink" href="#model-specific-configurations" title="Permalink to this headline">¶</a></h3>
 <p>For model-specific configurations, users can set the quantization approach.
@@ -136,7 +136,7 @@ quantization-related parameters for model-wise and op-wise:</p>
     <span class="nt">first_conv_or_matmul_quantization</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">True</span>          <span class="c1"># optional. default value is True.</span>
   <span class="nt">calibration</span><span class="p">:</span>
     <span class="nt">sampling_size</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1000, 2000</span>                        <span class="c1"># optional. default value is 100. used to set how many samples should be used in calibration.</span>
-    <span class="nt">dataloader</span><span class="p">:</span>                                      <span class="c1"># optional. if not specified, user need construct a q_dataloader in code for lpot.Quantization.</span>
+    <span class="nt">dataloader</span><span class="p">:</span>                                      <span class="c1"># optional. if not specified, user need construct a q_dataloader in code for neural_compressor.Quantization.</span>
       <span class="nt">dataset</span><span class="p">:</span>
         <span class="nt">TFRecordDataset</span><span class="p">:</span>
           <span class="nt">root</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/path/to/tf_record</span>
@@ -231,7 +231,7 @@ the <code class="docutils literal notranslate"><span class="pre">strategy</span>
 optimization of black-box functions. This strategy comes from the <a class="reference external" href="https://github.com/fmfn/BayesianOptimization">Bayesian
 optimization</a> package and
 changed it to a discrete version that complied with the strategy standard of
-Intel® Low Precision Optimization Tool. It uses <a class="reference external" href="https://en.wikipedia.org/wiki/Neural_network_Gaussian_process">Gaussian processes</a> to define
+Intel® Neural Compressor. It uses <a class="reference external" href="https://en.wikipedia.org/wiki/Neural_network_Gaussian_process">Gaussian processes</a> to define
 the prior/posterior distribution over the black-box function with the tuning
 history, and then finds the tuning configuration that maximizes the expected
 improvement. For now, <code class="docutils literal notranslate"><span class="pre">Bayesian</span></code> just focus on op-wise quantize configs tuning
@@ -400,13 +400,13 @@ tuning configs to generate a better-performance quantized model.</p>
 </div>
 <div class="section" id="id12">
 <h4>Usage<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
-<p>Compare to <code class="docutils literal notranslate"><span class="pre">Basic</span></code>, <code class="docutils literal notranslate"><span class="pre">sigopt_api_token</span></code> and <code class="docutils literal notranslate"><span class="pre">sigopt_project_id</span></code> is necessary for <code class="docutils literal notranslate"><span class="pre">SigOpt</span></code>.<code class="docutils literal notranslate"><span class="pre">sigopt_experiment_name</span></code> is optional, the default name is <code class="docutils literal notranslate"><span class="pre">lpot-tune</span></code>.</p>
+<p>Compare to <code class="docutils literal notranslate"><span class="pre">Basic</span></code>, <code class="docutils literal notranslate"><span class="pre">sigopt_api_token</span></code> and <code class="docutils literal notranslate"><span class="pre">sigopt_project_id</span></code> is necessary for <code class="docutils literal notranslate"><span class="pre">SigOpt</span></code>.<code class="docutils literal notranslate"><span class="pre">sigopt_experiment_name</span></code> is optional, the default name is <code class="docutils literal notranslate"><span class="pre">nc-tune</span></code>.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">tuning</span><span class="p">:</span>
   <span class="nt">strategy</span><span class="p">:</span>
     <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">sigopt</span>
     <span class="nt">sigopt_api_token</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">YOUR-ACCOUNT-API-TOKEN</span>
     <span class="nt">sigopt_project_id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">PROJECT-ID</span>
-    <span class="nt">sigopt_experiment_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">lpot-tune</span>
+    <span class="nt">sigopt_experiment_name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">nc-tune</span>
   <span class="nt">accuracy_criterion</span><span class="p">:</span>
     <span class="nt">relative</span><span class="p">:</span>  <span class="l l-Scalar l-Scalar-Plain">0.01</span>
   <span class="nt">exit_policy</span><span class="p">:</span>
@@ -414,13 +414,13 @@ tuning configs to generate a better-performance quantized model.</p>
   <span class="nt">random_seed</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">9527</span>
 </pre></div>
 </div>
-<p>For details, <a class="reference internal" href="sigopt_strategy.html"><span class="doc">how to use sigopt strategy in lpot</span></a> is available.</p>
+<p>For details, <a class="reference internal" href="sigopt_strategy.html"><span class="doc">how to use sigopt strategy in neural_compressor</span></a> is available.</p>
 </div>
 </div>
 </div>
 <div class="section" id="customize-a-new-tuning-strategy">
 <h2>Customize a New Tuning Strategy<a class="headerlink" href="#customize-a-new-tuning-strategy" title="Permalink to this headline">¶</a></h2>
-<p>Intel® Low Precision Optimization Tool supports new strategy extension by implementing a subclass of <code class="docutils literal notranslate"><span class="pre">TuneStrategy</span></code> class in lpot.strategy package
+<p>Intel® Neural Compressor supports new strategy extension by implementing a subclass of <code class="docutils literal notranslate"><span class="pre">TuneStrategy</span></code> class in neural_compressor.strategy package
 and registering this strategy by <code class="docutils literal notranslate"><span class="pre">strategy_registry</span></code> decorator.</p>
 <p>for example, user can implement a <code class="docutils literal notranslate"><span class="pre">Abc</span></code> strategy like below:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@strategy_registry</span>
@@ -436,7 +436,7 @@ and registering this strategy by <code class="docutils literal notranslate"><spa
 <p>The <code class="docutils literal notranslate"><span class="pre">next_tune_cfg</span></code> function is used to yield the next tune configuration according to some algorithm or strategy. <code class="docutils literal notranslate"><span class="pre">TuneStrategy</span></code> base class will traverse
 all the tuning space till a quantization configuration meets pre-defined accuracy criterion.</p>
 <p>If the traverse behavior of <code class="docutils literal notranslate"><span class="pre">TuneStrategy</span></code> base class does not meet new strategy requirement, it could re-implement <code class="docutils literal notranslate"><span class="pre">traverse</span></code> function with self own logic.
-An example like this is under <a class="reference external" href="https://github.com/intel/neural-compressor/blob/6e1a111de07958bdff7c914b2bd99ba039e6280f/docs/../lpot/strategy/strategy.py">TPE Strategy</a>.</p>
+An example like this is under <a class="reference external" href="https://github.com/intel/neural-compressor/blob/7607ee46a015ee83a5e79dace8535a439d49cc8c/docs/../neural_compressor/strategy/strategy.py">TPE Strategy</a>.</p>
 </div>
 </div>
 
@@ -451,7 +451,7 @@ An example like this is under <a class="reference external" href="https://github
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Intel® Low Precision Optimization Tool.</p>
+    <p>&#169; Copyright 2021, Intel® Neural Compressor.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

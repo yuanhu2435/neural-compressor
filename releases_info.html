@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Release &mdash; Intel® Low Precision Optimization Tool  documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <title>Release &mdash; Intel® Neural Compressor  documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -25,10 +25,10 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> Intel® Low Precision Optimization Tool
+            <a href="index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.6
+                1.7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -45,7 +45,6 @@
 <li class="toctree-l1"><a class="reference internal" href="docs/api-introduction.html">API Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docs/doclist.html">Developer Documentation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Release</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#current-release">Current Release</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#known-issues">Known Issues</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#incompatible-changes">Incompatible Changes</a></li>
 </ul>
@@ -53,7 +52,7 @@
 <li class="toctree-l1"><a class="reference internal" href="contributions.html">Contribution Guidelines</a></li>
 <li class="toctree-l1"><a class="reference internal" href="legal_information.html">Legal Information</a></li>
 <li class="toctree-l1"><a class="reference internal" href="security_policy.html">Security Policy</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/intel/lpot">Intel® LPOT repository</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/intel/neural-compressor">Intel® Neural Compressor repository</a></li>
 </ul>
 
         </div>
@@ -62,7 +61,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Intel® Low Precision Optimization Tool</a>
+          <a href="index.html">Intel® Neural Compressor</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -82,23 +81,19 @@
              
   <div class="section" id="release">
 <h1>Release<a class="headerlink" href="#release" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="current-release">
-<h2>Current Release<a class="headerlink" href="#current-release" title="Permalink to this headline">¶</a></h2>
-<p>The latest Intel® Neural Compressor release is v1.4 (May 2021).</p>
 <p>View new feature information and release downloads for the latest and previous releases on GitHub. Validated configurations and distribution sites located here as well:</p>
 <blockquote>
 <div><p><a class="reference external" href="https://github.com/intel/neural-compressor/releases">https://github.com/intel/neural-compressor/releases</a></p>
 </div></blockquote>
-<p>Contact <a class="reference external" href="mailto:lpot&#46;maintainers&#37;&#52;&#48;intel&#46;com">lpot<span>&#46;</span>maintainers<span>&#64;</span>intel<span>&#46;</span>com</a> if you need additional assistance.</p>
-</div>
+<p>Contact <a class="reference external" href="lpot.maintainers&#64;intel.com">Maintainers</a> if you need additional assistance.</p>
 <div class="section" id="known-issues">
 <h2>Known Issues<a class="headerlink" href="#known-issues" title="Permalink to this headline">¶</a></h2>
 <p>The MSE tuning strategy does not work with the PyTorch adaptor layer. This strategy requires a comparison between the FP32 and INT8 tensors to decide which op impacts the final quantization accuracy. The PyTorch adaptor layer does not implement this inspect tensor interface. Therefore, do not choose the MSE tuning strategy for PyTorch models.</p>
 </div>
 <div class="section" id="incompatible-changes">
 <h2>Incompatible Changes<a class="headerlink" href="#incompatible-changes" title="Permalink to this headline">¶</a></h2>
-<p><a class="reference external" href="https://github.com/intel/neural-compressor/tree/v1.2">Intel® Neural Compressor v1.2</a> introduces incompatible changes in user facing APIs. Please refer to <a class="reference internal" href="docs/incompatible_changes.html"><span class="doc">incompatible changes</span></a> to know which incompatible changes are made in v1.2.</p>
-<p><a class="reference external" href="https://github.com/intel/neural-compressor/tree/v1.2.1">Intel® Neural Compressor v1.2.1</a> solves this backward compatible issues introduced in v1.2 by moving new user facing APIs to lpot.experimental package and keep old one as is. Please refer to <a class="reference external" href="/api-documentation/api-introduction">API documentation</a> to know the details of user-facing APIs.</p>
+<p><a class="reference external" href="https://github.com/intel/neural-compressor/tree/v1.2">Neural Compressor v1.2</a> introduces incompatible changes in user facing APIs. Please refer to <a class="reference internal" href="docs/incompatible_changes.html"><span class="doc">incompatible changes</span></a> to know which incompatible changes are made in v1.2.</p>
+<p><a class="reference external" href="https://github.com/intel/neural-compressor/tree/v1.2.1">Neural Compressor v1.2.1</a> solves this backward compatible issues introduced in v1.2 by moving new user facing APIs to neural_compressor.experimental package and keep old one as is. Please refer to <a class="reference external" href="/api-documentation/api-introduction">API documentation</a> to know the details of user-facing APIs.</p>
 </div>
 </div>
 
@@ -113,7 +108,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Intel® Low Precision Optimization Tool.</p>
+    <p>&#169; Copyright 2021, Intel® Neural Compressor.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

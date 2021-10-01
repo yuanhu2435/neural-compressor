@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pruning &mdash; Intel® Low Precision Optimization Tool  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <title>Pruning &mdash; Intel® Neural Compressor  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -25,10 +25,10 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> Intel® Low Precision Optimization Tool
+            <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.6
+                1.7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -52,7 +52,7 @@
 <li class="toctree-l3"><a class="reference internal" href="dynamic_quantization.html">Dynamic Quantization</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Pruning</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#pruning-algorithms-supported-by-lpot">Pruning Algorithms supported by LPOT</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pruning-algorithms-supported-by-neural-compressor">Pruning Algorithms supported by Neural Compressor</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#pruning-api">Pruning API</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#examples">Examples</a></li>
 </ul>
@@ -71,7 +71,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../contributions.html">Contribution Guidelines</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../legal_information.html">Legal Information</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../security_policy.html">Security Policy</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/intel/lpot">Intel® LPOT repository</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/intel/neural-compressor">Intel® Neural Compressor repository</a></li>
 </ul>
 
         </div>
@@ -80,7 +80,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Intel® Low Precision Optimization Tool</a>
+          <a href="../index.html">Intel® Neural Compressor</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -117,14 +117,15 @@
 </ul>
 <p>Filter/Channel pruning means pruning a larger part of the network, such as filters or layers, according to some rules.</p>
 </div>
-<div class="section" id="pruning-algorithms-supported-by-lpot">
-<h2>Pruning Algorithms supported by LPOT<a class="headerlink" href="#pruning-algorithms-supported-by-lpot" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pruning-algorithms-supported-by-neural-compressor">
+<h2>Pruning Algorithms supported by Neural Compressor<a class="headerlink" href="#pruning-algorithms-supported-by-neural-compressor" title="Permalink to this headline">¶</a></h2>
 <table border="1" class="docutils">
 <thead>
 <tr>
 <th>Pruning Type</th>
 <th>Algorithm</th>
 <th>PyTorch</th>
+<th>Tensorflow</th>
 </tr>
 </thead>
 <tbody>
@@ -132,24 +133,28 @@
 <td>unstructured pruning</td>
 <td>basic_magnitude</td>
 <td>Yes</td>
+<td>Yes</td>
 </tr>
 <tr>
 <td></td>
 <td>pattern_lock</td>
 <td>Yes</td>
+<td>N/A</td>
 </tr>
 <tr>
 <td>structured pruning</td>
 <td>pattern_lock</td>
 <td>Yes</td>
+<td>N/A</td>
 </tr>
 <tr>
 <td>filter/channel pruning</td>
 <td>gradient_sensitivity</td>
 <td>Yes</td>
+<td>N/A</td>
 </tr>
 </tbody>
-</table><p>LPOT also supports the two-shot execution of unstructured pruning and post-training quantization.</p>
+</table><p>Neural Compressor also supports the two-shot execution of unstructured pruning and post-training quantization.</p>
 <ul class="simple">
 <li><p>basic_magnitude:</p>
 <ul>
@@ -182,11 +187,11 @@
 <h2>Pruning API<a class="headerlink" href="#pruning-api" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="user-facing-api">
 <h3>User facing API<a class="headerlink" href="#user-facing-api" title="Permalink to this headline">¶</a></h3>
-<p>LPOT pruning API is defined under <code class="docutils literal notranslate"><span class="pre">lpot.experimental.Pruning</span></code>, which takes a user defined yaml file as input. The user defined yaml defines training, pruning and evaluation behaviors.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># pruning.py in lpot/experimental</span>
+<p>Neural Compressor pruning API is defined under <code class="docutils literal notranslate"><span class="pre">neural_compressor.experimental.Pruning</span></code>, which takes a user defined yaml file as input. The user defined yaml defines training, pruning and evaluation behaviors.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># pruning.py in neural_compressor/experimental</span>
 <span class="k">class</span> <span class="nc">Pruning</span><span class="p">():</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf_fname</span><span class="p">):</span>
-        <span class="c1"># The initialization function of pruning, taking the path to user-defined yaml as input</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf_fname_or_obj</span><span class="p">):</span>
+        <span class="c1"># The initialization function of pruning, taking the path or Pruning_Conf class to user-defined yaml as input</span>
         <span class="o">...</span>
 
     <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -204,13 +209,13 @@
     <span class="k">def</span> <span class="nf">pruning_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_pruning_func</span><span class="p">)</span>
         <span class="c1"># The training function provided by user. This function takes framework runtime model object as input parameter, </span>
         <span class="c1"># and executes entire training process with self contained training hyper-parameters.</span>
-        <span class="c1"># It is optional if training could be configured by lpot built-in dataloader/optimizer/criterion.</span>
+        <span class="c1"># It is optional if training could be configured by neural_compressor built-in dataloader/optimizer/criterion.</span>
         <span class="o">...</span>
 
     <span class="nd">@eval_func</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">eval_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_eval_func</span><span class="p">)</span>
         <span class="c1"># The evaluation function provided by user. This function takes framework runtime model object as input parameter and executes evaluation process.</span>
-        <span class="c1"># It is optional if evaluation could be configured by lpot built-in dataloader/optimizer/criterion.</span>
+        <span class="c1"># It is optional if evaluation could be configured by neural_compressor built-in dataloader/optimizer/criterion.</span>
         <span class="o">...</span>
 
     <span class="nd">@train_dataloader</span><span class="o">.</span><span class="n">setter</span>
@@ -248,8 +253,17 @@
 <div class="section" id="launcher-code">
 <h3>Launcher code<a class="headerlink" href="#launcher-code" title="Permalink to this headline">¶</a></h3>
 <p>Simplest launcher code if training behavior is defined in user-defined yaml.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="k">import</span> <span class="n">Pruning</span><span class="p">,</span> <span class="n">common</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="k">import</span> <span class="n">Pruning</span><span class="p">,</span> <span class="n">common</span>
 <span class="n">prune</span> <span class="o">=</span> <span class="n">Pruning</span><span class="p">(</span><span class="s1">&#39;/path/to/user/pruning/yaml&#39;</span><span class="p">)</span>
+<span class="n">prune</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">prune</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Pruning class also support Pruning_Conf class as it’s argument.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="k">import</span> <span class="n">Pruning</span><span class="p">,</span> <span class="n">common</span>
+<span class="kn">from</span> <span class="nn">lpot.conf.config</span> <span class="k">import</span> <span class="n">Pruning_Conf</span>
+<span class="n">conf</span> <span class="o">=</span> <span class="n">Pruning_Conf</span><span class="p">(</span><span class="s1">&#39;/path/to/user/pruning/yaml&#39;</span><span class="p">)</span>
+<span class="n">prune</span> <span class="o">=</span> <span class="n">Pruning</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
 <span class="n">prune</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">prune</span><span class="p">()</span>
 </pre></div>
@@ -360,8 +374,8 @@
 </div>
 <div class="section" id="pruning-with-user-defined-pruning-func">
 <h3>Pruning with user-defined pruning_func()<a class="headerlink" href="#pruning-with-user-defined-pruning-func" title="Permalink to this headline">¶</a></h3>
-<p>User can pass the customized training/evaluation functions to <code class="docutils literal notranslate"><span class="pre">Pruning</span></code> for flexible scenarios. <code class="docutils literal notranslate"><span class="pre">Pruning</span></code>  In this case, pruning process can be done by pre-defined hooks in LPOT. User needs to put those hooks inside the training function.</p>
-<p>LPOT defines several hooks for user pass</p>
+<p>User can pass the customized training/evaluation functions to <code class="docutils literal notranslate"><span class="pre">Pruning</span></code> for flexible scenarios. <code class="docutils literal notranslate"><span class="pre">Pruning</span></code>  In this case, pruning process can be done by pre-defined hooks in Neural Compressor. User needs to put those hooks inside the training function.</p>
+<p>Neural Compressor defines several hooks for user pass</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">on_epoch_begin</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span> <span class="p">:</span> <span class="n">Hook</span> <span class="n">executed</span> <span class="n">at</span> <span class="n">each</span> <span class="n">epoch</span> <span class="n">beginning</span>
 <span class="n">on_batch_begin</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span> <span class="p">:</span> <span class="n">Hook</span> <span class="n">executed</span> <span class="n">at</span> <span class="n">each</span> <span class="n">batch</span> <span class="n">beginning</span>
 <span class="n">on_batch_end</span><span class="p">()</span> <span class="p">:</span> <span class="n">Hook</span> <span class="n">executed</span> <span class="n">at</span> <span class="n">each</span> <span class="n">batch</span> <span class="n">end</span>
@@ -403,7 +417,7 @@
 </pre></div>
 </div>
 <p>In this case, the launcher code is like the following:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="kn">import</span> <span class="n">Pruning</span><span class="p">,</span> <span class="n">common</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">Pruning</span><span class="p">,</span> <span class="n">common</span>
 <span class="n">prune</span> <span class="o">=</span> <span class="n">Pruning</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
 <span class="n">prune</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
 <span class="n">prune</span><span class="o">.</span><span class="n">pruning_func</span> <span class="o">=</span> <span class="n">pruning_func</span>
@@ -413,8 +427,8 @@
 </div>
 <div class="section" id="scheduler-for-pruning-and-quantization">
 <h3>Scheduler for Pruning and Quantization<a class="headerlink" href="#scheduler-for-pruning-and-quantization" title="Permalink to this headline">¶</a></h3>
-<p>LPOT defined Scheduler to automatically pipeline execute prune and post-training quantization. After appending separate component into scheduler pipeline, scheduler executes them one by one. In following example it executes the pruning and then post-training quantization.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="kn">import</span> <span class="n">Quantization</span><span class="p">,</span> <span class="n">common</span><span class="p">,</span> <span class="n">Pruning</span><span class="p">,</span> <span class="n">Scheduler</span>
+<p>Neural Compressor defined Scheduler to automatically pipeline execute prune and post-training quantization. After appending separate component into scheduler pipeline, scheduler executes them one by one. In following example it executes the pruning and then post-training quantization.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">Quantization</span><span class="p">,</span> <span class="n">common</span><span class="p">,</span> <span class="n">Pruning</span><span class="p">,</span> <span class="n">Scheduler</span>
 <span class="n">prune</span> <span class="o">=</span> <span class="n">Pruning</span><span class="p">(</span><span class="n">prune_conf</span><span class="p">)</span>
 <span class="n">quantizer</span> <span class="o">=</span> <span class="n">Quantization</span><span class="p">(</span><span class="n">post_training_quantization_conf</span><span class="p">)</span>
 <span class="n">scheduler</span> <span class="o">=</span> <span class="n">Scheduler</span><span class="p">()</span>
@@ -428,14 +442,15 @@
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="examples-in-lpot">
-<h3>Examples in LPOT<a class="headerlink" href="#examples-in-lpot" title="Permalink to this headline">¶</a></h3>
-<p>Following examples are supported in LPOT:</p>
+<div class="section" id="examples-in-neural-compressor">
+<h3>Examples in Neural Compressor<a class="headerlink" href="#examples-in-neural-compressor" title="Permalink to this headline">¶</a></h3>
+<p>Following examples are supported in Neural Compressor:</p>
 <ul class="simple">
 <li><p>CNN Examples:</p>
 <ul>
 <li><p><a class="reference external" href="../examples/pytorch/eager/image_recognition/imagenet/cpu/prune/README">resnet example</a>: magnitude pruning on resnet.</p></li>
 <li><p><a class="reference external" href="../examples/pytorch/eager/image_recognition/imagenet/cpu/prune_and_ptq/README">pruning and post-training quantization</a>: magnitude pruning and then post-training quantization on resnet.</p></li>
+<li><p><a class="reference external" href="../examples/tensorflow/pruning/resnet_v2/README">resnet_v2 example</a>: magnitude pruning on resnet_v2 for tensorflow.</p></li>
 </ul>
 </li>
 <li><p>NLP Examples:</p>
@@ -460,7 +475,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Intel® Low Precision Optimization Tool.</p>
+    <p>&#169; Copyright 2021, Intel® Neural Compressor.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

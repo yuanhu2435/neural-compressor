@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Getting Started &mdash; Intel® Low Precision Optimization Tool  documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <title>Getting Started &mdash; Intel® Neural Compressor  documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -23,10 +23,10 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> Intel® Low Precision Optimization Tool
+            <a href="index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.6
+                1.7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -46,7 +46,7 @@
 <li class="toctree-l1"><a class="reference internal" href="contributions.html">Contribution Guidelines</a></li>
 <li class="toctree-l1"><a class="reference internal" href="legal_information.html">Legal Information</a></li>
 <li class="toctree-l1"><a class="reference internal" href="security_policy.html">Security Policy</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/intel/lpot">Intel® LPOT repository</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/intel/neural-compressor">Intel® Neural Compressor repository</a></li>
 </ul>
 
         </div>
@@ -55,7 +55,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Intel® Low Precision Optimization Tool</a>
+          <a href="index.html">Intel® Neural Compressor</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -81,28 +81,28 @@
 <a class="reference external" href="https://software.intel.com/content/www/us/en/develop/tools/oneapi/ai-analytics-toolkit.html">Intel® oneAPI AI Analytics Toolkit</a> (AI Kit).
 The AI Kit provides a consolidated package of Intel’s latest deep learning and
 machine optimizations all in one place for ease of development. Along with
-Intel® Neural Compressor, the AI Kit includes Intel-optimized versions of deep learning frameworks
+Neural Compressor, the AI Kit includes Intel-optimized versions of deep learning frameworks
 (such as TensorFlow and PyTorch) and high-performing Python libraries to
 streamline end-to-end data science and AI workflows on Intel architectures.</p>
 <div class="section" id="linux-installation">
 <h3>Linux Installation<a class="headerlink" href="#linux-installation" title="Permalink to this headline">¶</a></h3>
-<p>You can install just the Intel® Neural Compressor library from binary or source, or you can get
-the Intel-optimized framework together with the Intel® Neural Compressor library by installing the
+<p>You can install just the library from binary or source, or you can get
+the Intel-optimized framework together with the library by installing the
 Intel® oneAPI AI Analytics Toolkit.</p>
 <div class="section" id="install-from-binary">
 <h4>Install from binary<a class="headerlink" href="#install-from-binary" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-Shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># install from pip</span>
-pip install lpot
+pip install neural-compressor
 
 <span class="c1"># install from conda</span>
-conda install lpot -c conda-forge -c intel 
+conda install neural-compressor -c conda-forge -c intel 
 </pre></div>
 </div>
 </div>
 <div class="section" id="install-from-source">
 <h4>Install from source<a class="headerlink" href="#install-from-source" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-Shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/intel/neural-compressor.git
-<span class="nb">cd</span> lpot
+<span class="nb">cd</span> neural-compressor
 pip install -r requirements.txt
 python setup.py install
 </pre></div>
@@ -110,7 +110,7 @@ python setup.py install
 </div>
 <div class="section" id="install-from-ai-kit">
 <h4>Install from AI Kit<a class="headerlink" href="#install-from-ai-kit" title="Permalink to this headline">¶</a></h4>
-<p>The AI Kit, which includes the Intel® Neural Compressor
+<p>The AI Kit, which includes the
 library, is distributed through many common channels,
 including from Intel’s website, YUM, APT, Anaconda, and more.
 Select and <a class="reference external" href="https://software.intel.com/content/www/us/en/develop/tools/oneapi/ai-analytics-toolkit/download.html">download</a>
@@ -139,10 +139,10 @@ for post-installation instructions.</p>
 <ul>
 <li><p>Python version: 3.6 or 3.7 or 3.8 or 3.9</p></li>
 <li><p>Download and install <a class="reference external" href="https://anaconda.org/">anaconda</a>.</p></li>
-<li><p>Create a virtual environment named lpot in anaconda:</p>
+<li><p>Create a virtual environment named nc in anaconda:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Here we install python 3.7 for instance. You can also choose python 3.6, 3.8, or 3.9.</span>
-conda create -n lpot <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.7
-conda activate lpot
+conda create -n nc <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.7
+conda activate nc 
 </pre></div>
 </div>
 </li>
@@ -150,17 +150,17 @@ conda activate lpot
 <div class="section" id="id1">
 <h4>Install from binary<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-Shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># install from pip</span>
-pip install lpot
+pip install neural-compressor
 
 <span class="c1"># install from conda</span>
-conda install lpot -c conda-forge -c intel 
+conda install neural-compressor -c conda-forge -c intel 
 </pre></div>
 </div>
 </div>
 <div class="section" id="id2">
 <h4>Install from source<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/intel/neural-compressor.git
-<span class="nb">cd</span> lpot
+<span class="nb">cd</span> neural-compressor
 pip install -r requirements.txt
 python setup.py install
 </pre></div>
@@ -170,7 +170,7 @@ python setup.py install
 </div>
 <div class="section" id="tutorials-and-examples">
 <h2>Tutorials and Examples<a class="headerlink" href="#tutorials-and-examples" title="Permalink to this headline">¶</a></h2>
-<p>Read the following resources to learn how to use Intel® Neural Compressor.</p>
+<p>Read the following resources to learn how to use Neural Compressor.</p>
 <div class="section" id="tutorial">
 <h3>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h3>
 <p>The <a class="reference internal" href="docs/tutorial.html"><span class="doc">Tutorial</span></a> provides comprehensive instructions on how to utilize Intel® Neural Compressor’s features with examples.</p>
@@ -182,7 +182,7 @@ python setup.py install
 </div>
 <div class="section" id="developer-documentation">
 <h2>Developer Documentation<a class="headerlink" href="#developer-documentation" title="Permalink to this headline">¶</a></h2>
-<p>View Intel® Neural Compressor <a class="reference internal" href="docs/doclist.html">Documentation</a> for getting started, deep dive, and advanced resources to help you use and develop Intel® Neural Compressor.</p>
+<p>View Neural Compressor <a class="reference internal" href="docs/doclist.html">Documentation</a> for getting started, deep dive, and advanced resources to help you use and develop Neural Compressor.</p>
 </div>
 <div class="section" id="system-requirements">
 <h2>System Requirements<a class="headerlink" href="#system-requirements" title="Permalink to this headline">¶</a></h2>
@@ -542,7 +542,7 @@ python setup.py install
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Intel® Low Precision Optimization Tool.</p>
+    <p>&#169; Copyright 2021, Intel® Neural Compressor.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
