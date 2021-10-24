@@ -138,11 +138,6 @@ pip install -r requirements.txt
 python setup.py install
 ```
 
-> **Note**: To run examples from neural-compressor version<1.7 with neural-compressor binary version>=1.7, please replace model name in main.py.   
->```shell
-> sed -i "s|lpot|neural_compressor|g" main.py
->```
-
 ## Documentation
 
 **Get Started**
@@ -963,3 +958,7 @@ Intel® Neural Compressor provides numerous examples to show promising accuracy 
 * [Legal](legal_information.md)
 * [Security Policy](security_policy.md)
 * [Intel® Neural Compressor Website](https://intel.github.io/neural-compressor)
+
+## Hiring
+
+We are hiring. Please send your resume to [INC Jobs](lpot.maintainers@intel.com) if you have interests in model compression techniques.

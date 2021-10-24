@@ -28,7 +28,7 @@
             <a href="index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.7
+                1.7.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -74,6 +74,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#additional-content">Additional Content</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hiring">Hiring</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="docs/tutorial.html">Tutorial</a></li>
@@ -150,7 +151,7 @@
 <li><p><a class="reference external" href="https://pytorch.org/">PyTorch*</a>, including <a class="reference external" href="https://download.pytorch.org/whl/torch_stable.html">1.5.0+cpu</a>, <a class="reference external" href="https://download.pytorch.org/whl/torch_stable.html">1.8.0+cpu</a>, <a class="reference external" href="https://download.pytorch.org/whl/torch_stable.html">1.9.0+cpu</a></p></li>
 <li><p><a class="reference external" href="https://mxnet.apache.org">Apache* MXNet</a>, including <a class="reference external" href="https://github.com/apache/incubator-mxnet/tree/1.6.0">1.6.0</a>, <a class="reference external" href="https://github.com/apache/incubator-mxnet/tree/1.7.0">1.7.0</a>, <a class="reference external" href="https://github.com/apache/incubator-mxnet/tree/1.8.0">1.8.0</a></p></li>
 <li><p><a class="reference external" href="https://github.com/microsoft/onnxruntime">ONNX* Runtime</a>, including <a class="reference external" href="https://github.com/microsoft/onnxruntime/tree/v1.6.0">1.6.0</a>, <a class="reference external" href="https://github.com/microsoft/onnxruntime/tree/v1.7.0">1.7.0</a>, <a class="reference external" href="https://github.com/microsoft/onnxruntime/tree/v1.8.0">1.8.0</a></p></li>
-<li><p><a class="reference internal" href="docs/engine.html"><span class="doc">Engine</span></a>, which is a built-in bare metal <a class="reference external" href="https://github.com/intel/neural-compressor/tree/b220ccf3dbf77bd76a7ba5afab9bbf2a121070cd/./engine">acceleration library</a> for domain-specific NLP models.</p></li>
+<li><p><a class="reference internal" href="docs/engine.html"><span class="doc">Engine</span></a>, which is a built-in bare metal <a class="reference external" href="https://github.com/intel/neural-compressor/tree/b5a84e7c3672047db7b3a13733140bc9eafe882c/./engine">acceleration library</a> for domain-specific NLP models.</p></li>
 </ul>
 </div>
 </div>
@@ -251,12 +252,6 @@ pip install -r requirements.txt
 python setup.py install
 </pre></div>
 </div>
-<blockquote>
-<div><p><strong>Note</strong>: To run examples from neural-compressor version&lt;1.7 with neural-compressor binary version&gt;=1.7, please replace model name in main.py.</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sed -i <span class="s2">&quot;s|lpot|neural_compressor|g&quot;</span> main.py
-</pre></div>
-</div>
-</div></blockquote>
 </div>
 </div>
 </div>
@@ -269,7 +264,7 @@ python setup.py install
 <li><p><a class="reference internal" href="docs/dataset.html"><span class="doc">Dataset</span></a> introduces how to utilize Neural Compressor’s built-in dataset and how to develop a custom dataset.</p></li>
 <li><p><a class="reference internal" href="docs/metric.html"><span class="doc">Metric</span></a> introduces how to utilize Neural Compressor’s built-in metrics and how to develop a custom metric.</p></li>
 <li><p><a class="reference internal" href="docs/tutorial.html"><span class="doc">Tutorial</span></a> provides comprehensive instructions on how to utilize Neural Compressor’s features with examples.</p></li>
-<li><p><a class="reference external" href="https://github.com/intel/neural-compressor/tree/b220ccf3dbf77bd76a7ba5afab9bbf2a121070cd/examples">Examples</a> are provided to demonstrate the usage of Neural Compressor in different frameworks: TensorFlow, PyTorch, MXNet, and ONNX Runtime.</p></li>
+<li><p><a class="reference external" href="https://github.com/intel/neural-compressor/tree/b5a84e7c3672047db7b3a13733140bc9eafe882c/examples">Examples</a> are provided to demonstrate the usage of Neural Compressor in different frameworks: TensorFlow, PyTorch, MXNet, and ONNX Runtime.</p></li>
 <li><p><a class="reference internal" href="docs/bench.html"><span class="doc">Intel® Neural Compressor Bench</span></a> is a web-based system used to simplify Intel® Neural Compressor usage.</p></li>
 <li><p><a class="reference external" href="https://software.intel.com/content/www/us/en/develop/documentation/get-started-with-ai-linux/top.html">Intel oneAPI AI Analytics Toolkit Get Started Guide</a> explains the AI Kit components, installation and configuration guides, and instructions for building and running sample apps.</p></li>
 <li><p><a class="reference external" href="https://github.com/oneapi-src/oneAPI-samples/tree/master/AI-and-Analytics">AI and Analytics Samples</a> includes code samples for Intel oneAPI libraries.</p></li>
@@ -1068,6 +1063,10 @@ python setup.py install
 <li><p><a class="reference internal" href="security_policy.html"><span class="doc">Security Policy</span></a></p></li>
 <li><p><a class="reference external" href="https://intel.github.io/neural-compressor">Intel® Neural Compressor Website</a></p></li>
 </ul>
+</div>
+<div class="section" id="hiring">
+<h2>Hiring<a class="headerlink" href="#hiring" title="Permalink to this headline">¶</a></h2>
+<p>We are hiring. Please send your resume to <a class="reference external" href="lpot.maintainers&#64;intel.com">INC Jobs</a> if you have interests in model compression techniques.</p>
 </div>
 </div>
 

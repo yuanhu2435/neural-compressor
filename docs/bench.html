@@ -26,7 +26,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.7
+                1.7.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -75,7 +75,10 @@
              
   <div class="section" id="intel-neural-compressor-bench">
 <h1>Intel® Neural Compressor Bench<a class="headerlink" href="#intel-neural-compressor-bench" title="Permalink to this headline">¶</a></h1>
-<p>Intel® Neural Compressor Bench is only available on Linux based hosts.</p>
+<p>Intel® Neural Compressor Bench is a web application for easier use of Intel® Neural Compressor. It is only available on Linux based hosts.</p>
+</div>
+<div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="start-the-intel-neural-compressor-bench">
 <h2>Start the Intel® Neural Compressor Bench<a class="headerlink" href="#start-the-intel-neural-compressor-bench" title="Permalink to this headline">¶</a></h2>
 <ol>
@@ -103,31 +106,41 @@ Then open address http://localhost:5000/?token=338174d13706855fc6924cec7b3a8ae8
 </div>
 <div class="section" id="home">
 <h2>Home<a class="headerlink" href="#home" title="Permalink to this headline">¶</a></h2>
-<p>This view shows introduction to Intel® Neural Compressor Bench and 2 buttons for creating new configurations in 2 different ways. First one links to <strong>Examples</strong>, the second one to <strong>Config wizard</strong>.</p>
-<p><img alt="Home" src="../_images/home.png" /></p>
-<p>On the left hand side there is a panel with list of configurations.</p>
-<p><img alt="Menu" src="../_images/menu.png" /></p>
-<p>One can see system information by clicking <img alt="System info" src="../_images/system_info.png" /> button. The result is details dialog:</p>
-<p><img alt="System info table" src="../_images/system_info_table.png" /></p>
-<p>By clicking <img alt="See models" src="../_images/see_models.png" />  button you can navigate to <strong>My models list</strong>.</p>
-</div>
-<div class="section" id="configuration-details">
-<h2>Configuration details<a class="headerlink" href="#configuration-details" title="Permalink to this headline">¶</a></h2>
-<p>When clicking on configuration from the left hand side list, you can see its details view. You can see the results, rerun the tuning, check the configuration and console output. You can also see the model graph.</p>
-<div class="section" id="tuning-history">
-<h3>Tuning history<a class="headerlink" href="#tuning-history" title="Permalink to this headline">¶</a></h3>
-<p>If the configuration was tuned several times, in the details view there will be a chart showing accuracy and duration of historical tunings.</p>
-<p><img alt="Details" src="../_images/details.png" /></p>
+<p>This view shows introduction to Intel® Neural Compressor Bench and 2 buttons for creating new configurations in 2 different ways. First one links to <strong>Quantize from presets</strong> where you can find examples of models to chose from, the second one to <strong>Quantize using wizard</strong> where you can your custom models with many configurable parameters.
+<img alt="Home" src="../_images/home.png" /></p>
 </div>
 </div>
-<div class="section" id="my-models-list">
-<h2>My Models list<a class="headerlink" href="#my-models-list" title="Permalink to this headline">¶</a></h2>
-<p>This view lists all Model Configurations defined on a given server.</p>
-<p>You can create a new model using pre-defined models by using a New Model Wizard or <strong>Examples</strong>:</p>
-<p><img alt="My models" src="../_images/my_models.png" /></p>
+<div class="section" id="quantize-from-presets">
+<h1>Quantize from presets<a class="headerlink" href="#quantize-from-presets" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>In this scenario you can use one of preset models divided into 2 domain categories: image recognition and object detection.
+<img alt="Examples" src="../_images/examples.png" /></p>
+<p>You can use included models to test tuning. You have to point to the Dataset that you want to use and click <strong>Finish</strong> to add it to your models. A new model will be downloaded and added to the <strong>My models</strong> list, ready for tuning.</p>
 </div>
-<div class="section" id="new-model-configuration-from-new-model-wizard">
-<h2>New Model Configuration from New Model Wizard<a class="headerlink" href="#new-model-configuration-from-new-model-wizard" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="resnet50-v1-5">
+<h3>ResNet50 v1.5<a class="headerlink" href="#resnet50-v1-5" title="Permalink to this headline">¶</a></h3>
+<p>Follow <a class="reference external" href="../examples/tensorflow/image_recognition/README">instructions</a> to get the ImageRecord dataset. Then go to <strong>Examples</strong>, choose <strong>Image Recognition</strong> domain, then click on <strong>resnet50 v1 5</strong> button and in the last step select the ImageRecord dataset like in the example below:
+<img alt="examples1" src="../_images/examples-resnet.png" /></p>
+</div>
+<div class="section" id="mobilenet-v1">
+<h3>MobileNet v1<a class="headerlink" href="#mobilenet-v1" title="Permalink to this headline">¶</a></h3>
+<p>Follow <a class="reference external" href="../examples/tensorflow/image_recognition/README">instructions</a> to get the ImageRecord dataset. Then go to <strong>Examples</strong>, choose  <strong>Image Recognition</strong> domain, then click on <strong>mobilenet v1</strong> button and in the last step select the ImageRecord dataset like in the example below:
+<img alt="examples2" src="../_images/examples-mobilenet.png" /></p>
+</div>
+<div class="section" id="ssd-mobilenet-v1">
+<h3>SSD MobileNet v1<a class="headerlink" href="#ssd-mobilenet-v1" title="Permalink to this headline">¶</a></h3>
+<p>Follow <a class="reference external" href="../examples/tensorflow/object_detection/README">instructions</a> to get the COCORecord dataset. Then go to <strong>Examples</strong>, choose  <strong>Object Detection</strong> domain, then click on <strong>ssd mobilenet v1</strong> button and in the last step select the COCORecord dataset like in the example below:
+<img alt="examples3" src="../_images/examples-ssd.png" /></p>
+</div>
+</div>
+</div>
+<div class="section" id="quantize-using-wizard">
+<h1>Quantize using wizard<a class="headerlink" href="#quantize-using-wizard" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>Description<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="basic-parameters">
 <h3>Basic parameters<a class="headerlink" href="#basic-parameters" title="Permalink to this headline">¶</a></h3>
 <ol class="simple">
@@ -140,24 +153,63 @@ Then open address http://localhost:5000/?token=338174d13706855fc6924cec7b3a8ae8
 ).</p></li>
 </ol>
 </div>
-<div class="section" id="advanced-parameters">
-<h3>Advanced parameters<a class="headerlink" href="#advanced-parameters" title="Permalink to this headline">¶</a></h3>
-<p>From the advanced parameters page, you can configure more features such as tuning, quantization, and benchmarking.</p>
-<p><img alt="Wizard advanced" src="../_images/wizard_advanced.png" /></p>
 </div>
+<div class="section" id="id2">
+<h2>Examples<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3>ResNet50 v1.5<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Follow <a class="reference external" href="../examples/tensorflow/image_recognition/README">instructions</a> to:</p>
+<ul>
+<li><p>install Intel Tensorflow 1.15 up2</p></li>
+<li><p>prepare dataset and a frozen pb model</p></li>
+</ul>
+</li>
+<li><p>In the <strong>Create low precision model</strong> in first step:</p>
+<ul>
+<li><p>select created frozen model</p></li>
+<li><p>inputs, outputs and model domain will be selected automatically
+<img alt="resnet1" src="../_images/resnet1.png" /></p></li>
+</ul>
+</li>
+<li><p>in second step :</p>
+<ul>
+<li><p>in <strong>Calibration/dataset location</strong>, select <strong>ImageRecord</strong> file from created dataset</p></li>
+<li><p>transformation and other parameters will be filled automatically</p></li>
+<li><p>click <strong>Finish</strong> or change Advanced parameters
+<img alt="resnet2" src="../_images/resnet2.png" /></p></li>
+</ul>
+</li>
+</ul>
 </div>
-<div class="section" id="new-model-configuration-from-examples">
-<h2>New Model Configuration from Examples<a class="headerlink" href="#new-model-configuration-from-examples" title="Permalink to this headline">¶</a></h2>
-<p><img alt="Examples" src="../_images/examples.png" /></p>
-<p>Included are models you can use to test tuning. You have to point to the Dataset that you want to use click <strong>Finish</strong> too add it to your models. A new model will be downloaded and added to the <strong>My models</strong> list, ready for tuning.</p>
+<div class="section" id="ssd-resnet34">
+<h3>SSD-ResNet34<a class="headerlink" href="#ssd-resnet34" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Follow <a class="reference external" href="../examples/tensorflow/object_detection/README">instructions</a> to:</p>
+<ul>
+<li><p>install Intel Tensorflow 1.15 up2</p></li>
+<li><p>prepare dataset and a frozen pb model</p></li>
+</ul>
+</li>
+<li><p>In the <strong>Create low precision model</strong> in first step:</p>
+<ul>
+<li><p>select created frozen model</p></li>
+<li><p>inputs, outputs and model domain will be selected automatically
+<img alt="ssd1" src="../_images/ssd1.png" /></p></li>
+</ul>
+</li>
+<li><p>in second step :</p>
+<ul>
+<li><p>in <strong>Calibration/dataset location</strong>, select <strong>coco record</strong> file from created dataset</p></li>
+<li><p>transformation and other parameters will be filled automatically</p></li>
+<li><p>click <strong>Finish</strong> or change Advanced parameters
+<img alt="ssd2" src="../_images/ssd2.png" /></p></li>
+</ul>
+</li>
+</ul>
 </div>
-<div class="section" id="custom-dataset-or-metric">
-<h2>Custom dataset or metric<a class="headerlink" href="#custom-dataset-or-metric" title="Permalink to this headline">¶</a></h2>
-<p>If you choose <strong>custom</strong> in the Dataset or Metric section, the appropriate code templates will be generated for you to fill in with your code. The path to the template will be available by clicking the <strong>Copy code template path</strong> button located in the right-most column in the <strong>My models</strong> list.</p>
-<p>Follow the comments in the generated code template to fill in required methods with your own code.</p>
-</div>
-<div class="section" id="bert-model-configuration">
-<h2>BERT model configuration<a class="headerlink" href="#bert-model-configuration" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="bert">
+<h3>BERT<a class="headerlink" href="#bert" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Follow <a class="reference external" href="../examples/tensorflow/nlp/bert_large_squad/README">instructions</a> to:</p>
 <ul>
@@ -184,11 +236,38 @@ Then open address http://localhost:5000/?token=338174d13706855fc6924cec7b3a8ae8
 </li>
 </ul>
 </div>
-<div class="section" id="model-graph-display">
-<h2>Model Graph Display<a class="headerlink" href="#model-graph-display" title="Permalink to this headline">¶</a></h2>
-<p>For Tensorflow frozen pb models there will be a new button available <img alt="Show graph" src="../_images/show_graph_button.png" />.</p>
-<p>Click it to display graph of selected model:</p>
-<p><img alt="Bert model graph" src="../_images/graph_bert.png" />.</p>
+</div>
+<div class="section" id="advanced-configs">
+<h2>Advanced configs<a class="headerlink" href="#advanced-configs" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="advanced-parameters">
+<h3>Advanced parameters<a class="headerlink" href="#advanced-parameters" title="Permalink to this headline">¶</a></h3>
+<p>From the advanced parameters page, you can configure more features such as tuning, quantization, and benchmarking.</p>
+<p><img alt="Wizard advanced" src="../_images/wizard_advanced.png" /></p>
+</div>
+<div class="section" id="custom-dataset-or-metric">
+<h3>Custom dataset or metric<a class="headerlink" href="#custom-dataset-or-metric" title="Permalink to this headline">¶</a></h3>
+<p>If you choose <strong>custom</strong> in the Dataset or Metric section, the appropriate code templates will be generated for you to fill in with your code. The path to the template will be available by clicking the <strong>Copy code template path</strong> button located in the right-most column in the <strong>My models</strong> list.</p>
+<p>Follow the comments in the generated code template to fill in required methods with your own code.</p>
+</div>
+</div>
+</div>
+<div class="section" id="available-views">
+<h1>Available views<a class="headerlink" href="#available-views" title="Permalink to this headline">¶</a></h1>
+<p>On the left hand side there is a panel with list of configurations.</p>
+<p><img alt="Menu" src="../_images/menu.png" /></p>
+<p>One can see system information by clicking <img alt="System info" src="../_images/system_info.png" /> button. The result is details dialog:</p>
+<p><img alt="System info table" src="../_images/system_info_table.png" /></p>
+<p>By clicking <img alt="See models" src="../_images/see_models.png" />  button you can navigate to <strong>My models list</strong>.</p>
+<div class="section" id="my-models-list">
+<h2>My Models list<a class="headerlink" href="#my-models-list" title="Permalink to this headline">¶</a></h2>
+<p>This view lists all Model Configurations defined on a given server.</p>
+<p>You can create a new model using pre-defined models by using a New Model Wizard or <strong>Examples</strong>:</p>
+<p><img alt="My models" src="../_images/my_models.png" /></p>
+</div>
+<div class="section" id="configuration-details">
+<h2>Configuration details<a class="headerlink" href="#configuration-details" title="Permalink to this headline">¶</a></h2>
+<p>When clicking on configuration from the left hand side list, you can see its details view. You can see the results, rerun the tuning, check the configuration and console output. You can also see the model graph.</p>
+<p><img alt="Details" src="../_images/details.png" /></p>
 </div>
 <div class="section" id="tuning">
 <h2>Tuning<a class="headerlink" href="#tuning" title="Permalink to this headline">¶</a></h2>
@@ -210,6 +289,16 @@ Then open address http://localhost:5000/?token=338174d13706855fc6924cec7b3a8ae8
 </ul>
 </li>
 </ul>
+<div class="section" id="tuning-history">
+<h3>Tuning history<a class="headerlink" href="#tuning-history" title="Permalink to this headline">¶</a></h3>
+<p>If the configuration was tuned several times, in the details view there will be a chart showing accuracy and duration of historical tunings.</p>
+</div>
+</div>
+<div class="section" id="model-graph-display">
+<h2>Model Graph Display<a class="headerlink" href="#model-graph-display" title="Permalink to this headline">¶</a></h2>
+<p>For Tensorflow frozen pb models there will be a new button available <img alt="Show graph" src="../_images/show_graph_button.png" />.</p>
+<p>Click it to display graph of selected model:</p>
+<p><img alt="Bert model graph" src="../_images/graph_bert.png" />.</p>
 </div>
 </div>
 
