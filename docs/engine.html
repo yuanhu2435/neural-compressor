@@ -103,7 +103,10 @@
 </div>
 <div class="section" id="install-c-binary-by-deploy-bare-metal-engine">
 <h3>2. install C++ binary by deploy bare metal engine<a class="headerlink" href="#install-c-binary-by-deploy-bare-metal-engine" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">&lt;</span><span class="n">nc_folder</span><span class="o">&gt;/</span><span class="n">engine</span><span class="o">/</span><span class="n">executor</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">&lt;</span><span class="n">nc_folder</span><span class="o">&gt;</span>
+<span class="n">git</span> <span class="n">submodule</span> <span class="n">sync</span>
+<span class="n">git</span> <span class="n">submodule</span> <span class="n">update</span> <span class="o">--</span><span class="n">init</span> <span class="o">--</span><span class="n">recursive</span>
+<span class="n">cd</span> <span class="n">engine</span><span class="o">/</span><span class="n">executor</span>
 <span class="n">mkdir</span> <span class="n">build</span>
 <span class="n">cd</span> <span class="n">build</span>
 <span class="n">cmake</span> <span class="o">..</span>

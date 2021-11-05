@@ -151,7 +151,7 @@
 <li><p><a class="reference external" href="https://pytorch.org/">PyTorch*</a>, including <a class="reference external" href="https://download.pytorch.org/whl/torch_stable.html">1.5.0+cpu</a>, <a class="reference external" href="https://download.pytorch.org/whl/torch_stable.html">1.8.0+cpu</a>, <a class="reference external" href="https://download.pytorch.org/whl/torch_stable.html">1.9.0+cpu</a></p></li>
 <li><p><a class="reference external" href="https://mxnet.apache.org">Apache* MXNet</a>, including <a class="reference external" href="https://github.com/apache/incubator-mxnet/tree/1.6.0">1.6.0</a>, <a class="reference external" href="https://github.com/apache/incubator-mxnet/tree/1.7.0">1.7.0</a>, <a class="reference external" href="https://github.com/apache/incubator-mxnet/tree/1.8.0">1.8.0</a></p></li>
 <li><p><a class="reference external" href="https://github.com/microsoft/onnxruntime">ONNX* Runtime</a>, including <a class="reference external" href="https://github.com/microsoft/onnxruntime/tree/v1.6.0">1.6.0</a>, <a class="reference external" href="https://github.com/microsoft/onnxruntime/tree/v1.7.0">1.7.0</a>, <a class="reference external" href="https://github.com/microsoft/onnxruntime/tree/v1.8.0">1.8.0</a></p></li>
-<li><p><a class="reference internal" href="docs/engine.html"><span class="doc">Engine</span></a>, which is a built-in bare metal <a class="reference external" href="https://github.com/intel/neural-compressor/tree/1bddfcb5609c8f4643a33b5d7f359138090464ee/./engine">acceleration library</a> for domain-specific NLP models.</p></li>
+<li><p><a class="reference internal" href="docs/engine.html"><span class="doc">Engine</span></a>, which is a built-in bare metal <a class="reference external" href="https://github.com/intel/neural-compressor/tree/3976edc4215398e69ce0213f87ec295f5dc96e0e/./engine">acceleration library</a> for domain-specific NLP models.</p></li>
 </ul>
 </div>
 </div>
@@ -163,6 +163,20 @@
 <p>You can install Neural Compressor using one of three options: Install just the library
 from binary or source, or get the Intel-optimized framework together with the
 library by installing the <a class="reference external" href="https://software.intel.com/content/www/us/en/develop/tools/oneapi/ai-analytics-toolkit.html">Intel® oneAPI AI Analytics Toolkit</a>.</p>
+<p><strong>Prerequisites</strong></p>
+<p>The following prerequisites and requirements must be satisfied for a successful installation:</p>
+<ul class="simple">
+<li><p>Python version: 3.6 or 3.7 or 3.8 or 3.9</p></li>
+<li><p>C++ compiler: 7.2.1 or above</p></li>
+<li><p>CMake: 3.12 or above</p></li>
+</ul>
+<blockquote>
+<div><p><strong>common build issues</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">Issue</span> <span class="pre">1</span></code>: ValueError: numpy.ndarray size changed, may indicate binary incompatibility. Expected 88 from C header, got 80 from PyObject
+Solution: reinstall pycocotools by “pip install pycocotools –no-cache-dir”</p>
+<p><code class="docutils literal notranslate"><span class="pre">Issue</span> <span class="pre">2</span></code>: ImportError: libGL.so.1: cannot open shared object file: No such file or directory
+Solution: apt install or yum install opencv</p>
+</div></blockquote>
 <div class="section" id="option-1-install-from-binary">
 <h4>Option 1 Install from binary<a class="headerlink" href="#option-1-install-from-binary" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-Shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># install stable version from pip</span>
@@ -180,6 +194,8 @@ conda install neural-compressor -c conda-forge -c intel
 <h4>Option 2 Install from source<a class="headerlink" href="#option-2-install-from-source" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-Shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/intel/neural-compressor.git
 <span class="nb">cd</span> neural-compressor
+git submodule sync
+git submodule update --init --recursive
 pip install -r requirements.txt
 python setup.py install
 </pre></div>
@@ -248,6 +264,8 @@ conda install neural-compressor -c conda-forge -c intel
 <h4>Option 2 Install from source<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/intel/neural-compressor.git
 <span class="nb">cd</span> neural-compressor
+git submodule sync
+git submodule update --init --recursive
 pip install -r requirements.txt
 python setup.py install
 </pre></div>
@@ -265,7 +283,7 @@ python setup.py install
 <li><p><a class="reference internal" href="docs/dataset.html"><span class="doc">Dataset</span></a> introduces how to utilize Neural Compressor’s built-in dataset and how to develop a custom dataset.</p></li>
 <li><p><a class="reference internal" href="docs/metric.html"><span class="doc">Metric</span></a> introduces how to utilize Neural Compressor’s built-in metrics and how to develop a custom metric.</p></li>
 <li><p><a class="reference internal" href="docs/tutorial.html"><span class="doc">Tutorial</span></a> provides comprehensive instructions on how to utilize Neural Compressor’s features with examples.</p></li>
-<li><p><a class="reference external" href="https://github.com/intel/neural-compressor/tree/1bddfcb5609c8f4643a33b5d7f359138090464ee/examples">Examples</a> are provided to demonstrate the usage of Neural Compressor in different frameworks: TensorFlow, PyTorch, MXNet, and ONNX Runtime.</p></li>
+<li><p><a class="reference external" href="https://github.com/intel/neural-compressor/tree/3976edc4215398e69ce0213f87ec295f5dc96e0e/examples">Examples</a> are provided to demonstrate the usage of Neural Compressor in different frameworks: TensorFlow, PyTorch, MXNet, and ONNX Runtime.</p></li>
 <li><p><a class="reference external" href="https://software.intel.com/content/www/us/en/develop/documentation/get-started-with-ai-linux/top.html">Intel oneAPI AI Analytics Toolkit Get Started Guide</a> explains the AI Kit components, installation and configuration guides, and instructions for building and running sample apps.</p></li>
 <li><p><a class="reference external" href="https://github.com/oneapi-src/oneAPI-samples/tree/master/AI-and-Analytics">AI and Analytics Samples</a> includes code samples for Intel oneAPI libraries.</p></li>
 </ul>

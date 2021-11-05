@@ -55,6 +55,24 @@ You can install Neural Compressor using one of three options: Install just the l
 from binary or source, or get the Intel-optimized framework together with the
 library by installing the [Intel® oneAPI AI Analytics Toolkit](https://software.intel.com/content/www/us/en/develop/tools/oneapi/ai-analytics-toolkit.html).
 
+**Prerequisites**
+
+The following prerequisites and requirements must be satisfied for a successful installation:
+
+- Python version: 3.6 or 3.7 or 3.8 or 3.9
+
+- C++ compiler: 7.2.1 or above
+
+- CMake: 3.12 or above
+
+> **common build issues**
+>
+> `Issue 1`: ValueError: numpy.ndarray size changed, may indicate binary incompatibility. Expected 88 from C header, got 80 from PyObject
+> Solution: reinstall pycocotools by "pip install pycocotools --no-cache-dir"
+>    
+> `Issue 2`: ImportError: libGL.so.1: cannot open shared object file: No such file or directory 
+> Solution: apt install or yum install opencv
+
 #### Option 1 Install from binary
 
   ```Shell
@@ -73,6 +91,8 @@ library by installing the [Intel® oneAPI AI Analytics Toolkit](https://software
   ```Shell
   git clone https://github.com/intel/neural-compressor.git
   cd neural-compressor
+  git submodule sync
+  git submodule update --init --recursive
   pip install -r requirements.txt
   python setup.py install
   ```
@@ -131,12 +151,14 @@ The following prerequisites and requirements must be satisfied for a successful 
 
 #### Option 2 Install from source
 
-```shell
-git clone https://github.com/intel/neural-compressor.git
-cd neural-compressor
-pip install -r requirements.txt
-python setup.py install
-```
+  ```shell
+  git clone https://github.com/intel/neural-compressor.git
+  cd neural-compressor
+  git submodule sync
+  git submodule update --init --recursive
+  pip install -r requirements.txt
+  python setup.py install
+  ```
 
 ## Documentation
 

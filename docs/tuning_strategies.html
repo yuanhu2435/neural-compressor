@@ -100,7 +100,7 @@ the low-precision inference solution on popular Deep Learning frameworks
 such as TensorFlow, PyTorch, and MxNet. Using built-in strategies, it
 automatically optimizes low-precision recipes for deep learning models to
 achieve optimal product objectives, such as inference performance and memory
-usage, with expected accuracy criteria. Currently, it supports <code class="docutils literal notranslate"><span class="pre">Basic</span></code>, <code class="docutils literal notranslate"><span class="pre">Bayesian</span></code>, <code class="docutils literal notranslate"><span class="pre">Exhaustive</span></code>, <code class="docutils literal notranslate"><span class="pre">MSE</span></code>, <code class="docutils literal notranslate"><span class="pre">Random</span></code>, and <code class="docutils literal notranslate"><span class="pre">TPE</span></code> strategies. <code class="docutils literal notranslate"><span class="pre">Basic</span></code> is
+usage, with expected accuracy criteria. Currently, it supports <code class="docutils literal notranslate"><span class="pre">Basic</span></code>, <code class="docutils literal notranslate"><span class="pre">Bayesian</span></code>, <code class="docutils literal notranslate"><span class="pre">Exhaustive</span></code>, <code class="docutils literal notranslate"><span class="pre">MSE</span></code>, <code class="docutils literal notranslate"><span class="pre">Random</span></code>, <code class="docutils literal notranslate"><span class="pre">SigOpt</span></code> and <code class="docutils literal notranslate"><span class="pre">TPE</span></code> strategies. <code class="docutils literal notranslate"><span class="pre">Basic</span></code> is
 the default strategy.</p>
 </div>
 <div class="section" id="strategy-design">
@@ -122,7 +122,7 @@ tuning phase stops when the <code class="docutils literal notranslate"><span cla
 </div>
 <div class="section" id="configurations">
 <h2>Configurations<a class="headerlink" href="#configurations" title="Permalink to this headline">¶</a></h2>
-<p>Detailed configuration templates can be found <a class="reference external" href="https://github.com/intel/neural-compressor/tree/1bddfcb5609c8f4643a33b5d7f359138090464ee/docs/../neural_compressor/template">here</a>.</p>
+<p>Detailed configuration templates can be found <a class="reference external" href="https://github.com/intel/neural-compressor/tree/3976edc4215398e69ce0213f87ec295f5dc96e0e/docs/../neural_compressor/template">here</a>.</p>
 <div class="section" id="model-specific-configurations">
 <h3>Model-specific configurations<a class="headerlink" href="#model-specific-configurations" title="Permalink to this headline">¶</a></h3>
 <p>For model-specific configurations, users can set the quantization approach.
@@ -436,7 +436,7 @@ and registering this strategy by <code class="docutils literal notranslate"><spa
 <p>The <code class="docutils literal notranslate"><span class="pre">next_tune_cfg</span></code> function is used to yield the next tune configuration according to some algorithm or strategy. <code class="docutils literal notranslate"><span class="pre">TuneStrategy</span></code> base class will traverse
 all the tuning space till a quantization configuration meets pre-defined accuracy criterion.</p>
 <p>If the traverse behavior of <code class="docutils literal notranslate"><span class="pre">TuneStrategy</span></code> base class does not meet new strategy requirement, it could re-implement <code class="docutils literal notranslate"><span class="pre">traverse</span></code> function with self own logic.
-An example like this is under <a class="reference external" href="https://github.com/intel/neural-compressor/blob/1bddfcb5609c8f4643a33b5d7f359138090464ee/docs/../neural_compressor/strategy/strategy.py">TPE Strategy</a>.</p>
+An example like this is under <a class="reference external" href="https://github.com/intel/neural-compressor/blob/3976edc4215398e69ce0213f87ec295f5dc96e0e/docs/../neural_compressor/strategy/strategy.py">TPE Strategy</a>.</p>
 </div>
 </div>
 
