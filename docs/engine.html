@@ -26,7 +26,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.7.1
+                1.8
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -78,7 +78,7 @@
 <p>A deep learning inference engine for quantized and sparsified models.</p>
 <div class="section" id="architecture">
 <h2>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h2>
-<p>Engine support model converter, model executor and high performance kernel for multi device.</p>
+<p>Engine support model compile, model executor and high performance kernel for multi device.</p>
 <a target="_blank" href="docs/imgs/infrastructure.png">
   <img src="imgs/engine_infrastructure.png" alt="Infrastructure" width=800 height=500>
 </a></div>
@@ -118,7 +118,7 @@
 </div>
 <div class="section" id="generate-the-bert-model-intermediate-representations-that-are-yaml-and-bin-files">
 <h2>Generate the bert model intermediate representations, that are yaml and bin files<a class="headerlink" href="#generate-the-bert-model-intermediate-representations-that-are-yaml-and-bin-files" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">engine.converter.converter</span> <span class="k">import</span> <span class="n">prepare_ir</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">engine.compile.compile</span> <span class="k">import</span> <span class="n">prepare_ir</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">prepare_ir</span><span class="p">(</span><span class="s1">&#39;/path/to/your/model&#39;</span><span class="p">)</span>
 <span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;/ir/path&#39;</span><span class="p">)</span>
 </pre></div>

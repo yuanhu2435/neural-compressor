@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compile an ONNX Model to Engine IR &mdash; Intel® Neural Compressor  documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Intel® Neural Compressor
+          </a>
+              <div class="version">
+                1.8
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">Introduction to Intel® Neural Compressor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples_readme.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/api-introduction.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/doclist.html">Developer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../releases_info.html">Release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributions.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../legal_information.html">Legal Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../security_policy.html">Security Policy</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/intel/neural-compressor">Intel® Neural Compressor repository</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Intel® Neural Compressor</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Compile an ONNX Model to Engine IR</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/engine/docs/onnx_compile.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="compile-an-onnx-model-to-engine-ir">
+<h1>Compile an ONNX Model to Engine IR<a class="headerlink" href="#compile-an-onnx-model-to-engine-ir" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">Engine</span></code>  as the backend of <code class="docutils literal notranslate"><span class="pre">Neural_Compressor</span></code> support frozen static graph model from two deep learning framework (<code class="docutils literal notranslate"><span class="pre">TensorFlow</span></code> and <code class="docutils literal notranslate"><span class="pre">ONNX</span></code>) for now. The image below shows the workflow of how the <code class="docutils literal notranslate"><span class="pre">Engine</span></code> compile framework model to its own intermediate representation (IR). The <code class="docutils literal notranslate"><span class="pre">Loader</span></code> is used to load models from different deep learning framework. Then the <code class="docutils literal notranslate"><span class="pre">Extractors</span></code> would extract operations of the origin model and compose the engine graph. Next, the <code class="docutils literal notranslate"><span class="pre">Subgraph</span> <span class="pre">matcher</span></code>  implement pattern fusion for accelerating inference. In the end, the <code class="docutils literal notranslate"><span class="pre">Emitter</span></code> saves the final intermediate graph on the disk as the format of <code class="docutils literal notranslate"><span class="pre">.yaml</span></code> and <code class="docutils literal notranslate"><span class="pre">.bin</span></code> files.</p>
+<p><img alt="../../_images/compile_workflow.png" src="../../_images/compile_workflow.png" /></p>
+<p>Here is one example show that how to use <code class="docutils literal notranslate"><span class="pre">Engine</span></code> to compile <code class="docutils literal notranslate"><span class="pre">ONNX</span></code> model to <code class="docutils literal notranslate"><span class="pre">Engine</span></code> intermediate representations. In this example, we will compile  <code class="docutils literal notranslate"><span class="pre">distilbert_base</span></code>  model in <code class="docutils literal notranslate"><span class="pre">ONNX</span></code> framework on task <code class="docutils literal notranslate"><span class="pre">MRPC</span></code> to <code class="docutils literal notranslate"><span class="pre">Engine</span></code> IR.</p>
+<div class="section" id="prepare-your-environment">
+<h2>Prepare your environment<a class="headerlink" href="#prepare-your-environment" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># clone the neural_compressor repository</span>
+git clone https://github.com/intel/neural-compressor.git 
+<span class="nb">cd</span> &lt;nc_folder&gt;/examples/engine/nlp/mrpc/distilbert_base_uncased
+
+<span class="c1"># use conda create new work environment</span>
+conda create -n &lt;your_env_name&gt; <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.7
+conda activate &lt;your_env_name&gt;
+
+<span class="c1"># install necessary requirements</span>
+pip install -r requirements.txt
+</pre></div>
+</div>
+</div>
+<div class="section" id="prepare-pretrained-model">
+<h2>Prepare pretrained model<a class="headerlink" href="#prepare-pretrained-model" title="Permalink to this headline">¶</a></h2>
+<p>You can get the <code class="docutils literal notranslate"><span class="pre">distilbert_base</span></code> from <a class="reference external" href="https://huggingface.co/">Hugging Face</a>, and train it on <code class="docutils literal notranslate"><span class="pre">MRPC</span></code> task.</p>
+<p>Train the <code class="docutils literal notranslate"><span class="pre">distilbert_base</span></code> and export the model</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bash prepare_model.sh 
+</pre></div>
+</div>
+<p>Then you will get the <code class="docutils literal notranslate"><span class="pre">distilbert_base_uncased_mrpc.onnx</span></code> model in the folder.</p>
+<blockquote>
+<div><p><strong>NOTE</strong>: However, you can also choose not to train the model and just compile a <code class="docutils literal notranslate"><span class="pre">distilbert_base</span></code> model without task layers for quick use. But the engine ir can not be used for deployment or quantization later because it just output raw logits.</p>
+</div></blockquote>
+<p>Here are the commands of get <code class="docutils literal notranslate"><span class="pre">distilbert_base</span></code> onnx model without <code class="docutils literal notranslate"><span class="pre">MRPC</span></code> task layer.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python -m transformers.onnx --model<span class="o">=</span>distilbert-base-uncased distilbert-base-uncased/
+</pre></div>
+</div>
+<p>Then you will get the <code class="docutils literal notranslate"><span class="pre">distilbert_base</span></code> model  <code class="docutils literal notranslate"><span class="pre">model.onnx</span></code>  without task layer in the <code class="docutils literal notranslate"><span class="pre">&lt;./distilbert-base-uncased&gt;</span></code> folder.</p>
+</div>
+<div class="section" id="compile-the-distilbert-base-model-to-engine-ir">
+<h2>Compile the distilbert_base model to Engine IR<a class="headerlink" href="#compile-the-distilbert-base-model-to-engine-ir" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># import prepare_ir api form engine</span>
+<span class="kn">from</span> <span class="nn">engine.compile</span> <span class="kn">import</span> <span class="n">prepare_ir</span>
+<span class="c1"># get the engine intermediate graph (if trained on MRPC task)</span>
+<span class="n">graph</span> <span class="o">=</span> <span class="n">prepare_ir</span><span class="p">(</span><span class="s2">&quot;distilbert_base_uncased_mrpc.onnx&quot;</span><span class="p">)</span>
+<span class="c1"># get the engine intermediate graph (if not trained on MRPC task)</span>
+<span class="n">graph</span> <span class="o">=</span> <span class="n">prepare_ir</span><span class="p">(</span><span class="s2">&quot;distilbert-base-uncased/model.onnx&quot;</span><span class="p">)</span>
+<span class="c1"># save the graph and get the final ir </span>
+<span class="c1"># the yaml and bin file will stored in &#39;&lt;ir&gt;&#39; folder</span>
+<span class="n">graph</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span class="c1"># you can also set the ir output folder, like</span>
+<span class="n">graph</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;my_ir&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Intel® Neural Compressor.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -26,7 +26,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.7.1
+                1.8
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -310,12 +310,15 @@
 <h3>Examples in Neural Compressor<a class="headerlink" href="#examples-in-neural-compressor" title="Permalink to this headline">¶</a></h3>
 <p>Following examples are supported in Neural Compressor:</p>
 <ul class="simple">
-<li><p>CNN Examples:</p>
+<li><p>Image Classification Examples:</p>
 <ul>
+<li><p><a class="reference external" href="../examples/pytorch/eager/image_recognition/cifar10/README">MobileNetV2 example</a>: distillation of WideResNet40-2 to MobileNetV2-0.35 on CIFAR-10 dataset.</p></li>
+<li><p><a class="reference external" href="../examples/pytorch/eager/image_recognition/cifar100/README">CNN example</a>: distillation of CNN-10 to CNN-2 on CIFAR-100 dataset.</p></li>
+<li><p><a class="reference external" href="../examples/pytorch/eager/image_recognition/cifar100/README">VGG example</a>: distillation of VGG-13-BN to VGG-8-BN on CIFAR-100 dataset.</p></li>
 <li><p><a class="reference external" href="../examples/pytorch/eager/image_recognition/imagenet/cpu/distillation/README">ResNet example</a>: distillation of ResNet50 to ResNet18 on ImageNet dataset.</p></li>
 </ul>
 </li>
-<li><p>NLP Examples:</p>
+<li><p>Natural Language Processing Examples:</p>
 <ul>
 <li><p><a class="reference external" href="../examples/pytorch/eager/blendcnn/distillation/README">BlendCnn example</a>: distillation of BERT-Base to BlendCnn on MRPC of GLUE dataset.</p></li>
 <li><p><a class="reference external" href="../examples/pytorch/eager/huggingface_models/README">BiLSTM example</a>: distillation of RoBERTa-Base to BiLSTM on SST-2 of GLUE dataset.</p></li>
@@ -338,6 +341,27 @@
 </thead>
 <tbody>
 <tr>
+<td>MobileNet example</td>
+<td>CIFAR-10</td>
+<td>MobileNetV2-0.35<br>(0.7965)</td>
+<td>WideResNet40-2<br>(0.9522)</td>
+<td>0.8178<br>(0.0213)</td>
+</tr>
+<tr>
+<td>CNN example</td>
+<td>CIFAR-100</td>
+<td>CNN-2<br>(0.5494)</td>
+<td>CNN-10<br>(0.7153)</td>
+<td>0.5540<br>(0.0046)</td>
+</tr>
+<tr>
+<td>VGG example</td>
+<td>CIFAR-100</td>
+<td>VGG-8-BN<br>(0.7022)</td>
+<td>VGG-13-BN<br>(0.7415)</td>
+<td>0.7025<br>(0.0003)</td>
+</tr>
+<tr>
 <td>ResNet example</td>
 <td>ImageNet</td>
 <td>ResNet18<br>(0.6739)</td>
@@ -354,9 +378,9 @@
 <tr>
 <td>BiLSTM example</td>
 <td>SST-2</td>
-<td>BiLSTM<br>(0.7913)</td>
-<td>RoBERTa-Base<br>(0.9404)</td>
-<td>0.8085<br>(0.0172)</td>
+<td>BiLSTM<br>(0.8303)</td>
+<td>RoBERTa-Base<br>(0.9403)</td>
+<td>0.9023<br>(0.072)</td>
 </tr>
 </tbody>
 </table></div>

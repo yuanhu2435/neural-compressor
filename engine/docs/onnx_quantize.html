@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quantize a ONNX model to engine low precision/int8 IR &mdash; Intel® Neural Compressor  documentation</title><link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> Intel® Neural Compressor
+          </a>
+              <div class="version">
+                1.8
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">Introduction to Intel® Neural Compressor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples_readme.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/api-introduction.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../docs/doclist.html">Developer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../releases_info.html">Release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributions.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../legal_information.html">Legal Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../security_policy.html">Security Policy</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/intel/neural-compressor">Intel® Neural Compressor repository</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Intel® Neural Compressor</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Quantize a ONNX model to engine low precision/int8 IR</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/engine/docs/onnx_quantize.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="quantize-a-onnx-model-to-engine-low-precision-int8-ir">
+<h1>Quantize a ONNX model to engine low precision/int8 IR<a class="headerlink" href="#quantize-a-onnx-model-to-engine-low-precision-int8-ir" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="design">
+<h2>Design<a class="headerlink" href="#design" title="Permalink to this headline">¶</a></h2>
+<p>Quantizing a ONNX model to engine low precision/int8 IR has two steps: 1. Convert ONNX model to engine float IR; 2. Quantize float IR to low precision/int8 IR. The first step will be finished in engine compile. We focus on the sceond step how to quantize a float enigne IR to low precision IR in INC. The whole is in examlpes/engine/nlp/bert_base_mrpc.</p>
+</div>
+<div class="section" id="prerequisite">
+<h2>Prerequisite<a class="headerlink" href="#prerequisite" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="install-environment">
+<h3>Install environment<a class="headerlink" href="#install-environment" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> &lt;nc_folder&gt;/examples/deepengine/nlp/distilbert_base_uncased_mrpc
+conda create -n &lt;env name&gt; <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.7
+conda activate &lt;env name&gt;
+pip install -r requirements.txt
+</pre></div>
+</div>
+</div>
+<div class="section" id="prepare-dataset">
+<h3>Prepare Dataset<a class="headerlink" href="#prepare-dataset" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">prepare_dataset</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">tasks</span><span class="o">=</span><span class="s1">&#39;MRPC&#39;</span> <span class="o">--</span><span class="n">output_dir</span><span class="o">=./</span><span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="prepare-onnx-model">
+<h3>Prepare ONNX model<a class="headerlink" href="#prepare-onnx-model" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bash prepare_model.sh
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="tuning-and-benchmark">
+<h2>Tuning and benchmark<a class="headerlink" href="#tuning-and-benchmark" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="tune-the-low-precison-model">
+<h3>Tune the low precison model<a class="headerlink" href="#tune-the-low-precison-model" title="Permalink to this headline">¶</a></h3>
+<p>The process of converting a float model to a low precision model in INC is called tunning.
+The whole workflow is as follow: <img alt="avatar" src="../../_images/engine_adaptor_workflow.png" /> Now the const tensor has symmetric quantization mode, and it also can be quantized by per channel or per tensor two. Activation tensor has asymmetric and symmetric two modes.
+And there is a simple example to show how float model tuned to low precision model, like this <img alt="avatar" src="../../_images/engine_adaptor_example.png" />
+It quantizes the all int8 operators by calibration dataset. In order to meet the accuracy requirements, it will run low precision models and determine whether the relative accuracy between low precision model with float model is within the limited range. If not, it will recall some int8 operators to float. So the object quantizer need dataset, model and metric.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">Quantization</span><span class="p">,</span> <span class="n">common</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">TF_BERTDataSet</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">vocab_file</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">do_lower_case</span><span class="p">)</span>
+<span class="n">quantizer</span> <span class="o">=</span> <span class="n">Quantization</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+<span class="n">quantizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_model</span><span class="p">)</span>
+<span class="n">quantizer</span><span class="o">.</span><span class="n">eval_dataloader</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">batch_size</span><span class="p">)</span>
+<span class="n">quantizer</span><span class="o">.</span><span class="n">calib_dataloader</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">batch_size</span><span class="p">)</span>
+<span class="n">q_model</span> <span class="o">=</span> <span class="n">quantizer</span><span class="p">()</span>
+<span class="n">q_model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output_model</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>There are several build-in metrics in INC. In this example, MRPC is used and configured in bert.yaml:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>evaluation:
+  accuracy:
+    metric:
+      GLUE:
+        task: mrpc
+</pre></div>
+</div>
+</div>
+<div class="section" id="benchmark-the-tuned-low-precision-model">
+<h3>Benchmark the tuned low precision model:<a class="headerlink" href="#benchmark-the-tuned-low-precision-model" title="Permalink to this headline">¶</a></h3>
+<p>User can also run tuned low precision model on benchmark dataset and get the accuracy and performance of it by configuring mode=accuracy or mode=performance.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">Benchmark</span><span class="p">,</span> <span class="n">common</span>
+<span class="n">ds</span> <span class="o">=</span> <span class="n">TF_BERTDataSet</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">vocab_file</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">do_lower_case</span><span class="p">)</span>
+<span class="n">evaluator</span> <span class="o">=</span> <span class="n">Benchmark</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+<span class="n">evaluator</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_model</span><span class="p">)</span>
+<span class="n">evaluator</span><span class="o">.</span><span class="n">b_dataloader</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">batch_size</span><span class="p">)</span>
+<span class="n">evaluator</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="config-for-tunning-and-benchmark">
+<h3>Config for tunning and benchmark:<a class="headerlink" href="#config-for-tunning-and-benchmark" title="Permalink to this headline">¶</a></h3>
+<p>The yaml can config sampling size of calibration dataset for quantization. And the accuracy criterion is generally 1% relative error. Or if you only want to quantize but no callback, you can set timeout to 1 for tuning exit policy.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>quantization:
+  calibration:
+    sampling_size: <span class="m">40</span>
+
+tuning:
+  accuracy_criterion:
+    relative: <span class="m">0</span>.01
+  exit_policy:
+    timeout: <span class="m">0</span>
+  random_seed: <span class="m">9527</span>
+</pre></div>
+</div>
+<p>And if you want to get performance, setting num of instance and cores per instance according to your device is needed. In addition, don’t remember to set warmup and iteration. It’s better if warmup is more than 5 and iteration is more than 10.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>  performance:
+    warmup: <span class="m">5</span>
+    iteration: <span class="m">10</span>
+    configs:
+      num_of_instance: <span class="m">1</span>
+      cores_per_instance: <span class="m">28</span>
+</pre></div>
+</div>
+<p>Each model has its own metric to get accuracy. INC also provides some metrics for users and you only need to set task in yaml as follows:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>evaluation:
+  accuracy:
+    metric:
+      GLUE:
+        task: mrpc
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="run-tuning-and-benckmark">
+<h2>Run tuning and benckmark<a class="headerlink" href="#run-tuning-and-benckmark" title="Permalink to this headline">¶</a></h2>
+<p>Users can run shell to tune model and get its accuracy and performance.</p>
+<div class="section" id="to-get-the-tuned-model-and-its-accuracy">
+<h3>1. To get the tuned model and its accuracy:<a class="headerlink" href="#to-get-the-tuned-model-and-its-accuracy" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bash run_tuning.sh --config<span class="o">=</span>bert.yaml --input_model<span class="o">=</span>roberta_base_mrpc.onnx --output_model<span class="o">=</span>ir --dataset_location<span class="o">=</span>data
+</pre></div>
+</div>
+</div>
+<div class="section" id="to-get-the-benchmark-of-tuned-model">
+<h3>2. To get the benchmark of tuned model:<a class="headerlink" href="#to-get-the-benchmark-of-tuned-model" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bash run_benchmark.sh --config<span class="o">=</span>bert.yaml --input_model<span class="o">=</span>ir --dataset_location<span class="o">=</span>data --batch_size<span class="o">=</span><span class="m">1</span> --mode<span class="o">=</span>accuracy
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bash run_benchmark.sh --config<span class="o">=</span>bert.yaml --input_model<span class="o">=</span>ir --dataset_location<span class="o">=</span>data --batch_size<span class="o">=</span><span class="m">1</span> --mode<span class="o">=</span>performance
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Intel® Neural Compressor.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

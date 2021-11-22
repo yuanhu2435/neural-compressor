@@ -26,7 +26,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.7.1
+                1.8
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -81,28 +81,44 @@
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="start-the-intel-neural-compressor-bench">
 <h2>Start the Intel® Neural Compressor Bench<a class="headerlink" href="#start-the-intel-neural-compressor-bench" title="Permalink to this headline">¶</a></h2>
-<ol>
-<li><p>Start the Intel® Neural Compressor Bench server:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>neural_compressor_bench
+<p>To start the Intel® Neural Compressor Bench server execute <code class="docutils literal notranslate"><span class="pre">inc_bench</span></code> command:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>inc_bench
 </pre></div>
 </div>
-<blockquote>
-<div><p><strong>Note</strong>: TF 2.5.0 requires setting environment variable TF_ENABLE_MKL_NATIVE_FORMAT=0 for INT8 quantization:</p>
-</div></blockquote>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nv">TF_ENABLE_MKL_NATIVE_FORMAT</span><span class="o">=</span><span class="m">0</span> neural_compressor_bench
-</pre></div>
-</div>
-</li>
-<li><p>The server prints information on how to access the Web UI.</p>
-<p>An example message looks like this:</p>
+<p>The server generates a self-signed TLS certificate and prints instruction how to access the Web UI.</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Intel(r) Neural Compressor Bench Server started.
-Setup port forwarding from your local port 5000 to 5000 on this machine.
-Then open address http://localhost:5000/?token=338174d13706855fc6924cec7b3a8ae8
+
+Open address https://10.11.12.13:5000/?token=338174d13706855fc6924cec7b3a8ae8
 </pre></div>
 </div>
-<p>Make certain that requested port forwarding is set up (depending on your OS) and then open the address in your web browser.</p>
+<p>Server generated certificate is not trusted by your web browser, you will need to accept usage of such certificate.</p>
+<p>You might also use additional parameters and settings:</p>
+<ul>
+<li><p>Intel® Neural Compressor Bench listens on port 5000.
+Make sure that port 5000 is accessible to your browser (you might need to open it in your firewall),
+or specify different port that is already opened, for example 8080:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>inc_bench -p <span class="m">8080</span>
+</pre></div>
+</div>
 </li>
-</ol>
+<li><p>When using TF 2.5.0, set environment variable <code class="docutils literal notranslate"><span class="pre">TF_ENABLE_MKL_NATIVE_FORMAT=0</span></code> for INT8 tuning:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nv">TF_ENABLE_MKL_NATIVE_FORMAT</span><span class="o">=</span><span class="m">0</span> inc_bench
+</pre></div>
+</div>
+</li>
+<li><p>To start the Intel® Neural Compressor Bench server with your own TLS certificate add <code class="docutils literal notranslate"><span class="pre">--cert</span></code> and <code class="docutils literal notranslate"><span class="pre">--key</span></code> parameters:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>inc_bench --cert path_to_cert.crt --key path_to_private_key.key
+</pre></div>
+</div>
+</li>
+<li><p>To start the Intel® Neural Compressor Bench server without TLS encryption use <code class="docutils literal notranslate"><span class="pre">--allow-insecure-connections</span></code> parameter:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>inc_bench --allow-insecure-connections
+</pre></div>
+</div>
+<p>This enables access to the server from any machine in your local network (or the whole Internet if your server is exposed to it).</p>
+<p>You are forfeiting security, confidentiality and integrity of all client-server communication. Your server is exposed to external threats.</p>
+</li>
+</ul>
 </div>
 <div class="section" id="home">
 <h2>Home<a class="headerlink" href="#home" title="Permalink to this headline">¶</a></h2>
@@ -293,12 +309,29 @@ Then open address http://localhost:5000/?token=338174d13706855fc6924cec7b3a8ae8
 <h3>Tuning history<a class="headerlink" href="#tuning-history" title="Permalink to this headline">¶</a></h3>
 <p>If the configuration was tuned several times, in the details view there will be a chart showing accuracy and duration of historical tunings.</p>
 </div>
+<div class="section" id="profiling">
+<h3>Profiling<a class="headerlink" href="#profiling" title="Permalink to this headline">¶</a></h3>
+<p>You can also run profiling to check the performance of model layers. To do that you need to click <img alt="Start profiling button" src="../_images/profiling_start.png" /> button and when the profiling is finished, a table with profiling data will be shown:
+<img alt="Profiling table" src="../_images/profiling_table.png" /></p>
+</div>
 </div>
 <div class="section" id="model-graph-display">
 <h2>Model Graph Display<a class="headerlink" href="#model-graph-display" title="Permalink to this headline">¶</a></h2>
 <p>For Tensorflow frozen pb models there will be a new button available <img alt="Show graph" src="../_images/show_graph_button.png" />.</p>
 <p>Click it to display graph of selected model:</p>
 <p><img alt="Bert model graph" src="../_images/graph_bert.png" />.</p>
+</div>
+<div class="section" id="security">
+<h2>Security<a class="headerlink" href="#security" title="Permalink to this headline">¶</a></h2>
+<p>Intel® Neural Compressor Bench uses encrypted connections to ensure security, confidentiality and integrity of all client-server communication.</p>
+<p>You can use automatically generated self-signed certificate or provide your own trusted certificate.</p>
+<p>You can also choose to start the server without encryption exposing it to threats from network.</p>
+<p>Intel® Neural Compressor Bench uses external packages to run the web-server and provide encryption. Please report any security issues to correct organizations:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://cryptography.io/en/latest/security/">Cryptography module</a></p></li>
+<li><p><a class="reference external" href="https://flask.palletsprojects.com/en/2.0.x/contributing/#reporting-issues">Flask</a></p></li>
+<li><p><a class="reference external" href="https://github.com/miguelgrinberg/Flask-SocketIO/blob/main/SECURITY.md">Flask-SocketIO</a></p></li>
+</ul>
 </div>
 </div>
 
