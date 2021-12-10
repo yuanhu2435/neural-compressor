@@ -26,7 +26,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.8
+                1.8.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -118,7 +118,7 @@
 <p>As symbolic trace cannot handle dynamic control, tensor iteration and so on, we might meet trace failure sometimes. In order to quantize the model successfully, we suggest two approaches to preprocess the model here.</p>
 <ol>
 <li><p>Non_traceable_module_class/name</p>
-<p>Select module classes or names that cannot be traced by proxy object, and pass them into INC: <code class="docutils literal notranslate"><span class="pre">common.Model</span></code> as a dict.</p>
+<p>Select module classes or names that cannot be traced by proxy object, and pass them into neural_compressor: <code class="docutils literal notranslate"><span class="pre">common.Model</span></code> as a dict.</p>
 <p>These non_traceable modules will be considered as a  called function. If there is any nn.Conv2D in modules, it won’t be converted into quantized::Conv2D.</p>
 <p><strong>For example:</strong> example/pytorch/fx/object_detection/maskrcnn/pytorch/tools/test_net.py</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">prepare_custom_config_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;non_traceable_module_class&quot;</span><span class="p">:</span> <span class="p">[</span>
