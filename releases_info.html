@@ -28,7 +28,7 @@
             <a href="index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.8.1
+                1.9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -85,7 +85,7 @@
 <blockquote>
 <div><p><a class="reference external" href="https://github.com/intel/neural-compressor/releases">https://github.com/intel/neural-compressor/releases</a></p>
 </div></blockquote>
-<p>Contact <a class="reference external" href="inc.maintainers&#64;intel.com">Maintainers</a> if you need additional assistance.</p>
+<p>Contact inc.maintainers&#64;intel.com if you need additional assistance.</p>
 <div class="section" id="known-issues">
 <h2>Known Issues<a class="headerlink" href="#known-issues" title="Permalink to this headline">¶</a></h2>
 <p>The MSE tuning strategy does not work with the PyTorch adaptor layer. This strategy requires a comparison between the FP32 and INT8 tensors to decide which op impacts the final quantization accuracy. The PyTorch adaptor layer does not implement this inspect tensor interface. Therefore, do not choose the MSE tuning strategy for PyTorch models.</p>

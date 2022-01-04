@@ -28,7 +28,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.8.1
+                1.9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -96,14 +96,14 @@
 <p>Neural Compressor constructs the whole quantization/pruning process using these four components.</p>
 <p>Neural Compressor has added built-in support for popular dataloaders/datasets and metrics to ease the preparation. Refer to <a class="reference internal" href="dataset.html"><span class="doc">dataset</span></a> and <a class="reference internal" href="metric.html"><span class="doc">metric</span></a> to learn how to use them in yaml.</p>
 <p>Neural Compressor also supports registering custom datasets and custom metrics by code.</p>
-<p>As for model, Neural Compressor abstract a common API, named <a class="reference external" href="https://github.com/intel/neural-compressor/blob/e1d59da3790f9ff9647a21d2ff23da98c78a9682/docs/../neural_compressor/experimental/common/model.py">neural_compressor.experimental.common.Model</a>, to cover the case in which model, weight, and other necessary info are separately stored. Refer to <a class="reference internal" href="model.html"><span class="doc">model</span></a> to learn how to use it.</p>
+<p>As for model, Neural Compressor abstract a common API, named <a class="reference external" href="https://github.com/intel/neural-compressor/blob/3482e789e1d26967c448ca53a6bba8714f75c8f2/docs/../neural_compressor/experimental/common/model.py">neural_compressor.experimental.common.Model</a>, to cover the case in which model, weight, and other necessary info are separately stored. Refer to <a class="reference internal" href="model.html"><span class="doc">model</span></a> to learn how to use it.</p>
 <p>Postprocess is treated as a special transform by Neural Compressor which is only needed when a model output is mismatching with the expected input of Neural Compressor built-in metrics. If a user is using a custom metric, the postprocess is not needed as the custom metric implementation needed ensures it can handle the model output correctly. On the other hand, the postprocess logic becomes part of the custom metric implementation.</p>
 <p>The example below shows how to enable Neural Compressor on TensorFlow mobilenet_v1 with a built-in dataloader, dataset, and metric.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># main.py</span>
 <span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">Quantization</span><span class="p">,</span> <span class="n">common</span>
 <span class="n">quantizer</span> <span class="o">=</span> <span class="n">Quantization</span><span class="p">(</span><span class="s1">&#39;./conf.yaml&#39;</span><span class="p">)</span>
-<span class="n">quantizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="s2">&quot;./mobilenet_v1_1.0_224_frozen.pb&quot;</span><span class="p">)</span>
-<span class="n">quantized_model</span> <span class="o">=</span> <span class="n">quantizer</span><span class="p">()</span>
+<span class="n">quantizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="s2">&quot;./mobilenet_v1_1.0_224_frozen.pb&quot;</span>
+<span class="n">quantized_model</span> <span class="o">=</span> <span class="n">quantizer</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Quantization also support Quantization_Conf class as it’s argument:</p>
@@ -112,8 +112,8 @@
 <span class="kn">from</span> <span class="nn">lpot.conf.config</span> <span class="kn">import</span> <span class="n">Quantization_Conf</span>
 <span class="n">conf</span> <span class="o">=</span> <span class="n">Quantization_Conf</span><span class="p">(</span><span class="s1">&#39;./conf.yaml&#39;</span><span class="p">)</span>
 <span class="n">quantizer</span> <span class="o">=</span> <span class="n">Quantization</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
-<span class="n">quantizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="s2">&quot;./mobilenet_v1_1.0_224_frozen.pb&quot;</span><span class="p">)</span>
-<span class="n">quantized_model</span> <span class="o">=</span> <span class="n">quantizer</span><span class="p">()</span>
+<span class="n">quantizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="s2">&quot;./mobilenet_v1_1.0_224_frozen.pb&quot;</span>
+<span class="n">quantized_model</span> <span class="o">=</span> <span class="n">quantizer</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># conf.yaml</span>
@@ -190,8 +190,8 @@
 <span class="n">quantizer</span><span class="o">.</span><span class="n">metric</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Metric</span><span class="p">(</span><span class="n">MyMetric</span><span class="p">)</span>
 <span class="n">quantizer</span><span class="o">.</span><span class="n">calib_dataloader</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">quantizer</span><span class="o">.</span><span class="n">eval_dataloader</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">quantizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="s1">&#39;../models/simple_model&#39;</span><span class="p">)</span>
-<span class="n">q_model</span> <span class="o">=</span> <span class="n">quantizer</span><span class="p">()</span>
+<span class="n">quantizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;../models/simple_model&#39;</span>
+<span class="n">q_model</span> <span class="o">=</span> <span class="n">quantizer</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 <blockquote>
@@ -218,10 +218,10 @@
 <div class="section" id="helloworld-examples">
 <h2>Helloworld Examples<a class="headerlink" href="#helloworld-examples" title="Permalink to this headline">¶</a></h2>
 <ol class="simple">
-<li><p>Built-in dataloader and metric example: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/e1d59da3790f9ff9647a21d2ff23da98c78a9682/examples/helloworld/tf_example1">tf_example1</a> for more details.</p></li>
-<li><p>TensorFlow checkpoint: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/e1d59da3790f9ff9647a21d2ff23da98c78a9682/examples/helloworld/tf_example4">tf_example4</a> for more details.</p></li>
-<li><p>Enable benchmark for performance and accuracy measurement: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/e1d59da3790f9ff9647a21d2ff23da98c78a9682/examples/helloworld/tf_example5">tf_example5</a> for more details.</p></li>
-<li><p>TensorFlow slim model: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/e1d59da3790f9ff9647a21d2ff23da98c78a9682/examples/helloworld/tf_example3">tf_example3</a> for more details.</p></li>
+<li><p>Built-in dataloader and metric example: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/3482e789e1d26967c448ca53a6bba8714f75c8f2/examples/helloworld/tf_example1">tf_example1</a> for more details.</p></li>
+<li><p>TensorFlow checkpoint: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/3482e789e1d26967c448ca53a6bba8714f75c8f2/examples/helloworld/tf_example4">tf_example4</a> for more details.</p></li>
+<li><p>Enable benchmark for performance and accuracy measurement: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/3482e789e1d26967c448ca53a6bba8714f75c8f2/examples/helloworld/tf_example5">tf_example5</a> for more details.</p></li>
+<li><p>TensorFlow slim model: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/3482e789e1d26967c448ca53a6bba8714f75c8f2/examples/helloworld/tf_example3">tf_example3</a> for more details.</p></li>
 </ol>
 </div>
 </div>

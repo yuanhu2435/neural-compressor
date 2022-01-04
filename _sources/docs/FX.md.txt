@@ -20,8 +20,8 @@ if args.tune:
     from neural_compressor.experimental import Quantization, common
     model.eval()
     quantizer = Quantization("./conf.yaml")
-    quantizer.model = common.Model(model)
-    q_model = quantizer()
+    quantizer.model = model
+    q_model = quantizer.fit()
     q_model.save(args.tuned_checkpoint)
     return
 ```

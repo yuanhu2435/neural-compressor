@@ -124,8 +124,8 @@ Simplest launcher code if training behavior is defined in user-defined yaml.
 ```
 from neural_compressor.experimental import Pruning, common
 prune = Pruning('/path/to/user/pruning/yaml')
-prune.model = common.Model(model)
-model = prune()
+prune.model = model
+model = prune.fit()
 ```
 
 Pruning class also support Pruning_Conf class as it's argument.
@@ -135,8 +135,8 @@ from lpot.experimental import Pruning, common
 from lpot.conf.config import Pruning_Conf
 conf = Pruning_Conf('/path/to/user/pruning/yaml')
 prune = Pruning(conf)
-prune.model = common.Model(model)
-model = prune()
+prune.model = model
+model = prune.fit()
 ```
 
 ### User-defined yaml
@@ -296,9 +296,9 @@ In this case, the launcher code is like the following:
 ```python
 from neural_compressor.experimental import Pruning, common
 prune = Pruning(args.config)
-prune.model = common.Model(model)
+prune.model = model
 prune.pruning_func = pruning_func
-model = prune()
+model = prune.fit()
 ```
 
 ### Scheduler for Pruning and Quantization
@@ -310,10 +310,10 @@ from neural_compressor.experimental import Quantization, common, Pruning, Schedu
 prune = Pruning(prune_conf)
 quantizer = Quantization(post_training_quantization_conf)
 scheduler = Scheduler()
-scheduler.model = common.Model(model)
+scheduler.model = model
 scheduler.append(prune)
 scheduler.append(quantizer)
-opt_model = scheduler()
+opt_model = scheduler.fit()
 ```
 
 ## Examples
@@ -322,10 +322,10 @@ opt_model = scheduler()
 Following examples are supported in Neural Compressor:
 
 - CNN Examples:
-  - [resnet example](../examples/pytorch/eager/image_recognition/imagenet/cpu/prune/README.md): magnitude pruning on resnet.
-  - [pruning and post-training quantization](../examples/pytorch/eager/image_recognition/imagenet/cpu/prune_and_ptq/README.md): magnitude pruning and then post-training quantization on resnet.
-  - [resnet_v2 example](../examples/tensorflow/pruning/resnet_v2/README.md): magnitude pruning on resnet_v2 for tensorflow.
+  - [resnet example](../examples/pytorch/image_recognition/torchvision_models/pruning/magnitude/eager/README.md): magnitude pruning on resnet.
+  - [pruning and post-training quantization](../examples/pytorch/image_recognition/torchvision_models/optimization_pipeline/prune_and_ptq/eager/README.md): magnitude pruning and then post-training quantization on resnet.
+  - [resnet_v2 example](../examples/tensorflow/image_recognition/resnet_v2/pruning/magnitude/README.md): magnitude pruning on resnet_v2 for tensorflow.
 - NLP Examples:
-  - [BERT example](../examples/pytorch/eager/language_translation/prune/README.md): magnitude pruning on DistilBERT.
-  - [BERT example](../examples/pytorch/eager/huggingface_models/README.md): Pattern-lock and head-pruning on BERT-base.
+  - [BERT example](../examples/pytorch/nlp/huggingface_models/text-classification/pruning/magnitude/eager/README.md): magnitude pruning on DistilBERT.
+  - [BERT example](../examples/pytorch/nlp/huggingface_models/text-classification/pruning/pattern_lock/eager/README.md): Pattern-lock and head-pruning on BERT-base.
 

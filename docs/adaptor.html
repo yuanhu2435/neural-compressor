@@ -28,7 +28,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.8.1
+                1.9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -143,7 +143,7 @@ following information on the current runtime framework.</p>
 <li><p>The supported sequence of each quantizable op.</p></li>
 <li><p>The instance of each sequence.</p></li>
 </ul>
-<p>In the past, the above information was generally defined and hidden in every corner of the code which made effective maintenance difficult. With the Query API, we only need to create one unified yaml file and call the corresponding API to get the information. For example, the <a class="reference external" href="https://github.com/intel/neural-compressor/blob/e1d59da3790f9ff9647a21d2ff23da98c78a9682/docs/../neural_compressor/adaptor/tensorflow.yaml">tensorflow.yaml</a> keeps the current Tensorflow framework ability. We recommend that the end user not make modifications if requirements are not clear.</p>
+<p>In the past, the above information was generally defined and hidden in every corner of the code which made effective maintenance difficult. With the Query API, we only need to create one unified yaml file and call the corresponding API to get the information. For example, the <a class="reference external" href="https://github.com/intel/neural-compressor/blob/3482e789e1d26967c448ca53a6bba8714f75c8f2/docs/../neural_compressor/adaptor/tensorflow.yaml">tensorflow.yaml</a> keeps the current Tensorflow framework ability. We recommend that the end user not make modifications if requirements are not clear.</p>
 </div>
 <div class="section" id="unify-config-introduction">
 <h4>Unify Config Introduction<a class="headerlink" href="#unify-config-introduction" title="Permalink to this headline">¶</a></h4>
@@ -286,7 +286,7 @@ following information on the current runtime framework.</p>
 </div>
 <div class="section" id="query-api-introduction">
 <h4>Query API Introduction<a class="headerlink" href="#query-api-introduction" title="Permalink to this headline">¶</a></h4>
-<p>The abstract class <code class="docutils literal notranslate"><span class="pre">QueryBackendCapability</span></code> is defined in <a class="reference external" href="https://github.com/intel/neural-compressor/blob/e1d59da3790f9ff9647a21d2ff23da98c78a9682/docs/../neural_compressor/adaptor/query.py">query.py</a>. Each framework should inherit it and implement the member function if needed. Refer to Tensorflow implementation <a class="reference external" href="https://github.com/intel/neural-compressor/blob/e1d59da3790f9ff9647a21d2ff23da98c78a9682/docs/../neural_compressor/adaptor/tensorflow.py">TensorflowQuery</a>.</p>
+<p>The abstract class <code class="docutils literal notranslate"><span class="pre">QueryBackendCapability</span></code> is defined in <a class="reference external" href="https://github.com/intel/neural-compressor/blob/3482e789e1d26967c448ca53a6bba8714f75c8f2/docs/../neural_compressor/adaptor/query.py">query.py</a>. Each framework should inherit it and implement the member function if needed. Refer to Tensorflow implementation <a class="reference external" href="https://github.com/intel/neural-compressor/blob/3482e789e1d26967c448ca53a6bba8714f75c8f2/docs/../neural_compressor/adaptor/tensorflow.py">TensorflowQuery</a>.</p>
 </div>
 </div>
 </div>
@@ -296,7 +296,7 @@ following information on the current runtime framework.</p>
 Onnxruntime already has <a class="reference external" href="https://github.com/microsoft/onnxruntime/tree/master/onnxruntime/python/tools/quantization">quantization tools</a>, so the question becomes how to integrate onnxruntime quantization tools into Neural Compressor.</p>
 <ol>
 <li><p>Capability</p>
-<p>The user should explore quantization capability first. According to <a class="reference external" href="https://github.com/microsoft/onnxruntime/blob/503b61d897074a494f5798069308ee67d8fb9ace/onnxruntime/python/tools/quantization/onnx_quantizer.py#L77">onnx_quantizer</a>, the quantization tools support the following attributes:</p>
+<p>The user should explore quantization capability first. According to <a class="reference external" href="https://github.com/microsoft/onnxruntime/blob/503b61d897074a494f5798069308ee67d8fb9ace/onnxruntime/python/tools/quantization/onnx_quantizer.py#L76">onnx_quantizer</a>, the quantization tools support the following attributes:</p>
 <ul class="simple">
 <li><p>whether per_channel</p></li>
 <li><p>whether reduce_range</p></li>
@@ -378,7 +378,7 @@ the original model:</p>
 </div></blockquote>
 </li>
 <li><p>Do quantization</p>
-<p>This part depends on your backend implementations. Refer to <a class="reference external" href="https://github.com/intel/neural-compressor/blob/e1d59da3790f9ff9647a21d2ff23da98c78a9682/docs/../neural_compressor/adaptor/onnxrt.py">onnxruntime</a> as an example.</p>
+<p>This part depends on your backend implementations. Refer to <a class="reference external" href="https://github.com/intel/neural-compressor/blob/3482e789e1d26967c448ca53a6bba8714f75c8f2/docs/../neural_compressor/adaptor/onnxrt.py">onnxruntime</a> as an example.</p>
 </li>
 </ol>
 </div>

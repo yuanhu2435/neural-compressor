@@ -26,7 +26,7 @@
             <a href="../../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.8.1
+                1.9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -117,7 +117,7 @@
 </pre></div>
 </div>
 <p>Assume you want to find the match results of pattern <code class="docutils literal notranslate"><span class="pre">['MatMul',</span> <span class="pre">'BiasAdd',</span> <span class="pre">['Add',</span> <span class="pre">'AddV2']]</span></code> in bert_large TensorFlow model (you can get this model from this <a class="reference external" href="https://github.com/intel/neural-compressor/tree/master/examples/engine/nlp/squad/bert_large#2-prepare-dataset-and-model">link</a> and make sure the tf version is <code class="docutils literal notranslate"><span class="pre">intel-tensorflow-1.15-up2</span></code>).</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">engine.compile.compile</span> <span class="kn">import</span> <span class="n">COMPILES</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">engine.compile</span> <span class="kn">import</span> <span class="n">COMPILES</span>
 <span class="kn">from</span> <span class="nn">engine.compile.graph_utils</span> <span class="kn">import</span> <span class="n">search_straight_pattern</span>
 <span class="n">graph</span> <span class="o">=</span> <span class="n">COMPILES</span><span class="p">[</span><span class="s1">&#39;loader&#39;</span><span class="p">]()(</span><span class="n">bert_large_model_path</span><span class="p">)</span>
 <span class="n">graph</span> <span class="o">=</span> <span class="n">COMPILES</span><span class="p">[</span><span class="s1">&#39;extractor&#39;</span><span class="p">]()(</span><span class="n">graph</span><span class="p">)</span>
@@ -136,7 +136,7 @@
 <h2>Splice sub-chains  with main chain and remove duplicate results<a class="headerlink" href="#splice-sub-chains-with-main-chain-and-remove-duplicate-results" title="Permalink to this headline">¶</a></h2>
 <p>Each sub-chain pattern matched results would find their attached main chain by check the node names with the indexes. They are merged into the last result recursively by inserting node name at certain position with the help of the indexes. However, due to the volatile and complicated pattern form, there must have other validation ways to avoiding duplicated and incorrect outcomes. For example,  a pattern may be symmetric, the main chain and sub-chain are totally same. Or a pattern has several exactly the same sub-chains attached at same location. So when doing splicing, the pattern recognition function would screen the sub-chain pattern matched results by checking if any node name occurs already or not. And before return the final results, it also remove the duplicate element in the list.  For more details, you can see the implementation of <code class="docutils literal notranslate"><span class="pre">search_pattern</span></code> API.</p>
 <p>In the end, here is the example shows how to get the <code class="docutils literal notranslate"><span class="pre">LayerNorm</span></code>  pattern matched results in bert_large TensorFlow model.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">engine.compile.compile</span> <span class="kn">import</span> <span class="n">COMPILES</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">engine.compile</span> <span class="kn">import</span> <span class="n">COMPILES</span>
 <span class="kn">from</span> <span class="nn">engine.compile.graph_utils</span> <span class="kn">import</span> <span class="n">search_pattern</span>
 <span class="n">graph</span> <span class="o">=</span> <span class="n">COMPILES</span><span class="p">[</span><span class="s1">&#39;loader&#39;</span><span class="p">]()(</span><span class="n">bert_large_model_path</span><span class="p">)</span>
 <span class="n">graph</span> <span class="o">=</span> <span class="n">COMPILES</span><span class="p">[</span><span class="s1">&#39;extractor&#39;</span><span class="p">]()(</span><span class="n">graph</span><span class="p">)</span>

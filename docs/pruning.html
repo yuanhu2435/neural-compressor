@@ -28,7 +28,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.8.1
+                1.9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -255,8 +255,8 @@
 <p>Simplest launcher code if training behavior is defined in user-defined yaml.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="k">import</span> <span class="n">Pruning</span><span class="p">,</span> <span class="n">common</span>
 <span class="n">prune</span> <span class="o">=</span> <span class="n">Pruning</span><span class="p">(</span><span class="s1">&#39;/path/to/user/pruning/yaml&#39;</span><span class="p">)</span>
-<span class="n">prune</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">prune</span><span class="p">()</span>
+<span class="n">prune</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">prune</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Pruning class also support Pruning_Conf class as it’s argument.</p>
@@ -264,8 +264,8 @@
 <span class="kn">from</span> <span class="nn">lpot.conf.config</span> <span class="k">import</span> <span class="n">Pruning_Conf</span>
 <span class="n">conf</span> <span class="o">=</span> <span class="n">Pruning_Conf</span><span class="p">(</span><span class="s1">&#39;/path/to/user/pruning/yaml&#39;</span><span class="p">)</span>
 <span class="n">prune</span> <span class="o">=</span> <span class="n">Pruning</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
-<span class="n">prune</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">prune</span><span class="p">()</span>
+<span class="n">prune</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">prune</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -419,9 +419,9 @@
 <p>In this case, the launcher code is like the following:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">Pruning</span><span class="p">,</span> <span class="n">common</span>
 <span class="n">prune</span> <span class="o">=</span> <span class="n">Pruning</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
-<span class="n">prune</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">prune</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
 <span class="n">prune</span><span class="o">.</span><span class="n">pruning_func</span> <span class="o">=</span> <span class="n">pruning_func</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">prune</span><span class="p">()</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">prune</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -432,10 +432,10 @@
 <span class="n">prune</span> <span class="o">=</span> <span class="n">Pruning</span><span class="p">(</span><span class="n">prune_conf</span><span class="p">)</span>
 <span class="n">quantizer</span> <span class="o">=</span> <span class="n">Quantization</span><span class="p">(</span><span class="n">post_training_quantization_conf</span><span class="p">)</span>
 <span class="n">scheduler</span> <span class="o">=</span> <span class="n">Scheduler</span><span class="p">()</span>
-<span class="n">scheduler</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">scheduler</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
 <span class="n">scheduler</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prune</span><span class="p">)</span>
 <span class="n">scheduler</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">quantizer</span><span class="p">)</span>
-<span class="n">opt_model</span> <span class="o">=</span> <span class="n">scheduler</span><span class="p">()</span>
+<span class="n">opt_model</span> <span class="o">=</span> <span class="n">scheduler</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -448,15 +448,15 @@
 <ul class="simple">
 <li><p>CNN Examples:</p>
 <ul>
-<li><p><a class="reference external" href="../examples/pytorch/eager/image_recognition/imagenet/cpu/prune/README">resnet example</a>: magnitude pruning on resnet.</p></li>
-<li><p><a class="reference external" href="../examples/pytorch/eager/image_recognition/imagenet/cpu/prune_and_ptq/README">pruning and post-training quantization</a>: magnitude pruning and then post-training quantization on resnet.</p></li>
-<li><p><a class="reference external" href="../examples/tensorflow/pruning/resnet_v2/README">resnet_v2 example</a>: magnitude pruning on resnet_v2 for tensorflow.</p></li>
+<li><p><a class="reference external" href="../examples/pytorch/image_recognition/torchvision_models/pruning/magnitude/eager/README">resnet example</a>: magnitude pruning on resnet.</p></li>
+<li><p><a class="reference external" href="../examples/pytorch/image_recognition/torchvision_models/optimization_pipeline/prune_and_ptq/eager/README">pruning and post-training quantization</a>: magnitude pruning and then post-training quantization on resnet.</p></li>
+<li><p><a class="reference external" href="../examples/tensorflow/image_recognition/resnet_v2/pruning/magnitude/README">resnet_v2 example</a>: magnitude pruning on resnet_v2 for tensorflow.</p></li>
 </ul>
 </li>
 <li><p>NLP Examples:</p>
 <ul>
-<li><p><a class="reference external" href="../examples/pytorch/eager/language_translation/prune/README">BERT example</a>: magnitude pruning on DistilBERT.</p></li>
-<li><p><a class="reference external" href="../examples/pytorch/eager/huggingface_models/README">BERT example</a>: Pattern-lock and head-pruning on BERT-base.</p></li>
+<li><p><a class="reference external" href="../examples/pytorch/nlp/huggingface_models/text-classification/pruning/magnitude/eager/README">BERT example</a>: magnitude pruning on DistilBERT.</p></li>
+<li><p><a class="reference external" href="../examples/pytorch/nlp/huggingface_models/text-classification/pruning/pattern_lock/eager/README">BERT example</a>: Pattern-lock and head-pruning on BERT-base.</p></li>
 </ul>
 </li>
 </ul>

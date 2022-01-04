@@ -26,7 +26,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.8.1
+                1.9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -115,8 +115,8 @@
 <span class="c1"># tf.compat.v1.enable_eager_execution()        (Only TensorFlow 1.x needs)</span>
 <span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="k">import</span> <span class="n">Quantization</span><span class="p">,</span> <span class="n">common</span>
 <span class="n">quantizer</span> <span class="o">=</span> <span class="n">Quantization</span><span class="p">(</span><span class="s2">&quot;yaml_file_path&quot;</span><span class="p">)</span>
-<span class="n">quantizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-<span class="n">q_model</span> <span class="o">=</span> <span class="n">quantizer</span><span class="p">()</span>                          <span class="c1"># q_model -&gt; quantized low-precision model </span>
+<span class="n">quantizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+<span class="n">q_model</span> <span class="o">=</span> <span class="n">quantizer</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>                          <span class="c1"># q_model -&gt; quantized low-precision model </span>
 </pre></div>
 </div>
 <p>Only do model accuracy evaluation based on distributed inference</p>
@@ -124,7 +124,7 @@
 <span class="c1"># tf.compat.v1.enable_eager_execution()        (Only TensorFlow 1.x needs)</span>
 <span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="k">import</span> <span class="n">Quantization</span><span class="p">,</span> <span class="n">common</span>
 <span class="n">quantizer</span> <span class="o">=</span> <span class="n">Quantization</span><span class="p">(</span><span class="s2">&quot;yaml_file_path&quot;</span><span class="p">)</span>
-<span class="n">quantizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> 
+<span class="n">quantizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span> 
 <span class="n">quantizer</span><span class="o">.</span><span class="n">pre_process</span><span class="p">()</span>                        <span class="c1"># If you simply want to do model evaluation with no need quantization, you should preprocess the quantizer before evaluation.</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">quantizer</span><span class="o">.</span><span class="n">strategy</span><span class="o">.</span><span class="n">evaluation_result</span>  <span class="c1"># result -&gt; (accuracy, evaluation_time_cost)</span>
 </pre></div>
@@ -184,7 +184,7 @@
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="k">import</span> <span class="n">Component</span><span class="p">,</span> <span class="n">common</span>
 <span class="n">component</span> <span class="o">=</span> <span class="n">Component</span><span class="p">(</span><span class="n">yaml_file</span><span class="p">)</span>
-<span class="n">component</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">component</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
 <span class="n">component</span><span class="o">.</span><span class="n">train_func</span> <span class="o">=</span> <span class="n">train_func</span>
 <span class="n">component</span><span class="o">.</span><span class="n">eval_func</span> <span class="o">=</span> <span class="n">test_func</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">component</span><span class="p">()</span>
@@ -214,12 +214,12 @@
 <ul class="simple">
 <li><p>PyTorch example-1: MNIST</p>
 <ul>
-<li><p>Please follow this README.md exactly：<a class="reference external" href="https://github.com/intel/neural-compressor/tree/e1d59da3790f9ff9647a21d2ff23da98c78a9682/docs/../examples/pytorch/eager/image_recognition/mnist">MNIST</a></p></li>
+<li><p>Please follow this README.md exactly：<a class="reference external" href="https://github.com/intel/neural-compressor/tree/3482e789e1d26967c448ca53a6bba8714f75c8f2/docs/../examples/pytorch/image_recognition/mnist">MNIST</a></p></li>
 </ul>
 </li>
 <li><p>PyTorch example-2: QAT (Quantization Aware Training)</p>
 <ul>
-<li><p>Please follow this README.md exactly：<a class="reference external" href="https://github.com/intel/neural-compressor/tree/e1d59da3790f9ff9647a21d2ff23da98c78a9682/docs/../examples/pytorch/eager/image_recognition/imagenet/cpu/distributed">QAT</a></p></li>
+<li><p>Please follow this README.md exactly：<a class="reference external" href="https://github.com/intel/neural-compressor/tree/3482e789e1d26967c448ca53a6bba8714f75c8f2/docs/../examples/pytorch/image_recognition/torchvision_models/quantization/qat/eager/distributed">QAT</a></p></li>
 </ul>
 </li>
 </ul>
@@ -227,8 +227,8 @@
 <ul>
 <li><p>TensorFlow example-1: ‘ResNet50 V1.0’ PTQ (Post Training Quantization) with distributed inference</p>
 <ul>
-<li><p>Step-1: Please cd (change directory) to the <a class="reference external" href="https://github.com/intel/neural-compressor/tree/e1d59da3790f9ff9647a21d2ff23da98c78a9682/docs/../examples/tensorflow/image_recognition">TensorFlow Image Recognition Example</a> and follow the readme to run PTQ, ensure that PTQ of ‘ResNet50 V1.0’ can be successfully executed.</p></li>
-<li><p>Step-2: We only need to modify the <a class="reference external" href="https://github.com/intel/neural-compressor/blob/e1d59da3790f9ff9647a21d2ff23da98c78a9682/docs/../examples/tensorflow/image_recognition/resnet50_v1.yaml">resnet50_v1.yaml</a>, add a line ‘distributed: True’ in the ‘evaluation’ field.</p>
+<li><p>Step-1: Please cd (change directory) to the <a class="reference external" href="https://github.com/intel/neural-compressor/tree/3482e789e1d26967c448ca53a6bba8714f75c8f2/docs/../examples/tensorflow/image_recognition">TensorFlow Image Recognition Example</a> and follow the readme to run PTQ, ensure that PTQ of ‘ResNet50 V1.0’ can be successfully executed.</p></li>
+<li><p>Step-2: We only need to modify the <a class="reference external" href="https://github.com/intel/neural-compressor/blob/3482e789e1d26967c448ca53a6bba8714f75c8f2/docs/../examples/tensorflow/image_recognition/tensorflow_models/quantization/ptq/resnet50_v1.yaml">resnet50_v1.yaml</a>, add a line ‘distributed: True’ in the ‘evaluation’ field.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># only need to modify the resnet50_v1.yaml, add a line &#39;distributed: True&#39;</span>
 <span class="o">......</span>
 <span class="o">......</span>
@@ -260,7 +260,7 @@
 </li>
 <li><p>TensorFlow example-2: ‘resnet_v2’ pruning on Keras backend with distributed training and inference</p>
 <ul class="simple">
-<li><p>Please follow this README.md exactly：<a class="reference external" href="https://github.com/intel/neural-compressor/tree/e1d59da3790f9ff9647a21d2ff23da98c78a9682/docs/../examples/tensorflow/pruning/resnet_v2">Pruning</a></p></li>
+<li><p>Please follow this README.md exactly：<a class="reference external" href="https://github.com/intel/neural-compressor/tree/3482e789e1d26967c448ca53a6bba8714f75c8f2/docs/../examples/tensorflow/image_recognition/resnet_v2">Pruning</a></p></li>
 </ul>
 </li>
 </ul>

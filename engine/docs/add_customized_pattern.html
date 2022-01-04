@@ -26,7 +26,7 @@
             <a href="../../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.8.1
+                1.9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -82,14 +82,14 @@
 <div class="section" id="register-the-nodes-op-types">
 <h2>Register the nodes’ op_types<a class="headerlink" href="#register-the-nodes-op-types" title="Permalink to this headline">¶</a></h2>
 <p>First you should check whether the nodes’ op_types in the pattern are registered in <code class="docutils literal notranslate"><span class="pre">Engine</span></code> or not.  If not, you need to add the op_type class for <code class="docutils literal notranslate"><span class="pre">engine.compile</span></code> loading and extracting the origin model. All the ops can be found from this <a class="reference external" href="https://github.com/intel/neural-compressor/blob/master/engine/compile/ops/op.py">link</a>. For quick check, use the commands below.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># make sure you have cloned neural_compressor repo and installed neural_compressor </span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># make sure you have cloned neural_compressor repo and installed neural_compressor</span>
 <span class="kn">from</span> <span class="nn">engine.compile.ops.op</span> <span class="kn">import</span> <span class="n">OPERATORS</span>
 <span class="c1"># All the op_type names and objects are stored in `OPERATORS`</span>
 <span class="k">print</span><span class="p">(</span><span class="n">OPERATORS</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The print result will show all registered ops, for example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>{&#39;All&#39;: &lt;class &#39;engine.compile.ops.all.All&#39;&gt;, &#39;Assert&#39;: &lt;class &#39;engine.compile.ops.assert.Assert&#39;&gt;, &#39;BatchMatMul&#39;: &lt;class &#39;engine.compile.ops.batch_matmul.BatchMatMul&#39;&gt;, &#39;BatchMatMulV2&#39;: &lt;class &#39;engine.compile.ops.batch_matmul_v2.BatchMatMulV2&#39;&gt;, &#39;BiasAdd&#39;: &lt;class &#39;engine.compile.ops.bias_add.BiasAdd&#39;&gt;, &#39;Cast&#39;: &lt;class &#39;engine.compile.ops.cast.Cast&#39;&gt;, &#39;Concat&#39;: &lt;class &#39;engine.compile.ops.concat.Concat&#39;&gt;, &#39;AddV2&#39;: &lt;class &#39;engine.compile.ops.empty_ops.AddV2&#39;&gt;, &#39;Add&#39;: &lt;class &#39;engine.compile.ops.empty_ops.Add&#39;&gt;, &#39;BinaryAdd&#39;: &lt;class &#39;engine.compile.ops.empty_ops.BinaryAdd&#39;&gt;, &#39;ConstantOfShape&#39;: &lt;class &#39;engine.compile.ops.empty_ops.ConstantOfShape&#39;&gt;, &#39;DequantizeLinear&#39;: &lt;class &#39;engine.compile.ops.empty_ops.DequantizeLinear&#39;&gt;, &#39;Div&#39;: &lt;class &#39;engine.compile.ops.empty_ops.Div&#39;&gt;, &#39;Equal&#39;: &lt;class &#39;engine.compile.ops.empty_ops.Equal&#39;&gt;, &#39;Erf&#39;: &lt;class &#39;engine.compile.ops.empty_ops.Erf&#39;&gt;, &#39;Expand&#39;: &lt;class &#39;engine.compile.ops.empty_ops.Expand&#39;&gt;, &#39;Fill&#39;: &lt;class &#39;engine.compile.ops.empty_ops.Fill&#39;&gt;, &#39;FlatMapDataset&#39;: &lt;class &#39;engine.compile.ops.empty_ops.FlatMapDataset&#39;&gt;, &#39;Identity&#39;: &lt;class &#39;engine.compile.ops.empty_ops.Identity&#39;&gt;, &#39;InnerProduct&#39;: &lt;class &#39;engine.compile.ops.empty_ops.InnerProduct&#39;&gt;, &#39;Input&#39;: &lt;class &#39;engine.compile.ops.empty_ops.Input&#39;&gt;, &#39;LayerNorm&#39;: &lt;class &#39;engine.compile.ops.empty_ops.LayerNorm&#39;&gt;, &#39;LessEqual&#39;: &lt;class &#39;engine.compile.ops.empty_ops.LessEqual&#39;&gt;, &#39;MakeIterator&#39;: &lt;class &#39;engine.compile.ops.empty_ops.MakeIterator&#39;&gt;, &#39;MatMulWithBiasAdd&#39;: &lt;class &#39;engine.compile.ops.empty_ops.MatMulWithBiasAdd&#39;&gt;, &#39;MatMulWithBiasGelu&#39;: &lt;class &#39;engine.compile.ops.empty_ops.MatMulWithBiasGelu&#39;&gt;, &#39;MatMulWithBiasTanh&#39;: &lt;class &#39;engine.compile.ops.empty_ops.MatMulWithBiasTanh&#39;&gt;, &#39;MatMulWithBias&#39;: &lt;class &#39;engine.compile.ops.empty_ops.MatMulWithBias&#39;&gt;, &#39;Mul&#39;: &lt;class &#39;engine.compile.ops.empty_ops.Mul&#39;&gt;, &#39;NonZero&#39;: &lt;class &#39;engine.compile.ops.empty_ops.NonZero&#39;&gt;, &#39;Output&#39;: &lt;class &#39;engine.compile.ops.empty_ops.Output&#39;&gt;, &#39;PaddingSequence&#39;: &lt;class &#39;engine.compile.ops.empty_ops.PaddingSequence&#39;&gt;, &#39;Pow&#39;: &lt;class &#39;engine.compile.ops.empty_ops.Pow&#39;&gt;, 
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>{&#39;All&#39;: &lt;class &#39;engine.compile.ops.all.All&#39;&gt;, &#39;Assert&#39;: &lt;class &#39;engine.compile.ops.assert.Assert&#39;&gt;, &#39;BatchMatMul&#39;: &lt;class &#39;engine.compile.ops.batch_matmul.BatchMatMul&#39;&gt;, &#39;BatchMatMulV2&#39;: &lt;class &#39;engine.compile.ops.batch_matmul_v2.BatchMatMulV2&#39;&gt;, &#39;BiasAdd&#39;: &lt;class &#39;engine.compile.ops.bias_add.BiasAdd&#39;&gt;, &#39;Cast&#39;: &lt;class &#39;engine.compile.ops.cast.Cast&#39;&gt;, &#39;Concat&#39;: &lt;class &#39;engine.compile.ops.concat.Concat&#39;&gt;, &#39;AddV2&#39;: &lt;class &#39;engine.compile.ops.empty_ops.AddV2&#39;&gt;, &#39;Add&#39;: &lt;class &#39;engine.compile.ops.empty_ops.Add&#39;&gt;, &#39;BinaryAdd&#39;: &lt;class &#39;engine.compile.ops.empty_ops.BinaryAdd&#39;&gt;, &#39;ConstantOfShape&#39;: &lt;class &#39;engine.compile.ops.empty_ops.ConstantOfShape&#39;&gt;, &#39;DequantizeLinear&#39;: &lt;class &#39;engine.compile.ops.empty_ops.DequantizeLinear&#39;&gt;, &#39;Div&#39;: &lt;class &#39;engine.compile.ops.empty_ops.Div&#39;&gt;, &#39;Equal&#39;: &lt;class &#39;engine.compile.ops.empty_ops.Equal&#39;&gt;, &#39;Erf&#39;: &lt;class &#39;engine.compile.ops.empty_ops.Erf&#39;&gt;, &#39;Expand&#39;: &lt;class &#39;engine.compile.ops.empty_ops.Expand&#39;&gt;, &#39;Fill&#39;: &lt;class &#39;engine.compile.ops.empty_ops.Fill&#39;&gt;, &#39;FlatMapDataset&#39;: &lt;class &#39;engine.compile.ops.empty_ops.FlatMapDataset&#39;&gt;, &#39;Identity&#39;: &lt;class &#39;engine.compile.ops.empty_ops.Identity&#39;&gt;, &#39;InnerProduct&#39;: &lt;class &#39;engine.compile.ops.empty_ops.InnerProduct&#39;&gt;, &#39;Input&#39;: &lt;class &#39;engine.compile.ops.empty_ops.Input&#39;&gt;, &#39;LayerNorm&#39;: &lt;class &#39;engine.compile.ops.empty_ops.LayerNorm&#39;&gt;, &#39;LessEqual&#39;: &lt;class &#39;engine.compile.ops.empty_ops.LessEqual&#39;&gt;, &#39;MakeIterator&#39;: &lt;class &#39;engine.compile.ops.empty_ops.MakeIterator&#39;&gt;, &#39;MatMulWithBiasAdd&#39;: &lt;class &#39;engine.compile.ops.empty_ops.MatMulWithBiasAdd&#39;&gt;, &#39;MatMulWithBiasGelu&#39;: &lt;class &#39;engine.compile.ops.empty_ops.MatMulWithBiasGelu&#39;&gt;, &#39;MatMulWithBiasTanh&#39;: &lt;class &#39;engine.compile.ops.empty_ops.MatMulWithBiasTanh&#39;&gt;, &#39;MatMulWithBias&#39;: &lt;class &#39;engine.compile.ops.empty_ops.MatMulWithBias&#39;&gt;, &#39;Mul&#39;: &lt;class &#39;engine.compile.ops.empty_ops.Mul&#39;&gt;, &#39;NonZero&#39;: &lt;class &#39;engine.compile.ops.empty_ops.NonZero&#39;&gt;, &#39;Output&#39;: &lt;class &#39;engine.compile.ops.empty_ops.Output&#39;&gt;, &#39;PaddingSequence&#39;: &lt;class &#39;engine.compile.ops.empty_ops.PaddingSequence&#39;&gt;, &#39;Pow&#39;: &lt;class &#39;engine.compile.ops.empty_ops.Pow&#39;&gt;,
  ...}
 </pre></div>
 </div>
@@ -136,7 +136,7 @@
 </pre></div>
 </div>
 <p>After adding the two op classes, you can use the <code class="docutils literal notranslate"><span class="pre">OPERATORS</span></code> to check whether them be added successfully or not. Please do not forget reinstall the <code class="docutils literal notranslate"><span class="pre">Neural_Compressor</span></code> in local for making your code changes effective.</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter into the &lt;nerual_compressor&gt; floder</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter into the &lt;neural_compressor&gt; folder</span>
 <span class="nb">cd</span> &lt;you_work_dir&gt;/neural_compressor/
 <span class="c1"># reinstall the neural_compressor locally</span>
 python setup.py install
@@ -160,7 +160,7 @@ python setup.py install
             <span class="s1">&#39;LayerNorm&#39;</span><span class="p">:</span> <span class="p">[</span>
     <span class="p">{</span>
     <span class="s1">&#39;patterns&#39;</span><span class="p">:</span> <span class="p">{</span>
-                 <span class="s1">&#39;in&#39;</span><span class="p">:</span> <span class="p">[[(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;ReduceMean&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Sub&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Pow&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;ReduceMean&#39;</span><span class="p">),</span> 
+                 <span class="s1">&#39;in&#39;</span><span class="p">:</span> <span class="p">[[(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;ReduceMean&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Sub&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Pow&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;ReduceMean&#39;</span><span class="p">),</span>
                         <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;Add&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;Sqrt&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;Div&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="s1">&#39;Mul&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="s1">&#39;Add&#39;</span><span class="p">)]],</span>
                  <span class="s1">&#39;out&#39;</span><span class="p">:</span> <span class="p">[[(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;LayerNorm&#39;</span><span class="p">)]]</span>
                  <span class="p">},</span>
@@ -210,11 +210,11 @@ python setup.py install
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
 
         <span class="n">pattern_mapping_config</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;LayerNorm&#39;</span><span class="p">:</span> <span class="p">[</span>        
+            <span class="s1">&#39;LayerNorm&#39;</span><span class="p">:</span> <span class="p">[</span>
                 <span class="c1"># LayerNorm in distil_bert_base</span>
                 <span class="p">{</span>
                     <span class="s1">&#39;patterns&#39;</span><span class="p">:</span> <span class="p">{</span>
-                        <span class="s1">&#39;in&#39;</span><span class="p">:</span> <span class="p">[[(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;ReduceMean&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Sub&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Pow&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;ReduceMean&#39;</span><span class="p">),</span> 
+                        <span class="s1">&#39;in&#39;</span><span class="p">:</span> <span class="p">[[(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;ReduceMean&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Sub&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Pow&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;ReduceMean&#39;</span><span class="p">),</span>
                                 <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;Add&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;Sqrt&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;Div&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="s1">&#39;Mul&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="s1">&#39;Add&#39;</span><span class="p">)]],</span>
                         <span class="s1">&#39;out&#39;</span><span class="p">:</span> <span class="p">[[(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;LayerNorm&#39;</span><span class="p">)]]</span>
                     <span class="p">},</span>
@@ -239,7 +239,7 @@ python setup.py install
                     <span class="s1">&#39;returns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
                 <span class="p">},</span>
             <span class="p">]</span>
-        <span class="p">}</span>     
+        <span class="p">}</span>
 </pre></div>
 </div>
 <p>After save this python file, you can check it by retrieving the <code class="docutils literal notranslate"><span class="pre">PATTERNS</span></code></p>
@@ -288,7 +288,7 @@ python setup.py install
     <span class="c1"># set the `epsilon` attribute</span>
     <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;epsilon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">epsilon</span><span class="p">)</span>
     <span class="n">ln_node_idx</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_node_id</span><span class="p">(</span><span class="n">node_names</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="c1"># make the LayerNorm node in model have the </span>
+    <span class="c1"># make the LayerNorm node in model have the</span>
     <span class="n">model</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">ln_node_idx</span><span class="p">]</span><span class="o">.</span><span class="n">attr</span> <span class="o">=</span> <span class="n">attr</span>
 <span class="c1"># LayerNorm pattern mapping</span>
 <span class="n">pattern_dict</span> <span class="o">=</span> <span class="n">pattern_mapping_config</span><span class="p">[</span><span class="s1">&#39;LayerNorm&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
@@ -315,11 +315,11 @@ python setup.py install
     <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
 
         <span class="n">pattern_mapping_config</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;LayerNorm&#39;</span><span class="p">:</span> <span class="p">[</span>        
+            <span class="s1">&#39;LayerNorm&#39;</span><span class="p">:</span> <span class="p">[</span>
                 <span class="c1"># LayerNorm in distil_bert_base</span>
                 <span class="p">{</span>
                     <span class="s1">&#39;patterns&#39;</span><span class="p">:</span> <span class="p">{</span>
-                        <span class="s1">&#39;in&#39;</span><span class="p">:</span> <span class="p">[[(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;ReduceMean&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Sub&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Pow&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;ReduceMean&#39;</span><span class="p">),</span> 
+                        <span class="s1">&#39;in&#39;</span><span class="p">:</span> <span class="p">[[(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;ReduceMean&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Sub&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Pow&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;ReduceMean&#39;</span><span class="p">),</span>
                                 <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;Add&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;Sqrt&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="s1">&#39;Div&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="s1">&#39;Mul&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="s1">&#39;Add&#39;</span><span class="p">)]],</span>
                         <span class="s1">&#39;out&#39;</span><span class="p">:</span> <span class="p">[[(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;LayerNorm&#39;</span><span class="p">)]]</span>
                     <span class="p">},</span>
@@ -344,18 +344,18 @@ python setup.py install
                     <span class="s1">&#39;returns&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
                 <span class="p">},</span>
             <span class="p">]</span>
-        <span class="p">}</span>     
-        
+        <span class="p">}</span>
+
         <span class="c1"># general LayerNorm node attribute setting function</span>
         <span class="k">def</span> <span class="nf">_set_attr</span><span class="p">(</span><span class="n">epsilon</span><span class="p">,</span> <span class="n">node_names</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
             <span class="n">attr</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
             <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;epsilon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">epsilon</span><span class="p">)</span>
             <span class="n">ln_node_idx</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_node_id</span><span class="p">(</span><span class="n">node_names</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
             <span class="n">model</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">ln_node_idx</span><span class="p">]</span><span class="o">.</span><span class="n">attr</span> <span class="o">=</span> <span class="n">attr</span>
-        <span class="c1"># use for-loop beacuse you may add other LayerNorm pattern mapping dict </span>
+        <span class="c1"># use for-loop because you may add other LayerNorm pattern mapping dict</span>
         <span class="c1"># when meeting other different models</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pattern_mapping_config</span><span class="p">[</span><span class="s1">&#39;LayerNorm&#39;</span><span class="p">])):</span>
-            <span class="c1"># replace all the LayerNorm patttern in the model</span>
+            <span class="c1"># replace all the LayerNorm pattern in the model</span>
             <span class="n">pattern_dict</span> <span class="o">=</span> <span class="n">pattern_mapping_config</span><span class="p">[</span><span class="s1">&#39;LayerNorm&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
             <span class="n">model</span><span class="p">,</span> <span class="n">new_node_names</span><span class="p">,</span> <span class="n">ret_old_nodes</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">pattern_mapping</span><span class="p">(</span><span class="s1">&#39;LayerNorm&#39;</span><span class="p">,</span> <span class="n">pattern_dict</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_node_names</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
@@ -368,7 +368,7 @@ python setup.py install
         <span class="k">return</span> <span class="n">model</span>
 </pre></div>
 </div>
-<p>After finishing these three steps in <code class="docutils literal notranslate"><span class="pre">engine.compile</span></code>, reinstall <code class="docutils literal notranslate"><span class="pre">Neural_Compressor</span></code> and then use <code class="docutils literal notranslate"><span class="pre">prepare_ir</span></code> function would compile your model with the customized pattern.</p>
+<p>After finishing these three steps in <code class="docutils literal notranslate"><span class="pre">engine.compile</span></code>, reinstall <code class="docutils literal notranslate"><span class="pre">Neural_Compressor</span></code> and then use <code class="docutils literal notranslate"><span class="pre">compile</span></code> function would compile your model with the customized pattern.</p>
 <blockquote>
 <div><p><strong>NOTE</strong>:</p>
 <ol class="simple">

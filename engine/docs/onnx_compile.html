@@ -26,7 +26,7 @@
             <a href="../../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.8.1
+                1.9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -81,7 +81,7 @@
 <div class="section" id="prepare-your-environment">
 <h2>Prepare your environment<a class="headerlink" href="#prepare-your-environment" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># clone the neural_compressor repository</span>
-git clone https://github.com/intel/neural-compressor.git 
+git clone https://github.com/intel/neural-compressor.git
 <span class="nb">cd</span> &lt;nc_folder&gt;/examples/engine/nlp/mrpc/distilbert_base_uncased
 
 <span class="c1"># use conda create new work environment</span>
@@ -97,7 +97,7 @@ pip install -r requirements.txt
 <h2>Prepare pretrained model<a class="headerlink" href="#prepare-pretrained-model" title="Permalink to this headline">¶</a></h2>
 <p>You can get the <code class="docutils literal notranslate"><span class="pre">distilbert_base</span></code> from <a class="reference external" href="https://huggingface.co/">Hugging Face</a>, and train it on <code class="docutils literal notranslate"><span class="pre">MRPC</span></code> task.</p>
 <p>Train the <code class="docutils literal notranslate"><span class="pre">distilbert_base</span></code> and export the model</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bash prepare_model.sh 
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bash prepare_model.sh
 </pre></div>
 </div>
 <p>Then you will get the <code class="docutils literal notranslate"><span class="pre">distilbert_base_uncased_mrpc.onnx</span></code> model in the folder.</p>
@@ -112,13 +112,13 @@ pip install -r requirements.txt
 </div>
 <div class="section" id="compile-the-distilbert-base-model-to-engine-ir">
 <h2>Compile the distilbert_base model to Engine IR<a class="headerlink" href="#compile-the-distilbert-base-model-to-engine-ir" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># import prepare_ir api form engine</span>
-<span class="kn">from</span> <span class="nn">engine.compile</span> <span class="kn">import</span> <span class="n">prepare_ir</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># import compile api form engine</span>
+<span class="kn">from</span> <span class="nn">engine.compile</span> <span class="kn">import</span> <span class="nb">compile</span>
 <span class="c1"># get the engine intermediate graph (if trained on MRPC task)</span>
-<span class="n">graph</span> <span class="o">=</span> <span class="n">prepare_ir</span><span class="p">(</span><span class="s2">&quot;distilbert_base_uncased_mrpc.onnx&quot;</span><span class="p">)</span>
+<span class="n">graph</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">(</span><span class="s2">&quot;distilbert_base_uncased_mrpc.onnx&quot;</span><span class="p">)</span>
 <span class="c1"># get the engine intermediate graph (if not trained on MRPC task)</span>
-<span class="n">graph</span> <span class="o">=</span> <span class="n">prepare_ir</span><span class="p">(</span><span class="s2">&quot;distilbert-base-uncased/model.onnx&quot;</span><span class="p">)</span>
-<span class="c1"># save the graph and get the final ir </span>
+<span class="n">graph</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">(</span><span class="s2">&quot;distilbert-base-uncased/model.onnx&quot;</span><span class="p">)</span>
+<span class="c1"># save the graph and get the final ir</span>
 <span class="c1"># the yaml and bin file will stored in &#39;&lt;ir&gt;&#39; folder</span>
 <span class="n">graph</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
 <span class="c1"># you can also set the ir output folder, like</span>

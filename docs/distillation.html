@@ -26,7 +26,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.8.1
+                1.9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -160,9 +160,9 @@
 <p>Simplest launcher code if training behavior is defined in user-defined yaml.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">Distillation</span><span class="p">,</span> <span class="n">common</span>
 <span class="n">distiller</span> <span class="o">=</span> <span class="n">Distillation</span><span class="p">(</span><span class="s1">&#39;/path/to/user/yaml&#39;</span><span class="p">)</span>
-<span class="n">distiller</span><span class="o">.</span><span class="n">student_model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">student_model</span><span class="p">)</span>
-<span class="n">distiller</span><span class="o">.</span><span class="n">teacher_model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">teacher_model</span><span class="p">)</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">distiller</span><span class="p">()</span>
+<span class="n">distiller</span><span class="o">.</span><span class="n">student_model</span> <span class="o">=</span> <span class="n">student_model</span>
+<span class="n">distiller</span><span class="o">.</span><span class="n">teacher_model</span> <span class="o">=</span> <span class="n">teacher_model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">distiller</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Distillation class also support Distillation_Conf class as it’s argument.</p>
@@ -170,9 +170,9 @@
 <span class="kn">from</span> <span class="nn">lpot.conf.config</span> <span class="kn">import</span> <span class="n">Distillation_Conf</span>
 <span class="n">conf</span> <span class="o">=</span> <span class="n">Distillation_Conf</span><span class="p">(</span><span class="s1">&#39;/path/to/user/yaml&#39;</span><span class="p">)</span>
 <span class="n">distiller</span> <span class="o">=</span> <span class="n">Distillation</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
-<span class="n">distiller</span><span class="o">.</span><span class="n">student_model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">student_model</span><span class="p">)</span>
-<span class="n">distiller</span><span class="o">.</span><span class="n">teacher_model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">teacher_model</span><span class="p">)</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">distiller</span><span class="p">()</span>
+<span class="n">distiller</span><span class="o">.</span><span class="n">student_model</span> <span class="o">=</span> <span class="n">student_model</span>
+<span class="n">distiller</span><span class="o">.</span><span class="n">teacher_model</span> <span class="o">=</span> <span class="n">teacher_model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">distiller</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -295,11 +295,11 @@
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">Distillation</span><span class="p">,</span> <span class="n">common</span>
 <span class="kn">from</span> <span class="nn">neural_compressor.experimental.common.criterion</span> <span class="kn">import</span> <span class="n">PyTorchKnowledgeDistillationLoss</span>
 <span class="n">distiller</span> <span class="o">=</span> <span class="n">Distillation</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
-<span class="n">distiller</span><span class="o">.</span><span class="n">student_model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-<span class="n">distiller</span><span class="o">.</span><span class="n">teacher_model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">teacher</span><span class="p">)</span>
+<span class="n">distiller</span><span class="o">.</span><span class="n">student_model</span> <span class="o">=</span> <span class="n">model</span>
+<span class="n">distiller</span><span class="o">.</span><span class="n">teacher_model</span> <span class="o">=</span> <span class="n">teacher</span>
 <span class="n">distiller</span><span class="o">.</span><span class="n">criterion</span> <span class="o">=</span> <span class="n">PyTorchKnowledgeDistillationLoss</span><span class="p">()</span>
 <span class="n">distiller</span><span class="o">.</span><span class="n">train_func</span> <span class="o">=</span> <span class="n">train_func</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">distiller</span><span class="p">()</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">distiller</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -312,16 +312,20 @@
 <ul class="simple">
 <li><p>Image Classification Examples:</p>
 <ul>
-<li><p><a class="reference external" href="../examples/pytorch/eager/image_recognition/cifar10/README">MobileNetV2 example</a>: distillation of WideResNet40-2 to MobileNetV2-0.35 on CIFAR-10 dataset.</p></li>
-<li><p><a class="reference external" href="../examples/pytorch/eager/image_recognition/cifar100/README">CNN example</a>: distillation of CNN-10 to CNN-2 on CIFAR-100 dataset.</p></li>
-<li><p><a class="reference external" href="../examples/pytorch/eager/image_recognition/cifar100/README">VGG example</a>: distillation of VGG-13-BN to VGG-8-BN on CIFAR-100 dataset.</p></li>
-<li><p><a class="reference external" href="../examples/pytorch/eager/image_recognition/imagenet/cpu/distillation/README">ResNet example</a>: distillation of ResNet50 to ResNet18 on ImageNet dataset.</p></li>
+<li><p><a class="reference external" href="../examples/pytorch/image_recognition/MobileNetV2-0.35/distillation/eager/README">MobileNetV2 example</a>: distillation of WideResNet40-2 to MobileNetV2-0.35 on CIFAR-10 dataset.</p></li>
+<li><p><a class="reference external" href="../examples/pytorch/image_recognition/CNN-2/distillation/eager/README">CNN example</a>: distillation of CNN-10 to CNN-2 on CIFAR-100 dataset.</p></li>
+<li><p><a class="reference external" href="../examples/pytorch/image_recognition/VGG-8/distillation/eager/README">VGG example</a>: distillation of VGG-13-BN to VGG-8-BN on CIFAR-100 dataset.</p></li>
+<li><p><a class="reference external" href="../examples/pytorch/image_recognition/torchvision_models/distillation/eager/README">ResNet example</a>: distillation of ResNet50 to ResNet18 on ImageNet dataset.</p></li>
 </ul>
 </li>
 <li><p>Natural Language Processing Examples:</p>
 <ul>
-<li><p><a class="reference external" href="../examples/pytorch/eager/blendcnn/distillation/README">BlendCnn example</a>: distillation of BERT-Base to BlendCnn on MRPC of GLUE dataset.</p></li>
-<li><p><a class="reference external" href="../examples/pytorch/eager/huggingface_models/README">BiLSTM example</a>: distillation of RoBERTa-Base to BiLSTM on SST-2 of GLUE dataset.</p></li>
+<li><p><a class="reference external" href="../examples/pytorch/nlp/blendcnn/distillation/eager/README">BlendCnn example</a>: distillation of BERT-Base to BlendCnn on MRPC of GLUE dataset.</p></li>
+<li><p><a class="reference external" href="../examples/pytorch/nlp/huggingface_models/text-classification/distillation/eager/README">BiLSTM example</a>: distillation of RoBERTa-Base to BiLSTM on SST-2 of GLUE dataset.</p></li>
+<li><p><a class="reference external" href="../examples/pytorch/nlp/huggingface_models/question-answering/distillation/eager/README">DistilBERT example</a>: distillation of BERT-Base to DistilBERT on SQuAD dataset.</p></li>
+<li><p><a class="reference external" href="../examples/pytorch/nlp/huggingface_models/text-classification/distillation/eager/README">TinyBERT example</a>: distillation of BERT-Base to TinyBERT on MNLI of GLUE dataset.</p></li>
+<li><p><a class="reference external" href="../examples/pytorch/nlp/huggingface_models/text-classification/distillation/eager/README">BERT-3 example</a>: distillation of BERT-Base to BERT-3 on QQP of GLUE dataset.</p></li>
+<li><p><a class="reference external" href="../examples/pytorch/nlp/huggingface_models/text-classification/distillation/eager/README">DistilRoBERTa example</a>: distillation of RoBERTa-Large to DistilRoBERTa on COLA of GLUE dataset.</p></li>
 </ul>
 </li>
 </ul>
@@ -334,53 +338,81 @@
 <tr>
 <th>Example Name</th>
 <th>Dataset</th>
-<th>Student<br>(Accuracy)</th>
-<th>Teacher<br>(Accuracy)</th>
-<th>Student With Distillation<br>(Accuracy Improvement)</th>
+<th>Student<br>(Metrics)</th>
+<th>Teacher<br>(Metrics)</th>
+<th>Student With Distillation<br>(Metrics Improvement)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>MobileNet example</td>
 <td>CIFAR-10</td>
-<td>MobileNetV2-0.35<br>(0.7965)</td>
-<td>WideResNet40-2<br>(0.9522)</td>
-<td>0.8178<br>(0.0213)</td>
+<td>MobileNetV2-0.35<br>(0.7965 Acc)</td>
+<td>WideResNet40-2<br>(0.9522 Acc)</td>
+<td>0.8178 Acc<br>(0.0213 Acc)</td>
 </tr>
 <tr>
 <td>CNN example</td>
 <td>CIFAR-100</td>
-<td>CNN-2<br>(0.5494)</td>
-<td>CNN-10<br>(0.7153)</td>
-<td>0.5540<br>(0.0046)</td>
+<td>CNN-2<br>(0.5494 Acc)</td>
+<td>CNN-10<br>(0.7153 Acc)</td>
+<td>0.5540 Acc<br>(0.0046 Acc)</td>
 </tr>
 <tr>
 <td>VGG example</td>
 <td>CIFAR-100</td>
-<td>VGG-8-BN<br>(0.7022)</td>
-<td>VGG-13-BN<br>(0.7415)</td>
-<td>0.7025<br>(0.0003)</td>
+<td>VGG-8-BN<br>(0.7022 Acc)</td>
+<td>VGG-13-BN<br>(0.7415 Acc)</td>
+<td>0.7025 Acc<br>(0.0003 Acc)</td>
 </tr>
 <tr>
 <td>ResNet example</td>
 <td>ImageNet</td>
-<td>ResNet18<br>(0.6739)</td>
-<td>ResNet50<br>(0.7399)</td>
-<td>0.6845<br>(0.0106)</td>
+<td>ResNet18<br>(0.6739 Acc)</td>
+<td>ResNet50<br>(0.7399 Acc)</td>
+<td>0.6845 Acc<br>(0.0106 Acc)</td>
 </tr>
 <tr>
 <td>BlendCnn example</td>
 <td>MRPC</td>
-<td>BlendCnn<br>(0.7034)</td>
-<td>BERT-Base<br>(0.8382)</td>
-<td>0.7034<br>(0)</td>
+<td>BlendCnn<br>(0.7034 Acc)</td>
+<td>BERT-Base<br>(0.8382 Acc)</td>
+<td>0.7034 Acc<br>(0 Acc)</td>
 </tr>
 <tr>
 <td>BiLSTM example</td>
 <td>SST-2</td>
-<td>BiLSTM<br>(0.8303)</td>
-<td>RoBERTa-Base<br>(0.9403)</td>
-<td>0.9023<br>(0.072)</td>
+<td>BiLSTM<br>(0.8314 Acc)</td>
+<td>RoBERTa-Base<br>(0.9403 Acc)</td>
+<td>0.9048 Acc<br>(0.0734 Acc)</td>
+</tr>
+<tr>
+<td>DistilBERT example</td>
+<td>SQuAD</td>
+<td>DistilBERT<br>(0.7323/0.8256 EM/F1)</td>
+<td>BERT-Base<br>(0.8084/0.8814 EM/F1)</td>
+<td>0.7442/0.8371 EM/F1<br>(0.0119/0.0115 EM/F1)</td>
+</tr>
+<tr>
+<td>TinyBERT example</td>
+<td>MNLI</td>
+<td>TinyBERT<br>(0.8018/0.8044 m/mm)</td>
+<td>BERT-Base<br>(0.8363/0.8411 m/mm)</td>
+<td>0.8025/0.8074 m/mm<br>(0.0007/0.0030 m/mm)</td>
+</tr>
+<tr>
+<td>BERT-3 example</td>
+<td>QQP</td>
+<td>BERT-3<br>(0.8626/0.8213 EM/F1)</td>
+<td>BERT-Base<br>(0.9091/0.8782 EM/F1)</td>
+<td>0.8684/0.8259 EM/F1<br>(0.0058/0.0046 EM/F1)</td>
+</tr>
+<tr>
+<td>DistilRoBERTa example</td>
+<td>COLA</td>
+<td>DistilRoBERTa<br>(0.6057 ACC)</td>
+<td>RoBERTa-Large<br>(0.6455 ACC)</td>
+<td>0.6187 ACC<br>(0.0130 ACC)</td>
 </tr>
 </tbody>
 </table></div>

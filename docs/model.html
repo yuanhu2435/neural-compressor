@@ -26,7 +26,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.8.1
+                1.9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -79,8 +79,8 @@
 <p>Users can create, use, and save models in the following manner:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_compressor</span> <span class="kn">import</span> <span class="n">Quantization</span><span class="p">,</span> <span class="n">common</span>
 <span class="n">quantizer</span> <span class="o">=</span> <span class="n">Quantization</span><span class="p">(</span><span class="s1">&#39;./conf.yaml&#39;</span><span class="p">)</span>
-<span class="n">quantizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="s1">&#39;/path/to/model&#39;</span><span class="p">)</span>
-<span class="n">q_model</span> <span class="o">=</span> <span class="n">quantizer</span><span class="p">()</span>
+<span class="n">quantizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;/path/to/model&#39;</span>
+<span class="n">q_model</span> <span class="o">=</span> <span class="n">quantizer</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="n">q_model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -102,43 +102,43 @@
 <td>frozen pb</td>
 <td><strong>model</strong>(str): path to frozen pb <br> <strong>framework_specific_info</strong>(dict): information about model and framework, such as input_tensor_names, input_tensor_names, workspace_path and name <br> <strong>kwargs</strong>(dict): other required parameters</td>
 <td><strong>Examples</strong>: <br> <a href="../examples/tensorflow/image_recognition">../examples/tensorflow/image_recognition</a> <br> <a href="../examples/tensorflow/oob_models">../examples/tensorflow/oob_models</a> <br> <strong>Save format</strong>: <br> frozen pb</td>
-<td>from neural_compressor.experimental import Quantization, common <br> quantizer = Quantization(args.config) <br> quantizer.model = common.Model(model) <br> q_model = quantizer() <br> <strong>model is the path of model, like ./path/to/frozen.pb</strong></td>
+<td>from neural_compressor.experimental import Quantization, common <br> quantizer = Quantization(args.config) <br> quantizer.model = model <br> q_model = quantizer.fit() <br> <strong>model is the path of model, like ./path/to/frozen.pb</strong></td>
 </tr>
 <tr>
 <td>Graph object</td>
 <td><strong>model</strong>(tf.compat.v1.Graph): tf.compat.v1.Graph object  <br> <strong>framework_specific_info</strong>(dict): information about model and framework, such as input_tensor_names, input_tensor_names, workspace_path and name <br> <strong>kwargs</strong>(dict): other required parameters</td>
 <td><strong>Examples</strong>: <br> <a href="../examples/tensorflow/style_transfer">../examples/tensorflow/style_transfer</a> <br> <a href="../examples/tensorflow/recommendation/wide_deep_large_ds">../examples/tensorflow/recommendation/wide_deep_large_ds</a> <br> <strong>Save format</strong>: <br> frozen pb</td>
-<td>from neural_compressor.experimental import Quantization, common <br> quantizer = Quantization(args.config) <br> quantizer.model = common.Model(model) <br> q_model = quantizer() <br> <strong>model is the object of tf.compat.v1.Graph</strong></td>
+<td>from neural_compressor.experimental import Quantization, common <br> quantizer = Quantization(args.config) <br> quantizer.model = model <br> q_model = quantizer.fit() <br> <strong>model is the object of tf.compat.v1.Graph</strong></td>
 </tr>
 <tr>
 <td>Graph object</td>
 <td><strong>model</strong>(tf.compat.v1.GraphDef) tf.compat.v1.GraphDef object <br> <strong>framework_specific_info</strong>(dict): information about model and framework, such as input_tensor_names, input_tensor_names, workspace_path and name <br> <strong>kwargs</strong>(dict): other required parameters</td>
 <td><strong>Save format</strong>: <br> frozen pb</td>
-<td>from neural_compressor.experimental import Quantization, common <br> quantizer = Quantization(args.config) <br> quantizer.model = common.Model(model) <br> q_model = quantizer() <br> <strong>model is the object of tf.compat.v1.GraphDef</strong></td>
+<td>from neural_compressor.experimental import Quantization, common <br> quantizer = Quantization(args.config) <br> quantizer.model = model <br> q_model = quantizer.fit() <br> <strong>model is the object of tf.compat.v1.GraphDef</strong></td>
 </tr>
 <tr>
 <td>tf1.x checkpoint</td>
 <td><strong>model</strong>(str): path to checkpoint <br> <strong>framework_specific_info</strong>(dict): information about model and framework, such as input_tensor_names, input_tensor_names, workspace_path and name <br> <strong>kwargs</strong>(dict): other required parameters</td>
 <td><strong>Examples</strong>: <br> <a href="../examples/helloworld/tf_example4">../examples/helloworld/tf_example4</a> <br> <a href="../examples/tensorflow/object_detection">../examples/tensorflow/object_detection</a>  <br> <strong>Save format</strong>: <br> frozen pb</td>
-<td>from neural_compressor.experimental import Quantization, common <br> quantizer = Quantization(args.config) <br> quantizer.model = common.Model(model) <br> q_model = quantizer() <br> <strong>model is the path of model, like ./path/to/ckpt/</strong></td>
+<td>from neural_compressor.experimental import Quantization, common <br> quantizer = Quantization(args.config) <br> quantizer.model = model <br> q_model = quantizer.fit() <br> <strong>model is the path of model, like ./path/to/ckpt/</strong></td>
 </tr>
 <tr>
 <td>keras.Model object</td>
 <td><strong>model</strong>(tf.keras.Model): tf.keras.Model object <br> <strong>framework_specific_info</strong>(dict): information about model and framework, such as input_tensor_names, input_tensor_names, workspace_path and name <br> <strong>kwargs</strong>(dict): other required parameters</td>
 <td><strong>Save format</strong>: <br> keras saved model</td>
-<td>from neural_compressor.experimental import Quantization, common <br> quantizer = Quantization(args.config) <br> quantizer.model = common.Model(model) <br> q_model = quantizer() <br> <strong>model is the object of tf.keras.Model</strong></td>
+<td>from neural_compressor.experimental import Quantization, common <br> quantizer = Quantization(args.config) <br> quantizer.model = model <br> q_model = quantizer.fit() <br> <strong>model is the object of tf.keras.Model</strong></td>
 </tr>
 <tr>
 <td>keras saved model</td>
 <td><strong>model</strong>(str): path to keras saved model <br> <strong>framework_specific_info</strong>(dict): information about model and framework, such as input_tensor_names, input_tensor_names, workspace_path and name <br> <strong>kwargs</strong>(dict): other required parameters</td>
 <td><strong>Examples</strong>: <br> <a href="../examples/helloworld/tf_example2">../examples/helloworld/tf_example2</a> <br> <strong>Save format</strong>: <br> keras saved model</td>
-<td>from neural_compressor.experimental import Quantization, common <br> quantizer = Quantization(args.config) <br> quantizer.model = common.Model(model) <br> q_model = quantizer() <br> <strong>model is the path of model, like ./path/to/saved_model/</strong></td>
+<td>from neural_compressor.experimental import Quantization, common <br> quantizer = Quantization(args.config) <br> quantizer.model = model <br> q_model = quantizer.fit() <br> <strong>model is the path of model, like ./path/to/saved_model/</strong></td>
 </tr>
 <tr>
 <td>tf2.x saved model</td>
 <td><strong>model</strong>(str): path to saved model <br> <strong>framework_specific_info</strong>(dict): information about model and framework, such as input_tensor_names, input_tensor_names, workspace_path and name <br> <strong>kwargs</strong>(dict): other required parameters</td>
 <td><strong>Save format</strong>: <br> saved model</td>
-<td>from neural_compressor.experimental import Quantization, common <br> quantizer = Quantization(args.config) <br> quantizer.model = common.Model(model) <br> q_model = quantizer() <br> <strong>model is the path of model, like ./path/to/saved_model/</strong></td>
+<td>from neural_compressor.experimental import Quantization, common <br> quantizer = Quantization(args.config) <br> quantizer.model = model <br> q_model = quantizer.fit() <br> <strong>model is the path of model, like ./path/to/saved_model/</strong></td>
 </tr>
 <tr>
 <td>tf2.x h5 format model</td>
@@ -150,13 +150,13 @@
 <td>slim checkpoint</td>
 <td><strong>model</strong>(str): path to slim checkpoint <br> <strong>framework_specific_info</strong>(dict): information about model and framework, such as input_tensor_names, input_tensor_names, workspace_path and name <br> <strong>kwargs</strong>(dict): other required parameters</td>
 <td><strong>Examples</strong>: <br> <a href="../examples/helloworld/tf_example3">../examples/helloworld/tf_example3</a> <br> <strong>Save format</strong>: <br> frozen pb</td>
-<td>from neural_compressor.experimental import Quantization, common <br> quantizer = Quantization(args.config) <br> quantizer.model = common.Model(model) <br> q_model = quantizer() <br> <strong>model is thepath of model, like ./path/to/model.ckpt</strong></td>
+<td>from neural_compressor.experimental import Quantization, common <br> quantizer = Quantization(args.config) <br> quantizer.model = model <br> q_model = quantizer.fit() <br> <strong>model is thepath of model, like ./path/to/model.ckpt</strong></td>
 </tr>
 <tr>
 <td>tf1.x saved model</td>
 <td><strong>model</strong>(str): path to saved model, <strong>framework_specific_info</strong>(dict): information about model and framework, such as input_tensor_names, input_tensor_names, workspace_path and name <br> <strong>kwargs</strong>(dict): other required parameters</td>
 <td><strong>Save format</strong>: <br> saved model</td>
-<td>from neural_compressor.experimental import Quantization, common <br> quantizer = Quantization(args.config) <br> quantizer.model = common.Model(model) <br> q_model = quantizer() <br> <strong>model is the path of model, like ./path/to/saved_model/</strong></td>
+<td>from neural_compressor.experimental import Quantization, common <br> quantizer = Quantization(args.config) <br> quantizer.model = model <br> q_model = quantizer.fit() <br> <strong>model is the path of model, like ./path/to/saved_model/</strong></td>
 </tr>
 <tr>
 <td>tf2.x checkpoint</td>
@@ -194,13 +194,13 @@
 <td>mxnet.gluon.HybridBlock</td>
 <td><strong>model</strong>(mxnet.gluon.HybridBlock): mxnet.gluon.HybridBlock object <br> <strong>framework_specific_info</strong>(dict): information about model and framework <br> <strong>kwargs</strong>(dict): other required parameters</td>
 <td><strong>Save format</strong>: <br> save_path.json</td>
-<td>from neural_compressor.experimental import Quantization, common <br> quantizer = Quantization(args.config) <br> quantizer.model = common.Model(model) <br> q_model = quantizer() <br> <strong>model is mxnet.gluon.HybridBlock object</strong></td>
+<td>from neural_compressor.experimental import Quantization, common <br> quantizer = Quantization(args.config) <br> quantizer.model = model <br> q_model = quantizer.fit() <br> <strong>model is mxnet.gluon.HybridBlock object</strong></td>
 </tr>
 <tr>
 <td>mxnet.symbol.Symbol</td>
 <td><strong>model</strong>(tuple): tuple of symbol, arg_params, aux_params <br> <strong>framework_specific_info</strong>(dict): information about model and framework <br> <strong>kwargs</strong>(dict): other required parameters</td>
 <td><strong>Save format</strong>: <br> save_path-symbol.json and save_path-0000.params</td>
-<td>from neural_compressor.experimental import Quantization, common <br> quantizer = Quantization(args.config) <br> quantizer.model = common.Model(model) <br> q_model = quantizer() <br> <strong>model is the tuple of symbol, arg_params, aux_params</strong></td>
+<td>from neural_compressor.experimental import Quantization, common <br> quantizer = Quantization(args.config) <br> quantizer.model = model <br> q_model = quantizer.fit() <br> <strong>model is the tuple of symbol, arg_params, aux_params</strong></td>
 </tr>
 </tbody>
 </table><ul class="simple">
@@ -238,7 +238,7 @@
 <td>torch.nn.model</td>
 <td><strong>model</strong>(torch.nn.model): torch.nn.model object <br> <strong>framework_specific_info</strong>(dict): information about model and framework <br> <strong>kwargs</strong>(dict): other required parameters</td>
 <td><strong>Save format</strong>: <br> Without Intel PyTorch Extension(IPEX): /save_path/best_configure.yaml and /save_path/best_model_weights.pt <br> With IPEX: /save_path/best_configure.json</td>
-<td>from neural_compressor.experimental import Quantization, common <br> quantizer = Quantization(args.config) <br> quantizer.model = common.Model(model) <br> q_model = quantizer() <br> <strong>model is torch.nn.model object</strong></td>
+<td>from neural_compressor.experimental import Quantization, common <br> quantizer = Quantization(args.config) <br> quantizer.model = model <br> q_model = quantizer.fit() <br> <strong>model is torch.nn.model object</strong></td>
 </tr>
 </tbody>
 </table><ul class="simple">

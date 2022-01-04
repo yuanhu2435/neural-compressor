@@ -26,7 +26,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.8.1
+                1.9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -93,8 +93,8 @@
     <span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="k">import</span> <span class="n">Quantization</span><span class="p">,</span> <span class="n">common</span>
     <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
     <span class="n">quantizer</span> <span class="o">=</span> <span class="n">Quantization</span><span class="p">(</span><span class="s2">&quot;./conf.yaml&quot;</span><span class="p">)</span>
-    <span class="n">quantizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
-    <span class="n">q_model</span> <span class="o">=</span> <span class="n">quantizer</span><span class="p">()</span>
+    <span class="n">quantizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+    <span class="n">q_model</span> <span class="o">=</span> <span class="n">quantizer</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
     <span class="n">q_model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">tuned_checkpoint</span><span class="p">)</span>
     <span class="k">return</span>
 </pre></div>

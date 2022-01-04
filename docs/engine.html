@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Introduction to Engine &mdash; Intel® Neural Compressor  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <title>Execution Engine &mdash; Intel® Neural Compressor  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -26,7 +26,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.8.1
+                1.9
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -63,7 +63,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Introduction to Engine</li>
+      <li>Execution Engine</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/docs/engine.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -73,14 +73,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="introduction-to-engine">
-<h1>Introduction to Engine<a class="headerlink" href="#introduction-to-engine" title="Permalink to this headline">¶</a></h1>
-<p>A deep learning inference engine for quantized and sparsified models.</p>
-<div class="section" id="architecture">
-<h2>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h2>
-<p>Engine support model compile, model executor and high performance kernel for multi device.</p>
+  <div class="section" id="execution-engine">
+<h1>Execution Engine<a class="headerlink" href="#execution-engine" title="Permalink to this headline">¶</a></h1>
+<p>A reference deep learning execution engine for quantized and sparsified models.</p>
+<div class="section" id="deployment-architecture">
+<h2>Deployment Architecture<a class="headerlink" href="#deployment-architecture" title="Permalink to this headline">¶</a></h2>
+<p>The reference execution engine supports model optimizer, model executor and high performance kernel for CPU.</p>
 <a target="_blank" href="docs/imgs/infrastructure.png">
-  <img src="imgs/engine_infrastructure.png" alt="Infrastructure" width=800 height=500>
+  <img src="imgs/engine_infrastructure.png" alt="Infrastructure" width=762 height=672>
 </a></div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
@@ -96,7 +96,7 @@
 </div>
 <div class="section" id="install-neural-compressor">
 <h3>1. install neural-compressor<a class="headerlink" href="#install-neural-compressor" title="Permalink to this headline">¶</a></h3>
-<p>As engine is part of neural_compressor, just install neural-compressor will build the binary and engine interface</p>
+<p>The reference engine is our bare-metal deployment example of Intel Neural Compressor, just install neural-compressor and generate the binary.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">neural</span><span class="o">-</span><span class="n">compressor</span>
 </pre></div>
 </div>
@@ -113,17 +113,17 @@
 <span class="n">make</span> <span class="o">-</span><span class="n">j</span>
 </pre></div>
 </div>
-<p>Then in the build folder, you will get the <code class="docutils literal notranslate"><span class="pre">inferencer</span></code>, <code class="docutils literal notranslate"><span class="pre">engine_py.cpython-37m-x86_64-linux-gnu.so</span></code> and <code class="docutils literal notranslate"><span class="pre">libengine.so</span></code>. The first one is used for pure c++ model inference, and the second is used for python inference, they all need the <code class="docutils literal notranslate"><span class="pre">libengine.so</span></code>.</p>
+<p>Then in the build folder, you will get the <code class="docutils literal notranslate"><span class="pre">inferencer</span></code>, <code class="docutils literal notranslate"><span class="pre">engine_py.cpython-37m-x86_64-linux-gnu.so</span></code> and <code class="docutils literal notranslate"><span class="pre">libengine.so</span></code>. The first one is used for pure c++ APIs, and the second is used for Python APIs, they all need the <code class="docutils literal notranslate"><span class="pre">libengine.so</span></code>.</p>
 </div>
 </div>
 <div class="section" id="generate-the-bert-model-intermediate-representations-that-are-yaml-and-bin-files">
 <h2>Generate the bert model intermediate representations, that are yaml and bin files<a class="headerlink" href="#generate-the-bert-model-intermediate-representations-that-are-yaml-and-bin-files" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">engine.compile.compile</span> <span class="k">import</span> <span class="n">prepare_ir</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">prepare_ir</span><span class="p">(</span><span class="s1">&#39;/path/to/your/model&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">engine.compile</span> <span class="k">import</span> <span class="nb">compile</span>
+<span class="n">model</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">(</span><span class="s1">&#39;/path/to/your/model&#39;</span><span class="p">)</span>
 <span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;/ir/path&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Now engine support tensorflow and onnx model conversion.</p>
+<p>Now the engine support tensorflow and onnx model conversion.</p>
 </div>
 <div class="section" id="use-case">
 <h2>Use case<a class="headerlink" href="#use-case" title="Permalink to this headline">¶</a></h2>
@@ -166,7 +166,7 @@
           <span class="n">location</span><span class="p">:</span> <span class="p">[</span><span class="mi">430411380</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>All input tensors are in an operator typed Input. But slightly difference is some tensors have location while others not. A tensor with location means that is a frozen tensor or weight, it’s read from the bin file. A tensor without location means it’s activation, that should feed to the model during inference. When you use C++ interface, initialize the tensor config and feed data/shape from dataloader:</p>
+<p>All input tensors are in an operator typed Input. But slightly the difference is a weight or frozen (constant) tensor has location defined in bin file, while an activation or input doesn’t have location. When you use C++ interface, initialize the tensor config and feed data/shape from dataloader:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="o">//</span> <span class="n">initialize</span> <span class="n">the</span> <span class="nb">input</span> <span class="n">tensor</span> <span class="n">config</span><span class="p">(</span><span class="n">which</span> <span class="n">correspond</span> <span class="n">to</span> <span class="n">the</span> <span class="n">yaml</span> <span class="n">tensor</span> <span class="n">without</span> <span class="n">location</span><span class="p">)</span>
   <span class="n">vector</span><span class="o">&lt;</span><span class="n">executor</span><span class="p">::</span><span class="n">Tensor</span><span class="o">&gt;</span> <span class="n">input_tensors</span><span class="p">;</span>
   <span class="n">auto</span> <span class="n">input_configs</span> <span class="o">=</span> <span class="n">bert_model</span><span class="o">.</span><span class="n">input_configs</span><span class="p">();</span>
@@ -188,44 +188,44 @@
 </pre></div>
 </div>
 <p>You can add the tensor you want to the Output. Remember, all output tensors from operators should have operators take as input, that means output edges should have an end node. In this case, each operator’s output has one or several other operators take as input.</p>
-<p>If you want to close log information of the <code class="docutils literal notranslate"><span class="pre">inferencer</span></code>, use the command <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">GLOG_minloglevel=2</span></code> before executing the <code class="docutils literal notranslate"><span class="pre">inferencer</span></code>.  <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">GLOG_minloglevel=1</span></code> will open the log information again. This command can also be used in python engine model.</p>
+<p>If you want to close log information of the <code class="docutils literal notranslate"><span class="pre">inferencer</span></code>, use the command <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">GLOG_minloglevel=2</span></code> before executing the <code class="docutils literal notranslate"><span class="pre">inferencer</span></code>.  <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">GLOG_minloglevel=1</span></code> will open the log information again. This command can also be used to run the model with Python APIs.</p>
 </div>
-<div class="section" id="use-the-python-api-of-engine-model">
-<h3>2. Use the python API of engine model<a class="headerlink" href="#use-the-python-api-of-engine-model" title="Permalink to this headline">¶</a></h3>
-<p>If you use pip install -e . to install the engine in your current folder, please make sure to export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/path/to/your/libengine.so</p>
-<p>Other installation method will have no need to set the library path.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># import the engine model</span>
+<div class="section" id="use-the-python-apis">
+<h3>2. Use the python APIs<a class="headerlink" href="#use-the-python-apis" title="Permalink to this headline">¶</a></h3>
+<p>If you use pip install -e . to install the execution engine in your current folder, please make sure to export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/path/to/your/libengine.so</p>
+<p>Other installation method you can skip the step.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># import the model</span>
 <span class="kn">from</span> <span class="nn">engine_py</span> <span class="k">import</span> <span class="n">Model</span>
 <span class="c1"># load the model</span>
 <span class="c1"># config_path is the generated yaml file path</span>
 <span class="c1"># weight_path is the generated bin file path</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="n">config_path</span><span class="p">,</span> <span class="n">weight_path</span><span class="p">)</span>
-<span class="c1"># use engine model to inference</span>
+<span class="c1"># use model to do inference</span>
 <span class="n">out</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">forward</span><span class="p">([</span><span class="n">input_ids</span><span class="p">,</span> <span class="n">segment_ids</span><span class="p">,</span> <span class="n">input_mask</span><span class="p">])</span>
 </pre></div>
 </div>
-<p>Engine python api support input numpy array and output numpy array. if you have several inputs, you can put them in to a list and feed to the model forward interface.</p>
+<p>Python API support input numpy array and output numpy array. if you have several inputs, you can put them in to a list and feed to the model forward interface.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">input_ids</span></code>, <code class="docutils literal notranslate"><span class="pre">segment_ids</span></code> and <code class="docutils literal notranslate"><span class="pre">input_mask</span></code> are the input numpy array data of a bert model, which have size (batch_size, seq_len). Note that the <code class="docutils literal notranslate"><span class="pre">out</span></code> is a list contains the bert model output numpy data (<code class="docutils literal notranslate"><span class="pre">out=[output</span> <span class="pre">numpy</span> <span class="pre">data]</span></code>).</p>
 </div>
 </div>
 <div class="section" id="get-a-low-precision-model-using-neural-compressor-tool">
 <h2>Get a low precision model using neural_compressor tool<a class="headerlink" href="#get-a-low-precision-model-using-neural-compressor-tool" title="Permalink to this headline">¶</a></h2>
-<p>You may have a tensorflow or onnx model and want to have an high performance int8 engine ir, that will be easy to have</p>
+<p>It’s easy to convert a tensorflow or onnx model to the int8 ir with high performance.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="k">import</span> <span class="n">Quantization</span><span class="p">,</span> <span class="n">common</span>
 <span class="n">ds</span> <span class="o">=</span> <span class="n">TF_BERTDataSet</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">vocab_file</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">do_lower_case</span><span class="p">)</span>
 <span class="n">quantizer</span> <span class="o">=</span> <span class="n">Quantization</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
-<span class="n">quantizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_model</span><span class="p">)</span>
+<span class="n">quantizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">input_model</span>
 <span class="n">quantizer</span><span class="o">.</span><span class="n">eval_dataloader</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">batch_size</span><span class="p">)</span>
 <span class="n">quantizer</span><span class="o">.</span><span class="n">calib_dataloader</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">batch_size</span><span class="p">)</span>
-<span class="n">q_model</span> <span class="o">=</span> <span class="n">quantizer</span><span class="p">()</span>
+<span class="n">q_model</span> <span class="o">=</span> <span class="n">quantizer</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="n">q_model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">output_model</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The output_model is the generated int8 ir of engine. you can also test the benchmark of the engine model</p>
+<p>The output_model is the generated int8 ir of the execution engine. You are encouraged to test the benchmark in a bare-metal way.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="k">import</span> <span class="n">Benchmark</span><span class="p">,</span> <span class="n">common</span>
 <span class="n">ds</span> <span class="o">=</span> <span class="n">TF_BERTDataSet</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">vocab_file</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">do_lower_case</span><span class="p">)</span>
 <span class="n">evaluator</span> <span class="o">=</span> <span class="n">Benchmark</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
-<span class="n">evaluator</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_model</span><span class="p">)</span>
+<span class="n">evaluator</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">input_model</span>
 <span class="n">evaluator</span><span class="o">.</span><span class="n">b_dataloader</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">batch_size</span><span class="p">)</span>
 <span class="n">evaluator</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span>
 </pre></div>
