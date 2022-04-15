@@ -28,7 +28,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.9
+                1.11
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -42,7 +42,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../README.html">Introduction to Intel® Neural Compressor</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples_readme.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api-introduction.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-documentation/apis.html">APIs</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="doclist.html">Developer Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="doclist.html#get-started">Get Started</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="doclist.html#deep-dive">Deep Dive</a><ul class="current">
@@ -107,7 +107,10 @@
 <ul class="simple">
 <li><p>Structured Pruning</p></li>
 </ul>
-<p>Structured pruning means pruning sparsity patterns, in which there is some structure, most often in the form of blocks.</p>
+<p>Structured pruning means pruning sparsity patterns, in which there is some structure, most often in the form of blocks.
+Neural Compressor provided a NLP Structured pruning example:
+<a class="reference external" href="https://github.com/intel/neural-compressor/tree/0d766c7f40a8aefaaa7158284a8171a707141641/docs/../examples/pytorch/nlp/huggingface_models/question-answering/pruning/group_lasso/eager">Bert example</a>.
+<a class="reference external" href="../examples/pytorch/nlp/huggingface_models/question-answering/pruning/group_lasso/eager/README">README of Structured pruning example</a>.</p>
 <ul class="simple">
 <li><p>Unstructured Pruning</p></li>
 </ul>
@@ -187,68 +190,8 @@
 <h2>Pruning API<a class="headerlink" href="#pruning-api" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="user-facing-api">
 <h3>User facing API<a class="headerlink" href="#user-facing-api" title="Permalink to this headline">¶</a></h3>
-<p>Neural Compressor pruning API is defined under <code class="docutils literal notranslate"><span class="pre">neural_compressor.experimental.Pruning</span></code>, which takes a user defined yaml file as input. The user defined yaml defines training, pruning and evaluation behaviors.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># pruning.py in neural_compressor/experimental</span>
-<span class="k">class</span> <span class="nc">Pruning</span><span class="p">():</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf_fname_or_obj</span><span class="p">):</span>
-        <span class="c1"># The initialization function of pruning, taking the path or Pruning_Conf class to user-defined yaml as input</span>
-        <span class="o">...</span>
-
-    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># The main entry of pruning, executing pruning according to user configuration.</span>
-        <span class="o">...</span>
-
-    <span class="nd">@model</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_model</span><span class="p">):</span>
-        <span class="c1"># The wrapper of framework model. `user_model` is the path to framework model or framework runtime model </span>
-        <span class="nb">object</span><span class="o">.</span>
-        <span class="c1"># This attribute needs to be set before invoking self.__call__().</span>
-        <span class="o">...</span>
-
-    <span class="nd">@pruning_func</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">pruning_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_pruning_func</span><span class="p">)</span>
-        <span class="c1"># The training function provided by user. This function takes framework runtime model object as input parameter, </span>
-        <span class="c1"># and executes entire training process with self contained training hyper-parameters.</span>
-        <span class="c1"># It is optional if training could be configured by neural_compressor built-in dataloader/optimizer/criterion.</span>
-        <span class="o">...</span>
-
-    <span class="nd">@eval_func</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">eval_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_eval_func</span><span class="p">)</span>
-        <span class="c1"># The evaluation function provided by user. This function takes framework runtime model object as input parameter and executes evaluation process.</span>
-        <span class="c1"># It is optional if evaluation could be configured by neural_compressor built-in dataloader/optimizer/criterion.</span>
-        <span class="o">...</span>
-
-    <span class="nd">@train_dataloader</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">train_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataloader</span><span class="p">):</span>
-        <span class="c1"># The dataloader used in training phase. It is optional if training dataloader is configured in user-define yaml.</span>
-        <span class="o">...</span>
-
-    <span class="nd">@eval_dataloader</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">eval_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataloader</span><span class="p">):</span>
-        <span class="c1"># The dataloader used in evaluation phase. It is optional if training dataloader is configured in user-define yaml.</span>
-        <span class="o">...</span>
-
-    <span class="k">def</span> <span class="nf">on_epoch_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">epoch</span><span class="p">):</span>
-        <span class="c1"># The hook point used by pruning algorithm</span>
-        <span class="o">...</span>
-
-    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># The hook point used by pruning algorithm</span>
-        <span class="o">...</span>
-
-    <span class="k">def</span> <span class="nf">on_batch_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
-        <span class="c1"># The hook point used by pruning algorithm</span>
-        <span class="o">...</span>
-
-    <span class="k">def</span> <span class="nf">on_batch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># The hook point used by pruning algorithm</span>
-        <span class="o">...</span>
-
-    <span class="k">def</span> <span class="nf">on_post_grad</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># The hook point used by pruning algorithm</span>
-        <span class="o">...</span>
-</pre></div>
-</div>
+<p>Neural Compressor pruning API is defined under <code class="docutils literal notranslate"><span class="pre">neural_compressor.experimental.Pruning</span></code>, which takes a user defined yaml file as input. The user defined yaml defines training, pruning and evaluation behaviors.
+<a class="reference internal" href="pruning_api.html"><span class="doc">API Readme</span></a>.</p>
 </div>
 <div class="section" id="launcher-code">
 <h3>Launcher code<a class="headerlink" href="#launcher-code" title="Permalink to this headline">¶</a></h3>
@@ -271,69 +214,8 @@
 </div>
 <div class="section" id="user-defined-yaml">
 <h3>User-defined yaml<a class="headerlink" href="#user-defined-yaml" title="Permalink to this headline">¶</a></h3>
-<p>The user-defined yaml follows below syntax, note <code class="docutils literal notranslate"><span class="pre">train</span></code> section is optional if user implements <code class="docutils literal notranslate"><span class="pre">pruning_func</span></code> and sets to <code class="docutils literal notranslate"><span class="pre">pruning_func</span></code> attribute of pruning instance.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pruning:
-  train:                    # optional. No need if user implements `pruning_func` and pass to `pruning_func` attribute of pruning instance.
-    start_epoch: 0
-    end_epoch: 10
-    iteration: 100
-    frequency: 2
-    
-    dataloader:
-      batch_size: 256
-      dataset:
-        ImageFolder:
-          root: /path/to/imagenet/train
-      transform:
-        RandomResizedCrop:
-          size: 224
-        RandomHorizontalFlip:
-        ToTensor:
-        Normalize:
-          mean: [0.485, 0.456, 0.406]
-          std: [0.229, 0.224, 0.225] 
-    criterion:
-      CrossEntropyLoss:
-        reduction: None
-    optimizer:
-      SGD:
-        learning_rate: 0.1
-        momentum: 0.9
-        weight_decay: 0.0004
-        nesterov: False
-
-  approach:
-    weight_compression:
-      initial_sparsity: 0.0
-      target_sparsity: 0.3
-      pruners:
-        - !Pruner
-            initial_sparsity: 0.0
-            target_sparsity: 0.97
-            start_epoch: 0
-            end_epoch: 2
-            prune_type: basic_magnitude
-            update_frequency: 0.1
-            names: [&#39;layer1.0.conv1.weight&#39;]
-        - !Pruner
-            start_epoch: 0
-            end_epoch: 1
-            prune_type: gradient_sensitivity
-            update_frequency: 1
-            names: [
-                     &#39;bert.encoder.layer.0.attention.output.dense.weight&#39;,
-                   ]
-            parameters: {
-                          target: 8,
-                          transpose: True,
-                          stride: 64,
-                          index: 0,
-                          normalize: True,
-                          importance_inputs: [&#39;head_mask&#39;],
-                          importance_metric: abs_gradient
-                        }
-</pre></div>
-</div>
+<p>The user-defined yaml follows below syntax, note <code class="docutils literal notranslate"><span class="pre">train</span></code> section is optional if user implements <code class="docutils literal notranslate"><span class="pre">pruning_func</span></code> and sets to <code class="docutils literal notranslate"><span class="pre">pruning_func</span></code> attribute of pruning instance.
+<a class="reference external" href="https://github.com/intel/neural-compressor/blob/0d766c7f40a8aefaaa7158284a8171a707141641/docs/../docs/pruning.yaml">user-defined yaml</a>.</p>
 <div class="section" id="train">
 <h4><code class="docutils literal notranslate"><span class="pre">train</span></code><a class="headerlink" href="#train" title="Permalink to this headline">¶</a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">train</span></code> section defines the training behavior, including what training hyper-parameter would be used and which dataloader is used during training.</p>
@@ -475,7 +357,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Intel® Neural Compressor.</p>
+    <p>&#169; Copyright 2022, Intel® Neural Compressor.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

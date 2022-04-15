@@ -28,7 +28,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.9
+                1.11
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -42,7 +42,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../README.html">Introduction to Intel® Neural Compressor</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples_readme.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api-introduction.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-documentation/apis.html">APIs</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="doclist.html">Developer Documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="doclist.html#get-started">Get Started</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="transform.html">Transform</a></li>
@@ -97,7 +97,7 @@
 <p>Users can use Neural Compressor built-in dataset objects as well as register their own datasets.</p>
 <div class="section" id="built-in-dataset-support-list">
 <h2>Built-in dataset support list<a class="headerlink" href="#built-in-dataset-support-list" title="Permalink to this headline">¶</a></h2>
-<p>Neural Compressor supports built-in dataloaders on popular industry datasets. Refer to this <a class="reference external" href="https://github.com/intel/neural-compressor/tree/aaad4c357a86914ffa583753c9a26d949838a2a5/examples/helloworld/tf_example6">HelloWorld example</a> to learn how to configure a built-in dataloader.</p>
+<p>Neural Compressor supports built-in dataloaders on popular industry datasets. Refer to this <a class="reference external" href="https://github.com/intel/neural-compressor/tree/0d766c7f40a8aefaaa7158284a8171a707141641/examples/helloworld/tf_example6">HelloWorld example</a> to learn how to configure a built-in dataloader.</p>
 <div class="section" id="tensorflow">
 <h3>TensorFlow<a class="headerlink" href="#tensorflow" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
@@ -200,6 +200,12 @@
 <td align="left">This dataset supports tfrecord data, please refer to <a href="../examples/tensorflow/nlp/bert_large_squad/quantization/ptq/README.md">Guide</a> to create tfrecord file first.</td>
 <td align="left"><strong>In yaml file:</strong> <br> dataset: <br> &ensp;&ensp; bert: <br> &ensp;&ensp;&ensp;&ensp; root: /path/to/root <br> &ensp;&ensp;&ensp;&ensp; label_file: /path/to/label_file  <br> &ensp;&ensp;&ensp;&ensp; task: squad <br> &ensp;&ensp;&ensp;&ensp; model_type: bert <br> <strong>In user code:</strong> <br> from neural_compressor.experimental.data import DATASETS <br> datasets = DATASETS(framework) <br> dataset = datasets['bert'] (root, label_file, transform=transform)</td>
 </tr>
+<tr>
+<td align="left">sparse_dummy_v2(dense_shape, label_shape, sparse_ratio, low, high, dtype, transform, filter)</td>
+<td align="left"><strong>dense_shape</strong> (list or tuple):create single or multi sparse tensors, tuple represent the sample shape of the dataset, eg and image size should be represented as (224, 224, 3), tuple contains multiple list and represent multi input tensors. <br> <strong>label_shape</strong> (list or tuple):create single or multi label tensors list represent the sample shape of the label, eg and label size should be represented as (1,), tuple contains multiple list and represent multi label tensors. In yaml usage, it offers (1,) as the default value. <br> <strong>sparse_ratio</strong> (float, default=0.5): the ratio of sparsity, support [0, 1]. <br> <strong>low</strong> (list or float, default=-128.):low out the tensor value range from[0, 1] to [0, low] or [low, 0] if low &lt; 0, if float, will implement all tensors with same low value. <br> <strong>high</strong> (list or float, default=127.):high the tensor value by add all tensor element value high. If list, length of list should be same with shape list <br> <strong>dtype</strong> (list or str, default='float32'):support multi tensor dtype setting. If list, length of list should be same with shape list, if str, all tensors will use same dtype. dtype support 'float32', 'float16', 'uint8', 'int8', 'int32', 'int64', 'bool' <br>  <strong>transform</strong> (transform object, default=None): dummy dataset does not need transform. If transform is not None, it will ignore it. <br> <strong>filter</strong> (Filter objects, default=None): filter out examples according to specific conditions</td>
+<td align="left">This dataset is to construct a dataset from a specific shape, the value range is calculated from: low * stand_normal(0, 1) + high.</td>
+<td align="left"><strong>In yaml file:</strong> <br> dataset: <br> &ensp;&ensp; sparse_dummy_v2: <br> &ensp;&ensp;&ensp;&ensp; dense_shape: [224, 224, 3] <br> &ensp;&ensp;&ensp;&ensp; label_shape: [1] <br> &ensp;&ensp;&ensp;&ensp; sparse_ratio: 0.5 <br> &ensp;&ensp;&ensp;&ensp; low: 0.0 <br> &ensp;&ensp;&ensp;&ensp; high: 127.0 <br> &ensp;&ensp;&ensp;&ensp; dtype: float32 <br> <br> <strong>In user code:</strong> <br> from neural_compressor.experimental.data import DATASETS <br> datasets = DATASETS(framework) <br> dataset = datasets['sparse_dummy_v2'] (dense_shape, label_shape, sparse_ratio, low, high, dtype, transform=None, filter=None)</td>
+</tr>
 </tbody>
 </table></div>
 <div class="section" id="pytorch">
@@ -274,6 +280,12 @@
 <td align="left">This Dataset is to construct from the Bert TensorDataset and not a full implementation from yaml config. The original repo link is: https://github.com/huggingface/transformers. When you want use this Dataset, you should add it before you initialize your DataLoader.</td>
 <td align="left"><strong>In user code:</strong> <br> from neural_compressor.experimental.data import DATASETS <br> datasets = DATASETS(framework) <br> dataset = datasets['bert'] (dataset, task, model_type, transform=transform, filter=None) <br> Now not support yaml implementation</td>
 </tr>
+<tr>
+<td align="left">sparse_dummy_v2(dense_shape, label_shape, sparse_ratio, low, high, dtype, transform, filter)</td>
+<td align="left"><strong>dense_shape</strong> (list or tuple):create single or multi sparse tensors, tuple represent the sample shape of the dataset, eg and image size should be represented as (224, 224, 3), tuple contains multiple list and represent multi input tensors. <br> <strong>label_shape</strong> (list or tuple):create single or multi label tensors list represent the sample shape of the label, eg and label size should be represented as (1,), tuple contains multiple list and represent multi label tensors. In yaml usage, it offers (1,) as the default value. <br> <strong>sparse_ratio</strong> (float, default=0.5): the ratio of sparsity, support [0, 1]. <br> <strong>low</strong> (list or float, default=-128.):low out the tensor value range from[0, 1] to [0, low] or [low, 0] if low &lt; 0, if float, will implement all tensors with same low value. <br> <strong>high</strong> (list or float, default=127.):high the tensor value by add all tensor element value high. If list, length of list should be same with shape list <br> <strong>dtype</strong> (list or str, default='float32'):support multi tensor dtype setting. If list, length of list should be same with shape list, if str, all tensors will use same dtype. dtype support 'float32', 'float16', 'uint8', 'int8', 'int32', 'int64', 'bool' <br>  <strong>transform</strong> (transform object, default=None): dummy dataset does not need transform. If transform is not None, it will ignore it. <br> <strong>filter</strong> (Filter objects, default=None): filter out examples according to specific conditions</td>
+<td align="left">This dataset is to construct a dataset from a specific shape, the value range is calculated from: low * stand_normal(0, 1) + high.</td>
+<td align="left"><strong>In yaml file:</strong> <br> dataset: <br> &ensp;&ensp; sparse_dummy_v2: <br> &ensp;&ensp;&ensp;&ensp; dense_shape: [224, 224, 3] <br> &ensp;&ensp;&ensp;&ensp; label_shape: [1] <br> &ensp;&ensp;&ensp;&ensp; sparse_ratio: 0.5 <br> &ensp;&ensp;&ensp;&ensp; low: 0.0 <br> &ensp;&ensp;&ensp;&ensp; high: 127.0 <br> &ensp;&ensp;&ensp;&ensp; dtype: float32 <br> <br> <strong>In user code:</strong> <br> from neural_compressor.experimental.data import DATASETS <br> datasets = DATASETS(framework) <br> dataset = datasets['sparse_dummy_v2'] (dense_shape, label_shape, sparse_ratio, low, high, dtype, transform=None, filter=None)</td>
+</tr>
 </tbody>
 </table></div>
 <div class="section" id="mxnet">
@@ -341,6 +353,12 @@
 <td align="left"><strong>input_shape</strong> (list or tuple):create single or multi input tensors list represent the sample shape of the dataset, eg and image size should be represented as (224, 224, 3), tuple contains multiple list and represent multi input tensors. <br> <strong>label_shape</strong> (list or tuple):create single or multi label tensors list represent the sample shape of the label, eg and label size should be represented as (1,), tuple contains multiple list and represent multi label tensors. In yaml usage, it offers (1,) as the default value. <br> <strong>low</strong> (list or float, default=-128.):low out the tensor value range from[0, 1] to [0, low] or [low, 0] if low &lt; 0, if float, will implement all tensors with same low value. <br> <strong>high</strong> (list or float, default=127.):high the tensor value by add all tensor element value high. If list, length of list should be same with shape list <br> <strong>dtype</strong> (list or str, default='float32'):support multi tensor dtype setting. If list, length of list should be same with shape list, if str, all tensors will use same dtype. dtype support 'float32', 'float16', 'uint8', 'int8', 'int32', 'int64', 'bool' <br>  <strong>transform</strong> (transform object, default=None): dummy dataset does not need transform. If transform is not None, it will ignore it. <br> <strong>filter</strong> (Filter objects, default=None): filter out examples according to specific conditions</td>
 <td align="left">This dataset is to construct a dataset from a specific shape, the value range is calculated from: low * stand_normal(0, 1) + high.</td>
 <td align="left"><strong>In yaml file:</strong> <br> dataset: <br> &ensp;&ensp; dummy_v2: <br> &ensp;&ensp;&ensp;&ensp; input_shape: [224, 224, 3] <br> &ensp;&ensp;&ensp;&ensp; label_shape: [1] <br> &ensp;&ensp;&ensp;&ensp; low: 0.0 <br> &ensp;&ensp;&ensp;&ensp; high: 127.0 <br> &ensp;&ensp;&ensp;&ensp; dtype: float32 <br> <br> <strong>In user code:</strong> <br> from neural_compressor.experimental.data import DATASETS <br> datasets = DATASETS(framework) <br> dataset = datasets['dummy_v2'] (input_shape, low, high, dtype, transform=None, filter=None)</td>
+</tr>
+<tr>
+<td align="left">sparse_dummy_v2(dense_shape, label_shape, sparse_ratio, low, high, dtype, transform, filter)</td>
+<td align="left"><strong>dense_shape</strong> (list or tuple):create single or multi sparse tensors, tuple represent the sample shape of the dataset, eg and image size should be represented as (224, 224, 3), tuple contains multiple list and represent multi input tensors. <br> <strong>label_shape</strong> (list or tuple):create single or multi label tensors list represent the sample shape of the label, eg and label size should be represented as (1,), tuple contains multiple list and represent multi label tensors. In yaml usage, it offers (1,) as the default value. <br> <strong>sparse_ratio</strong> (float, default=0.5): the ratio of sparsity, support [0, 1]. <br> <strong>low</strong> (list or float, default=-128.):low out the tensor value range from[0, 1] to [0, low] or [low, 0] if low &lt; 0, if float, will implement all tensors with same low value. <br> <strong>high</strong> (list or float, default=127.):high the tensor value by add all tensor element value high. If list, length of list should be same with shape list <br> <strong>dtype</strong> (list or str, default='float32'):support multi tensor dtype setting. If list, length of list should be same with shape list, if str, all tensors will use same dtype. dtype support 'float32', 'float16', 'uint8', 'int8', 'int32', 'int64', 'bool' <br>  <strong>transform</strong> (transform object, default=None): dummy dataset does not need transform. If transform is not None, it will ignore it. <br> <strong>filter</strong> (Filter objects, default=None): filter out examples according to specific conditions</td>
+<td align="left">This dataset is to construct a dataset from a specific shape, the value range is calculated from: low * stand_normal(0, 1) + high.</td>
+<td align="left"><strong>In yaml file:</strong> <br> dataset: <br> &ensp;&ensp; sparse_dummy_v2: <br> &ensp;&ensp;&ensp;&ensp; dense_shape: [224, 224, 3] <br> &ensp;&ensp;&ensp;&ensp; label_shape: [1] <br> &ensp;&ensp;&ensp;&ensp; sparse_ratio: 0.5 <br> &ensp;&ensp;&ensp;&ensp; low: 0.0 <br> &ensp;&ensp;&ensp;&ensp; high: 127.0 <br> &ensp;&ensp;&ensp;&ensp; dtype: float32 <br> <br> <strong>In user code:</strong> <br> from neural_compressor.experimental.data import DATASETS <br> datasets = DATASETS(framework) <br> dataset = datasets['sparse_dummy_v2'] (dense_shape, label_shape, sparse_ratio, low, high, dtype, transform=None, filter=None)</td>
 </tr>
 </tbody>
 </table></div>
@@ -416,6 +434,12 @@
 <td align="left">Refer to <a href="/examples/onnxrt/language_translation/bert">this example</a> on how to prepare dataset</td>
 <td align="left"><strong>In yaml file:</strong> <br> dataset: <br> &ensp;&ensp; bert: <br> &ensp;&ensp;&ensp;&ensp; data_dir: False <br> &ensp;&ensp;&ensp;&ensp; model_name_or_path: True <br> (transform and filter are not set in the range of dataset) <br> <strong>In user code:</strong> <br> from neural_compressor.experimental.data import DATASETS <br> datasets = DATASETS(framework) <br> dataset = datasets['bert'] (data_dir='/path/to/data/', model_name_or_path='bert-base-uncased', max_seq_length=128, task='mrpc', model_type='bert', dynamic_length=True, transform=None, filter=None)</td>
 </tr>
+<tr>
+<td align="left">sparse_dummy_v2(dense_shape, label_shape, sparse_ratio, low, high, dtype, transform, filter)</td>
+<td align="left"><strong>dense_shape</strong> (list or tuple):create single or multi sparse tensors, tuple represent the sample shape of the dataset, eg and image size should be represented as (224, 224, 3), tuple contains multiple list and represent multi input tensors. <br> <strong>label_shape</strong> (list or tuple):create single or multi label tensors list represent the sample shape of the label, eg and label size should be represented as (1,), tuple contains multiple list and represent multi label tensors. In yaml usage, it offers (1,) as the default value. <br> <strong>sparse_ratio</strong> (float, default=0.5): the ratio of sparsity, support [0, 1]. <br> <strong>low</strong> (list or float, default=-128.):low out the tensor value range from[0, 1] to [0, low] or [low, 0] if low &lt; 0, if float, will implement all tensors with same low value. <br> <strong>high</strong> (list or float, default=127.):high the tensor value by add all tensor element value high. If list, length of list should be same with shape list <br> <strong>dtype</strong> (list or str, default='float32'):support multi tensor dtype setting. If list, length of list should be same with shape list, if str, all tensors will use same dtype. dtype support 'float32', 'float16', 'uint8', 'int8', 'int32', 'int64', 'bool' <br>  <strong>transform</strong> (transform object, default=None): dummy dataset does not need transform. If transform is not None, it will ignore it. <br> <strong>filter</strong> (Filter objects, default=None): filter out examples according to specific conditions</td>
+<td align="left">This dataset is to construct a dataset from a specific shape, the value range is calculated from: low * stand_normal(0, 1) + high.</td>
+<td align="left"><strong>In yaml file:</strong> <br> dataset: <br> &ensp;&ensp; sparse_dummy_v2: <br> &ensp;&ensp;&ensp;&ensp; dense_shape: [224, 224, 3] <br> &ensp;&ensp;&ensp;&ensp; label_shape: [1] <br> &ensp;&ensp;&ensp;&ensp; sparse_ratio: 0.5 <br> &ensp;&ensp;&ensp;&ensp; low: 0.0 <br> &ensp;&ensp;&ensp;&ensp; high: 127.0 <br> &ensp;&ensp;&ensp;&ensp; dtype: float32 <br> <br> <strong>In user code:</strong> <br> from neural_compressor.experimental.data import DATASETS <br> datasets = DATASETS(framework) <br> dataset = datasets['sparse_dummy_v2'] (dense_shape, label_shape, sparse_ratio, low, high, dtype, transform=None, filter=None)</td>
+</tr>
 </tbody>
 </table></div>
 </div>
@@ -457,7 +481,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Intel® Neural Compressor.</p>
+    <p>&#169; Copyright 2022, Intel® Neural Compressor.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

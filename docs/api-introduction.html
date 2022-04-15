@@ -17,7 +17,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Developer Documentation" href="doclist.html" />
-    <link rel="prev" title="Examples" href="../examples_readme.html" /> 
+    <link rel="prev" title="Quantization" href="../api-documentation/quantization-api.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -28,7 +28,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.9
+                1.11
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -42,16 +42,20 @@
 <li class="toctree-l1"><a class="reference internal" href="../README.html">Introduction to Intel® Neural Compressor</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples_readme.html">Examples</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">API Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#user-facing-apis">User-facing APIs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#experimental-user-facing-apis">Experimental user-facing APIs</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#quantization-related-apis">Quantization-related APIs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#pruning-related-apis-poc">Pruning-related APIs (POC)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#benchmarking-related-apis">Benchmarking-related APIs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api-documentation/apis.html">APIs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../api-documentation/api-reference.html">API Reference</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">API Documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#user-facing-apis">User-facing APIs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experimental-user-facing-apis">Experimental user-facing APIs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#quantization-related-apis">Quantization-related APIs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pruning-related-apis-poc">Pruning-related APIs (POC)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#benchmarking-related-apis">Benchmarking-related APIs</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#default-user-facing-apis">Default user-facing APIs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#default-user-facing-apis">Default user-facing APIs</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="doclist.html">Developer Documentation</a></li>
@@ -76,6 +80,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../api-documentation/apis.html">APIs</a> &raquo;</li>
       <li>API Documentation</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/docs/api-introduction.md.txt" rel="nofollow"> View page source</a>
@@ -158,10 +163,10 @@ the <code class="docutils literal notranslate"><span class="pre">neural_compress
 <p>The <code class="docutils literal notranslate"><span class="pre">conf_fname_or_obj</span></code> parameter used in the class initialization is the path to the user yaml configuration file or Quantization_Conf class. This yaml file is used to control the entire tuning behavior on the model.</p>
 <p><strong>Neural Compressor User YAML Syntax</strong></p>
 <blockquote>
-<div><p>Intel® Neural Compressor provides template yaml files for <a class="reference external" href="https://github.com/intel/neural-compressor/blob/aaad4c357a86914ffa583753c9a26d949838a2a5/docs/../neural_compressor/template/ptq.yaml">Post-Training Quantization</a>, <a class="reference external" href="https://github.com/intel/neural-compressor/blob/aaad4c357a86914ffa583753c9a26d949838a2a5/docs/../neural_compressor/template/qat.yaml">Quantization-Aware Training</a>, and <a class="reference external" href="https://github.com/intel/neural-compressor/blob/aaad4c357a86914ffa583753c9a26d949838a2a5/docs/../neural_compressor/template/pruning.yaml">Pruning</a> scenarios. Refer to these template files to understand the meaning of each field.</p>
+<div><p>Intel® Neural Compressor provides template yaml files for <a class="reference external" href="https://github.com/intel/neural-compressor/blob/0d766c7f40a8aefaaa7158284a8171a707141641/docs/../neural_compressor/template/ptq.yaml">Post-Training Quantization</a>, <a class="reference external" href="https://github.com/intel/neural-compressor/blob/0d766c7f40a8aefaaa7158284a8171a707141641/docs/../neural_compressor/template/qat.yaml">Quantization-Aware Training</a>, and <a class="reference external" href="https://github.com/intel/neural-compressor/blob/0d766c7f40a8aefaaa7158284a8171a707141641/docs/../neural_compressor/template/pruning.yaml">Pruning</a> scenarios. Refer to these template files to understand the meaning of each field.</p>
 </div></blockquote>
 <blockquote>
-<div><p>Note that most fields in the yaml templates are optional. View the <a class="reference external" href="https://github.com/intel/neural-compressor/blob/aaad4c357a86914ffa583753c9a26d949838a2a5/docs/../examples/helloworld/tf_example2/conf.yaml">HelloWorld Yaml</a> example for reference.</p>
+<div><p>Note that most fields in the yaml templates are optional. View the <a class="reference external" href="https://github.com/intel/neural-compressor/blob/0d766c7f40a8aefaaa7158284a8171a707141641/docs/../examples/helloworld/tf_example2/conf.yaml">HelloWorld Yaml</a> example for reference.</p>
 </div></blockquote>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Typical Launcher code</span>
 <span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">Quantization</span><span class="p">,</span> <span class="n">common</span>
@@ -280,7 +285,7 @@ the <code class="docutils literal notranslate"><span class="pre">neural_compress
 <div class="section" id="default-user-facing-apis">
 <h2>Default user-facing APIs<a class="headerlink" href="#default-user-facing-apis" title="Permalink to this headline">¶</a></h2>
 <p>The default user-facing APIs exist for backwards compatibility from the v1.0 release. Refer to <a class="reference external" href="https://github.com/intel/neural-compressor/blob/v1.1/docs/introduction.md">v1.1 API</a> to understand how the default user-facing APIs work.</p>
-<p>View the <a class="reference external" href="https://github.com/intel/neural-compressor/tree/aaad4c357a86914ffa583753c9a26d949838a2a5/examples/helloworld/tf_example6">HelloWorld example</a> that uses default user-facing APIs for user reference.</p>
+<p>View the <a class="reference external" href="https://github.com/intel/neural-compressor/tree/0d766c7f40a8aefaaa7158284a8171a707141641/examples/helloworld/tf_example6">HelloWorld example</a> that uses default user-facing APIs for user reference.</p>
 <p>Full examples using default user-facing APIs can be found <a class="reference external" href="https://github.com/intel/neural-compressor/tree/v1.1/examples">here</a>.</p>
 </div>
 </div>
@@ -289,14 +294,14 @@ the <code class="docutils literal notranslate"><span class="pre">neural_compress
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../examples_readme.html" class="btn btn-neutral float-left" title="Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../api-documentation/quantization-api.html" class="btn btn-neutral float-left" title="Quantization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="doclist.html" class="btn btn-neutral float-right" title="Developer Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Intel® Neural Compressor.</p>
+    <p>&#169; Copyright 2022, Intel® Neural Compressor.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

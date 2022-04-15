@@ -28,7 +28,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.9
+                1.11
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -42,7 +42,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../README.html">Introduction to Intel® Neural Compressor</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples_readme.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api-introduction.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-documentation/apis.html">APIs</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="doclist.html">Developer Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="doclist.html#get-started">Get Started</a></li>
 <li class="toctree-l2"><a class="reference internal" href="doclist.html#deep-dive">Deep Dive</a></li>
@@ -122,7 +122,7 @@ tuning phase stops when the <code class="docutils literal notranslate"><span cla
 </div>
 <div class="section" id="configurations">
 <h2>Configurations<a class="headerlink" href="#configurations" title="Permalink to this headline">¶</a></h2>
-<p>Detailed configuration templates can be found <a class="reference external" href="https://github.com/intel/neural-compressor/tree/aaad4c357a86914ffa583753c9a26d949838a2a5/docs/../neural_compressor/template">here</a>.</p>
+<p>Detailed configuration templates can be found <a class="reference external" href="https://github.com/intel/neural-compressor/tree/0d766c7f40a8aefaaa7158284a8171a707141641/docs/../neural_compressor/template">here</a>.</p>
 <div class="section" id="model-specific-configurations">
 <h3>Model-specific configurations<a class="headerlink" href="#model-specific-configurations" title="Permalink to this headline">¶</a></h3>
 <p>For model-specific configurations, users can set the quantization approach.
@@ -436,7 +436,7 @@ and registering this strategy by <code class="docutils literal notranslate"><spa
 <p>The <code class="docutils literal notranslate"><span class="pre">next_tune_cfg</span></code> function is used to yield the next tune configuration according to some algorithm or strategy. <code class="docutils literal notranslate"><span class="pre">TuneStrategy</span></code> base class will traverse
 all the tuning space till a quantization configuration meets pre-defined accuracy criterion.</p>
 <p>If the traverse behavior of <code class="docutils literal notranslate"><span class="pre">TuneStrategy</span></code> base class does not meet new strategy requirement, it could re-implement <code class="docutils literal notranslate"><span class="pre">traverse</span></code> function with self own logic.
-An example like this is under <a class="reference external" href="https://github.com/intel/neural-compressor/blob/aaad4c357a86914ffa583753c9a26d949838a2a5/docs/../neural_compressor/strategy/strategy.py">TPE Strategy</a>.</p>
+An example like this is under <a class="reference external" href="https://github.com/intel/neural-compressor/blob/0d766c7f40a8aefaaa7158284a8171a707141641/docs/../neural_compressor/strategy/strategy.py">TPE Strategy</a>.</p>
 </div>
 </div>
 
@@ -451,7 +451,7 @@ An example like this is under <a class="reference external" href="https://github
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Intel® Neural Compressor.</p>
+    <p>&#169; Copyright 2022, Intel® Neural Compressor.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

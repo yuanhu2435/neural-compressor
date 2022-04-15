@@ -28,7 +28,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.9
+                1.11
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -42,7 +42,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../README.html">Introduction to Intel® Neural Compressor</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples_readme.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api-introduction.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-documentation/apis.html">APIs</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="doclist.html">Developer Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="doclist.html#get-started">Get Started</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="doclist.html#deep-dive">Deep Dive</a><ul class="current">
@@ -99,21 +99,16 @@
 <div><p><strong>Note</strong></p>
 </div></blockquote>
 <blockquote>
-<div><p>Dynamic quantization currently only supports the onnxruntime backend.</p>
+<div><p>Dynamic quantization currently supports the pytorch and onnxruntime backend.</p>
 </div></blockquote>
 <p>As a <a class="reference internal" href="Quantization.html"><span class="doc">quantization</span></a> class, dynamic quantization allows users to determine the scale factor for activations dynamically based on the data range that’s observed at runtime as opposed to using other methods that entail multiplying a float point value by some scale factor and then rounding the result to a whole number. As noted in <a class="reference external" href="https://pytorch.org/tutorials/recipes/recipes/dynamic_quantization.html">PyTorch documentation</a>, this “ensures that the scale factor is ‘tuned’ so that as much signal as possible about each observed dataset is preserved.” Since it does not use a lot of tuning parameters, dynamic quantization is a good match for NLP models.</p>
-<p>The onnxruntime bert_base model provides an example where users can create a specific quantization method like the following yaml:</p>
+<p>The pytorch bert_base model provides an example where users can create a specific quantization method like the following yaml:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">model</span><span class="p">:</span>                                               <span class="c1"># mandatory. used to specify model specific information.</span>
   <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">bert</span> 
-  <span class="nt">framework</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">onnxrt_integerops</span>                       <span class="c1"># mandatory. possible values are tensorflow, mxnet, pytorch, pytorch_ipex, onnxrt_integerops and onnxrt_qlinearops.</span>
+  <span class="nt">framework</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pytorch</span>                                 <span class="c1"># mandatory. possible values are pytorch, onnxrt_integerops.</span>
 
 <span class="nt">quantization</span><span class="p">:</span>
   <span class="nt">approach</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">post_training_dynamic_quant</span>              <span class="c1"># optional. default value is post_training_static_quant</span>
-                                                     <span class="c1"># possible value is post_training_static_quant, </span>
-                                                     <span class="c1"># post_training_dynamic_quant</span>
-                                                     <span class="c1"># quant_aware_training                                 </span>
-  <span class="nt">calibration</span><span class="p">:</span>
-    <span class="nt">sampling_size</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">8, 16, 32</span>
 
 <span class="nt">tuning</span><span class="p">:</span>
   <span class="nt">accuracy_criterion</span><span class="p">:</span>
@@ -136,7 +131,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Intel® Neural Compressor.</p>
+    <p>&#169; Copyright 2022, Intel® Neural Compressor.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

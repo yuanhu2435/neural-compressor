@@ -26,7 +26,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.9
+                1.11
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -40,7 +40,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../README.html">Introduction to Intel® Neural Compressor</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples_readme.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api-introduction.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-documentation/apis.html">APIs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doclist.html">Developer Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../releases_info.html">Release</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../contributions.html">Contribution Guidelines</a></li>
@@ -98,6 +98,19 @@
     <span class="n">q_model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">tuned_checkpoint</span><span class="p">)</span>
     <span class="k">return</span>
 </pre></div>
+</div>
+</div>
+<div class="section" id="note">
+<h2>Note<a class="headerlink" href="#note" title="Permalink to this headline">¶</a></h2>
+<p>Right now, we support auto quantization method and can avoid below common problem.<br />For users, you will see log output below if you model failed on symbolic trace method.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">INFO</span><span class="p">]</span> <span class="n">Fx</span> <span class="n">trace</span> <span class="n">of</span> <span class="n">the</span> <span class="n">entire</span> <span class="n">model</span> <span class="n">failed</span><span class="o">.</span> <span class="n">We</span> <span class="n">will</span> <span class="n">conduct</span> <span class="n">auto</span> <span class="n">quantization</span>
+</pre></div>
+</div>
+<div class="section" id="details">
+<h3>Details<a class="headerlink" href="#details" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>We combine GraphModule from symbolic_trace and imperative control flow. Therefore, the INT8 model consists of lots of GraphModules.</p></li>
+</ul>
 </div>
 </div>
 <hr class="docutils" />
@@ -164,7 +177,7 @@ def bboxes_labels_scores(bboxes, probs, criteria = 0.45, max_output=200):
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Intel® Neural Compressor.</p>
+    <p>&#169; Copyright 2022, Intel® Neural Compressor.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

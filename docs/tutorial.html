@@ -28,7 +28,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.9
+                1.11
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -41,12 +41,13 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../README.html">Introduction to Intel® Neural Compressor</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#usage-examples">Usage Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#instructions-with-examples">Instructions with Examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#helloworld-examples">Helloworld Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tutorial-examples">Tutorial Examples</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../examples_readme.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api-introduction.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-documentation/apis.html">APIs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doclist.html">Developer Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../releases_info.html">Release</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../contributions.html">Contribution Guidelines</a></li>
@@ -81,147 +82,27 @@
              
   <div class="section" id="tutorial">
 <h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
-<p>This tutorial provides instructions (with examples) on how to integrate models with Intel® Neural Compressor.</p>
-<p>The following diagram shows steps for enabling model with Neural Compressor:</p>
-<p><img alt="Tutorial" src="../_images/tutorial.png" /></p>
-<div class="section" id="usage-examples">
-<h2>Usage Examples<a class="headerlink" href="#usage-examples" title="Permalink to this headline">¶</a></h2>
-<p>To write launcher code, a user needs to prepare four components:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">Dataloader/Dataset</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Model</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Postprocess</span></code>      <span style="color:red"><em>optional</em></span></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">Metric</span></code></p></li>
-</ul>
-<p>Neural Compressor constructs the whole quantization/pruning process using these four components.</p>
-<p>Neural Compressor has added built-in support for popular dataloaders/datasets and metrics to ease the preparation. Refer to <a class="reference internal" href="dataset.html"><span class="doc">dataset</span></a> and <a class="reference internal" href="metric.html"><span class="doc">metric</span></a> to learn how to use them in yaml.</p>
-<p>Neural Compressor also supports registering custom datasets and custom metrics by code.</p>
-<p>As for model, Neural Compressor abstract a common API, named <a class="reference external" href="https://github.com/intel/neural-compressor/blob/aaad4c357a86914ffa583753c9a26d949838a2a5/docs/../neural_compressor/experimental/common/model.py">neural_compressor.experimental.common.Model</a>, to cover the case in which model, weight, and other necessary info are separately stored. Refer to <a class="reference internal" href="model.html"><span class="doc">model</span></a> to learn how to use it.</p>
-<p>Postprocess is treated as a special transform by Neural Compressor which is only needed when a model output is mismatching with the expected input of Neural Compressor built-in metrics. If a user is using a custom metric, the postprocess is not needed as the custom metric implementation needed ensures it can handle the model output correctly. On the other hand, the postprocess logic becomes part of the custom metric implementation.</p>
-<p>The example below shows how to enable Neural Compressor on TensorFlow mobilenet_v1 with a built-in dataloader, dataset, and metric.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># main.py</span>
-<span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">Quantization</span><span class="p">,</span> <span class="n">common</span>
-<span class="n">quantizer</span> <span class="o">=</span> <span class="n">Quantization</span><span class="p">(</span><span class="s1">&#39;./conf.yaml&#39;</span><span class="p">)</span>
-<span class="n">quantizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="s2">&quot;./mobilenet_v1_1.0_224_frozen.pb&quot;</span>
-<span class="n">quantized_model</span> <span class="o">=</span> <span class="n">quantizer</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>Quantization also support Quantization_Conf class as it’s argument:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># main.py</span>
-<span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="kn">import</span> <span class="n">Quantization</span><span class="p">,</span> <span class="n">common</span>
-<span class="kn">from</span> <span class="nn">lpot.conf.config</span> <span class="kn">import</span> <span class="n">Quantization_Conf</span>
-<span class="n">conf</span> <span class="o">=</span> <span class="n">Quantization_Conf</span><span class="p">(</span><span class="s1">&#39;./conf.yaml&#39;</span><span class="p">)</span>
-<span class="n">quantizer</span> <span class="o">=</span> <span class="n">Quantization</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
-<span class="n">quantizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="s2">&quot;./mobilenet_v1_1.0_224_frozen.pb&quot;</span>
-<span class="n">quantized_model</span> <span class="o">=</span> <span class="n">quantizer</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
-</pre></div>
-</div>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># conf.yaml</span>
-<span class="nt">model</span><span class="p">:</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mobilenet_v1</span> 
-  <span class="nt">framework</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tensorflow</span>
-<span class="nt">quantization</span><span class="p">:</span>
-  <span class="nt">calibration</span><span class="p">:</span>
-    <span class="nt">sampling_size</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">20</span>
-    <span class="nt">dataloader</span><span class="p">:</span>
-      <span class="nt">batch_size</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
-      <span class="nt">dataset</span><span class="p">:</span>
-        <span class="nt">ImageRecord</span><span class="p">:</span>
-          <span class="nt">root</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/path/to/imagenet/</span>
-      <span class="nt">transform</span><span class="p">:</span>
-        <span class="nt">ParseDecodeImagenet</span><span class="p">:</span> <span class="p p-Indicator">{}</span>
-        <span class="nt">BilinearImagenet</span><span class="p">:</span> 
-          <span class="nt">height</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">224</span>
-          <span class="nt">width</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">224</span>
-<span class="nt">evaluation</span><span class="p">:</span>
-  <span class="nt">accuracy</span><span class="p">:</span>
-    <span class="nt">metric</span><span class="p">:</span>
-      <span class="nt">topk</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
-    <span class="nt">dataloader</span><span class="p">:</span>
-      <span class="nt">batch_size</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">32</span> 
-      <span class="nt">dataset</span><span class="p">:</span>
-        <span class="nt">ImageRecord</span><span class="p">:</span>
-          <span class="nt">root</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">/path/to/imagenet/</span>
-      <span class="nt">transform</span><span class="p">:</span>
-        <span class="nt">ParseDecodeImagenet</span><span class="p">:</span> <span class="p p-Indicator">{}</span>
-        <span class="nt">BilinearImagenet</span><span class="p">:</span> 
-          <span class="nt">height</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">224</span>
-          <span class="nt">width</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">224</span>
-</pre></div>
-</div>
-<p>In this example, we use an Neural Compressor built-in <code class="docutils literal notranslate"><span class="pre">ImageRecord</span></code> dataset and a <code class="docutils literal notranslate"><span class="pre">topk</span></code> metric.</p>
-<p>If the user wants to use a dataset or metric that is not supported by built-in, the user can register a custom one as demonstrated in the below helloworld example.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># main.py</span>
-<span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">Quantization</span><span class="p">,</span> <span class="n">common</span>
-
-<span class="k">class</span> <span class="nc">Dataset</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-      <span class="p">(</span><span class="n">train_images</span><span class="p">,</span> <span class="n">train_labels</span><span class="p">),</span> <span class="p">(</span><span class="n">test_images</span><span class="p">,</span>
-                 <span class="n">test_labels</span><span class="p">)</span> <span class="o">=</span> <span class="n">keras</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">fashion_mnist</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">test_images</span> <span class="o">=</span> <span class="n">test_images</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.0</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="n">test_labels</span>
-  <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-      <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_images</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
-  <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-      <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_images</span><span class="p">)</span>
-
-<span class="c1"># Define a customized Metric function </span>
-<span class="k">class</span> <span class="nc">MyMetric</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">pred_list</span> <span class="o">=</span> <span class="p">[]</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">label_list</span> <span class="o">=</span> <span class="p">[]</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">samples</span> <span class="o">=</span> <span class="mi">0</span>
-  <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">predict</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">pred_list</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">predict</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">label_list</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">samples</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
-  <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">pred_list</span> <span class="o">=</span> <span class="p">[]</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">label_list</span> <span class="o">=</span> <span class="p">[]</span>
-      <span class="bp">self</span><span class="o">.</span><span class="n">samples</span> <span class="o">=</span> <span class="mi">0</span>
-  <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-      <span class="n">correct_num</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pred_list</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">label_list</span><span class="p">))</span>
-      <span class="k">return</span> <span class="n">correct_num</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span>
-
-<span class="c1"># Quantize with customized dataloader and metric</span>
-<span class="n">quantizer</span> <span class="o">=</span> <span class="n">Quantization</span><span class="p">(</span><span class="s1">&#39;./conf.yaml&#39;</span><span class="p">)</span>
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">()</span>
-<span class="n">quantizer</span><span class="o">.</span><span class="n">metric</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Metric</span><span class="p">(</span><span class="n">MyMetric</span><span class="p">)</span>
-<span class="n">quantizer</span><span class="o">.</span><span class="n">calib_dataloader</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">quantizer</span><span class="o">.</span><span class="n">eval_dataloader</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">quantizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;../models/simple_model&#39;</span>
-<span class="n">q_model</span> <span class="o">=</span> <span class="n">quantizer</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
-</pre></div>
-</div>
-<blockquote>
-<div><p><strong>Note</strong></p>
-<p>In the customized dataset, the <code class="docutils literal notranslate"><span class="pre">__getitem__()</span></code> interface must be implemented and return a single sample and label. In this example, it returns the (image, label) pair. The user can return (image, 0) for a label-free case.</p>
-</div></blockquote>
-<p>In the customized metric, the update() function records the predicted result of each mini-batch. The result() function is invoked by Neural Compressor at the end of the evaluation to return a scalar to reflect model accuracy. By default, this scalar is higher-is-better. If this scalar returned from the customized metric is a lower-is-better value, <code class="docutils literal notranslate"><span class="pre">tuning.accuracy_criterion.higher_is_better</span></code> in yaml should be set to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># conf.yaml</span>
-<span class="nt">model</span><span class="p">:</span>
-  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">hello_world</span>
-  <span class="nt">framework</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tensorflow</span>
-  <span class="nt">inputs</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">input</span>
-  <span class="nt">outputs</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">output</span>
-
-<span class="nt">tuning</span><span class="p">:</span>
-  <span class="nt">accuracy_criterion</span><span class="p">:</span>
-    <span class="nt">relative</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.01</span>
-  <span class="nt">exit_policy</span><span class="p">:</span>
-    <span class="nt">timeout</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span>
-  <span class="nt">random_seed</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">100</span>
-</pre></div>
-</div>
+<p>This tutorial provides instructions (with examples), basic and end-to-end examples to help user to learn optimize models by Intel® Neural Compressor.</p>
+<div class="section" id="instructions-with-examples">
+<h2>Instructions with Examples<a class="headerlink" href="#instructions-with-examples" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="tutorial/usage_example.html"><span class="doc">Usage Example</span></a></p>
 </div>
 <div class="section" id="helloworld-examples">
 <h2>Helloworld Examples<a class="headerlink" href="#helloworld-examples" title="Permalink to this headline">¶</a></h2>
 <ol class="simple">
-<li><p>Built-in dataloader and metric example: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/aaad4c357a86914ffa583753c9a26d949838a2a5/examples/helloworld/tf_example1">tf_example1</a> for more details.</p></li>
-<li><p>TensorFlow checkpoint: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/aaad4c357a86914ffa583753c9a26d949838a2a5/examples/helloworld/tf_example4">tf_example4</a> for more details.</p></li>
-<li><p>Enable benchmark for performance and accuracy measurement: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/aaad4c357a86914ffa583753c9a26d949838a2a5/examples/helloworld/tf_example5">tf_example5</a> for more details.</p></li>
-<li><p>TensorFlow slim model: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/aaad4c357a86914ffa583753c9a26d949838a2a5/examples/helloworld/tf_example3">tf_example3</a> for more details.</p></li>
+<li><p>Built-in dataloader and metric example: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/0d766c7f40a8aefaaa7158284a8171a707141641/examples/helloworld/tf_example1">tf_example1</a> for more details.</p></li>
+<li><p>TensorFlow checkpoint: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/0d766c7f40a8aefaaa7158284a8171a707141641/examples/helloworld/tf_example4">tf_example4</a> for more details.</p></li>
+<li><p>Enable benchmark for performance and accuracy measurement: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/0d766c7f40a8aefaaa7158284a8171a707141641/examples/helloworld/tf_example5">tf_example5</a> for more details.</p></li>
+<li><p>TensorFlow slim model: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/0d766c7f40a8aefaaa7158284a8171a707141641/examples/helloworld/tf_example3">tf_example3</a> for more details.</p></li>
+</ol>
+</div>
+<div class="section" id="tutorial-examples">
+<h2>Tutorial Examples<a class="headerlink" href="#tutorial-examples" title="Permalink to this headline">¶</a></h2>
+<p>These examples are <strong>easy</strong> to run without preparing dataset. The script will download public dataset automatically or create fake dataset.</p>
+<ol class="simple">
+<li><p>Compare existed FP32 &amp; INT8 ResNet50 model directly: <a class="reference external" href="https://github.com/intel/neural-compressor/tree/0d766c7f40a8aefaaa7158284a8171a707141641/docs/tutorial/perf_fp32_int8_tf">Performance of FP32 Vs. INT8 ResNet50 Model</a>.</p></li>
+<li><p>An End-To-End pipeline to build up a CNN model by Pytorch to recognize fashion image and speed up AI model by Intel® Neural Compressor: <a class="reference external" href="https://github.com/intel/neural-compressor/tree/0d766c7f40a8aefaaa7158284a8171a707141641/docs/tutorial/pytorch/alexnet_fashion_mnist">Intel® Neural Compressor Sample for PyTorch*</a></p></li>
+<li><p>An End-To-End pipeline to build up a CNN model by Tensorflow to recognize handwriting number and speed up AI model by Intel® Neural Compressor: <a class="reference external" href="https://github.com/intel/neural-compressor/tree/0d766c7f40a8aefaaa7158284a8171a707141641/docs/tutorial/tensorflow/alexnet_mnist">Intel® Neural Compressor Sample for TensorFlow*</a></p></li>
 </ol>
 </div>
 </div>
@@ -237,7 +118,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Intel® Neural Compressor.</p>
+    <p>&#169; Copyright 2022, Intel® Neural Compressor.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

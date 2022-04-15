@@ -28,7 +28,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.9
+                1.11
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -42,13 +42,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../README.html">Introduction to Intel® Neural Compressor</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples_readme.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api-introduction.html">API Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-documentation/apis.html">APIs</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="doclist.html">Developer Documentation</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="doclist.html#get-started">Get Started</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="transform.html">Transform</a></li>
 <li class="toctree-l3"><a class="reference internal" href="dataset.html">Dataset</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Metrics</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#how-to-use-metrics">How to use Metrics</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#multi-metrics-support">Multi-metrics support</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#built-in-metric-support-list">Built-in metric support list</a></li>
 </ul>
 </li>
@@ -126,14 +127,47 @@
 </pre></div>
 </div>
 <p>The result() function returns a higher-is-better scalar to reflect model accuracy on an evaluation dataset.</p>
-<p>After defining the metric class, users need to register it with a user-defined metric name and the metric class:</p>
+<p>After defining the metric class, users can initialize it and pass it to quantizer:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
-<span class="kn">from</span> <span class="nn">neural_compressor.quantization</span> <span class="kn">import</span> <span class="n">Quantization</span><span class="p">,</span> <span class="n">common</span>
+<span class="kn">from</span> <span class="nn">neural_compressor.quantization</span> <span class="kn">import</span> <span class="n">Quantization</span>
 <span class="n">quantizer</span> <span class="o">=</span> <span class="n">Quantization</span><span class="p">(</span><span class="n">yaml_file</span><span class="p">)</span>
 <span class="n">quantizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">graph</span>
-<span class="n">quantizer</span><span class="o">.</span><span class="n">metric</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">Metric</span><span class="p">(</span><span class="n">NewMetric</span><span class="p">,</span> <span class="s1">&#39;metric_name&#39;</span><span class="p">)</span>
+<span class="n">quantizer</span><span class="o">.</span><span class="n">metric</span> <span class="o">=</span> <span class="n">NewMetric</span><span class="p">()</span>
 <span class="n">quantizer</span><span class="o">.</span><span class="n">calib_dataloader</span> <span class="o">=</span> <span class="n">dataloader</span>
 <span class="n">q_model</span> <span class="o">=</span> <span class="n">quantizer</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="multi-metrics-support">
+<h2>Multi-metrics support<a class="headerlink" href="#multi-metrics-support" title="Permalink to this headline">¶</a></h2>
+<p>In some cases, users want to use more than one metric to evaluate the performance of a specific model and they can realize it with multi_metrics of Neural Compressor. Currently multi_metrics supports built-in metrics.</p>
+<div class="section" id="usage">
+<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
+<p>There are two usages for multi_metrics of Neural Compressor:</p>
+<ol class="simple">
+<li><p>Evaluate performance of a model with metrics one by one</p></li>
+</ol>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">evaluation</span><span class="p">:</span>
+  <span class="nt">accuracy</span><span class="p">:</span>
+    <span class="nt">multi_metrics</span><span class="p">:</span>
+      <span class="nt">topk</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+      <span class="nt">MSE</span><span class="p">:</span>
+        <span class="nt">compare_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+      <span class="nt">higher_is_better</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">True</span><span class="p p-Indicator">,</span> <span class="nv">False</span><span class="p p-Indicator">]</span> <span class="c1"># length of higher_is_better should be equal to num of metric, default is True</span>
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>Evaluate performance of a model with weighted metric results</p></li>
+</ol>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">evaluation</span><span class="p">:</span>
+  <span class="nt">accuracy</span><span class="p">:</span>
+    <span class="nt">multi_metrics</span><span class="p">:</span>
+      <span class="nt">topk</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">1</span>
+      <span class="nt">MSE</span><span class="p">:</span>
+        <span class="nt">compare_label</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">False</span>
+      <span class="nt">weight</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">0.5</span><span class="p p-Indicator">,</span> <span class="nv">0.5</span><span class="p p-Indicator">]</span> <span class="c1"># length of weight should be equal to num of metric</span>
+      <span class="nt">higher_is_better</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">True</span><span class="p p-Indicator">,</span> <span class="nv">False</span><span class="p p-Indicator">]</span> <span class="c1"># length of higher_is_better should be equal to num of metric, default is True</span>
 </pre></div>
 </div>
 </div>
@@ -141,7 +175,7 @@
 <div class="section" id="built-in-metric-support-list">
 <h2>Built-in metric support list<a class="headerlink" href="#built-in-metric-support-list" title="Permalink to this headline">¶</a></h2>
 <p>Neural Compressor supports some built-in metrics that are popularly used in industry.</p>
-<p>Refer to <a class="reference external" href="https://github.com/intel/neural-compressor/tree/aaad4c357a86914ffa583753c9a26d949838a2a5/examples/helloworld/tf_example1">this HelloWorld example</a> on how to config a built-in metric.</p>
+<p>Refer to <a class="reference external" href="https://github.com/intel/neural-compressor/tree/0d766c7f40a8aefaaa7158284a8171a707141641/examples/helloworld/tf_example1">this HelloWorld example</a> on how to config a built-in metric.</p>
 <div class="section" id="tensorflow">
 <h3>TensorFlow<a class="headerlink" href="#tensorflow" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
@@ -489,7 +523,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Intel® Neural Compressor.</p>
+    <p>&#169; Copyright 2022, Intel® Neural Compressor.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
