@@ -1,5 +1,76 @@
-Full Validated Models on Intel Xeon Platinum 8380 Scalable processor
-=====================
+Validated Models
+===
+## Validated MLPerf Models
+<table class="docutils">
+<thead>
+  <tr>
+    <th>Model</th>
+    <th>Framework</th>
+    <th>Support</th>
+    <th>Example</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td rowspan="2">ResNet50 v1.5</td>
+    <td>TensorFlow</td>
+    <td>Yes</td>
+    <td><a href="../examples/tensorflow/image_recognition/tensorflow_models/quantization/ptq">Link</a></td>
+  </tr>
+  <tr>
+    <td>PyTorch</td>
+    <td>Yes</td>
+    <td><a href="../examples/pytorch/image_recognition/torchvision_models/quantization/ptq/cpu/ipex">Link</a></td>
+  </tr>
+  <tr>
+    <td>DLRM</td>
+    <td>PyTorch</td>
+    <td>Yes</td>
+    <td><a href="../examples/pytorch/recommendation/dlrm/quantization/ptq">Link</a></td>
+  </tr>
+  <tr>
+    <td rowspan="2">BERT-large</td>
+    <td>TensorFlow</td>
+    <td>Yes</td>
+    <td><a href="../examples/tensorflow/nlp/bert_large_squad/quantization/ptq">Link</a></td>
+  </tr>
+  <tr>
+    <td>PyTorch</td>
+    <td>Yes</td>
+    <td><a href="../examples/pytorch/nlp/huggingface_models/question-answering/quantization/ptq_static/ipex">Link</a></td>
+  </tr>
+  <tr>
+    <td rowspan="2">SSD-ResNet34</td>
+    <td>TensorFlow</td>
+    <td>Yes</td>
+    <td><a href="../examples/tensorflow/object_detection/tensorflow_models/quantization/ptq">Link</a></td>
+  </tr>
+  <tr>
+    <td>PyTorch</td>
+    <td>Yes</td>
+    <td><a href="../examples/pytorch/object_detection/ssd_resnet34/quantization">Link</a></td>
+  </tr>
+  <tr>
+    <td>RNN-T</td>
+    <td>PyTorch</td>
+    <td>Yes</td>
+    <td><a href="../examples/pytorch/speech_recognition/rnnt/quantization">Link</a></td>    
+  </tr>
+  <tr>
+    <td rowspan="2">3D-UNet</td>
+    <td>TensorFlow</td>
+    <td>WIP</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>PyTorch</td>
+    <td>Yes</td>
+    <td><a href="../examples/pytorch/image_recognition/3d-unet/quantization">Link</a></td>
+  </tr>
+</tbody>
+</table>
+
+## Full Validated Models on Intel Xeon Platinum 8380 Scalable processor
 
 The below tables are models enabled by the Intel® Neural Compressor. 
 
@@ -1549,4 +1620,222 @@ Intel technologies may require enabled hardware, software or service activation.
 1x INTEL_SSDSC2BB48 447.1G
 1x INTEL_SSDSC2KG96 894.3G</td>
 </tr><tr>
+</table>
+
+## Validated Pruning Models
+<table class="docutils">
+<thead>
+  <tr>
+    <th rowspan="2">Tasks</th>
+    <th rowspan="2">FWK</th>
+    <th rowspan="2">Model</th>
+    <th rowspan="2">fp32 baseline</th>
+    <th colspan="3">gradient sensitivity with 20% sparsity</th>
+    <th colspan="3">+onnx dynamic quantization on pruned model</th>
+  </tr>
+  <tr>
+    <td>accuracy%</td>
+    <td> drop%</td>
+    <td>perf gain (sample/s)</td>
+    <td>accuracy%</td>
+    <td> drop%</td>
+    <td>perf gain (sample/s)</td>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>SST-2</td>
+    <td>pytorch</td>
+    <td>bert-base</td>
+    <td>accuracy = 92.32</td>
+    <td>accuracy = 91.97</td>
+    <td>-0.38</td>
+    <td>1.30x</td>
+    <td>accuracy = 92.20</td>
+    <td>-0.13</td>
+    <td>1.86x</td>
+  </tr>
+  <tr>
+    <td>QQP</td>
+    <td>pytorch</td>
+    <td>bert-base</td>
+    <td>[accuracy, f1] = [91.10, 88.05]</td>
+    <td>[accuracy, f1] = [89.97, 86.54]</td>
+    <td>[-1.24, -1.71]</td>
+    <td>1.32x</td>
+    <td>[accuracy, f1] = [89.75, 86.60]</td>
+    <td>[-1.48, -1.65]</td>
+    <td>1.81x</td>
+  </tr>
+</tbody>
+</table>
+
+<table class="docutils">
+<thead>
+  <tr>
+    <th rowspan="2">Tasks</th>
+    <th rowspan="2">FWK</th>
+    <th rowspan="2">Model</th>
+    <th rowspan="2">fp32 baseline</th>
+    <th colspan="2">Pattern Lock on 70% Unstructured Sparsity</th>
+    <th colspan="2">Pattern Lock on 50% 1:2 Structured Sparsity</th>
+  </tr>
+  <tr>
+    <td>accuracy%</td>
+    <td> drop%</td>
+    <td>accuracy%</td>
+    <td> drop%</td>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>MNLI</td>
+    <td>pytorch</td>
+    <td>bert-base</td>
+    <td>[m, mm] = [84.57, 84.79]</td>
+    <td>[m, mm] = [82.45, 83.27]</td>
+    <td>[-2.51, -1.80]</td>
+    <td>[m, mm] = [83.20, 84.11]</td>
+    <td>[-1.62, -0.80]</td>
+  </tr>
+  <tr>
+    <td>SST-2</td>
+    <td>pytorch</td>
+    <td>bert-base</td>
+    <td>accuracy = 92.32</td>
+    <td>accuracy = 91.51</td>
+    <td>-0.88</td>
+    <td>accuracy = 92.20</td>
+    <td>-0.13</td>
+  </tr>
+  <tr>
+    <td>QQP</td>
+    <td>pytorch</td>
+    <td>bert-base</td>
+    <td>[accuracy, f1] = [91.10, 88.05]</td>
+    <td>[accuracy, f1] = [90.48, 87.06]</td>
+    <td>[-0.68, -1.12]</td>
+    <td>[accuracy, f1] = [90.92, 87.78]</td>
+    <td>[-0.20, -0.31]</td>
+  </tr>
+  <tr>
+    <td>QNLI</td>
+    <td>pytorch</td>
+    <td>bert-base</td>
+    <td>accuracy = 91.54</td>
+    <td>accuracy = 90.39</td>
+    <td>-1.26</td>
+    <td>accuracy = 90.87</td>
+    <td>-0.73</td>
+  </tr>
+  <tr>
+    <td>QnA</td>
+    <td>pytorch</td>
+    <td>bert-base</td>
+    <td>[em, f1] = [79.34, 87.10]</td>
+    <td>[em, f1] = [77.27, 85.75]</td>
+    <td>[-2.61, -1.54]</td>
+    <td>[em, f1] = [78.03, 86.50]</td>
+    <td>[-1.65, -0.69]</td>
+  </tr>
+</tbody>
+</table>
+
+<table class="docutils">
+<thead>
+  <tr>
+    <th>Framework</th>
+    <th>Model</th>
+    <th>fp32 baseline</th>
+    <th>Compression</th>
+    <th>dataset</th>
+    <th>acc(drop)%</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>Pytorch</td>
+    <td>resnet18</td>
+    <td>69.76</td>
+    <td>30% sparsity on magnitude</td>
+    <td>ImageNet</td>
+    <td>69.47(-0.42)</td>
+  </tr>
+  <tr>
+    <td>Pytorch</td>
+    <td>resnet18</td>
+    <td>69.76</td>
+    <td>30% sparsity on gradient sensitivity</td>
+    <td>ImageNet</td>
+    <td>68.85(-1.30)</td>
+  </tr>
+  <tr>
+    <td>Pytorch</td>
+    <td>resnet50</td>
+    <td>76.13</td>
+    <td>30% sparsity on magnitude</td>
+    <td>ImageNet</td>
+    <td>76.11(-0.03)</td>
+  </tr>
+  <tr>
+    <td>Pytorch</td>
+    <td>resnet50</td>
+    <td>76.13</td>
+    <td>30% sparsity on magnitude and post training quantization</td>
+    <td>ImageNet</td>
+    <td>76.01(-0.16)</td>
+  </tr>
+  <tr>
+    <td>Pytorch</td>
+    <td>resnet50</td>
+    <td>76.13</td>
+    <td>30% sparsity on magnitude and quantization aware training</td>
+    <td>ImageNet</td>
+    <td>75.90(-0.30)</td>
+  </tr>
+</tbody>
+</table>
+
+## Validated Knowledge Distillation Examples
+<table class="docutils">
+<thead>
+  <tr>
+    <th rowspan="2">Example Name</th>
+    <th rowspan="2">Dataset</th>
+    <th rowspan="2">Student<br>(Accuracy)</th>
+    <th rowspan="2">Teacher<br>(Accuracy)</th>
+    <th rowspan="2">Student With Distillation<br>(Accuracy Improvement)</th>
+  </tr>
+  <tr>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td rowspan="2">ResNet example</td>
+    <td rowspan="2">ImageNet</td>
+    <td rowspan="2">ResNet18<br>(0.6739)</td>
+    <td rowspan="2">ResNet50<br>(0.7399)</td>
+    <td rowspan="2">0.6845<br>(0.0106)</td>
+  </tr>
+  <tr>
+  </tr>
+  <tr>
+    <td rowspan="2">BlendCnn example</td>
+    <td rowspan="2">MRPC</td>
+    <td rowspan="2">BlendCnn<br>(0.7034)</td>
+    <td rowspan="2">BERT-Base<br>(0.8382)</td>
+    <td rowspan="2">0.7034<br>(0)</td>
+  </tr>
+  <tr>
+  </tr>
+  <tr>
+    <td rowspan="2">BiLSTM example</td>
+    <td rowspan="2">SST-2</td>
+    <td rowspan="2">BiLSTM<br>(0.7913)</td>
+    <td rowspan="2">RoBERTa-Base<br>(0.9404)</td>
+    <td rowspan="2">0.8085<br>(0.0172)</td>
+  </tr>
+  <tr>
+  </tr>
+</tbody>
 </table>

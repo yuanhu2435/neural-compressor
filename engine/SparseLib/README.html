@@ -93,8 +93,12 @@
 </div>
 <div class="section" id="test">
 <h3>Test<a class="headerlink" href="#test" title="Permalink to this headline">¶</a></h3>
-<p>After “Build” part,</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">tests</span><span class="o">/</span><span class="n">gtests</span><span class="o">/</span><span class="n">test_spmm_sparsednn_prim</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">test</span><span class="o">/</span><span class="n">gtest</span><span class="o">/</span><span class="n">SparseLib</span><span class="o">/</span>
+<span class="n">mkdir</span> <span class="n">build</span>
+<span class="n">cd</span> <span class="n">build</span>
+<span class="n">cmake</span> <span class="o">..</span>
+<span class="n">make</span> <span class="o">-</span><span class="n">j</span>
+<span class="o">./</span><span class="n">test_spmm_default_kernel</span>
 </pre></div>
 </div>
 </div>
@@ -105,15 +109,15 @@
 <h3>sparse_matmul kernel:<a class="headerlink" href="#sparse-matmul-kernel" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&quot;interface.hpp&quot;</span><span class="cp"></span>
   <span class="p">...</span>
-  <span class="n">operator_config</span> <span class="n">op_cfg</span><span class="p">(</span><span class="n">ker_kind</span><span class="p">,</span> <span class="n">ker_hypotype</span><span class="p">,</span> <span class="n">eng_kind</span><span class="p">,</span> <span class="n">ts_cfgs</span><span class="p">,</span> <span class="n">op_attrs</span><span class="p">);</span>
-  <span class="n">sparse_matmul_desc</span> <span class="nf">spmm_desc</span><span class="p">(</span><span class="n">op_cfg</span><span class="p">);</span>
+  <span class="n">operator_desc</span> <span class="n">op_desc</span><span class="p">(</span><span class="n">ker_kind</span><span class="p">,</span> <span class="n">ker_prop</span><span class="p">,</span> <span class="n">eng_kind</span><span class="p">,</span> <span class="n">ts_descs</span><span class="p">,</span> <span class="n">op_attrs</span><span class="p">);</span>
+  <span class="n">sparse_matmul_desc</span> <span class="nf">spmm_desc</span><span class="p">(</span><span class="n">op_desc</span><span class="p">);</span>
   <span class="n">sparse_matmul</span> <span class="nf">spmm_kern</span><span class="p">(</span><span class="n">spmm_desc</span><span class="p">);</span>
 
   <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="k">const</span> <span class="kt">void</span><span class="o">*&gt;</span> <span class="n">rt_data</span> <span class="o">=</span> <span class="p">{</span><span class="n">data0</span><span class="p">,</span> <span class="n">data1</span><span class="p">,</span> <span class="n">data2</span><span class="p">,</span> <span class="n">data3</span><span class="p">,</span> <span class="n">data4</span><span class="p">};</span>
   <span class="n">spmm_kern</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">rt_data</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>See test_spmm_sparsednn_prim.cpp for details.</p>
+<p>See test_spmm_default_kernel.cpp for details.</p>
 </div>
 </div>
 <div class="section" id="developer-guide-for-developers">

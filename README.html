@@ -40,39 +40,15 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction to Intel® Neural Compressor</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#infrastructure">Infrastructure</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#architecture">Architecture</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#workflow">Workflow</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#supported-frameworks">Supported Frameworks</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#linux-installation">Linux Installation</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#option-1-install-from-binary">Option 1 Install from binary</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#option-2-install-from-source">Option 2 Install from source</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#option-3-install-from-ai-kit">Option 3 Install from AI Kit</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#windows-installation">Windows Installation</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id1">Option 1 Install from binary</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id2">Option 2 Install from source</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#system-requirements">System Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#validated-software-environment">Validated Software Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#validated-models">Validated Models</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#system-requirements">System Requirements</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#validated-hardware-software-environment">Validated Hardware/Software Environment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#validated-models">Validated Models</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#validated-mlperf-models">Validated MLPerf Models</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#validated-quantized-models-on-intel-xeon-platinum-8380-scalable-processor">Validated Quantized Models on Intel Xeon Platinum 8380 Scalable processor</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#validated-pruning-models">Validated Pruning Models</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#validated-knowledge-distillation-examples">Validated Knowledge Distillation Examples</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#validated-engine-examples-on-intel-xeon-platinum-8380-scalable-processor">Validated Engine Examples on Intel Xeon Platinum 8380 Scalable processor</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#selected-publications">Selected Publications</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#additional-content">Additional Content</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#hiring">Hiring</a></li>
 </ul>
@@ -114,71 +90,20 @@
              
   <div class="section" id="introduction-to-intel-neural-compressor">
 <h1>Introduction to Intel® Neural Compressor<a class="headerlink" href="#introduction-to-intel-neural-compressor" title="Permalink to this headline">¶</a></h1>
-<p>Intel® Neural Compressor (formerly known as Intel® Low Precision Optimization Tool) is an open-source Python library running on Intel CPUs and GPUs, which delivers unified interfaces across multiple deep learning frameworks for popular network compression technologies, such as quantization, pruning, knowledge distillation. This tool supports automatic accuracy-driven tuning strategies to help user quickly find out the best quantized model. It also implements different weight pruning algorithms to generate pruned model with predefined sparsity goal and supports knowledge distillation to distill the knowledge from the teacher model to the student model.</p>
+<p>Intel® Neural Compressor (formerly known as Intel® Low Precision Optimization Tool) is an open-source Python library running on Intel CPUs and GPUs, which delivers unified interfaces across multiple deep learning frameworks for popular network compression technologies, such as quantization, pruning, knowledge distillation. This tool supports automatic accuracy-driven tuning strategies to help user quickly find out the best quantized model. It also implements different weight pruning algorithms to generate pruned model with predefined sparsity goal and supports knowledge distillation to distill the knowledge from the teacher model to the student model.
+Intel® Neural Compressor has been one of the critical AI software components in <a class="reference external" href="https://software.intel.com/content/www/us/en/develop/tools/oneapi/ai-analytics-toolkit.html">Intel® oneAPI AI Analytics Toolkit</a>.</p>
 <blockquote>
-<div><p><strong>Note</strong></p>
-<p>GPU support is under development.</p>
+<div><p><strong>Note</strong>
+GPU support is under development.</p>
 </div></blockquote>
 <p><strong>Visit the Intel® Neural Compressor online document website at: <a class="reference external" href="https://intel.github.io/neural-compressor">https://intel.github.io/neural-compressor</a>.</strong></p>
-<div class="section" id="infrastructure">
-<h2>Infrastructure<a class="headerlink" href="#infrastructure" title="Permalink to this headline">¶</a></h2>
-<p>Intel® Neural Compressor features an architecture and workflow that aids in increasing performance and faster deployments across infrastructures.</p>
-<div class="section" id="architecture">
-<h3>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h3>
-<a target="_blank" href="docs/imgs/architecture.png">
-  <img src="docs/imgs/architecture.png" alt="Architecture" width=914 height=370>
-</a><p>Click the image to enlarge it.</p>
-</div>
-<div class="section" id="workflow">
-<h3>Workflow<a class="headerlink" href="#workflow" title="Permalink to this headline">¶</a></h3>
-<a target="_blank" href="docs/imgs/workflow.png">
-  <img src="docs/imgs/workflow.png" alt="Workflow" width=914 height=390>
-</a><p>Click the image to enlarge it.</p>
-</div>
-<div class="section" id="supported-frameworks">
-<h3>Supported Frameworks<a class="headerlink" href="#supported-frameworks" title="Permalink to this headline">¶</a></h3>
-<p>Supported deep learning frameworks are:</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow">TensorFlow*</a>, including <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up3">1.15.0 UP3</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.7.0">2.7.0</a>, <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v2.8.0">2.8.0</a>, <a class="reference external" href="https://github.com/tensorflow/tensorflow/tree/v2.6.2">Official TensorFlow 2.6.2</a>, <a class="reference external" href="https://github.com/tensorflow/tensorflow/tree/v2.7.0">Official TensorFlow 2.7.0</a>, <a class="reference external" href="https://github.com/tensorflow/tensorflow/tree/v2.8.0">Official TensorFlow 2.8.0</a></p></li>
-</ul>
-<blockquote>
-<div><p><strong>Note</strong>: Intel Optimized TensorFlow 2.5.0 requires to set environment variable TF_ENABLE_MKL_NATIVE_FORMAT=0 before running Neural Compressor quantization or deploying the quantized model.</p>
-</div></blockquote>
-<blockquote>
-<div><p><strong>Note</strong>: From the official TensorFlow 2.6.0, oneDNN support has been upstreamed. Download the official TensorFlow 2.6.0 binary for the CPU device and set the environment variable TF_ENABLE_ONEDNN_OPTS=1 before running the quantization process or deploying the quantized model.</p>
-</div></blockquote>
-<ul class="simple">
-<li><p><a class="reference external" href="https://pytorch.org/">PyTorch*</a>, including <a class="reference external" href="https://download.pytorch.org/whl/torch_stable.html">1.9.0+cpu</a>, <a class="reference external" href="https://download.pytorch.org/whl/torch_stable.html">1.10.0+cpu</a>, <a class="reference external" href="https://download.pytorch.org/whl/torch_stable.html">1.11.0+cpu</a></p></li>
-<li><p><a class="reference external" href="https://mxnet.apache.org">Apache* MXNet</a>, including <a class="reference external" href="https://github.com/apache/incubator-mxnet/tree/1.6.0">1.6.0</a>, <a class="reference external" href="https://github.com/apache/incubator-mxnet/tree/1.7.0">1.7.0</a>, <a class="reference external" href="https://github.com/apache/incubator-mxnet/tree/1.8.0">1.8.0</a></p></li>
-<li><p><a class="reference external" href="https://github.com/microsoft/onnxruntime">ONNX* Runtime</a>, including <a class="reference external" href="https://github.com/microsoft/onnxruntime/tree/v1.8.0">1.8.0</a>, <a class="reference external" href="https://github.com/microsoft/onnxruntime/tree/v1.9.0">1.9.0</a>, <a class="reference external" href="https://github.com/microsoft/onnxruntime/tree/v1.10.0">1.10.0</a></p></li>
-<li><p><a class="reference internal" href="docs/engine.html"><span class="doc">Execution Engine</span></a>, a reference bare metal solution(./engine) for domain-specific NLP models.</p></li>
-</ul>
-</div>
-</div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>Select the installation based on your operating system.</p>
-<div class="section" id="linux-installation">
-<h3>Linux Installation<a class="headerlink" href="#linux-installation" title="Permalink to this headline">¶</a></h3>
-<p>You can install Neural Compressor using one of three options: Install just the library
-from binary or source, or get the Intel-optimized framework together with the
-library by installing the <a class="reference external" href="https://software.intel.com/content/www/us/en/develop/tools/oneapi/ai-analytics-toolkit.html">Intel® oneAPI AI Analytics Toolkit</a>.</p>
 <p><strong>Prerequisites</strong></p>
-<p>The following prerequisites and requirements must be satisfied for a successful installation:</p>
 <ul class="simple">
 <li><p>Python version: 3.7 or 3.8 or 3.9 or 3.10</p></li>
-<li><p>C++ compiler: 7.2.1 or above</p></li>
-<li><p>CMake: 3.12 or above</p></li>
 </ul>
-<blockquote>
-<div><p><strong>common build issues</strong></p>
-<p><code class="docutils literal notranslate"><span class="pre">Issue</span> <span class="pre">1</span></code>: ValueError: numpy.ndarray size changed, may indicate binary incompatibility. Expected 88 from C header, got 80 from PyObject</p>
-<p>Solution: reinstall pycocotools by “pip install pycocotools –no-cache-dir”</p>
-<p><code class="docutils literal notranslate"><span class="pre">Issue</span> <span class="pre">2</span></code>: ImportError: libGL.so.1: cannot open shared object file: No such file or directory</p>
-<p>Solution: apt install or yum install opencv</p>
-</div></blockquote>
-<div class="section" id="option-1-install-from-binary">
-<h4>Option 1 Install from binary<a class="headerlink" href="#option-1-install-from-binary" title="Permalink to this headline">¶</a></h4>
+<p><strong>Install on Linux</strong></p>
 <div class="highlight-Shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># install stable version from pip</span>
 pip install neural-compressor
 
@@ -189,903 +114,184 @@ pip install -i https://test.pypi.org/simple/ neural-compressor
 conda install neural-compressor -c conda-forge -c intel 
 </pre></div>
 </div>
+<p>More installation methods can be found at <a class="reference internal" href="docs/installation_guide.html"><span class="doc">Installation Guide</span></a>.</p>
 </div>
-<div class="section" id="option-2-install-from-source">
-<h4>Option 2 Install from source<a class="headerlink" href="#option-2-install-from-source" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-Shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/intel/neural-compressor.git
-<span class="nb">cd</span> neural-compressor
-git submodule sync
-git submodule update --init --recursive
-pip install -r requirements.txt
-python setup.py install
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Quantization with Python API</p></li>
+</ul>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># A TensorFlow Example</span>
+pip install tensorflow
+<span class="c1"># Prepare fp32 model</span>
+wget https://storage.googleapis.com/intel-optimized-tensorflow/models/v1_6/mobilenet_v1_1.0_224_frozen.pb
 </pre></div>
 </div>
-</div>
-<div class="section" id="option-3-install-from-ai-kit">
-<h4>Option 3 Install from AI Kit<a class="headerlink" href="#option-3-install-from-ai-kit" title="Permalink to this headline">¶</a></h4>
-<p>The Intel® Neural Compressor library is released as part of the
-<a class="reference external" href="https://software.intel.com/content/www/us/en/develop/tools/oneapi/ai-analytics-toolkit.html">Intel® oneAPI AI Analytics Toolkit</a> (AI Kit).
-The AI Kit provides a consolidated package of Intel’s latest deep learning and
-machine optimizations all in one place for ease of development. Along with
-Neural Compressor, the AI Kit includes Intel-optimized versions of deep learning frameworks
-(such as TensorFlow and PyTorch) and high-performing Python libraries to
-streamline end-to-end data science and AI workflows on Intel architectures.</p>
-<p>The AI Kit is distributed through many common channels,
-including from Intel’s website, YUM, APT, Anaconda, and more.
-Select and <a class="reference external" href="https://software.intel.com/content/www/us/en/develop/tools/oneapi/ai-analytics-toolkit/download.html">download</a>
-the AI Kit distribution package that’s best suited for you and follow the
-<a class="reference external" href="https://software.intel.com/content/www/us/en/develop/documentation/get-started-with-ai-linux/top.html">Get Started Guide</a>
-for post-installation instructions.</p>
-<table border="1" class="docutils">
-<thead>
-<tr>
-<th><a href="https://software.intel.com/content/www/us/en/develop/tools/oneapi/ai-analytics-toolkit/">Download AI Kit</a></th>
-<th><a href="https://software.intel.com/content/www/us/en/develop/documentation/get-started-with-ai-linux/top.html">AI Kit Get Started Guide</a></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table></div>
-</div>
-<div class="section" id="windows-installation">
-<h3>Windows Installation<a class="headerlink" href="#windows-installation" title="Permalink to this headline">¶</a></h3>
-<p><strong>Prerequisites</strong></p>
-<p>The following prerequisites and requirements must be satisfied for a successful installation:</p>
-<ul>
-<li><p>Python version: 3.7 or 3.8 or 3.9</p></li>
-<li><p>Download and install <a class="reference external" href="https://anaconda.org/">anaconda</a>.</p></li>
-<li><p>Create a virtual environment named nc in anaconda:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># Here we install python 3.7 for instance. You can also choose python 3.8 or 3.9.</span>
-conda create -n nc <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.7
-conda activate nc
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">Quantization</span><span class="p">,</span> <span class="n">common</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">disable_eager_execution</span><span class="p">()</span>
+<span class="n">quantizer</span> <span class="o">=</span> <span class="n">Quantization</span><span class="p">()</span>
+<span class="n">quantizer</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;./mobilenet_v1_1.0_224_frozen.pb&#39;</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">quantizer</span><span class="o">.</span><span class="n">dataset</span><span class="p">(</span><span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">quantizer</span><span class="o">.</span><span class="n">calib_dataloader</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+<span class="n">quantizer</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
-</li>
+<ul class="simple">
+<li><p>Quantization with <a class="reference internal" href="docs/bench.html"><span class="doc">GUI</span></a></p></li>
 </ul>
-<p><strong>Installation options</strong></p>
-<div class="section" id="id1">
-<h4>Option 1 Install from binary<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-Shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># install stable version from pip</span>
-pip install neural-compressor
-
-<span class="c1"># install nightly version from pip</span>
-pip install -i https://test.pypi.org/simple/ neural-compressor
-
-<span class="c1"># install from conda</span>
-conda install pycocotools -c esri   
-conda install neural-compressor -c conda-forge -c intel
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># An ONNX Example</span>
+pip install <span class="nv">onnx</span><span class="o">==</span><span class="m">1</span>.9.0 <span class="nv">onnxruntime</span><span class="o">==</span><span class="m">1</span>.10.0 onnxruntime-extensions
+<span class="c1"># Prepare fp32 model</span>
+wget https://github.com/onnx/models/blob/main/vision/classification/resnet/model/resnet50-v1-12.onnx
+<span class="c1"># Start GUI</span>
+inc_bench
 </pre></div>
 </div>
-</div>
-<div class="section" id="id2">
-<h4>Option 2 Install from source<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/intel/neural-compressor.git
-<span class="nb">cd</span> neural-compressor
-git submodule sync
-git submodule update --init --recursive
-pip install -r requirements.txt
-python setup.py install
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="documentation">
-<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
-<p><strong>Get Started</strong></p>
-<ul class="simple">
-<li><p><a class="reference internal" href="docs/api-introduction.html"><span class="doc">APIs</span></a> explains Intel® Neural Compressor’s API.</p></li>
-<li><p><a class="reference internal" href="docs/bench.html"><span class="doc">GUI</span></a> provides web-based UI service to make quantization easier.</p></li>
-<li><p><a class="reference internal" href="docs/transform.html"><span class="doc">Transform</span></a> introduces how to utilize Neural Compressor’s built-in data processing and how to develop a custom data processing method.</p></li>
-<li><p><a class="reference internal" href="docs/dataset.html"><span class="doc">Dataset</span></a> introduces how to utilize Neural Compressor’s built-in dataset and how to develop a custom dataset.</p></li>
-<li><p><a class="reference internal" href="docs/metric.html"><span class="doc">Metric</span></a> introduces how to utilize Neural Compressor’s built-in metrics and how to develop a custom metric.</p></li>
-<li><p><a class="reference internal" href="docs/objective.html"><span class="doc">Objective</span></a> introduces how to utilize Neural Compressor’s built-in objectives and how to develop a custom objective.</p></li>
-<li><p><a class="reference internal" href="docs/tutorial.html"><span class="doc">Tutorial</span></a> provides comprehensive instructions on how to utilize Neural Compressor’s features with examples.</p></li>
-<li><p><a class="reference external" href="https://github.com/intel/neural-compressor/tree/39ba61a116d75795879e3607ce0c051f8fefc709/examples">Examples</a> are provided to demonstrate the usage of Neural Compressor in different frameworks: TensorFlow, PyTorch, MXNet, and ONNX Runtime.</p></li>
-<li><p><a class="reference external" href="https://software.intel.com/content/www/us/en/develop/documentation/get-started-with-ai-linux/top.html">Intel oneAPI AI Analytics Toolkit Get Started Guide</a> explains the AI Kit components, installation and configuration guides, and instructions for building and running sample apps.</p></li>
-<li><p><a class="reference external" href="https://github.com/oneapi-src/oneAPI-samples/tree/master/AI-and-Analytics">AI and Analytics Samples</a> includes code samples for Intel oneAPI libraries.</p></li>
-</ul>
-<p><strong>Deep Dive</strong></p>
-<ul class="simple">
-<li><p><a class="reference internal" href="docs/Quantization.html"><span class="doc">Quantization</span></a> are processes that enable inference and training by performing computations at low-precision data types, such as fixed-point integers. Neural Compressor supports Post-Training Quantization (<a class="reference internal" href="docs/PTQ.html"><span class="doc">PTQ</span></a>) with <a class="reference internal" href="docs/backend_quant.html"><span class="doc">different quantization capabilities</span></a> and Quantization-Aware Training (<a class="reference internal" href="docs/QAT.html"><span class="doc">QAT</span></a>). Note that (<a class="reference internal" href="docs/dynamic_quantization.html"><span class="doc">Dynamic Quantization</span></a>) currently has limited support.</p></li>
-<li><p><a class="reference internal" href="docs/pruning.html"><span class="doc">Pruning</span></a> provides a common method for introducing sparsity in weights and activations.</p></li>
-<li><p><a class="reference internal" href="docs/distillation.html"><span class="doc">Knowledge Distillation</span></a> provides a common method for distilling knowledge from teacher model to student model.</p></li>
-<li><p><a class="reference internal" href="docs/distributed.html"><span class="doc">Distributed Training</span></a> introduces how to leverage Horovod to do multi-node training in Intel® Neural Compressor to speed up the training time.</p></li>
-<li><p><a class="reference internal" href="docs/benchmark.html"><span class="doc">Benchmarking</span></a> introduces how to utilize the benchmark interface of Neural Compressor.</p></li>
-<li><p><a class="reference internal" href="docs/mixed_precision.html"><span class="doc">Mixed precision</span></a> introduces how to enable mixed precision, including BFP16 and int8 and FP32, on Intel platforms during tuning.</p></li>
-<li><p><a class="reference internal" href="docs/graph_optimization.html"><span class="doc">Graph Optimization</span></a> introduces how to enable graph optimization for FP32 and auto-mixed precision.</p></li>
-<li><p><a class="reference internal" href="docs/model_conversion.html"><span class="doc">Model Conversion</span></a> introduces how to convert TensorFlow QAT model to quantized model running on Intel platforms.</p></li>
-<li><p><a class="reference internal" href="docs/tensorboard.html"><span class="doc">TensorBoard</span></a> provides tensor histograms and execution graphs for tuning debugging purposes.</p></li>
-</ul>
-<p><strong>Advanced Topics</strong></p>
-<ul class="simple">
-<li><p><a class="reference internal" href="docs/engine.html"><span class="doc">Execution Engine</span></a> is a bare metal solution domain-specific NLP models as the reference for customers.</p></li>
-<li><p><a class="reference internal" href="docs/adaptor.html"><span class="doc">Adaptor</span></a> is the interface between components and framework. The method to develop adaptor extension is introduced with ONNX Runtime as example.</p></li>
-<li><p><a class="reference internal" href="docs/tuning_strategies.html"><span class="doc">Strategy</span></a> can automatically optimized low-precision recipes for deep learning models to achieve optimal product objectives like inference performance and memory usage with expected accuracy criteria. The method to develop a new strategy is introduced.</p></li>
-</ul>
-<p><strong>Publications</strong></p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://builders.intel.com/docs/networkbuilders/ai-technologies-unleash-ai-innovation-in-network-applications-solution-brief-1637303210.pdf">New instructions in the Intel® Xeon® Scalable processors combined with optimized software frameworks enable real-time AI within network workloads</a> (Feb 2022)</p></li>
-<li><p><a class="reference external" href="https://community.intel.com/t5/Blogs/Tech-Innovation/Artificial-Intelligence-AI/Quantizing-ONNX-Models-using-Intel-Neural-Compressor/post/1355237">Quantizing ONNX Models using Intel® Neural Compressor</a> (Feb 2022)</p></li>
-<li><p><a class="reference external" href="https://www.intel.com/content/www/us/en/developer/articles/technical/quantize-ai-by-oneapi-analytics-on-alibaba-cloud.html">Quantize AI Model by Intel® oneAPI AI Analytics Toolkit on Alibaba Cloud</a> (Feb 2022)</p></li>
-<li><p><a class="reference external" href="https://twitter.com/IntelAI/status/1469079414562557952">AI Performance and Productivity with Intel® Neural Compressor</a> (Jan 2022)</p></li>
-<li><p><a class="reference external" href="https://pytorch.org/tutorials/recipes/intel_neural_compressor_for_pytorch.html">Ease-of-use quantization for PyTorch with Intel® Neural Compressor</a> (Jan 2022)</p></li>
-<li><p><a class="reference external" href="https://www.intel.com/content/www/us/en/artificial-intelligence/posts/optimization-with-intel-neural-compressor.html">Faster, Easier Optimization with Intel® Neural Compressor</a> (Nov 2021)</p></li>
-<li><p><a class="reference external" href="https://www.intel.com/content/www/us/en/artificial-intelligence/posts/3rd-gen-xeon-mlperf-performance-gains.html">MLPerf™ Performance Gains Abound with latest 3rd Generation Intel® Xeon® Scalable Processors</a> (Apr 2021)</p></li>
-<li><p><a class="reference external" href="https://www.intel.com/content/www/us/en/artificial-intelligence/posts/tencent-3d-digital-face-reconstruction.html">3D Digital Face Reconstruction Solution enabled by 3rd Gen Intel® Xeon® Scalable Processors</a> (Apr 2021)</p></li>
-<li><p><a class="reference external" href="https://www.intel.com/content/www/us/en/artificial-intelligence/posts/alibaba-lpot.html">Accelerating Alibaba Transformer model performance with 3rd Gen Intel® Xeon® Scalable Processors (Ice Lake) and Intel® Deep Learning Boost</a> (Apr 2021)</p></li>
-<li><p><a class="reference external" href="https://techdecoded.intel.io/essentials/using-low-precision-optimizations-for-high-performance-dl-inference-applications/#gs.z20k91">Using Low-Precision Optimizations for High-Performance DL Inference Applications</a> (Apr 2021)</p></li>
-<li><p><a class="reference external" href="https://www.nextplatform.com/2021/02/01/cern-uses-dlboost-oneapi-to-juice-inference-without-accuracy-loss/">DL Boost Quantization with CERN’s 3D-GANs model</a> (Feb 2021)</p></li>
-</ul>
-<p>View the <a class="reference internal" href="docs/publication_list.html"><span class="doc">full publications list</span></a>.</p>
-</div>
+<a target="_blank" href="./docs/imgs/INC_GUI.gif">
+  <img src="./docs/imgs/INC_GUI.gif" alt="Architecture">
+</a></div>
 <div class="section" id="system-requirements">
 <h2>System Requirements<a class="headerlink" href="#system-requirements" title="Permalink to this headline">¶</a></h2>
 <p>Intel® Neural Compressor supports systems based on <a class="reference external" href="https://en.wikipedia.org/wiki/X86-64">Intel 64 architecture or compatible processors</a>, specially optimized for the following CPUs:</p>
 <ul class="simple">
 <li><p>Intel Xeon Scalable processor (formerly Skylake, Cascade Lake, Cooper Lake, and Icelake)</p></li>
-<li><p>future Intel Xeon Scalable processor (code name Sapphire Rapids)</p></li>
+<li><p>Future Intel Xeon Scalable processor (code name Sapphire Rapids)</p></li>
 </ul>
-<p>Intel® Neural Compressor requires installing the Intel-optimized framework version for the supported DL framework you use: TensorFlow, PyTorch, MXNet, or ONNX runtime.</p>
-<p>Note: Intel Neural Compressor supports Intel-optimized and official frameworks for some TensorFlow versions. Refer to <a class="reference external" href="#Supported-Frameworks">Supported Frameworks</a> for specifics.</p>
-<div class="section" id="validated-hardware-software-environment">
-<h3>Validated Hardware/Software Environment<a class="headerlink" href="#validated-hardware-software-environment" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="validated-software-environment">
+<h3>Validated Software Environment<a class="headerlink" href="#validated-software-environment" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>OS version: CentOS 8.4, Ubuntu 20.04</p></li>
+<li><p>Python version: 3.7, 3.8, 3.9, 3.10</p></li>
+</ul>
 <table class="docutils">
 <thead>
   <tr>
-    <th class="tg-bobw">Processor</th>
-    <th class="tg-bobw">OS</th>
-    <th class="tg-bobw">Python</th>
-    <th class="tg-bobw">Framework</th>
-    <th class="tg-bobw">Version</th>
+    <th>Framework</th>
+    <th>TensorFlow</th>
+    <th>Intel TensorFlow</th>
+    <th>PyTorch</th>
+    <th>IPEX</th>
+    <th>ONNX Runtime</th>
+    <th>MXNet</th>
   </tr>
 </thead>
 <tbody>
-  <tr>
-    <td class="tg-nrix" rowspan="14">Intel Xeon Scalable processor<br> (formerly Skylake, Cascade Lake, Cooper Lake, and Icelake)<br></td>
-    <td class="tg-nrix" rowspan="14">CentOS 8.3<br><br>Ubuntu 18.04</td>
-    <td class="tg-nrix" rowspan="14">3.7<br><br>3.8<br><br>3.9</td>
-    <td class="tg-cly1" rowspan="4">TensorFlow</td>
-    <td class="tg-7zrl">2.8.0</td>
-  </tr>
-  <tr>
-    <td class="tg-7zrl">2.7.0</td>
-  </tr>
-  <tr>
-    <td class="tg-7zrl">2.6.2</td>
-  </tr>
-  <tr>
-    <td class="tg-7zrl">1.15.0UP3</td>
-  </tr>
-  <tr>
-    <td class="tg-7zrl" rowspan="4">PyTorch</td>
-    <td class="tg-7zrl">1.11.0+cpu</td>
-  </tr>
-  <tr>
-    <td class="tg-7zrl">1.10.0+cpu</td>
-  </tr>
-  <tr>
-    <td class="tg-7zrl">1.9.0+cpu</td>
-  </tr>
-  <tr>
-    <td class="tg-7zrl">IPEX</td>
-  </tr>
-  <tr>
-    <td class="tg-cly1" rowspan="3">MXNet</td>
-    <td class="tg-7zrl">1.8.0</td>
-  </tr>
-  <tr>
-    <td class="tg-7zrl">1.7.0</td>
-  </tr>
-  <tr>
-    <td class="tg-7zrl">1.6.0</td>
-  </tr>
-  <tr>
-    <td class="tg-7zrl" rowspan="3">ONNX Runtime</td>
-    <td class="tg-7zrl">1.10.0</td>
-  </tr>
-  <tr>
-    <td class="tg-7zrl">1.9.0</td>
-  </tr>
-  <tr>
-    <td class="tg-7zrl">1.8.0</td>
+  <tr align="center">
+    <th>Version</th>
+    <td class="tg-7zrl"><a href=https://github.com/tensorflow/tensorflow/tree/v2.8.0>2.8.0</a><br>
+    <a href=https://github.com/tensorflow/tensorflow/tree/v2.7.0>2.7.0</a><br>
+    <a href=https://github.com/tensorflow/tensorflow/tree/v2.6.2>2.6.2</a></td>
+    <td class="tg-7zrl"><a href=https://github.com/Intel-tensorflow/tensorflow/tree/v2.8.0>2.8.0</a><br>
+    <a href=https://github.com/Intel-tensorflow/tensorflow/tree/v2.7.0>2.7.0</a><br>
+    <a href=https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up3>1.15.0UP3</a></td>
+    <td class="tg-7zrl"><a href=https://download.pytorch.org/whl/torch_stable.html>1.11.0+cpu</a><br>
+    <a href=https://download.pytorch.org/whl/torch_stable.html>1.10.0+cpu</a><br>
+    <a href=https://download.pytorch.org/whl/torch_stable.html>1.9.0+cpu</a></td>
+    <td class="tg-7zrl"><a href=https://github.com/intel/intel-extension-for-pytorch/tree/v1.11.0>1.11.0</a><br>
+    <a href=https://github.com/intel/intel-extension-for-pytorch/tree/v1.10.0>1.10.0</a><br>
+    <a href=https://github.com/intel/intel-extension-for-pytorch/tree/v1.9.0>1.9.0</a></td>
+    <td class="tg-7zrl"><a href=https://github.com/microsoft/onnxruntime/tree/v1.10.0>1.10.0</a><br>
+    <a href=https://github.com/microsoft/onnxruntime/tree/v1.9.0>1.9.0</a><br>
+    <a href=https://github.com/microsoft/onnxruntime/tree/v1.8.0>1.8.0</a></td>
+    <td class="tg-7zrl"><a href=https://github.com/apache/incubator-mxnet/tree/1.8.0>1.8.0</a><br>
+    <a href=https://github.com/apache/incubator-mxnet/tree/1.7.0>1.7.0</a><br>
+    <a href=https://github.com/apache/incubator-mxnet/tree/1.6.0>1.6.0</a></td>
   </tr>
 </tbody>
 </table></div>
 <div class="section" id="validated-models">
 <h3>Validated Models<a class="headerlink" href="#validated-models" title="Permalink to this headline">¶</a></h3>
-<p>Intel® Neural Compressor provides numerous examples to show the performance gains while minimizing the accuracy loss. A full quantized model list on various frameworks is available in the <a class="reference internal" href="docs/full_model_list.html"><span class="doc">Model List</span></a>.</p>
-<div class="section" id="validated-mlperf-models">
-<h4>Validated MLPerf Models<a class="headerlink" href="#validated-mlperf-models" title="Permalink to this headline">¶</a></h4>
-<table class="docutils">
-<thead>
-  <tr>
-    <th>Model</th>
-    <th>Framework</th>
-    <th>Support</th>
-    <th>Example</th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td rowspan="2">ResNet50 v1.5</td>
-    <td>TensorFlow</td>
-    <td>Yes</td>
-    <td><a href="https://github.com/intel/neural-compressor/tree/master/examples/tensorflow/image_recognition/tensorflow_models/quantization">Link</a></td>
-  </tr>
-  <tr>
-    <td>PyTorch</td>
-    <td>Yes</td>
-    <td><a href="https://github.com/intel/neural-compressor/tree/master/examples/pytorch/image_recognition/torchvision_models/quantization/ptq/cpu/ipex">Link</a></td>
-  </tr>
-  <tr>
-    <td>DLRM</td>
-    <td>PyTorch</td>
-    <td>Yes</td>
-    <td><a href="https://github.com/intel/neural-compressor/tree/examples/pytorch/recommendation/dlrm/quantization">Link</a></td>
-  </tr>
-  <tr>
-    <td rowspan="2">BERT-large</td>
-    <td>TensorFlow</td>
-    <td>Yes</td>
-    <td><a href="https://github.com/intel/neural-compressor/tree/master/examples/tensorflow/nlp/bert_large_squad/quantization">Link</a></td>
-  </tr>
-  <tr>
-    <td>PyTorch</td>
-    <td>Yes</td>
-    <td><a href="https://github.com/intel/neural-compressor/tree/v1.8/examples/pytorch/eager/language_translation">Link</a></td>
-  </tr>
-  <tr>
-    <td rowspan="2">SSD-ResNet34</td>
-    <td>TensorFlow</td>
-    <td>Yes</td>
-    <td><a href="https://github.com/intel/neural-compressor/tree/master/examples/tensorflow/object_detection/tensorflow_models/quantization">Link</a></td>
-  </tr>
-  <tr>
-    <td>PyTorch</td>
-    <td>Yes</td>
-    <td><a href="https://github.com/intel/neural-compressor/tree/master/examples/pytorch/object_detection/ssd_resnet34/quantization">Link</a></td>
-  </tr>
-  <tr>
-    <td>RNN-T</td>
-    <td>PyTorch</td>
-    <td>Yes</td>
-    <td><a href="https://github.com/intel/neural-compressor/tree/master/examples/pytorch/speech_recognition/rnnt/quantization">Link</a></td>    
-  </tr>
-  <tr>
-    <td rowspan="2">3D-UNet</td>
-    <td>TensorFlow</td>
-    <td>WIP</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>PyTorch</td>
-    <td>Yes</td>
-    <td><a href="https://github.com/intel/neural-compressor/tree/master/examples/pytorch/image_recognition/3d-unet/quantization">Link</a></td>
-  </tr>
-</tbody>
-</table></div>
-<div class="section" id="validated-quantized-models-on-intel-xeon-platinum-8380-scalable-processor">
-<h4>Validated Quantized Models on Intel Xeon Platinum 8380 Scalable processor<a class="headerlink" href="#validated-quantized-models-on-intel-xeon-platinum-8380-scalable-processor" title="Permalink to this headline">¶</a></h4>
-<table class="docutils">
-<thead>
-  <tr>
-    <th rowspan="2">Framework</th>
-    <th rowspan="2">version</th>
-    <th rowspan="2">model</th>
-    <th colspan="3">Accuracy</th>
-    <th colspan="3">Performance<br>1s4c10ins1bs/throughput<br>(samples/sec)<br></th>
-  </tr>
-  <tr>
-    <th>INT8</th>
-    <th>FP32</th>
-    <th>Acc Ratio[(INT8-FP32)/FP32]</th>
-    <th>INT8</th>
-    <th>FP32</th>
-    <th>Performance Ratio[INT8/FP32]</th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td>intel-tensorflow</td>
-    <td>2.7.0</td>
-    <td>resnet50v1.0</td>
-    <td>74.11%</td>
-    <td>74.27%</td>
-    <td>-0.22%</td>
-    <td>1474.03</td>
-    <td>486.21</td>
-    <td>3.03x</td>
-  </tr>
-  <tr>
-    <td>intel-tensorflow</td>
-    <td>2.7.0</td>
-    <td>resnet50v1.5</td>
-    <td>76.82%</td>
-    <td>76.46%</td>
-    <td>0.47%</td>
-    <td>1224.52</td>
-    <td>414.92</td>
-    <td>2.95x</td>
-  </tr>
-  <tr>
-    <td>intel-tensorflow</td>
-    <td>2.7.0</td>
-    <td>resnet101</td>
-    <td>77.50%</td>
-    <td>76.45%</td>
-    <td>1.37%</td>
-    <td>853.41</td>
-    <td>342.71</td>
-    <td>2.49x</td>
-  </tr>
-  <tr>
-    <td>intel-tensorflow</td>
-    <td>2.7.0</td>
-    <td>inception_v1</td>
-    <td>70.48%</td>
-    <td>69.74%</td>
-    <td>1.06%</td>
-    <td>2192.55</td>
-    <td>1052.98</td>
-    <td>2.08x</td>
-  </tr>
-  <tr>
-    <td>intel-tensorflow</td>
-    <td>2.7.0</td>
-    <td>inception_v2</td>
-    <td>74.36%</td>
-    <td>73.97%</td>
-    <td>0.53%</td>
-    <td>1799.2</td>
-    <td>816.74</td>
-    <td>2.20x</td>
-  </tr>
-  <tr>
-    <td>intel-tensorflow</td>
-    <td>2.7.0</td>
-    <td>inception_v3</td>
-    <td>77.28%</td>
-    <td>76.75%</td>
-    <td>0.69%</td>
-    <td>923.76</td>
-    <td>386.05</td>
-    <td>2.39x</td>
-  </tr>
-  <tr>
-    <td>intel-tensorflow</td>
-    <td>2.7.0</td>
-    <td>inception_v4</td>
-    <td>80.40%</td>
-    <td>80.27%</td>
-    <td>0.16%</td>
-    <td>572.49</td>
-    <td>190.99</td>
-    <td>3.00x</td>
-  </tr>
-  <tr>
-    <td>intel-tensorflow</td>
-    <td>2.7.0</td>
-    <td>inception_resnet_v2</td>
-    <td>80.44%</td>
-    <td>80.40%</td>
-    <td>0.05%</td>
-    <td>265.7</td>
-    <td>133.92</td>
-    <td>1.98x</td>
-  </tr>
-  <tr>
-    <td>intel-tensorflow</td>
-    <td>2.7.0</td>
-    <td>mobilenetv1</td>
-    <td>71.79%</td>
-    <td>70.96%</td>
-    <td>1.17%</td>
-    <td>3633.27</td>
-    <td>1382.64</td>
-    <td>2.63x</td>
-  </tr>
-  <tr>
-    <td>intel-tensorflow</td>
-    <td>2.7.0</td>
-    <td>mobilenetv2</td>
-    <td>71.89%</td>
-    <td>71.76%</td>
-    <td>0.18%</td>
-    <td>2504.63</td>
-    <td>1418.82</td>
-    <td>1.77x</td>
-  </tr>
-  <tr>
-    <td>intel-tensorflow</td>
-    <td>2.7.0</td>
-    <td>ssd_resnet50_v1</td>
-    <td>37.86%</td>
-    <td>38.00%</td>
-    <td>-0.37%</td>
-    <td>68.03</td>
-    <td>24.68</td>
-    <td>2.76x</td>
-  </tr>
-  <tr>
-    <td>intel-tensorflow</td>
-    <td>2.7.0</td>
-    <td>ssd_mobilenet_v1</td>
-    <td>22.97%</td>
-    <td>23.13%</td>
-    <td>-0.69%</td>
-    <td>866.75</td>
-    <td>450.34</td>
-    <td>1.92x</td>
-  </tr>
-  <tr>
-    <td>intel-tensorflow</td>
-    <td>2.7.0</td>
-    <td>ssd_resnet34</td>
-    <td>21.69%</td>
-    <td>22.09%</td>
-    <td>-1.81%</td>
-    <td>41.17</td>
-    <td>10.76</td>
-    <td>3.83x</td>
-  </tr>
-</tbody>
-</table><table class="docutils">
-<thead>
-  <tr>
-    <th rowspan="2">Framework</th>
-    <th rowspan="2">version</th>
-    <th rowspan="2">model</th>
-    <th colspan="3">Accuracy</th>
-    <th colspan="3">Performance<br>1s4c10ins1bs/throughput<br>(samples/sec)<br></th>
-  </tr>
-  <tr>
-    <th>INT8</th>
-    <th>FP32</th>
-    <th>Acc Ratio[(INT8-FP32)/FP32]</th>
-    <th>INT8</th>
-    <th>FP32</th>
-    <th>Performance Ratio[INT8/FP32]</th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td>pytorch</td>
-    <td>1.9.0+cpu</td>
-    <td>resnet18</td>
-    <td>69.57%</td>
-    <td>69.76%</td>
-    <td>-0.27%</td>
-    <td>828.529</td>
-    <td>402.887</td>
-    <td>2.06x</td>
-  </tr>
-  <tr>
-    <td>pytorch</td>
-    <td>1.9.0+cpu</td>
-    <td>resnet50</td>
-    <td>75.98%</td>
-    <td>76.15%</td>
-    <td>-0.21%</td>
-    <td>515.564</td>
-    <td>194.381</td>
-    <td>2.65x</td>
-  </tr>
-  <tr>
-    <td>pytorch</td>
-    <td>1.9.0+cpu</td>
-    <td>resnext101_32x8d</td>
-    <td>79.15%</td>
-    <td>79.31%</td>
-    <td>-0.20%</td>
-    <td>203.845</td>
-    <td>70.247</td>
-    <td>2.90x</td>
-  </tr>
-  <tr>
-    <td>pytorch</td>
-    <td>1.9.0+cpu</td>
-    <td>inception_v3</td>
-    <td>69.43%</td>
-    <td>69.52%</td>
-    <td>-0.13%</td>
-    <td>472.927</td>
-    <td>216.804</td>
-    <td>2.18x</td>
-  </tr>
-  <tr>
-    <td>pytorch</td>
-    <td>1.9.0+cpu</td>
-    <td>peleenet</td>
-    <td>71.66%</td>
-    <td>72.10%</td>
-    <td>-0.62%</td>
-    <td>513.073</td>
-    <td>388.098</td>
-    <td>1.32x</td>
-  </tr>
-  <tr>
-    <td>pytorch</td>
-    <td>1.9.0+cpu</td>
-    <td>yolo_v3</td>
-    <td>24.46%</td>
-    <td>24.54%</td>
-    <td>-0.36%</td>
-    <td>99.827</td>
-    <td>37.337</td>
-    <td>2.67x</td>
-  </tr>
-  <tr>
-    <td>pytorch</td>
-    <td>1.8.0+cpu</td>
-    <td>bert_base_sts-b</td>
-    <td>89.07%</td>
-    <td>89.76%</td>
-    <td>-0.77%</td>
-    <td>179.076</td>
-    <td>103.044</td>
-    <td>1.74x</td>
-  </tr>
-  <tr>
-    <td>pytorch</td>
-    <td>1.8.0+cpu</td>
-    <td>bert_base_sst-2</td>
-    <td>91.35%</td>
-    <td>91.83%</td>
-    <td>-0.52%</td>
-    <td>179.677</td>
-    <td>101.563</td>
-    <td>1.77x</td>
-  </tr>
-  <tr>
-    <td>pytorch</td>
-    <td>1.8.0+cpu</td>
-    <td>bert_base_rte</td>
-    <td>69.53%</td>
-    <td>69.14%</td>
-    <td>0.56%</td>
-    <td>176.974</td>
-    <td>101.55</td>
-    <td>1.74x</td>
-  </tr>
-  <tr>
-    <td>pytorch</td>
-    <td>1.8.0+cpu</td>
-    <td>bert_large_rte</td>
-    <td>72.27%</td>
-    <td>71.88%</td>
-    <td>0.54%</td>
-    <td>37.546</td>
-    <td>33.779</td>
-    <td>1.11x</td>
-  </tr>
-  <tr>
-    <td>pytorch</td>
-    <td>1.8.0+cpu</td>
-    <td>bert_large_mrpc</td>
-    <td>88.97%</td>
-    <td>89.91%</td>
-    <td>-1.05%</td>
-    <td>86.948</td>
-    <td>33.841</td>
-    <td>2.57x</td>
-  </tr>
-  <tr>
-    <td>pytorch</td>
-    <td>1.8.0+cpu</td>
-    <td>bert_large_qnli</td>
-    <td>91.54%</td>
-    <td>91.84%</td>
-    <td>-0.32%</td>
-    <td>89.916</td>
-    <td>33.837</td>
-    <td>2.66x</td>
-  </tr>
-  <tr>
-    <td>pytorch</td>
-    <td>1.8.0+cpu</td>
-    <td>bert_large_cola</td>
-    <td>62.07%</td>
-    <td>62.83%</td>
-    <td>-1.21%</td>
-    <td>87.102</td>
-    <td>33.964</td>
-    <td>2.56x</td>
-  </tr>
-</tbody>
-</table></div>
-<div class="section" id="validated-pruning-models">
-<h4>Validated Pruning Models<a class="headerlink" href="#validated-pruning-models" title="Permalink to this headline">¶</a></h4>
-<table class="docutils">
-<thead>
-  <tr>
-    <th rowspan="2">Tasks</th>
-    <th rowspan="2">FWK</th>
-    <th rowspan="2">Model</th>
-    <th rowspan="2">fp32 baseline</th>
-    <th colspan="3">gradient sensitivity with 20% sparsity</th>
-    <th colspan="3">+onnx dynamic quantization on pruned model</th>
-  </tr>
-  <tr>
-    <td>accuracy%</td>
-    <td> drop%</td>
-    <td>perf gain (sample/s)</td>
-    <td>accuracy%</td>
-    <td> drop%</td>
-    <td>perf gain (sample/s)</td>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td>SST-2</td>
-    <td>pytorch</td>
-    <td>bert-base</td>
-    <td>accuracy = 92.32</td>
-    <td>accuracy = 91.97</td>
-    <td>-0.38</td>
-    <td>1.30x</td>
-    <td>accuracy = 92.20</td>
-    <td>-0.13</td>
-    <td>1.86x</td>
-  </tr>
-  <tr>
-    <td>QQP</td>
-    <td>pytorch</td>
-    <td>bert-base</td>
-    <td>[accuracy, f1] = [91.10, 88.05]</td>
-    <td>[accuracy, f1] = [89.97, 86.54]</td>
-    <td>[-1.24, -1.71]</td>
-    <td>1.32x</td>
-    <td>[accuracy, f1] = [89.75, 86.60]</td>
-    <td>[-1.48, -1.65]</td>
-    <td>1.81x</td>
-  </tr>
-</tbody>
-</table><table class="docutils">
-<thead>
-  <tr>
-    <th rowspan="2">Tasks</th>
-    <th rowspan="2">FWK</th>
-    <th rowspan="2">Model</th>
-    <th rowspan="2">fp32 baseline</th>
-    <th colspan="2">Pattern Lock on 70% Unstructured Sparsity</th>
-    <th colspan="2">Pattern Lock on 50% 1:2 Structured Sparsity</th>
-  </tr>
-  <tr>
-    <td>accuracy%</td>
-    <td> drop%</td>
-    <td>accuracy%</td>
-    <td> drop%</td>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td>MNLI</td>
-    <td>pytorch</td>
-    <td>bert-base</td>
-    <td>[m, mm] = [84.57, 84.79]</td>
-    <td>[m, mm] = [82.45, 83.27]</td>
-    <td>[-2.51, -1.80]</td>
-    <td>[m, mm] = [83.20, 84.11]</td>
-    <td>[-1.62, -0.80]</td>
-  </tr>
-  <tr>
-    <td>SST-2</td>
-    <td>pytorch</td>
-    <td>bert-base</td>
-    <td>accuracy = 92.32</td>
-    <td>accuracy = 91.51</td>
-    <td>-0.88</td>
-    <td>accuracy = 92.20</td>
-    <td>-0.13</td>
-  </tr>
-  <tr>
-    <td>QQP</td>
-    <td>pytorch</td>
-    <td>bert-base</td>
-    <td>[accuracy, f1] = [91.10, 88.05]</td>
-    <td>[accuracy, f1] = [90.48, 87.06]</td>
-    <td>[-0.68, -1.12]</td>
-    <td>[accuracy, f1] = [90.92, 87.78]</td>
-    <td>[-0.20, -0.31]</td>
-  </tr>
-  <tr>
-    <td>QNLI</td>
-    <td>pytorch</td>
-    <td>bert-base</td>
-    <td>accuracy = 91.54</td>
-    <td>accuracy = 90.39</td>
-    <td>-1.26</td>
-    <td>accuracy = 90.87</td>
-    <td>-0.73</td>
-  </tr>
-  <tr>
-    <td>QnA</td>
-    <td>pytorch</td>
-    <td>bert-base</td>
-    <td>[em, f1] = [79.34, 87.10]</td>
-    <td>[em, f1] = [77.27, 85.75]</td>
-    <td>[-2.61, -1.54]</td>
-    <td>[em, f1] = [78.03, 86.50]</td>
-    <td>[-1.65, -0.69]</td>
-  </tr>
-</tbody>
-</table><table class="docutils">
-<thead>
-  <tr>
-    <th>Framework</th>
-    <th>Model</th>
-    <th>fp32 baseline</th>
-    <th>Compression</th>
-    <th>dataset</th>
-    <th>acc(drop)%</th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td>Pytorch</td>
-    <td>resnet18</td>
-    <td>69.76</td>
-    <td>30% sparsity on magnitude</td>
-    <td>ImageNet</td>
-    <td>69.47(-0.42)</td>
-  </tr>
-  <tr>
-    <td>Pytorch</td>
-    <td>resnet18</td>
-    <td>69.76</td>
-    <td>30% sparsity on gradient sensitivity</td>
-    <td>ImageNet</td>
-    <td>68.85(-1.30)</td>
-  </tr>
-  <tr>
-    <td>Pytorch</td>
-    <td>resnet50</td>
-    <td>76.13</td>
-    <td>30% sparsity on magnitude</td>
-    <td>ImageNet</td>
-    <td>76.11(-0.03)</td>
-  </tr>
-  <tr>
-    <td>Pytorch</td>
-    <td>resnet50</td>
-    <td>76.13</td>
-    <td>30% sparsity on magnitude and post training quantization</td>
-    <td>ImageNet</td>
-    <td>76.01(-0.16)</td>
-  </tr>
-  <tr>
-    <td>Pytorch</td>
-    <td>resnet50</td>
-    <td>76.13</td>
-    <td>30% sparsity on magnitude and quantization aware training</td>
-    <td>ImageNet</td>
-    <td>75.90(-0.30)</td>
-  </tr>
-</tbody>
-</table></div>
-<div class="section" id="validated-knowledge-distillation-examples">
-<h4>Validated Knowledge Distillation Examples<a class="headerlink" href="#validated-knowledge-distillation-examples" title="Permalink to this headline">¶</a></h4>
-<table class="docutils">
-<thead>
-  <tr>
-    <th rowspan="2">Example Name</th>
-    <th rowspan="2">Dataset</th>
-    <th rowspan="2">Student<br>(Accuracy)</th>
-    <th rowspan="2">Teacher<br>(Accuracy)</th>
-    <th rowspan="2">Student With Distillation<br>(Accuracy Improvement)</th>
-  </tr>
-  <tr>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td rowspan="2">ResNet example</td>
-    <td rowspan="2">ImageNet</td>
-    <td rowspan="2">ResNet18<br>(0.6739)</td>
-    <td rowspan="2">ResNet50<br>(0.7399)</td>
-    <td rowspan="2">0.6845<br>(0.0106)</td>
-  </tr>
-  <tr>
-  </tr>
-  <tr>
-    <td rowspan="2">BlendCnn example</td>
-    <td rowspan="2">MRPC</td>
-    <td rowspan="2">BlendCnn<br>(0.7034)</td>
-    <td rowspan="2">BERT-Base<br>(0.8382)</td>
-    <td rowspan="2">0.7034<br>(0)</td>
-  </tr>
-  <tr>
-  </tr>
-  <tr>
-    <td rowspan="2">BiLSTM example</td>
-    <td rowspan="2">SST-2</td>
-    <td rowspan="2">BiLSTM<br>(0.7913)</td>
-    <td rowspan="2">RoBERTa-Base<br>(0.9404)</td>
-    <td rowspan="2">0.8085<br>(0.0172)</td>
-  </tr>
-  <tr>
-  </tr>
-</tbody>
-</table></div>
-<div class="section" id="validated-engine-examples-on-intel-xeon-platinum-8380-scalable-processor">
-<h4>Validated Engine Examples on Intel Xeon Platinum 8380 Scalable processor<a class="headerlink" href="#validated-engine-examples-on-intel-xeon-platinum-8380-scalable-processor" title="Permalink to this headline">¶</a></h4>
-<table class="docutils">
-<thead>
-  <tr>
-    <th rowspan="2">model</th>
-    <th colspan="3">Accuracy</th>
-    <th colspan="3">Performance<br>1s4c10ins1bs/throughput<br>(samples/sec)<br></th>
-  </tr>
-  <tr>
-    <th>INT8</th>
-    <th>FP32</th>
-    <th>Acc Ratio[(INT8-FP32)/FP32]</th>
-    <th>INT8</th>
-    <th>FP32</th>
-    <th>Preformance<br>Ratio[INT8/FP32]</th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td>bert_large_squad</td>
-    <td>90.7</td>
-    <td>90.87</td>
-    <td>-0.19%</td>
-    <td>45.32</td>
-    <td>12.53</td>
-    <td>3.62x</td>
-  </tr>
-  <tr>
-    <td>distilbert_base_uncased_sst2</td>
-    <td>90.14%</td>
-    <td>90.25%</td>
-    <td>-0.12%</td>
-    <td>999.98</td>
-    <td>283.96</td>
-    <td>3.52x</td>
-  </tr>
-  <tr>
-    <td>minilm_l6_h384_uncased_sst2</td>
-    <td>89.33%</td>
-    <td>90.14%</td>
-    <td>-0.90%</td>
-    <td>2690.5</td>
-    <td>1002.7</td>
-    <td>2.68x</td>
-  </tr>
-  <tr>
-    <td>roberta_base_mrpc</td>
-    <td>89.71%</td>
-    <td>88.97%</td>
-    <td>0.83%</td>
-    <td>508.18</td>
-    <td>142.48</td>
-    <td>3.57x</td>
-  </tr>
-  <tr>
-    <td>bert_base_nli_mean_tokens_stsb</td>
-    <td>89.26%</td>
-    <td>89.55%</td>
-    <td>-0.32%</td>
-    <td>504.15</td>
-    <td>141.5</td>
-    <td>3.56x</td>
-  </tr>
-</tbody>
-</table></div>
+<p>Intel® Neural Compressor validated 420+ <a class="reference external" href="https://github.com/intel/neural-compressor/tree/130eefa3586b38df6c0ff78cc8807ae273f6a63f/./examples">examples</a> with performance speedup geomean 2.2x and up to 4.2x on VNNI while minimizing the accuracy loss.
+More details for validated models are available <a class="reference internal" href="docs/validated_model_list.html"><span class="doc">here</span></a>.</p>
+<a target="_blank" href="./docs/imgs/INC-release-data.png">
+  <img src="./docs/imgs/INC-release-data.png" alt="Architecture" width=750 height=500>
+</a></div>
 </div>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<table class="docutils">
+  <thead>
+  <tr>
+    <th colspan="9">Overview</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan="3" align="center"><a href="docs/infrastructure.md">Infrastructure</a></td>
+      <td colspan="2" align="center"><a href="docs/tutorial.md">Tutorial</a></td>
+      <td colspan="2" align="center"><a href="./examples">Examples</a></td>
+      <td colspan="1" align="center"><a href="docs/bench.md">GUI</a></td>
+      <td colspan="1" align="center"><a href="docs/api-introduction.md">APIs</a></td>
+    </tr>
+    <tr>
+      <td colspan="5" align="center"><a href="https://software.intel.com/content/www/us/en/develop/documentation/get-started-with-ai-linux/top.html">Intel oneAPI AI Analytics Toolkit</a></td>
+      <td colspan="4" align="center"><a href="https://github.com/oneapi-src/oneAPI-samples/tree/master/AI-and-Analytics">AI and Analytics Samples</a></td>
+    </tr>
+  </tbody>
+  <thead>
+  <tr>
+    <th colspan="9">Basic API</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan="2" align="center"><a href="docs/transform.md">Transform</a></td>
+      <td colspan="2" align="center"><a href="docs/dataset.md">Dataset</a></td>
+      <td colspan="2" align="center"><a href="docs/metric.md">Metric</a></td>
+      <td colspan="3" align="center"><a href="docs/objective.md">Objective</a></td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr>
+      <th colspan="9">Deep Dive</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+        <td colspan="2" align="center"><a href="docs/Quantization.md">Quantization</a></td>
+        <td colspan="1" align="center"><a href="docs/pruning.md">Pruning</a></td>
+        <td colspan="3" align="center"><a href="docs/distillation.md">Knowledge Distillation</a></td>
+        <td colspan="3" align="center"><a href="docs/mixed_precision.md">Mixed precision</a></td>
+    </tr>
+    <tr>
+        <td colspan="2" align="center"><a href="docs/benchmark.md">Benchmarking</a></td>
+        <td colspan="3" align="center"><a href="docs/distributed.md">Distributed Training</a></td>
+        <td colspan="2" align="center"><a href="docs/model_conversion.md">Model Conversion</a></td>
+        <td colspan="2" align="center"><a href="docs/tensorboard.md">TensorBoard</a></td>
+    </tr>
+  </tbody>
+  <thead>
+      <tr>
+        <th colspan="9">Advanced Topics</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td colspan="5" align="center"><a href="docs/adaptor.md">Adaptor</a></td>
+          <td colspan="4" align="center"><a href="docs/tuning_strategies.md">Strategy</a></td>
+      </tr>
+  </tbody>
+</table></div>
+<div class="section" id="selected-publications">
+<h2>Selected Publications<a class="headerlink" href="#selected-publications" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://networkbuilders.intel.com/solutionslibrary/intel-deep-learning-boost-boost-network-security-ai-inference-performance-in-google-cloud-platform-gcp-technology-guide">Intel® Deep Learning Boost - Boost Network Security AI Inference Performance in Google Cloud Platform (GCP)</a> (Apr 2022)</p></li>
+<li><p><a class="reference external" href="https://pytorch.org/ecosystem/">Intel® Neural Compressor joined PyTorch ecosystem tool </a> (Apr 2022)</p></li>
+<li><p><a class="reference external" href="https://builders.intel.com/docs/networkbuilders/ai-technologies-unleash-ai-innovation-in-network-applications-solution-brief-1637303210.pdf">New instructions in the Intel® Xeon® Scalable processors combined with optimized software frameworks enable real-time AI within network workloads</a> (Feb 2022)</p></li>
+<li><p><a class="reference external" href="https://community.intel.com/t5/Blogs/Tech-Innovation/Artificial-Intelligence-AI/Quantizing-ONNX-Models-using-Intel-Neural-Compressor/post/1355237">Quantizing ONNX Models using Intel® Neural Compressor</a> (Feb 2022)</p></li>
+<li><p><a class="reference external" href="https://www.intel.com/content/www/us/en/developer/articles/technical/quantize-ai-by-oneapi-analytics-on-alibaba-cloud.html">Quantize AI Model by Intel® oneAPI AI Analytics Toolkit on Alibaba Cloud</a> (Feb 2022)</p></li>
+</ul>
+<blockquote>
+<div><p>View the <a class="reference internal" href="docs/publication_list.html"><span class="doc">full publication list</span></a>.</p>
+</div></blockquote>
 </div>
 <div class="section" id="additional-content">
 <h2>Additional Content<a class="headerlink" href="#additional-content" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference internal" href="releases_info.html"><span class="doc">Release Information</span></a></p></li>
 <li><p><a class="reference internal" href="contributions.html"><span class="doc">Contribution Guidelines</span></a></p></li>
-<li><p><a class="reference internal" href="legal_information.html"><span class="doc">Legal</span></a></p></li>
+<li><p><a class="reference internal" href="legal_information.html"><span class="doc">Legal Information</span></a></p></li>
 <li><p><a class="reference internal" href="security_policy.html"><span class="doc">Security Policy</span></a></p></li>
 <li><p><a class="reference external" href="https://intel.github.io/neural-compressor">Intel® Neural Compressor Website</a></p></li>
 </ul>

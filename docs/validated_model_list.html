@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Full Validated Models on Intel Xeon Platinum 8380 Scalable processor &mdash; Intel® Neural Compressor  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <title>Validated Models &mdash; Intel® Neural Compressor  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -63,9 +63,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Full Validated Models on Intel Xeon Platinum 8380 Scalable processor</li>
+      <li>Validated Models</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/docs/full_model_list.md.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/docs/validated_model_list.md.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -73,8 +73,80 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="full-validated-models-on-intel-xeon-platinum-8380-scalable-processor">
-<h1>Full Validated Models on Intel Xeon Platinum 8380 Scalable processor<a class="headerlink" href="#full-validated-models-on-intel-xeon-platinum-8380-scalable-processor" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="validated-models">
+<h1>Validated Models<a class="headerlink" href="#validated-models" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="validated-mlperf-models">
+<h2>Validated MLPerf Models<a class="headerlink" href="#validated-mlperf-models" title="Permalink to this headline">¶</a></h2>
+<table class="docutils">
+<thead>
+  <tr>
+    <th>Model</th>
+    <th>Framework</th>
+    <th>Support</th>
+    <th>Example</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td rowspan="2">ResNet50 v1.5</td>
+    <td>TensorFlow</td>
+    <td>Yes</td>
+    <td><a href="../examples/tensorflow/image_recognition/tensorflow_models/quantization/ptq">Link</a></td>
+  </tr>
+  <tr>
+    <td>PyTorch</td>
+    <td>Yes</td>
+    <td><a href="../examples/pytorch/image_recognition/torchvision_models/quantization/ptq/cpu/ipex">Link</a></td>
+  </tr>
+  <tr>
+    <td>DLRM</td>
+    <td>PyTorch</td>
+    <td>Yes</td>
+    <td><a href="../examples/pytorch/recommendation/dlrm/quantization/ptq">Link</a></td>
+  </tr>
+  <tr>
+    <td rowspan="2">BERT-large</td>
+    <td>TensorFlow</td>
+    <td>Yes</td>
+    <td><a href="../examples/tensorflow/nlp/bert_large_squad/quantization/ptq">Link</a></td>
+  </tr>
+  <tr>
+    <td>PyTorch</td>
+    <td>Yes</td>
+    <td><a href="../examples/pytorch/nlp/huggingface_models/question-answering/quantization/ptq_static/ipex">Link</a></td>
+  </tr>
+  <tr>
+    <td rowspan="2">SSD-ResNet34</td>
+    <td>TensorFlow</td>
+    <td>Yes</td>
+    <td><a href="../examples/tensorflow/object_detection/tensorflow_models/quantization/ptq">Link</a></td>
+  </tr>
+  <tr>
+    <td>PyTorch</td>
+    <td>Yes</td>
+    <td><a href="../examples/pytorch/object_detection/ssd_resnet34/quantization">Link</a></td>
+  </tr>
+  <tr>
+    <td>RNN-T</td>
+    <td>PyTorch</td>
+    <td>Yes</td>
+    <td><a href="../examples/pytorch/speech_recognition/rnnt/quantization">Link</a></td>    
+  </tr>
+  <tr>
+    <td rowspan="2">3D-UNet</td>
+    <td>TensorFlow</td>
+    <td>WIP</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>PyTorch</td>
+    <td>Yes</td>
+    <td><a href="../examples/pytorch/image_recognition/3d-unet/quantization">Link</a></td>
+  </tr>
+</tbody>
+</table></div>
+<div class="section" id="full-validated-models-on-intel-xeon-platinum-8380-scalable-processor">
+<h2>Full Validated Models on Intel Xeon Platinum 8380 Scalable processor<a class="headerlink" href="#full-validated-models-on-intel-xeon-platinum-8380-scalable-processor" title="Permalink to this headline">¶</a></h2>
 <p>The below tables are models enabled by the Intel® Neural Compressor.</p>
 <p>Performance varies by use, configuration and other factors. See backup for configuration details. For more complete information about performance and benchmark results, visit www.intel.com/benchmarks</p>
 <p>Performance results are based on testing as of ​​02/23/2022 and may not reflect all publicly available ​updates. No product or component can be absolutely secure.</p>
@@ -83,7 +155,7 @@
 <p>Intel technologies may require enabled hardware, software or service activation.</p>
 <p>© Intel Corporation.  Intel, the Intel logo, and other Intel marks are trademarks of Intel Corporation or its subsidiaries.  Other names and brands may be claimed as the property of others​.​​</p>
 <div class="section" id="tensorflow-2-x-models">
-<h2>TensorFlow 2.x models<a class="headerlink" href="#tensorflow-2-x-models" title="Permalink to this headline">¶</a></h2>
+<h3>TensorFlow 2.x models<a class="headerlink" href="#tensorflow-2-x-models" title="Permalink to this headline">¶</a></h3>
 <table>
 <thead>
   <tr>
@@ -416,7 +488,7 @@
 </tr></tbody>
 </table></div>
 <div class="section" id="tensorflow-1-x-models">
-<h2>TensorFlow 1.x models<a class="headerlink" href="#tensorflow-1-x-models" title="Permalink to this headline">¶</a></h2>
+<h3>TensorFlow 1.x models<a class="headerlink" href="#tensorflow-1-x-models" title="Permalink to this headline">¶</a></h3>
 <table>
 <thead>
   <tr>
@@ -580,7 +652,7 @@
 </tbody>
 </table></div>
 <div class="section" id="pytorch-models">
-<h2>PyTorch models<a class="headerlink" href="#pytorch-models" title="Permalink to this headline">¶</a></h2>
+<h3>PyTorch models<a class="headerlink" href="#pytorch-models" title="Permalink to this headline">¶</a></h3>
 <table>
 <thead>
   <tr>
@@ -894,7 +966,7 @@
 </tbody>
 </table></div>
 <div class="section" id="id1">
-<h2>PyTorch models<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h3>PyTorch models<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <table>
 <thead>
   <tr>
@@ -1018,7 +1090,7 @@
 </tbody>
 </table></div>
 <div class="section" id="mxnet-models">
-<h2>MXNet models<a class="headerlink" href="#mxnet-models" title="Permalink to this headline">¶</a></h2>
+<h3>MXNet models<a class="headerlink" href="#mxnet-models" title="Permalink to this headline">¶</a></h3>
 <table>
 <thead>
   <tr>
@@ -1122,7 +1194,7 @@
 </tbody>
 </table></div>
 <div class="section" id="onnx-models">
-<h2>ONNX Models<a class="headerlink" href="#onnx-models" title="Permalink to this headline">¶</a></h2>
+<h3>ONNX Models<a class="headerlink" href="#onnx-models" title="Permalink to this headline">¶</a></h3>
 <table>
 <thead>
   <tr>
@@ -1396,7 +1468,7 @@
 </tbody>
 </table></div>
 <div class="section" id="inc-engine-models">
-<h2>INC-ENGINE Models<a class="headerlink" href="#inc-engine-models" title="Permalink to this headline">¶</a></h2>
+<h3>INC-ENGINE Models<a class="headerlink" href="#inc-engine-models" title="Permalink to this headline">¶</a></h3>
 <table>
 <thead>
   <tr>
@@ -1548,7 +1620,7 @@
 </tbody>
 </table></div>
 <div class="section" id="backup">
-<h2>BACKUP<a class="headerlink" href="#backup" title="Permalink to this headline">¶</a></h2>
+<h3>BACKUP<a class="headerlink" href="#backup" title="Permalink to this headline">¶</a></h3>
 <table>
 <tr><th>System Configuration</th><th>Intel Xeon Platinum 8380 Scalable processor</th></tr>
 <tr>
@@ -1605,6 +1677,221 @@
 1x INTEL_SSDSC2BB48 447.1G
 1x INTEL_SSDSC2KG96 894.3G</td>
 </tr><tr>
+</table></div>
+</div>
+<div class="section" id="validated-pruning-models">
+<h2>Validated Pruning Models<a class="headerlink" href="#validated-pruning-models" title="Permalink to this headline">¶</a></h2>
+<table class="docutils">
+<thead>
+  <tr>
+    <th rowspan="2">Tasks</th>
+    <th rowspan="2">FWK</th>
+    <th rowspan="2">Model</th>
+    <th rowspan="2">fp32 baseline</th>
+    <th colspan="3">gradient sensitivity with 20% sparsity</th>
+    <th colspan="3">+onnx dynamic quantization on pruned model</th>
+  </tr>
+  <tr>
+    <td>accuracy%</td>
+    <td> drop%</td>
+    <td>perf gain (sample/s)</td>
+    <td>accuracy%</td>
+    <td> drop%</td>
+    <td>perf gain (sample/s)</td>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>SST-2</td>
+    <td>pytorch</td>
+    <td>bert-base</td>
+    <td>accuracy = 92.32</td>
+    <td>accuracy = 91.97</td>
+    <td>-0.38</td>
+    <td>1.30x</td>
+    <td>accuracy = 92.20</td>
+    <td>-0.13</td>
+    <td>1.86x</td>
+  </tr>
+  <tr>
+    <td>QQP</td>
+    <td>pytorch</td>
+    <td>bert-base</td>
+    <td>[accuracy, f1] = [91.10, 88.05]</td>
+    <td>[accuracy, f1] = [89.97, 86.54]</td>
+    <td>[-1.24, -1.71]</td>
+    <td>1.32x</td>
+    <td>[accuracy, f1] = [89.75, 86.60]</td>
+    <td>[-1.48, -1.65]</td>
+    <td>1.81x</td>
+  </tr>
+</tbody>
+</table><table class="docutils">
+<thead>
+  <tr>
+    <th rowspan="2">Tasks</th>
+    <th rowspan="2">FWK</th>
+    <th rowspan="2">Model</th>
+    <th rowspan="2">fp32 baseline</th>
+    <th colspan="2">Pattern Lock on 70% Unstructured Sparsity</th>
+    <th colspan="2">Pattern Lock on 50% 1:2 Structured Sparsity</th>
+  </tr>
+  <tr>
+    <td>accuracy%</td>
+    <td> drop%</td>
+    <td>accuracy%</td>
+    <td> drop%</td>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>MNLI</td>
+    <td>pytorch</td>
+    <td>bert-base</td>
+    <td>[m, mm] = [84.57, 84.79]</td>
+    <td>[m, mm] = [82.45, 83.27]</td>
+    <td>[-2.51, -1.80]</td>
+    <td>[m, mm] = [83.20, 84.11]</td>
+    <td>[-1.62, -0.80]</td>
+  </tr>
+  <tr>
+    <td>SST-2</td>
+    <td>pytorch</td>
+    <td>bert-base</td>
+    <td>accuracy = 92.32</td>
+    <td>accuracy = 91.51</td>
+    <td>-0.88</td>
+    <td>accuracy = 92.20</td>
+    <td>-0.13</td>
+  </tr>
+  <tr>
+    <td>QQP</td>
+    <td>pytorch</td>
+    <td>bert-base</td>
+    <td>[accuracy, f1] = [91.10, 88.05]</td>
+    <td>[accuracy, f1] = [90.48, 87.06]</td>
+    <td>[-0.68, -1.12]</td>
+    <td>[accuracy, f1] = [90.92, 87.78]</td>
+    <td>[-0.20, -0.31]</td>
+  </tr>
+  <tr>
+    <td>QNLI</td>
+    <td>pytorch</td>
+    <td>bert-base</td>
+    <td>accuracy = 91.54</td>
+    <td>accuracy = 90.39</td>
+    <td>-1.26</td>
+    <td>accuracy = 90.87</td>
+    <td>-0.73</td>
+  </tr>
+  <tr>
+    <td>QnA</td>
+    <td>pytorch</td>
+    <td>bert-base</td>
+    <td>[em, f1] = [79.34, 87.10]</td>
+    <td>[em, f1] = [77.27, 85.75]</td>
+    <td>[-2.61, -1.54]</td>
+    <td>[em, f1] = [78.03, 86.50]</td>
+    <td>[-1.65, -0.69]</td>
+  </tr>
+</tbody>
+</table><table class="docutils">
+<thead>
+  <tr>
+    <th>Framework</th>
+    <th>Model</th>
+    <th>fp32 baseline</th>
+    <th>Compression</th>
+    <th>dataset</th>
+    <th>acc(drop)%</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>Pytorch</td>
+    <td>resnet18</td>
+    <td>69.76</td>
+    <td>30% sparsity on magnitude</td>
+    <td>ImageNet</td>
+    <td>69.47(-0.42)</td>
+  </tr>
+  <tr>
+    <td>Pytorch</td>
+    <td>resnet18</td>
+    <td>69.76</td>
+    <td>30% sparsity on gradient sensitivity</td>
+    <td>ImageNet</td>
+    <td>68.85(-1.30)</td>
+  </tr>
+  <tr>
+    <td>Pytorch</td>
+    <td>resnet50</td>
+    <td>76.13</td>
+    <td>30% sparsity on magnitude</td>
+    <td>ImageNet</td>
+    <td>76.11(-0.03)</td>
+  </tr>
+  <tr>
+    <td>Pytorch</td>
+    <td>resnet50</td>
+    <td>76.13</td>
+    <td>30% sparsity on magnitude and post training quantization</td>
+    <td>ImageNet</td>
+    <td>76.01(-0.16)</td>
+  </tr>
+  <tr>
+    <td>Pytorch</td>
+    <td>resnet50</td>
+    <td>76.13</td>
+    <td>30% sparsity on magnitude and quantization aware training</td>
+    <td>ImageNet</td>
+    <td>75.90(-0.30)</td>
+  </tr>
+</tbody>
+</table></div>
+<div class="section" id="validated-knowledge-distillation-examples">
+<h2>Validated Knowledge Distillation Examples<a class="headerlink" href="#validated-knowledge-distillation-examples" title="Permalink to this headline">¶</a></h2>
+<table class="docutils">
+<thead>
+  <tr>
+    <th rowspan="2">Example Name</th>
+    <th rowspan="2">Dataset</th>
+    <th rowspan="2">Student<br>(Accuracy)</th>
+    <th rowspan="2">Teacher<br>(Accuracy)</th>
+    <th rowspan="2">Student With Distillation<br>(Accuracy Improvement)</th>
+  </tr>
+  <tr>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td rowspan="2">ResNet example</td>
+    <td rowspan="2">ImageNet</td>
+    <td rowspan="2">ResNet18<br>(0.6739)</td>
+    <td rowspan="2">ResNet50<br>(0.7399)</td>
+    <td rowspan="2">0.6845<br>(0.0106)</td>
+  </tr>
+  <tr>
+  </tr>
+  <tr>
+    <td rowspan="2">BlendCnn example</td>
+    <td rowspan="2">MRPC</td>
+    <td rowspan="2">BlendCnn<br>(0.7034)</td>
+    <td rowspan="2">BERT-Base<br>(0.8382)</td>
+    <td rowspan="2">0.7034<br>(0)</td>
+  </tr>
+  <tr>
+  </tr>
+  <tr>
+    <td rowspan="2">BiLSTM example</td>
+    <td rowspan="2">SST-2</td>
+    <td rowspan="2">BiLSTM<br>(0.7913)</td>
+    <td rowspan="2">RoBERTa-Base<br>(0.9404)</td>
+    <td rowspan="2">0.8085<br>(0.0172)</td>
+  </tr>
+  <tr>
+  </tr>
+</tbody>
 </table></div>
 </div>
 
