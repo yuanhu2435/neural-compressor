@@ -93,7 +93,7 @@
 <p>Intel® Neural Compressor (formerly known as Intel® Low Precision Optimization Tool) is an open-source Python library running on Intel CPUs and GPUs, which delivers unified interfaces across multiple deep learning frameworks for popular network compression technologies, such as quantization, pruning, knowledge distillation. This tool supports automatic accuracy-driven tuning strategies to help user quickly find out the best quantized model. It also implements different weight pruning algorithms to generate pruned model with predefined sparsity goal and supports knowledge distillation to distill the knowledge from the teacher model to the student model.
 Intel® Neural Compressor has been one of the critical AI software components in <a class="reference external" href="https://software.intel.com/content/www/us/en/develop/tools/oneapi/ai-analytics-toolkit.html">Intel® oneAPI AI Analytics Toolkit</a>.</p>
 <blockquote>
-<div><p><strong>Note</strong>
+<div><p><strong>Note:</strong>
 GPU support is under development.</p>
 </div></blockquote>
 <p><strong>Visit the Intel® Neural Compressor online document website at: <a class="reference external" href="https://intel.github.io/neural-compressor">https://intel.github.io/neural-compressor</a>.</strong></p>
@@ -115,6 +115,10 @@ conda install neural-compressor -c conda-forge -c intel
 </pre></div>
 </div>
 <p>More installation methods can be found at <a class="reference internal" href="docs/installation_guide.html"><span class="doc">Installation Guide</span></a>.</p>
+<blockquote>
+<div><p><strong>Note:</strong>
+Run into installation issues, please check <a class="reference internal" href="docs/faq.html"><span class="doc">FAQ</span></a>.</p>
+</div></blockquote>
 </div>
 <div class="section" id="getting-started">
 <h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
@@ -202,7 +206,7 @@ inc_bench
 </table></div>
 <div class="section" id="validated-models">
 <h3>Validated Models<a class="headerlink" href="#validated-models" title="Permalink to this headline">¶</a></h3>
-<p>Intel® Neural Compressor validated 420+ <a class="reference external" href="https://github.com/intel/neural-compressor/tree/130eefa3586b38df6c0ff78cc8807ae273f6a63f/./examples">examples</a> with performance speedup geomean 2.2x and up to 4.2x on VNNI while minimizing the accuracy loss.
+<p>Intel® Neural Compressor validated 420+ <a class="reference external" href="https://github.com/intel/neural-compressor/tree/9e1e7de89181da2968f6f12f6acb223436b6ba61/./examples">examples</a> with performance speedup geomean 2.2x and up to 4.2x on VNNI while minimizing the accuracy loss.
 More details for validated models are available <a class="reference internal" href="docs/validated_model_list.html"><span class="doc">here</span></a>.</p>
 <a target="_blank" href="./docs/imgs/INC-release-data.png">
   <img src="./docs/imgs/INC-release-data.png" alt="Architecture" width=750 height=500>
