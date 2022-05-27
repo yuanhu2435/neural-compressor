@@ -16,7 +16,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Release" href="../releases_info.html" />
+    <link rel="next" title="Release" href="releases_info.html" />
     <link rel="prev" title="Adaptor" href="adaptor.html" /> 
 </head>
 
@@ -28,7 +28,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.11
+                1.12
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -39,9 +39,9 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../README.html">Introduction to Intel® Neural Compressor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">Intel® Neural Compressor</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../examples_readme.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples_readme.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api-documentation/apis.html">APIs</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="doclist.html">Developer Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="doclist.html#get-started">Get Started</a></li>
@@ -59,10 +59,10 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../releases_info.html">Release</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../contributions.html">Contribution Guidelines</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../legal_information.html">Legal Information</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../security_policy.html">Security Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="releases_info.html">Release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributions.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="legal_information.html">Legal Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security_policy.html">Security Policy</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/intel/neural-compressor">Intel® Neural Compressor repository</a></li>
 </ul>
 
@@ -122,7 +122,7 @@ tuning phase stops when the <code class="docutils literal notranslate"><span cla
 </div>
 <div class="section" id="configurations">
 <h2>Configurations<a class="headerlink" href="#configurations" title="Permalink to this headline">¶</a></h2>
-<p>Detailed configuration templates can be found <a class="reference external" href="https://github.com/intel/neural-compressor/tree/2de807c960a940b79871ce4e5baedb82c8d483a3/docs/../neural_compressor/template">here</a>.</p>
+<p>Detailed configuration templates can be found <a class="reference external" href="https://github.com/intel/neural-compressor/tree/aac0a0ec860d6d875467a8b7fb119ec18713fd48/docs/../neural_compressor/template">here</a>.</p>
 <div class="section" id="model-specific-configurations">
 <h3>Model-specific configurations<a class="headerlink" href="#model-specific-configurations" title="Permalink to this headline">¶</a></h3>
 <p>For model-specific configurations, users can set the quantization approach.
@@ -436,7 +436,7 @@ and registering this strategy by <code class="docutils literal notranslate"><spa
 <p>The <code class="docutils literal notranslate"><span class="pre">next_tune_cfg</span></code> function is used to yield the next tune configuration according to some algorithm or strategy. <code class="docutils literal notranslate"><span class="pre">TuneStrategy</span></code> base class will traverse
 all the tuning space till a quantization configuration meets pre-defined accuracy criterion.</p>
 <p>If the traverse behavior of <code class="docutils literal notranslate"><span class="pre">TuneStrategy</span></code> base class does not meet new strategy requirement, it could re-implement <code class="docutils literal notranslate"><span class="pre">traverse</span></code> function with self own logic.
-An example like this is under <a class="reference external" href="https://github.com/intel/neural-compressor/blob/2de807c960a940b79871ce4e5baedb82c8d483a3/docs/../neural_compressor/strategy/strategy.py">TPE Strategy</a>.</p>
+An example like this is under <a class="reference external" href="https://github.com/intel/neural-compressor/blob/aac0a0ec860d6d875467a8b7fb119ec18713fd48/docs/../neural_compressor/strategy/strategy.py">TPE Strategy</a>.</p>
 </div>
 </div>
 
@@ -445,7 +445,7 @@ An example like this is under <a class="reference external" href="https://github
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="adaptor.html" class="btn btn-neutral float-left" title="Adaptor" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../releases_info.html" class="btn btn-neutral float-right" title="Release" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="releases_info.html" class="btn btn-neutral float-right" title="Release" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

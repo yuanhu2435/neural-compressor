@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Introduction to Intel® Neural Compressor &mdash; Intel® Neural Compressor  documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <title>Intel® Neural Compressor &mdash; Intel® Neural Compressor  documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -28,7 +28,7 @@
             <a href="index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.11
+                1.12
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -39,7 +39,7 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction to Intel® Neural Compressor</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Intel® Neural Compressor</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#system-requirements">System Requirements</a><ul>
@@ -54,13 +54,13 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="docs/tutorial.html">Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="examples_readme.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/examples_readme.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api-documentation/apis.html">APIs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="docs/doclist.html">Developer Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="releases_info.html">Release</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contributions.html">Contribution Guidelines</a></li>
-<li class="toctree-l1"><a class="reference internal" href="legal_information.html">Legal Information</a></li>
-<li class="toctree-l1"><a class="reference internal" href="security_policy.html">Security Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/releases_info.html">Release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/contributions.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/legal_information.html">Legal Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs/security_policy.html">Security Policy</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/intel/neural-compressor">Intel® Neural Compressor repository</a></li>
 </ul>
 
@@ -78,7 +78,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Introduction to Intel® Neural Compressor</li>
+      <li>Intel® Neural Compressor</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/README.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -88,9 +88,15 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="introduction-to-intel-neural-compressor">
-<h1>Introduction to Intel® Neural Compressor<a class="headerlink" href="#introduction-to-intel-neural-compressor" title="Permalink to this headline">¶</a></h1>
-<p>Intel® Neural Compressor (formerly known as Intel® Low Precision Optimization Tool) is an open-source Python library running on Intel CPUs and GPUs, which delivers unified interfaces across multiple deep learning frameworks for popular network compression technologies, such as quantization, pruning, knowledge distillation. This tool supports automatic accuracy-driven tuning strategies to help user quickly find out the best quantized model. It also implements different weight pruning algorithms to generate pruned model with predefined sparsity goal and supports knowledge distillation to distill the knowledge from the teacher model to the student model.
+  <div align="center"><div class="section" id="intel-neural-compressor">
+<h1>Intel® Neural Compressor<a class="headerlink" href="#intel-neural-compressor" title="Permalink to this headline">¶</a></h1>
+<p><h3> An open-source Python library supporting popular network compression technologies on all mainstream deep learning frameworks (TensorFlow, PyTorch, ONNX Runtime, and MXNet)</h3></p>
+<p><a class="reference external" href="https://github.com/intel/neural-compressor"><img alt="python" src="https://img.shields.io/badge/python-3.7%2B-blue" /></a>
+<a class="reference external" href="https://github.com/intel/neural-compressor/releases"><img alt="version" src="https://img.shields.io/badge/release-1.12-green" /></a>
+<a class="reference external" href="https://github.com/intel/neural-compressor/blob/master/LICENSE"><img alt="license" src="https://img.shields.io/badge/license-Apache%202-blue" /></a>
+<a class="reference external" href="https://pepy.tech/project/neural-compressor"><img alt="Downloads" src="https://static.pepy.tech/personalized-badge/neural-compressor?period=total&amp;units=international_system&amp;left_color=grey&amp;right_color=green&amp;left_text=downloads" /></a></p>
+</div><hr class="docutils" />
+<p>Intel® Neural Compressor, formerly known as Intel® Low Precision Optimization Tool, an open-source Python library running on Intel CPUs and GPUs, which delivers unified interfaces across multiple deep learning frameworks for popular network compression technologies, such as quantization, pruning, knowledge distillation. This tool supports automatic accuracy-driven tuning strategies to help user quickly find out the best quantized model. It also implements different weight pruning algorithms to generate pruned model with predefined sparsity goal and supports knowledge distillation to distill the knowledge from the teacher model to the student model.
 Intel® Neural Compressor has been one of the critical AI software components in <a class="reference external" href="https://software.intel.com/content/www/us/en/develop/tools/oneapi/ai-analytics-toolkit.html">Intel® oneAPI AI Analytics Toolkit</a>.</p>
 <blockquote>
 <div><p><strong>Note:</strong>
@@ -183,9 +189,9 @@ inc_bench
 <tbody>
   <tr align="center">
     <th>Version</th>
-    <td class="tg-7zrl"><a href=https://github.com/tensorflow/tensorflow/tree/v2.8.0>2.8.0</a><br>
-    <a href=https://github.com/tensorflow/tensorflow/tree/v2.7.0>2.7.0</a><br>
-    <a href=https://github.com/tensorflow/tensorflow/tree/v2.6.2>2.6.2</a></td>
+    <td class="tg-7zrl"><a href=https://github.com/tensorflow/tensorflow/tree/v2.9.1>2.9.1</a><br>
+    <a href=https://github.com/tensorflow/tensorflow/tree/v2.8.2>2.8.2</a><br>
+    <a href=https://github.com/tensorflow/tensorflow/tree/v2.7.3>2.7.3</a><br>
     <td class="tg-7zrl"><a href=https://github.com/Intel-tensorflow/tensorflow/tree/v2.8.0>2.8.0</a><br>
     <a href=https://github.com/Intel-tensorflow/tensorflow/tree/v2.7.0>2.7.0</a><br>
     <a href=https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up3>1.15.0UP3</a></td>
@@ -203,10 +209,13 @@ inc_bench
     <a href=https://github.com/apache/incubator-mxnet/tree/1.6.0>1.6.0</a></td>
   </tr>
 </tbody>
-</table></div>
+</table><blockquote>
+<div><p>Note: 1.Starting from official TensorFlow 2.6.0, oneDNN has been default in the binary. Please set the environment variable TF_ENABLE_ONEDNN_OPTS=1 to enable the oneDNN optimizations.<br />2.Starting from official TensorFlow 2.9.0, oneDNN optimizations are enabled by default on CPUs with neural-network-focused hardware features such as AVX512_VNNI, AVX512_BF16, AMX, etc. No need to set environment variable.</p>
+</div></blockquote>
+</div>
 <div class="section" id="validated-models">
 <h3>Validated Models<a class="headerlink" href="#validated-models" title="Permalink to this headline">¶</a></h3>
-<p>Intel® Neural Compressor validated 420+ <a class="reference external" href="https://github.com/intel/neural-compressor/tree/2de807c960a940b79871ce4e5baedb82c8d483a3/./examples">examples</a> with performance speedup geomean 2.2x and up to 4.2x on VNNI while minimizing the accuracy loss.
+<p>Intel® Neural Compressor validated 420+ <a class="reference external" href="https://github.com/intel/neural-compressor/tree/aac0a0ec860d6d875467a8b7fb119ec18713fd48/./examples">examples</a> with performance speedup geomean 2.2x and up to 4.2x on VNNI while minimizing the accuracy loss.
 More details for validated models are available <a class="reference internal" href="docs/validated_model_list.html"><span class="doc">here</span></a>.</p>
 <a target="_blank" href="./docs/imgs/INC-release-data.png">
   <img src="./docs/imgs/inc-release.png" alt="Architecture" width=800 height=500>
@@ -254,7 +263,7 @@ More details for validated models are available <a class="reference internal" hr
   <tbody>
     <tr>
         <td colspan="2" align="center"><a href="docs/Quantization.md">Quantization</a></td>
-        <td colspan="1" align="center"><a href="docs/pruning.md">Pruning</a></td>
+        <td colspan="1" align="center"><a href="docs/pruning.md">Pruning</a> <a href="docs/sparsity.md">(Sparsity)</a> </td> 
         <td colspan="3" align="center"><a href="docs/distillation.md">Knowledge Distillation</a></td>
         <td colspan="3" align="center"><a href="docs/mixed_precision.md">Mixed precision</a></td>
     </tr>
@@ -272,8 +281,9 @@ More details for validated models are available <a class="reference internal" hr
   </thead>
   <tbody>
       <tr>
-          <td colspan="5" align="center"><a href="docs/adaptor.md">Adaptor</a></td>
-          <td colspan="4" align="center"><a href="docs/tuning_strategies.md">Strategy</a></td>
+          <td colspan="3" align="center"><a href="docs/adaptor.md">Adaptor</a></td>
+          <td colspan="3" align="center"><a href="docs/tuning_strategies.md">Strategy</a></td>
+          <td colspan="3" align="center"><a href="docs/reference_examples.md">Reference Example</a></td>
       </tr>
   </tbody>
 </table></div>
@@ -293,10 +303,10 @@ More details for validated models are available <a class="reference internal" hr
 <div class="section" id="additional-content">
 <h2>Additional Content<a class="headerlink" href="#additional-content" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p><a class="reference internal" href="releases_info.html"><span class="doc">Release Information</span></a></p></li>
-<li><p><a class="reference internal" href="contributions.html"><span class="doc">Contribution Guidelines</span></a></p></li>
-<li><p><a class="reference internal" href="legal_information.html"><span class="doc">Legal Information</span></a></p></li>
-<li><p><a class="reference internal" href="security_policy.html"><span class="doc">Security Policy</span></a></p></li>
+<li><p><a class="reference internal" href="docs/releases_info.html"><span class="doc">Release Information</span></a></p></li>
+<li><p><a class="reference internal" href="docs/contributions.html"><span class="doc">Contribution Guidelines</span></a></p></li>
+<li><p><a class="reference internal" href="docs/legal_information.html"><span class="doc">Legal Information</span></a></p></li>
+<li><p><a class="reference internal" href="docs/security_policy.html"><span class="doc">Security Policy</span></a></p></li>
 <li><p><a class="reference external" href="https://intel.github.io/neural-compressor">Intel® Neural Compressor Website</a></p></li>
 </ul>
 </div>

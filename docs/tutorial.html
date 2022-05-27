@@ -16,8 +16,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Examples" href="../examples_readme.html" />
-    <link rel="prev" title="Introduction to Intel® Neural Compressor" href="../README.html" /> 
+    <link rel="next" title="Examples" href="examples_readme.html" />
+    <link rel="prev" title="Intel® Neural Compressor" href="../README.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -28,7 +28,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.11
+                1.12
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -39,20 +39,20 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../README.html">Introduction to Intel® Neural Compressor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">Intel® Neural Compressor</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#instructions-with-examples">Instructions with Examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#helloworld-examples">Helloworld Examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tutorial-examples">Tutorial Examples</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../examples_readme.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples_readme.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api-documentation/apis.html">APIs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doclist.html">Developer Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../releases_info.html">Release</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../contributions.html">Contribution Guidelines</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../legal_information.html">Legal Information</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../security_policy.html">Security Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="releases_info.html">Release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributions.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="legal_information.html">Legal Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security_policy.html">Security Policy</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/intel/neural-compressor">Intel® Neural Compressor repository</a></li>
 </ul>
 
@@ -90,19 +90,19 @@
 <div class="section" id="helloworld-examples">
 <h2>Helloworld Examples<a class="headerlink" href="#helloworld-examples" title="Permalink to this headline">¶</a></h2>
 <ol class="simple">
-<li><p>Built-in dataloader and metric example: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/2de807c960a940b79871ce4e5baedb82c8d483a3/examples/helloworld/tf_example1">tf_example1</a> for more details.</p></li>
-<li><p>TensorFlow checkpoint: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/2de807c960a940b79871ce4e5baedb82c8d483a3/examples/helloworld/tf_example4">tf_example4</a> for more details.</p></li>
-<li><p>Enable benchmark for performance and accuracy measurement: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/2de807c960a940b79871ce4e5baedb82c8d483a3/examples/helloworld/tf_example5">tf_example5</a> for more details.</p></li>
-<li><p>TensorFlow slim model: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/2de807c960a940b79871ce4e5baedb82c8d483a3/examples/helloworld/tf_example3">tf_example3</a> for more details.</p></li>
+<li><p>Built-in dataloader and metric example: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/aac0a0ec860d6d875467a8b7fb119ec18713fd48/examples/helloworld/tf_example1">tf_example1</a> for more details.</p></li>
+<li><p>TensorFlow checkpoint: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/aac0a0ec860d6d875467a8b7fb119ec18713fd48/examples/helloworld/tf_example4">tf_example4</a> for more details.</p></li>
+<li><p>Enable benchmark for performance and accuracy measurement: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/aac0a0ec860d6d875467a8b7fb119ec18713fd48/examples/helloworld/tf_example5">tf_example5</a> for more details.</p></li>
+<li><p>TensorFlow slim model: see <a class="reference external" href="https://github.com/intel/neural-compressor/tree/aac0a0ec860d6d875467a8b7fb119ec18713fd48/examples/helloworld/tf_example3">tf_example3</a> for more details.</p></li>
 </ol>
 </div>
 <div class="section" id="tutorial-examples">
 <h2>Tutorial Examples<a class="headerlink" href="#tutorial-examples" title="Permalink to this headline">¶</a></h2>
 <p>These examples are <strong>easy</strong> to run without preparing dataset. The script will download public dataset automatically or create fake dataset.</p>
 <ol class="simple">
-<li><p>Compare existed FP32 &amp; INT8 ResNet50 model directly: <a class="reference external" href="https://github.com/intel/neural-compressor/tree/2de807c960a940b79871ce4e5baedb82c8d483a3/docs/tutorial/perf_fp32_int8_tf">Performance of FP32 Vs. INT8 ResNet50 Model</a>.</p></li>
-<li><p>An End-To-End pipeline to build up a CNN model by Pytorch to recognize fashion image and speed up AI model by Intel® Neural Compressor: <a class="reference external" href="https://github.com/intel/neural-compressor/tree/2de807c960a940b79871ce4e5baedb82c8d483a3/docs/tutorial/pytorch/alexnet_fashion_mnist">Intel® Neural Compressor Sample for PyTorch*</a></p></li>
-<li><p>An End-To-End pipeline to build up a CNN model by Tensorflow to recognize handwriting number and speed up AI model by Intel® Neural Compressor: <a class="reference external" href="https://github.com/intel/neural-compressor/tree/2de807c960a940b79871ce4e5baedb82c8d483a3/docs/tutorial/tensorflow/alexnet_mnist">Intel® Neural Compressor Sample for TensorFlow*</a></p></li>
+<li><p>Compare existed FP32 &amp; INT8 ResNet50 model directly: <a class="reference external" href="https://github.com/intel/neural-compressor/tree/aac0a0ec860d6d875467a8b7fb119ec18713fd48/docs/tutorial/perf_fp32_int8_tf">Performance of FP32 Vs. INT8 ResNet50 Model</a>.</p></li>
+<li><p>An End-To-End pipeline to build up a CNN model by Pytorch to recognize fashion image and speed up AI model by Intel® Neural Compressor: <a class="reference external" href="https://github.com/intel/neural-compressor/tree/aac0a0ec860d6d875467a8b7fb119ec18713fd48/docs/tutorial/pytorch/alexnet_fashion_mnist">Intel® Neural Compressor Sample for PyTorch*</a></p></li>
+<li><p>An End-To-End pipeline to build up a CNN model by Tensorflow to recognize handwriting number and speed up AI model by Intel® Neural Compressor: <a class="reference external" href="https://github.com/intel/neural-compressor/tree/aac0a0ec860d6d875467a8b7fb119ec18713fd48/docs/tutorial/tensorflow/alexnet_mnist">Intel® Neural Compressor Sample for TensorFlow*</a></p></li>
 </ol>
 </div>
 </div>
@@ -111,8 +111,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../README.html" class="btn btn-neutral float-left" title="Introduction to Intel® Neural Compressor" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../examples_readme.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../README.html" class="btn btn-neutral float-left" title="Intel® Neural Compressor" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="examples_readme.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

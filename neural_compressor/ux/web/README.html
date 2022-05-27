@@ -26,7 +26,7 @@
             <a href="../../../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.11
+                1.12
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -37,15 +37,15 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../README.html">Introduction to Intel® Neural Compressor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html">Intel® Neural Compressor</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../docs/tutorial.html">Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../examples_readme.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs/examples_readme.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../api-documentation/apis.html">APIs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../docs/doclist.html">Developer Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../releases_info.html">Release</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../contributions.html">Contribution Guidelines</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../legal_information.html">Legal Information</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../security_policy.html">Security Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs/releases_info.html">Release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs/contributions.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs/legal_information.html">Legal Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../docs/security_policy.html">Security Policy</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/intel/neural-compressor">Intel® Neural Compressor repository</a></li>
 </ul>
 
@@ -2026,6 +2026,41 @@
     &quot;last_run_at&quot;: &quot;None&quot;,
     &quot;duration&quot;: null
 }
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-profiling-result-as-csv">
+<h4>Get profiling result as csv<a class="headerlink" href="#get-profiling-result-as-csv" title="Permalink to this headline">¶</a></h4>
+<p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">api/profiling/results/csv</span></code><br>
+<strong>Method</strong>: <code class="docutils literal notranslate"><span class="pre">GET</span></code></p>
+<p><strong>Parameters description:</strong></p>
+<table>
+    <thead>
+        <tr>
+            <th>Parameter</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><b>id</b></td>
+            <td>Profiling id</td>
+            <td align="center">&#x2611;</td>
+        </tr>
+    </tbody>
+</table><p><strong>Example body</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">node_name</span><span class="p">,</span><span class="n">total_execution_time</span><span class="p">,</span><span class="n">accelerator_execution_time</span><span class="p">,</span><span class="n">cpu_execution_time</span><span class="p">,</span><span class="n">op_run</span><span class="p">,</span><span class="n">op_defined</span>
+<span class="n">Node_A</span><span class="p">,</span><span class="mi">123</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">123</span><span class="p">,</span><span class="mi">117</span><span class="p">,</span><span class="mi">140</span>
+<span class="n">Node_B</span><span class="p">,</span><span class="mi">456</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">456</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span>
+<span class="n">Node_C</span><span class="p">,</span><span class="mi">234</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">234</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">12</span>
+<span class="n">Node_D</span><span class="p">,</span><span class="mi">304</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">304</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">185</span>
 </pre></div>
 </div>
 </div>

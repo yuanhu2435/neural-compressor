@@ -28,7 +28,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.11
+                1.12
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -39,9 +39,9 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../README.html">Introduction to Intel® Neural Compressor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">Intel® Neural Compressor</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../examples_readme.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples_readme.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api-documentation/apis.html">APIs</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="doclist.html">Developer Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="doclist.html#get-started">Get Started</a></li>
@@ -67,10 +67,10 @@
 <li class="toctree-l2"><a class="reference internal" href="doclist.html#advanced-topics">Advanced Topics</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../releases_info.html">Release</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../contributions.html">Contribution Guidelines</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../legal_information.html">Legal Information</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../security_policy.html">Security Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="releases_info.html">Release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributions.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="legal_information.html">Legal Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security_policy.html">Security Policy</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/intel/neural-compressor">Intel® Neural Compressor repository</a></li>
 </ul>
 
@@ -109,7 +109,7 @@
 </ul>
 <p>Structured pruning means pruning sparsity patterns, in which there is some structure, most often in the form of blocks.
 Neural Compressor provided a NLP Structured pruning example:
-<a class="reference external" href="https://github.com/intel/neural-compressor/tree/2de807c960a940b79871ce4e5baedb82c8d483a3/docs/../examples/pytorch/nlp/huggingface_models/question-answering/pruning/group_lasso/eager">Bert example</a>.
+<a class="reference external" href="https://github.com/intel/neural-compressor/tree/aac0a0ec860d6d875467a8b7fb119ec18713fd48/docs/../examples/pytorch/nlp/huggingface_models/question-answering/pruning/group_lasso/eager">Bert example</a>.
 <a class="reference external" href="../examples/pytorch/nlp/huggingface_models/question-answering/pruning/group_lasso/eager/README">README of Structured pruning example</a>.</p>
 <ul class="simple">
 <li><p>Unstructured Pruning</p></li>
@@ -202,10 +202,10 @@ Neural Compressor provided a NLP Structured pruning example:
 <span class="n">model</span> <span class="o">=</span> <span class="n">prune</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Pruning class also support Pruning_Conf class as it’s argument.</p>
+<p>Pruning class also support PruningConf class as it’s argument.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="k">import</span> <span class="n">Pruning</span><span class="p">,</span> <span class="n">common</span>
-<span class="kn">from</span> <span class="nn">lpot.conf.config</span> <span class="k">import</span> <span class="n">Pruning_Conf</span>
-<span class="n">conf</span> <span class="o">=</span> <span class="n">Pruning_Conf</span><span class="p">(</span><span class="s1">&#39;/path/to/user/pruning/yaml&#39;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">lpot.conf.config</span> <span class="k">import</span> <span class="n">PruningConf</span>
+<span class="n">conf</span> <span class="o">=</span> <span class="n">PruningConf</span><span class="p">(</span><span class="s1">&#39;/path/to/user/pruning/yaml&#39;</span><span class="p">)</span>
 <span class="n">prune</span> <span class="o">=</span> <span class="n">Pruning</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
 <span class="n">prune</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">prune</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
@@ -215,7 +215,7 @@ Neural Compressor provided a NLP Structured pruning example:
 <div class="section" id="user-defined-yaml">
 <h3>User-defined yaml<a class="headerlink" href="#user-defined-yaml" title="Permalink to this headline">¶</a></h3>
 <p>The user-defined yaml follows below syntax, note <code class="docutils literal notranslate"><span class="pre">train</span></code> section is optional if user implements <code class="docutils literal notranslate"><span class="pre">pruning_func</span></code> and sets to <code class="docutils literal notranslate"><span class="pre">pruning_func</span></code> attribute of pruning instance.
-<a class="reference external" href="https://github.com/intel/neural-compressor/blob/2de807c960a940b79871ce4e5baedb82c8d483a3/docs/../docs/pruning.yaml">user-defined yaml</a>.</p>
+<a class="reference external" href="https://github.com/intel/neural-compressor/blob/aac0a0ec860d6d875467a8b7fb119ec18713fd48/docs/../docs/pruning.yaml">user-defined yaml</a>.</p>
 <div class="section" id="train">
 <h4><code class="docutils literal notranslate"><span class="pre">train</span></code><a class="headerlink" href="#train" title="Permalink to this headline">¶</a></h4>
 <p>The <code class="docutils literal notranslate"><span class="pre">train</span></code> section defines the training behavior, including what training hyper-parameter would be used and which dataloader is used during training.</p>

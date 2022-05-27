@@ -1,7 +1,18 @@
-Introduction to Intel® Neural Compressor 
+<div align="center">
+  
+Intel® Neural Compressor
 ===========================
+<h3> An open-source Python library supporting popular network compression technologies on all mainstream deep learning frameworks (TensorFlow, PyTorch, ONNX Runtime, and MXNet)</h3>
 
-Intel® Neural Compressor (formerly known as Intel® Low Precision Optimization Tool) is an open-source Python library running on Intel CPUs and GPUs, which delivers unified interfaces across multiple deep learning frameworks for popular network compression technologies, such as quantization, pruning, knowledge distillation. This tool supports automatic accuracy-driven tuning strategies to help user quickly find out the best quantized model. It also implements different weight pruning algorithms to generate pruned model with predefined sparsity goal and supports knowledge distillation to distill the knowledge from the teacher model to the student model. 
+[![python](https://img.shields.io/badge/python-3.7%2B-blue)](https://github.com/intel/neural-compressor)
+[![version](https://img.shields.io/badge/release-1.12-green)](https://github.com/intel/neural-compressor/releases)
+[![license](https://img.shields.io/badge/license-Apache%202-blue)](https://github.com/intel/neural-compressor/blob/master/LICENSE)
+[![Downloads](https://static.pepy.tech/personalized-badge/neural-compressor?period=total&units=international_system&left_color=grey&right_color=green&left_text=downloads)](https://pepy.tech/project/neural-compressor)
+</div>
+
+---
+
+Intel® Neural Compressor, formerly known as Intel® Low Precision Optimization Tool, an open-source Python library running on Intel CPUs and GPUs, which delivers unified interfaces across multiple deep learning frameworks for popular network compression technologies, such as quantization, pruning, knowledge distillation. This tool supports automatic accuracy-driven tuning strategies to help user quickly find out the best quantized model. It also implements different weight pruning algorithms to generate pruned model with predefined sparsity goal and supports knowledge distillation to distill the knowledge from the teacher model to the student model. 
 Intel® Neural Compressor has been one of the critical AI software components in [Intel® oneAPI AI Analytics Toolkit](https://software.intel.com/content/www/us/en/develop/tools/oneapi/ai-analytics-toolkit.html).
 
 > **Note:**
@@ -89,9 +100,9 @@ Intel® Neural Compressor supports systems based on [Intel 64 architecture or co
 <tbody>
   <tr align="center">
     <th>Version</th>
-    <td class="tg-7zrl"><a href=https://github.com/tensorflow/tensorflow/tree/v2.8.0>2.8.0</a><br>
-    <a href=https://github.com/tensorflow/tensorflow/tree/v2.7.0>2.7.0</a><br>
-    <a href=https://github.com/tensorflow/tensorflow/tree/v2.6.2>2.6.2</a></td>
+    <td class="tg-7zrl"><a href=https://github.com/tensorflow/tensorflow/tree/v2.9.1>2.9.1</a><br>
+    <a href=https://github.com/tensorflow/tensorflow/tree/v2.8.2>2.8.2</a><br>
+    <a href=https://github.com/tensorflow/tensorflow/tree/v2.7.3>2.7.3</a><br>
     <td class="tg-7zrl"><a href=https://github.com/Intel-tensorflow/tensorflow/tree/v2.8.0>2.8.0</a><br>
     <a href=https://github.com/Intel-tensorflow/tensorflow/tree/v2.7.0>2.7.0</a><br>
     <a href=https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up3>1.15.0UP3</a></td>
@@ -110,6 +121,9 @@ Intel® Neural Compressor supports systems based on [Intel 64 architecture or co
   </tr>
 </tbody>
 </table>
+
+> Note: 1.Starting from official TensorFlow 2.6.0, oneDNN has been default in the binary. Please set the environment variable TF_ENABLE_ONEDNN_OPTS=1 to enable the oneDNN optimizations.  
+> 2.Starting from official TensorFlow 2.9.0, oneDNN optimizations are enabled by default on CPUs with neural-network-focused hardware features such as AVX512_VNNI, AVX512_BF16, AMX, etc. No need to set environment variable.
 
 ### Validated Models
 Intel® Neural Compressor validated 420+ [examples](./examples) with performance speedup geomean 2.2x and up to 4.2x on VNNI while minimizing the accuracy loss. 
@@ -161,7 +175,7 @@ More details for validated models are available [here](docs/validated_model_list
   <tbody>
     <tr>
         <td colspan="2" align="center"><a href="docs/Quantization.md">Quantization</a></td>
-        <td colspan="1" align="center"><a href="docs/pruning.md">Pruning</a></td>
+        <td colspan="1" align="center"><a href="docs/pruning.md">Pruning</a> <a href="docs/sparsity.md">(Sparsity)</a> </td> 
         <td colspan="3" align="center"><a href="docs/distillation.md">Knowledge Distillation</a></td>
         <td colspan="3" align="center"><a href="docs/mixed_precision.md">Mixed precision</a></td>
     </tr>
@@ -179,8 +193,9 @@ More details for validated models are available [here](docs/validated_model_list
   </thead>
   <tbody>
       <tr>
-          <td colspan="5" align="center"><a href="docs/adaptor.md">Adaptor</a></td>
-          <td colspan="4" align="center"><a href="docs/tuning_strategies.md">Strategy</a></td>
+          <td colspan="3" align="center"><a href="docs/adaptor.md">Adaptor</a></td>
+          <td colspan="3" align="center"><a href="docs/tuning_strategies.md">Strategy</a></td>
+          <td colspan="3" align="center"><a href="docs/reference_examples.md">Reference Example</a></td>
       </tr>
   </tbody>
 </table>
@@ -196,10 +211,10 @@ More details for validated models are available [here](docs/validated_model_list
 
 ## Additional Content
 
-* [Release Information](releases_info.md)
-* [Contribution Guidelines](contributions.md)
-* [Legal Information](legal_information.md)
-* [Security Policy](security_policy.md)
+* [Release Information](docs/releases_info.md)
+* [Contribution Guidelines](docs/contributions.md)
+* [Legal Information](docs/legal_information.md)
+* [Security Policy](docs/security_policy.md)
 * [Intel® Neural Compressor Website](https://intel.github.io/neural-compressor)
 
 ## Hiring

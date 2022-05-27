@@ -28,7 +28,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.11
+                1.12
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -39,9 +39,9 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../README.html">Introduction to Intel® Neural Compressor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">Intel® Neural Compressor</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../examples_readme.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples_readme.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api-documentation/apis.html">APIs</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="doclist.html">Developer Documentation</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="doclist.html#get-started">Get Started</a></li>
@@ -65,10 +65,10 @@
 <li class="toctree-l2"><a class="reference internal" href="doclist.html#advanced-topics">Advanced Topics</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../releases_info.html">Release</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../contributions.html">Contribution Guidelines</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../legal_information.html">Legal Information</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../security_policy.html">Security Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="releases_info.html">Release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributions.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="legal_information.html">Legal Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security_policy.html">Security Policy</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/intel/neural-compressor">Intel® Neural Compressor repository</a></li>
 </ul>
 
@@ -155,11 +155,11 @@
 <span class="n">results</span> <span class="o">=</span> <span class="n">evaluator</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Benchmark class also support Benchmark_Conf class as it’s argument:</p>
+<p>Benchmark class also support BenchmarkConf class as it’s argument:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">()</span> <span class="c1">#  dataset class that implement __getitem__ method or __iter__ method</span>
 <span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="kn">import</span> <span class="n">Benchmark</span><span class="p">,</span> <span class="n">common</span>
-<span class="kn">from</span> <span class="nn">lpot.conf.config</span> <span class="kn">import</span> <span class="n">Benchmark_Conf</span>
-<span class="n">conf</span> <span class="o">=</span> <span class="n">Benchmark_Conf</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">yaml</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">lpot.conf.config</span> <span class="kn">import</span> <span class="n">BenchmarkConf</span>
+<span class="n">conf</span> <span class="o">=</span> <span class="n">BenchmarkConf</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">yaml</span><span class="p">)</span>
 <span class="n">evaluator</span> <span class="o">=</span> <span class="n">Benchmark</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
 <span class="n">evaluator</span><span class="o">.</span><span class="n">dataloader</span> <span class="o">=</span> <span class="n">common</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">)</span>
 <span class="c1"># user can also register postprocess and metric, this is optional</span>
@@ -170,7 +170,7 @@
 </div>
 <div class="section" id="examples">
 <h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
-<p>Refer to the <a class="reference external" href="https://github.com/intel/neural-compressor/blob/2de807c960a940b79871ce4e5baedb82c8d483a3/docs/../examples/tensorflow/image_recognition/tensorflow_models/quantization/ptq/run_benchmark.sh">Benchmark example</a>.</p>
+<p>Refer to the <a class="reference external" href="https://github.com/intel/neural-compressor/blob/aac0a0ec860d6d875467a8b7fb119ec18713fd48/docs/../examples/tensorflow/image_recognition/tensorflow_models/quantization/ptq/run_benchmark.sh">Benchmark example</a>.</p>
 </div>
 </div>
 </div>
