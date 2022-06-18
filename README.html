@@ -50,7 +50,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#selected-publications">Selected Publications</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#additional-content">Additional Content</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#hiring">Hiring</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hiring-star">Hiring :star:</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="docs/tutorial.html">Tutorial</a></li>
@@ -120,11 +120,7 @@ pip install -i https://test.pypi.org/simple/ neural-compressor
 conda install neural-compressor -c conda-forge -c intel 
 </pre></div>
 </div>
-<p>More installation methods can be found at <a class="reference internal" href="docs/installation_guide.html"><span class="doc">Installation Guide</span></a>.</p>
-<blockquote>
-<div><p><strong>Note:</strong>
-Run into installation issues, please check <a class="reference internal" href="docs/faq.html"><span class="doc">FAQ</span></a>.</p>
-</div></blockquote>
+<p>More installation methods can be found at <a class="reference internal" href="docs/installation_guide.html"><span class="doc">Installation Guide</span></a>. Please check out our <a class="reference internal" href="docs/faq.html"><span class="doc">FAQ</span></a> for more details.</p>
 </div>
 <div class="section" id="getting-started">
 <h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
@@ -210,12 +206,13 @@ inc_bench
   </tr>
 </tbody>
 </table><blockquote>
-<div><p>Note: 1.Starting from official TensorFlow 2.6.0, oneDNN has been default in the binary. Please set the environment variable TF_ENABLE_ONEDNN_OPTS=1 to enable the oneDNN optimizations.<br />2.Starting from official TensorFlow 2.9.0, oneDNN optimizations are enabled by default on CPUs with neural-network-focused hardware features such as AVX512_VNNI, AVX512_BF16, AMX, etc. No need to set environment variable.</p>
+<div><p><strong>Note:</strong>
+Please set the environment variable TF_ENABLE_ONEDNN_OPTS=1 to enable oneDNN optimizations if you are using TensorFlow from v2.6 to v2.8. oneDNN has been fully default from TensorFlow v2.9.</p>
 </div></blockquote>
 </div>
 <div class="section" id="validated-models">
 <h3>Validated Models<a class="headerlink" href="#validated-models" title="Permalink to this headline">¶</a></h3>
-<p>Intel® Neural Compressor validated 420+ <a class="reference external" href="https://github.com/intel/neural-compressor/tree/a89afcf97cb76dc30251078a7788efbef31b636e/./examples">examples</a> with performance speedup geomean 2.2x and up to 4.2x on VNNI while minimizing the accuracy loss.
+<p>Intel® Neural Compressor validated 420+ <a class="reference external" href="https://github.com/intel/neural-compressor/tree/16a4a12045fcb468da4d33769aff2c1a5e2ba6ba/./examples">examples</a> with performance speedup geomean 2.2x and up to 4.2x on VNNI while minimizing the accuracy loss.
 More details for validated models are available <a class="reference internal" href="docs/validated_model_list.html"><span class="doc">here</span></a>.</p>
 <a target="_blank" href="./docs/imgs/INC-release-data.png">
   <img src="./docs/imgs/inc-release.png" alt="Architecture" width=800 height=500>
@@ -231,7 +228,7 @@ More details for validated models are available <a class="reference internal" hr
   </thead>
   <tbody>
     <tr>
-      <td colspan="3" align="center"><a href="docs/infrastructure.md">Infrastructure</a></td>
+      <td colspan="3" align="center"><a href="docs/design.md">Architecture</a></td>
       <td colspan="2" align="center"><a href="docs/tutorial.md">Tutorial</a></td>
       <td colspan="2" align="center"><a href="./examples">Examples</a></td>
       <td colspan="1" align="center"><a href="docs/bench.md">GUI</a></td>
@@ -265,7 +262,7 @@ More details for validated models are available <a class="reference internal" hr
         <td colspan="2" align="center"><a href="docs/Quantization.md">Quantization</a></td>
         <td colspan="1" align="center"><a href="docs/pruning.md">Pruning</a> <a href="docs/sparsity.md">(Sparsity)</a> </td> 
         <td colspan="3" align="center"><a href="docs/distillation.md">Knowledge Distillation</a></td>
-        <td colspan="3" align="center"><a href="docs/mixed_precision.md">Mixed precision</a></td>
+        <td colspan="3" align="center"><a href="docs/mixed_precision.md">Mixed Precision</a></td>
     </tr>
     <tr>
         <td colspan="2" align="center"><a href="docs/benchmark.md">Benchmarking</a></td>
@@ -297,7 +294,7 @@ More details for validated models are available <a class="reference internal" hr
 <li><p><a class="reference external" href="https://www.intel.com/content/www/us/en/developer/articles/technical/quantize-ai-by-oneapi-analytics-on-alibaba-cloud.html">Quantize AI Model by Intel® oneAPI AI Analytics Toolkit on Alibaba Cloud</a> (Feb 2022)</p></li>
 </ul>
 <blockquote>
-<div><p>View the <a class="reference internal" href="docs/publication_list.html"><span class="doc">full publication list</span></a>.</p>
+<div><p>Please check out our <a class="reference internal" href="docs/publication_list.html"><span class="doc">full publication list</span></a>.</p>
 </div></blockquote>
 </div>
 <div class="section" id="additional-content">
@@ -310,9 +307,9 @@ More details for validated models are available <a class="reference internal" hr
 <li><p><a class="reference external" href="https://intel.github.io/neural-compressor">Intel® Neural Compressor Website</a></p></li>
 </ul>
 </div>
-<div class="section" id="hiring">
-<h2>Hiring<a class="headerlink" href="#hiring" title="Permalink to this headline">¶</a></h2>
-<p>We are hiring. Please send your resume to inc.maintainers&#64;intel.com if you have interests in model compression techniques.</p>
+<div class="section" id="hiring-star">
+<h2>Hiring :star:<a class="headerlink" href="#hiring-star" title="Permalink to this headline">¶</a></h2>
+<p>We are actively hiring. Please send your resume to inc.maintainers&#64;intel.com if you have interests in model compression techniques.</p>
 </div>
 </div>
 

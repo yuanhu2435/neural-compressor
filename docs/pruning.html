@@ -48,11 +48,12 @@
 <li class="toctree-l2 current"><a class="reference internal" href="doclist.html#deep-dive">Deep Dive</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="Quantization.html">Quantization</a></li>
 <li class="toctree-l3"><a class="reference internal" href="PTQ.html">PTQ</a></li>
-<li class="toctree-l3"><a class="reference internal" href="QAT.html">QAT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="QAT.html">Quantization-aware Training</a></li>
 <li class="toctree-l3"><a class="reference internal" href="dynamic_quantization.html">Dynamic Quantization</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Pruning</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#pruning-algorithms-supported-by-neural-compressor">Pruning Algorithms supported by Neural Compressor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pruning-types">Pruning Types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pruning-algorithms">Pruning Algorithms</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#pruning-api">Pruning API</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#examples">Examples</a></li>
 </ul>
@@ -103,85 +104,77 @@
 <h1>Pruning<a class="headerlink" href="#pruning" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
-<p>Network pruning is one of popular approaches of network compression, which reduces the size of a network by removing parameters with minimal drop in accuracy.</p>
-<ul class="simple">
-<li><p>Structured Pruning</p></li>
-</ul>
-<p>Structured pruning means pruning sparsity patterns, in which there is some structure, most often in the form of blocks.
-Neural Compressor provided a NLP Structured pruning example:
-<a class="reference external" href="https://github.com/intel/neural-compressor/tree/a89afcf97cb76dc30251078a7788efbef31b636e/docs/../examples/pytorch/nlp/huggingface_models/question-answering/pruning/group_lasso/eager">Bert example</a>.
-<a class="reference external" href="../examples/pytorch/nlp/huggingface_models/question-answering/pruning/group_lasso/eager/README">README of Structured pruning example</a>.</p>
+<p>Network pruning is one of popular approaches of network compression, which removes the least important parameters in the network to achieve compact architectures with minimal accuracy drop.</p>
+</div>
+<div class="section" id="pruning-types">
+<h2>Pruning Types<a class="headerlink" href="#pruning-types" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Unstructured Pruning</p></li>
 </ul>
-<p>Unstructured pruning means pruning unstructured sparsity (aka random sparsity) patterns, where the nonzero patterns are irregular and could be anywhere in the matrix.</p>
+<p>Unstructured pruning means finding and removing the less salient connection in the model where the nonzero patterns are irregular and could be anywhere in the matrix.</p>
 <ul class="simple">
-<li><p>Filter/Channel Pruning</p></li>
+<li><p>Structured Pruning</p></li>
 </ul>
-<p>Filter/Channel pruning means pruning a larger part of the network, such as filters or layers, according to some rules.</p>
+<p>Structured pruning means finding parameters in groups, deleting entire blocks, filters, or channels according to some pruning criterions.</p>
 </div>
-<div class="section" id="pruning-algorithms-supported-by-neural-compressor">
-<h2>Pruning Algorithms supported by Neural Compressor<a class="headerlink" href="#pruning-algorithms-supported-by-neural-compressor" title="Permalink to this headline">¶</a></h2>
-<table border="1" class="docutils">
+<div class="section" id="pruning-algorithms">
+<h2>Pruning Algorithms<a class="headerlink" href="#pruning-algorithms" title="Permalink to this headline">¶</a></h2>
+<table>
 <thead>
-<tr>
-<th>Pruning Type</th>
-<th>Algorithm</th>
-<th>PyTorch</th>
-<th>Tensorflow</th>
-</tr>
+  <tr>
+    <th>Pruning Type</th>
+    <th>Pruning Granularity</th>
+    <th>Pruning Algorithm</th>
+    <th>Framework</th>
+  </tr>
 </thead>
 <tbody>
-<tr>
-<td>unstructured pruning</td>
-<td>basic_magnitude</td>
-<td>Yes</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td></td>
-<td>pattern_lock</td>
-<td>Yes</td>
-<td>N/A</td>
-</tr>
-<tr>
-<td>structured pruning</td>
-<td>pattern_lock</td>
-<td>Yes</td>
-<td>N/A</td>
-</tr>
-<tr>
-<td>filter/channel pruning</td>
-<td>gradient_sensitivity</td>
-<td>Yes</td>
-<td>N/A</td>
-</tr>
+  <tr>
+    <td rowspan="2">Unstructured Pruning</td>
+    <td rowspan="2">Element-wise</td>
+    <td>Magnitude</td>
+    <td>PyTorch, TensorFlow</td>
+  </tr>
+  <tr>
+    <td>Pattern Lock</td>
+    <td>PyTorch</td>
+  </tr>
+  <tr>
+    <td rowspan="3">Structured Pruning</td>
+    <td>Filter/Channel-wise</td>
+    <td>Gradient Sensitivity</td>
+    <td>PyTorch</td>
+  </tr>
+  <tr>
+    <td>Block-wise</td>
+    <td>Group Lasso</td>
+    <td>PyTorch</td>
+  </tr>
+  <tr>
+    <td>Element-wise</td>
+    <td>Pattern Lock</td>
+    <td>PyTorch</td>
+  </tr>
 </tbody>
-</table><p>Neural Compressor also supports the two-shot execution of unstructured pruning and post-training quantization.</p>
-<ul class="simple">
-<li><p>basic_magnitude:</p>
+</table><ul class="simple">
+<li><p>Magnitude</p>
 <ul>
 <li><p>The algorithm prunes the weight by the lowest absolute value at each layer with given sparsity target.</p></li>
 </ul>
 </li>
-<li><p>gradient_sensitivity:</p>
+<li><p>Gradient sensitivity</p>
 <ul>
 <li><p>The algorithm prunes the head, intermediate layers, and hidden states in NLP model according to importance score calculated by following the paper <a class="reference external" href="https://arxiv.org/abs/2010.13382">FastFormers</a>.</p></li>
 </ul>
 </li>
-<li><p>pattern_lock</p>
+<li><p>Group Lasso</p>
 <ul>
-<li><p>The algorithm takes a sparsity model as input and starts to fine tune this sparsity model and locks the sparsity pattern by freezing those zero values in weight tensor after weight update during training.</p></li>
+<li><p>The algorithm uses Group lasso regularization to prune entire rows, columns or blocks of parameters that result in a smaller dense network.</p></li>
 </ul>
 </li>
-<li><p>pruning and then post-training quantization</p>
+<li><p>Pattern Lock</p>
 <ul>
-<li><p>The algorithm executes unstructured pruning and then executes post-training quantization.</p></li>
-</ul>
-</li>
-<li><p>pruning during quantization-aware training</p>
-<ul>
-<li><p>The algorithm executes unstructured pruning during quantization-aware training.</p></li>
+<li><p>The algorithm locks the sparsity pattern in fine tune phase by freezing those zero values of weight tensor during weight update of training.</p></li>
 </ul>
 </li>
 </ul>
@@ -193,35 +186,28 @@ Neural Compressor provided a NLP Structured pruning example:
 <p>Neural Compressor pruning API is defined under <code class="docutils literal notranslate"><span class="pre">neural_compressor.experimental.Pruning</span></code>, which takes a user defined yaml file as input. The user defined yaml defines training, pruning and evaluation behaviors.
 <a class="reference internal" href="pruning_api.html"><span class="doc">API Readme</span></a>.</p>
 </div>
+<div class="section" id="usage-1-launch-pruning-with-user-defined-yaml">
+<h3>Usage 1: Launch pruning with user-defined yaml<a class="headerlink" href="#usage-1-launch-pruning-with-user-defined-yaml" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="launcher-code">
-<h3>Launcher code<a class="headerlink" href="#launcher-code" title="Permalink to this headline">¶</a></h3>
-<p>Simplest launcher code if training behavior is defined in user-defined yaml.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="k">import</span> <span class="n">Pruning</span><span class="p">,</span> <span class="n">common</span>
+<h4>Launcher code<a class="headerlink" href="#launcher-code" title="Permalink to this headline">¶</a></h4>
+<p>Below is the launcher code if training behavior is defined in user-defined yaml.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="k">import</span> <span class="n">Pruning</span>
 <span class="n">prune</span> <span class="o">=</span> <span class="n">Pruning</span><span class="p">(</span><span class="s1">&#39;/path/to/user/pruning/yaml&#39;</span><span class="p">)</span>
-<span class="n">prune</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">prune</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>Pruning class also support PruningConf class as it’s argument.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lpot.experimental</span> <span class="k">import</span> <span class="n">Pruning</span><span class="p">,</span> <span class="n">common</span>
-<span class="kn">from</span> <span class="nn">lpot.conf.config</span> <span class="k">import</span> <span class="n">PruningConf</span>
-<span class="n">conf</span> <span class="o">=</span> <span class="n">PruningConf</span><span class="p">(</span><span class="s1">&#39;/path/to/user/pruning/yaml&#39;</span><span class="p">)</span>
-<span class="n">prune</span> <span class="o">=</span> <span class="n">Pruning</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
 <span class="n">prune</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">prune</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="user-defined-yaml">
-<h3>User-defined yaml<a class="headerlink" href="#user-defined-yaml" title="Permalink to this headline">¶</a></h3>
+<h4>User-defined yaml<a class="headerlink" href="#user-defined-yaml" title="Permalink to this headline">¶</a></h4>
 <p>The user-defined yaml follows below syntax, note <code class="docutils literal notranslate"><span class="pre">train</span></code> section is optional if user implements <code class="docutils literal notranslate"><span class="pre">pruning_func</span></code> and sets to <code class="docutils literal notranslate"><span class="pre">pruning_func</span></code> attribute of pruning instance.
-<a class="reference external" href="https://github.com/intel/neural-compressor/blob/a89afcf97cb76dc30251078a7788efbef31b636e/docs/../docs/pruning.yaml">user-defined yaml</a>.</p>
+User could refer to <a class="reference external" href="../docs/pruning.yaml">the yaml template file</a> to know field meanings.</p>
 <div class="section" id="train">
-<h4><code class="docutils literal notranslate"><span class="pre">train</span></code><a class="headerlink" href="#train" title="Permalink to this headline">¶</a></h4>
+<h5><code class="docutils literal notranslate"><span class="pre">train</span></code><a class="headerlink" href="#train" title="Permalink to this headline">¶</a></h5>
 <p>The <code class="docutils literal notranslate"><span class="pre">train</span></code> section defines the training behavior, including what training hyper-parameter would be used and which dataloader is used during training.</p>
 </div>
 <div class="section" id="approach">
-<h4><code class="docutils literal notranslate"><span class="pre">approach</span></code><a class="headerlink" href="#approach" title="Permalink to this headline">¶</a></h4>
+<h5><code class="docutils literal notranslate"><span class="pre">approach</span></code><a class="headerlink" href="#approach" title="Permalink to this headline">¶</a></h5>
 <p>The <code class="docutils literal notranslate"><span class="pre">approach</span></code> section defines which pruning algorithm is used and how to apply it during training process.</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">weight</span> <span class="pre">compression</span></code>: pruning target, currently only <code class="docutils literal notranslate"><span class="pre">weight</span> <span class="pre">compression</span></code> is supported. <code class="docutils literal notranslate"><span class="pre">weight</span> <span class="pre">compression</span></code> means zeroing the weight matrix. The parameters for <code class="docutils literal notranslate"><span class="pre">weight</span> <span class="pre">compression</span></code> is divided into global parameters and local parameters in different <code class="docutils literal notranslate"><span class="pre">pruners</span></code>. Global parameters may contain <code class="docutils literal notranslate"><span class="pre">start_epoch</span></code>, <code class="docutils literal notranslate"><span class="pre">end_epoch</span></code>, <code class="docutils literal notranslate"><span class="pre">initial_sparsity</span></code>, <code class="docutils literal notranslate"><span class="pre">target_sparsity</span></code> and <code class="docutils literal notranslate"><span class="pre">frequency</span></code>.</p>
@@ -235,11 +221,11 @@ Neural Compressor provided a NLP Structured pruning example:
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">Pruner</span></code>:</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">prune_type</span></code>: pruning algorithm, currently <code class="docutils literal notranslate"><span class="pre">basic_magnitude</span></code> and <code class="docutils literal notranslate"><span class="pre">gradient_sensitivity</span></code> are supported.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">prune_type</span></code>: pruning algorithm, currently <code class="docutils literal notranslate"><span class="pre">basic_magnitude</span></code>, <code class="docutils literal notranslate"><span class="pre">gradient_sensitivity</span></code> and <code class="docutils literal notranslate"><span class="pre">group_lasso</span></code>are supported.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">names</span></code>: weight name to be pruned. If no weight is specified, all weights of the model will be pruned.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">parameters</span></code>: Additional parameters is required <code class="docutils literal notranslate"><span class="pre">gradient_sensitivity</span></code> prune_type, which is defined in <code class="docutils literal notranslate"><span class="pre">parameters</span></code> field. Those parameters determined how a weight is pruned, including the pruning target and the calculation of weight’s importance. it contains:</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">parameters</span></code>: Additional parameters is required <code class="docutils literal notranslate"><span class="pre">gradient_sensitivity</span></code> prune_type, which is defined in <code class="docutils literal notranslate"><span class="pre">parameters</span></code> field. Those parameters determined how a weight is pruned, including the pruning target and the calculation of weight’s importance. It contains:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">target</span></code>: the pruning target for weight.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">target</span></code>: the pruning target for weight, will override global config <code class="docutils literal notranslate"><span class="pre">target_sparsity</span></code> if set.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">stride</span></code>: each stride of the pruned weight.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">transpose</span></code>: whether to transpose weight before prune.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">normalize</span></code>: whether to normalize the calculated importance.</p></li>
@@ -254,14 +240,29 @@ Neural Compressor provided a NLP Structured pruning example:
 </ul>
 </div>
 </div>
-<div class="section" id="pruning-with-user-defined-pruning-func">
-<h3>Pruning with user-defined pruning_func()<a class="headerlink" href="#pruning-with-user-defined-pruning-func" title="Permalink to this headline">¶</a></h3>
-<p>User can pass the customized training/evaluation functions to <code class="docutils literal notranslate"><span class="pre">Pruning</span></code> for flexible scenarios. <code class="docutils literal notranslate"><span class="pre">Pruning</span></code>  In this case, pruning process can be done by pre-defined hooks in Neural Compressor. User needs to put those hooks inside the training function.</p>
-<p>Neural Compressor defines several hooks for user pass</p>
+</div>
+<div class="section" id="usage-2-launch-pruning-with-user-defined-pruning-function">
+<h3>Usage 2: Launch pruning with user-defined pruning function<a class="headerlink" href="#usage-2-launch-pruning-with-user-defined-pruning-function" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id1">
+<h4>Launcher code<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<p>In this case, the launcher code is like the following:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">Pruning</span><span class="p">,</span> <span class="n">common</span>
+<span class="n">prune</span> <span class="o">=</span> <span class="n">Pruning</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+<span class="n">prune</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+<span class="n">prune</span><span class="o">.</span><span class="n">pruning_func</span> <span class="o">=</span> <span class="n">pruning_func</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">prune</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="user-defined-pruning-function">
+<h4>User-defined pruning function<a class="headerlink" href="#user-defined-pruning-function" title="Permalink to this headline">¶</a></h4>
+<p>User can pass the customized training/evaluation functions to <code class="docutils literal notranslate"><span class="pre">Pruning</span></code> for flexible scenarios. In this case, pruning process can be done by pre-defined hooks in Neural Compressor. User needs to put those hooks inside the training function.</p>
+<p>Neural Compressor defines several hooks for user use:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">on_epoch_begin</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span> <span class="p">:</span> <span class="n">Hook</span> <span class="n">executed</span> <span class="n">at</span> <span class="n">each</span> <span class="n">epoch</span> <span class="n">beginning</span>
 <span class="n">on_batch_begin</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span> <span class="p">:</span> <span class="n">Hook</span> <span class="n">executed</span> <span class="n">at</span> <span class="n">each</span> <span class="n">batch</span> <span class="n">beginning</span>
 <span class="n">on_batch_end</span><span class="p">()</span> <span class="p">:</span> <span class="n">Hook</span> <span class="n">executed</span> <span class="n">at</span> <span class="n">each</span> <span class="n">batch</span> <span class="n">end</span>
 <span class="n">on_epoch_end</span><span class="p">()</span> <span class="p">:</span> <span class="n">Hook</span> <span class="n">executed</span> <span class="n">at</span> <span class="n">each</span> <span class="n">epoch</span> <span class="n">end</span>
+<span class="n">on_post_grad</span><span class="p">()</span> <span class="p">:</span> <span class="n">Hook</span> <span class="n">executed</span> <span class="n">after</span> <span class="n">gradients</span> <span class="n">calculated</span> <span class="ow">and</span> <span class="n">before</span> <span class="n">backward</span>
 </pre></div>
 </div>
 <p>Following section shows how to use hooks in user pass-in training function which is part of example from BERT training:</p>
@@ -298,51 +299,12 @@ Neural Compressor provided a NLP Structured pruning example:
 <span class="o">...</span>
 </pre></div>
 </div>
-<p>In this case, the launcher code is like the following:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">Pruning</span><span class="p">,</span> <span class="n">common</span>
-<span class="n">prune</span> <span class="o">=</span> <span class="n">Pruning</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
-<span class="n">prune</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
-<span class="n">prune</span><span class="o">.</span><span class="n">pruning_func</span> <span class="o">=</span> <span class="n">pruning_func</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">prune</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="scheduler-for-pruning-and-quantization">
-<h3>Scheduler for Pruning and Quantization<a class="headerlink" href="#scheduler-for-pruning-and-quantization" title="Permalink to this headline">¶</a></h3>
-<p>Neural Compressor defined Scheduler to automatically pipeline execute prune and post-training quantization. After appending separate component into scheduler pipeline, scheduler executes them one by one. In following example it executes the pruning and then post-training quantization.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">Quantization</span><span class="p">,</span> <span class="n">common</span><span class="p">,</span> <span class="n">Pruning</span><span class="p">,</span> <span class="n">Scheduler</span>
-<span class="n">prune</span> <span class="o">=</span> <span class="n">Pruning</span><span class="p">(</span><span class="n">prune_conf</span><span class="p">)</span>
-<span class="n">quantizer</span> <span class="o">=</span> <span class="n">Quantization</span><span class="p">(</span><span class="n">post_training_quantization_conf</span><span class="p">)</span>
-<span class="n">scheduler</span> <span class="o">=</span> <span class="n">Scheduler</span><span class="p">()</span>
-<span class="n">scheduler</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
-<span class="n">scheduler</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">prune</span><span class="p">)</span>
-<span class="n">scheduler</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">quantizer</span><span class="p">)</span>
-<span class="n">opt_model</span> <span class="o">=</span> <span class="n">scheduler</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
-</pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="examples-in-neural-compressor">
-<h3>Examples in Neural Compressor<a class="headerlink" href="#examples-in-neural-compressor" title="Permalink to this headline">¶</a></h3>
-<p>Following examples are supported in Neural Compressor:</p>
-<ul class="simple">
-<li><p>CNN Examples:</p>
-<ul>
-<li><p><a class="reference external" href="../examples/pytorch/image_recognition/torchvision_models/pruning/magnitude/eager/README">resnet example</a>: magnitude pruning on resnet.</p></li>
-<li><p><a class="reference external" href="../examples/pytorch/image_recognition/torchvision_models/optimization_pipeline/prune_and_ptq/eager/README">pruning and post-training quantization</a>: magnitude pruning and then post-training quantization on resnet.</p></li>
-<li><p><a class="reference external" href="../examples/tensorflow/image_recognition/resnet_v2/pruning/magnitude/README">resnet_v2 example</a>: magnitude pruning on resnet_v2 for tensorflow.</p></li>
-</ul>
-</li>
-<li><p>NLP Examples:</p>
-<ul>
-<li><p><a class="reference external" href="../examples/pytorch/nlp/huggingface_models/text-classification/pruning/magnitude/eager/README">BERT example</a>: magnitude pruning on DistilBERT.</p></li>
-<li><p><a class="reference external" href="../examples/pytorch/nlp/huggingface_models/text-classification/pruning/pattern_lock/eager/README">BERT example</a>: Pattern-lock and head-pruning on BERT-base.</p></li>
-</ul>
-</li>
-</ul>
-</div>
+<p>For related examples, please refer to <a class="reference external" href="../examples/README">Pruning examples</a>.</p>
 </div>
 </div>
 
