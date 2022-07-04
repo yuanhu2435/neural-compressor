@@ -97,8 +97,10 @@ library by installing the <a class="reference external" href="https://software.i
 <div class="highlight-Shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># install stable version from pip</span>
 pip install neural-compressor
 
-<span class="c1"># install nightly version from pip</span>
+<span class="c1"># install basic nightly version from pip</span>
 pip install -i https://test.pypi.org/simple/ neural-compressor
+<span class="c1"># install full nightly version from pip (including GUI)</span>
+pip install -i https://test.pypi.org/simple/ neural-compressor-full
 
 <span class="c1"># install stable version from from conda</span>
 conda install neural-compressor -c conda-forge -c intel 
@@ -109,10 +111,11 @@ conda install neural-compressor -c conda-forge -c intel
 <h3>Option 2 Install from source<a class="headerlink" href="#option-2-install-from-source" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-Shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/intel/neural-compressor.git
 <span class="nb">cd</span> neural-compressor
-git submodule sync
-git submodule update --init --recursive
 pip install -r requirements.txt
+<span class="c1"># build with basic functionality</span>
 python setup.py install
+<span class="c1"># build with full functionality (including GUI)</span>
+python setup.py --full install
 </pre></div>
 </div>
 </div>
