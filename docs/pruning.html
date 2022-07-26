@@ -28,7 +28,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.12
+                1.13
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -40,7 +40,6 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../README.html">Intel® Neural Compressor</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples_readme.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api-documentation/apis.html">APIs</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="doclist.html">Developer Documentation</a><ul class="current">
@@ -249,7 +248,7 @@ User could refer to <a class="reference external" href="../docs/pruning.yaml">th
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">Pruning</span><span class="p">,</span> <span class="n">common</span>
 <span class="n">prune</span> <span class="o">=</span> <span class="n">Pruning</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
 <span class="n">prune</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
-<span class="n">prune</span><span class="o">.</span><span class="n">pruning_func</span> <span class="o">=</span> <span class="n">pruning_func</span>
+<span class="n">prune</span><span class="o">.</span><span class="n">train_func</span> <span class="o">=</span> <span class="n">pruning_func</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">prune</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -259,10 +258,10 @@ User could refer to <a class="reference external" href="../docs/pruning.yaml">th
 <p>User can pass the customized training/evaluation functions to <code class="docutils literal notranslate"><span class="pre">Pruning</span></code> for flexible scenarios. In this case, pruning process can be done by pre-defined hooks in Neural Compressor. User needs to put those hooks inside the training function.</p>
 <p>Neural Compressor defines several hooks for user use:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">on_epoch_begin</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span> <span class="p">:</span> <span class="n">Hook</span> <span class="n">executed</span> <span class="n">at</span> <span class="n">each</span> <span class="n">epoch</span> <span class="n">beginning</span>
-<span class="n">on_batch_begin</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span> <span class="p">:</span> <span class="n">Hook</span> <span class="n">executed</span> <span class="n">at</span> <span class="n">each</span> <span class="n">batch</span> <span class="n">beginning</span>
-<span class="n">on_batch_end</span><span class="p">()</span> <span class="p">:</span> <span class="n">Hook</span> <span class="n">executed</span> <span class="n">at</span> <span class="n">each</span> <span class="n">batch</span> <span class="n">end</span>
+<span class="n">on_step_begin</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span> <span class="p">:</span> <span class="n">Hook</span> <span class="n">executed</span> <span class="n">at</span> <span class="n">each</span> <span class="n">batch</span> <span class="n">beginning</span>
+<span class="n">on_step_end</span><span class="p">()</span> <span class="p">:</span> <span class="n">Hook</span> <span class="n">executed</span> <span class="n">at</span> <span class="n">each</span> <span class="n">batch</span> <span class="n">end</span>
 <span class="n">on_epoch_end</span><span class="p">()</span> <span class="p">:</span> <span class="n">Hook</span> <span class="n">executed</span> <span class="n">at</span> <span class="n">each</span> <span class="n">epoch</span> <span class="n">end</span>
-<span class="n">on_post_grad</span><span class="p">()</span> <span class="p">:</span> <span class="n">Hook</span> <span class="n">executed</span> <span class="n">after</span> <span class="n">gradients</span> <span class="n">calculated</span> <span class="ow">and</span> <span class="n">before</span> <span class="n">backward</span>
+<span class="n">on_before_optimizer_step</span><span class="p">()</span> <span class="p">:</span> <span class="n">Hook</span> <span class="n">executed</span> <span class="n">after</span> <span class="n">gradients</span> <span class="n">calculated</span> <span class="ow">and</span> <span class="n">before</span> <span class="n">backward</span>
 </pre></div>
 </div>
 <p>Following section shows how to use hooks in user pass-in training function which is part of example from BERT training:</p>
@@ -272,7 +271,7 @@ User could refer to <a class="reference external" href="../docs/pruning.yaml">th
         <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
         <span class="n">prune</span><span class="o">.</span><span class="n">on_epoch_begin</span><span class="p">(</span><span class="n">epoch</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">step</span><span class="p">,</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">train_dataloader</span><span class="p">):</span>
-            <span class="n">prune</span><span class="o">.</span><span class="n">on_batch_begin</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
+            <span class="n">prune</span><span class="o">.</span><span class="n">on_step_begin</span><span class="p">(</span><span class="n">step</span><span class="p">)</span>
             <span class="n">batch</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">device</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">batch</span><span class="p">)</span>
             <span class="n">inputs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;input_ids&#39;</span><span class="p">:</span> <span class="n">batch</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
                       <span class="s1">&#39;attention_mask&#39;</span><span class="p">:</span> <span class="n">batch</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
@@ -289,13 +288,13 @@ User could refer to <a class="reference external" href="../docs/pruning.yaml">th
             <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
             <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">clip_grad_norm_</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">args</span><span class="o">.</span><span class="n">max_grad_norm</span><span class="p">)</span>
 
-            
             <span class="k">if</span> <span class="p">(</span><span class="n">step</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">args</span><span class="o">.</span><span class="n">gradient_accumulation_steps</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">prune</span><span class="o">.</span><span class="n">on_before_optimizer_step</span><span class="p">()</span>
                 <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
                 <span class="n">scheduler</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>  <span class="c1"># Update learning rate schedule</span>
                 <span class="n">model</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
     
-            <span class="n">prune</span><span class="o">.</span><span class="n">on_batch_end</span><span class="p">()</span>
+            <span class="n">prune</span><span class="o">.</span><span class="n">on_step_end</span><span class="p">()</span>
 <span class="o">...</span>
 </pre></div>
 </div>

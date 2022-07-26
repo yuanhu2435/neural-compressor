@@ -28,7 +28,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.12
+                1.13
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -40,7 +40,6 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../README.html">Intel® Neural Compressor</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples_readme.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api-documentation/apis.html">APIs</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="doclist.html">Developer Documentation</a><ul class="current">
@@ -53,10 +52,11 @@
 <li class="toctree-l3"><a class="reference internal" href="pruning.html">Pruning</a></li>
 <li class="toctree-l3"><a class="reference internal" href="benchmark.html">Benchmarking</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Mixed Precision</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#bf16-convert">BF16 Convert</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#tensorflow">Tensorflow</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#pytorch">PyTorch</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#using-bf16-convert">Using BF16 Convert</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pre-requirements">Pre-requirements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#methods-to-enable-disable-bf16-support">Methods to enable &amp; disable BF16 support</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#direct-mixed-precision-conversion">Direct mixed precision conversion</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mixed-precision-during-quantization">Mixed precision during quantization</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="graph_optimization.html">Graph Optimization</a></li>
@@ -101,20 +101,171 @@
              
   <div class="section" id="mixed-precision">
 <h1>Mixed Precision<a class="headerlink" href="#mixed-precision" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="bf16-convert">
-<h2>BF16 Convert<a class="headerlink" href="#bf16-convert" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <p>The recent growth of Deep Learning has driven the development of more complex models that require significantly more compute and memory capabilities. Several low precision numeric formats have been proposed to address the problem. Google’s <a class="reference external" href="https://cloud.google.com/tpu/docs/bfloat16">bfloat16</a> and the <a class="reference external" href="https://en.wikipedia.org/wiki/Half-precision_floating-point_format">FP16: IEEE</a> half-precision format are two of the most widely used sixteen bit formats. <a class="reference external" href="https://arxiv.org/abs/1710.03740">Mixed precision</a> training and inference using low precision formats have been developed to reduce compute and bandwidth requirements.</p>
 <p>The recently launched 3rd Gen Intel® Xeon® Scalable processor (codenamed Cooper Lake), featuring Intel® Deep Learning Boost, is the first general-purpose x86 CPU to support the bfloat16 format. Specifically, three new bfloat16 instructions are added as a part of the AVX512_BF16 extension within Intel Deep Learning Boost: VCVTNE2PS2BF16, VCVTNEPS2BF16, and VDPBF16PS. The first two instructions allow converting to and from bfloat16 data type, while the last one performs a dot product of bfloat16 pairs. Further details can be found in the <a class="reference external" href="https://software.intel.com/content/www/us/en/develop/download/bfloat16-hardware-numerics-definition.html">hardware numerics document</a> published by Intel.</p>
-<p>Intel® Neural Compressor can support op-wise BF16 precision for TensorFlow and PyTorch now. With BF16 support, it can get a mixed precision model with acceptable accuracy and performance or others objective goals. This document will give a simple introduction of  BF16 convert transformation and how to use the BF16.</p>
+<p>Intel® Neural Compressor (INC) supports two use cases for mixed precision:</p>
+<ol class="simple">
+<li><p>Direct mixed precision conversion: Mix <code class="docutils literal notranslate"><span class="pre">BF16</span> <span class="pre">+</span> <span class="pre">FP32</span></code> and be executed by MixedPrecision API</p></li>
+<li><p>Mixed precision during quantization: Mix <code class="docutils literal notranslate"><span class="pre">BF16</span> <span class="pre">+</span> <span class="pre">FP32</span> <span class="pre">+</span> <span class="pre">INT8</span></code> and occur during quantization</p></li>
+</ol>
+<p>Its support status:</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Framework</th>
+<th style="text-align: center;">BF16</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TensorFlow</td>
+<td style="text-align: center;">&#10004;</td>
+</tr>
+<tr>
+<td>PyTorch</td>
+<td style="text-align: center;">&#10004;</td>
+</tr>
+<tr>
+<td>ONNX</td>
+<td style="text-align: center;">plan to support in the future</td>
+</tr>
+<tr>
+<td>MXNet</td>
+<td style="text-align: center;">&#10004;</td>
+</tr>
+</tbody>
+</table></div>
+<div class="section" id="pre-requirements">
+<h2>Pre-requirements<a class="headerlink" href="#pre-requirements" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="hardware">
+<h3>Hardware<a class="headerlink" href="#hardware" title="Permalink to this headline">¶</a></h3>
+<p>It needs the CPU supports <code class="docutils literal notranslate"><span class="pre">avx512_bf16</span></code> instruction set.</p>
 </div>
+<div class="section" id="software">
+<h3>Software<a class="headerlink" href="#software" title="Permalink to this headline">¶</a></h3>
+<p>Intel has worked with the PyTorch &amp; TensorFlow development teams to enhance PyTorch &amp; TensorFlow to include bfloat16 data support for CPUs.</p>
+<ul>
+<li><p>For PyTorch, the version higher than <a class="reference external" href="https://download.pytorch.org/whl/torch_stable.html">1.11.0</a> is necessary.</p></li>
+<li><p>For Tensorflow, BF16 support has been enabled in intel-tensorflow <a class="reference external" href="https://pypi.org/project/intel-tensorflow/2.3.0/">2.3.0</a>/<a class="reference external" href="https://pypi.org/project/intel-tensorflow/2.4.0/">2.4.0</a>/<a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up1">1.15.0up1</a>/<a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up2">1.15.0up2</a> and intel-tensorflow-avx512<a class="reference external" href="https://pypi.org/project/intel-tensorflow-avx512/2.3.0/">2.3.0</a>/<a class="reference external" href="https://pypi.org/project/intel-tensorflow-avx512/2.4.0/">2.4.0</a>.</p>
+<blockquote>
+<div><p>For more information about BF16 in TensorFlow, please read <a class="reference external" href="https://blog.tensorflow.org/2020/06/accelerating-ai-performance-on-3rd-gen-processors-with-tensorflow-bfloat16.html">Accelerating AI performance on 3rd Gen Intel® Xeon® Scalable processors with TensorFlow and Bfloat16</a>.</p>
+</div></blockquote>
+<blockquote>
+<div><p>To get better performance with BF16 datatype, the intel-tensorflow-avx512 is recommended, or build intel tensorflow (take <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up2">tag v1.15.0up2</a> as example) from source code by using below command:</p>
+</div></blockquote>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bazel build --cxxopt<span class="o">=</span>-D_GLIBCXX_USE_CXX11_ABI<span class="o">=</span><span class="m">0</span> --copt<span class="o">=</span>-O3 --copt<span class="o">=</span>-Wformat --copt<span class="o">=</span>-Wformat-security <span class="se">\</span>
+      --copt<span class="o">=</span>-fstack-protector --copt<span class="o">=</span>-fPIC --copt<span class="o">=</span>-fpic --linkopt<span class="o">=</span>-znoexecstack --linkopt<span class="o">=</span>-zrelro <span class="se">\</span>
+      --linkopt<span class="o">=</span>-znow --linkopt<span class="o">=</span>-fstack-protector --config<span class="o">=</span>mkl --define <span class="nv">build_with_mkl_dnn_v1_only</span><span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
+      --copt<span class="o">=</span>-DENABLE_INTEL_MKL_BFLOAT16 --copt<span class="o">=</span>-march<span class="o">=</span>native //tensorflow/tools/pip_package:build_pip_package
+
+./bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="methods-to-enable-disable-bf16-support">
+<h2>Methods to enable &amp; disable BF16 support<a class="headerlink" href="#methods-to-enable-disable-bf16-support" title="Permalink to this headline">¶</a></h2>
+<p>By default, BF16 has been added into activation and weight supported datatype if <strong>the TensorFlow/PyTorch version and CPU meet the requirements at the same time</strong>. We can disable it in the yaml config file by specifying the datatype for activation and weight.</p>
+<p>If either pre-requirement can’t be met, the program would exit consequently. But we can force enable it for debug usage by setting the environment variable <code class="docutils literal notranslate"><span class="pre">FORCE_BF16=1</span></code>:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nv">FORCE_BF16</span><span class="o">=</span><span class="m">1</span> /path/to/executable_nc_wrapper
+</pre></div>
+</div>
+<blockquote>
+<div><p>⚠️Without hardware or software support, the poor performance or other problems may expect for force enabling.</p>
+</div></blockquote>
+</div>
+<div class="section" id="direct-mixed-precision-conversion">
+<h2>Direct mixed precision conversion<a class="headerlink" href="#direct-mixed-precision-conversion" title="Permalink to this headline">¶</a></h2>
+<p>INC queries framework capability and user-defined precision to generate an op-wise config based on the pre-optimized fp32 model. Direct mixed precision conversion will be implemented under the direction of config. Further, if users add necessary evaluation components, INC will tune accuracy during conversion.</p>
+<div class="section" id="how-to-use-it">
+<h3>How to use it<a class="headerlink" href="#how-to-use-it" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p>Convert as many nodes as possible to target dtype</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">MixedPrecision</span>
+<span class="n">converter</span> <span class="o">=</span> <span class="n">MixedPrecision</span><span class="p">()</span>
+<span class="n">converter</span><span class="o">.</span><span class="n">precisions</span> <span class="o">=</span> <span class="s1">&#39;bf16&#39;</span>
+<span class="n">converter</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;/path/to/model&#39;</span>
+<span class="n">optimized_model</span> <span class="o">=</span> <span class="n">converter</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+<li><p>Tune accuracy during conversion</p>
+<p>Users can add dataloader and metric in yaml to execute evaluation.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">model</span><span class="p">:</span>
+  <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">resnet50_v1</span>
+  <span class="nt">framework</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">tensorflow</span>
+
+<span class="nt">mixed_precision</span><span class="p">:</span>
+  <span class="nt">precisions</span><span class="p">:</span> <span class="s">&#39;bf16&#39;</span>
+
+<span class="nt">evaluation</span><span class="p">:</span>
+  <span class="nt">accuracy</span><span class="p">:</span>
+    <span class="nt">dataloader</span><span class="p">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">...</span>
+    <span class="nt">metric</span><span class="p">:</span>
+      <span class="l l-Scalar l-Scalar-Plain">...</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">MixedPrecision</span>
+<span class="n">converter</span> <span class="o">=</span> <span class="n">MixedPrecision</span><span class="p">(</span><span class="s1">&#39;./conf.yaml&#39;</span><span class="p">)</span>
+<span class="n">converter</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;./model.pb&#39;</span>
+<span class="n">output_model</span> <span class="o">=</span> <span class="n">converter</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Users can also define their own dataloader or metric by python code.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>class Metric:
+   def __init__(self):
+     # initialization code
+
+   def update(self, sample):
+     # update predictions and label to recorder
+
+   def reset(self):
+     # reset recorder
+
+   def result(self):
+     # return accuracy
+
+class Dataset:
+   def __init__(self):
+     # initialization code
+
+   def getitem(self, index)：
+     # use idx to get data and label
+
+   def __length__(self):
+     # return data length
+
+from neural_compressor.experimental import MixedPrecision, common
+dataset = Dataset()
+converter = MixedPrecision()
+converter.metric = Metric()
+converter.precisions = &#39;bf16&#39;
+converter.eval_dataloader = common.DataLoader(dataset)
+converter.model = &#39;./model.pb&#39;
+output_model = converter()
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="mixed-precision-during-quantization">
+<h2>Mixed precision during quantization<a class="headerlink" href="#mixed-precision-during-quantization" title="Permalink to this headline">¶</a></h2>
+<p>This use case is only executed during quantization. Currently, only the Basic strategy with BF16 support has been validated.</p>
 <div class="section" id="tensorflow">
-<h2>Tensorflow<a class="headerlink" href="#tensorflow" title="Permalink to this headline">¶</a></h2>
-<p>Intel has worked with the TensorFlow development team to enhance TensorFlow to include bfloat16 data support for CPUs. For more information about BF16 in TensorFlow, please read <a class="reference external" href="https://blog.tensorflow.org/2020/06/accelerating-ai-performance-on-3rd-gen-processors-with-tensorflow-bfloat16.html">Accelerating AI performance on 3rd Gen Intel® Xeon® Scalable processors with TensorFlow and Bfloat16</a>.</p>
-<div class="section" id="bf16-convert-transformation-in-tensorflow">
-<h3>BF16 Convert Transformation in TensorFlow<a class="headerlink" href="#bf16-convert-transformation-in-tensorflow" title="Permalink to this headline">¶</a></h3>
+<h3>Tensorflow<a class="headerlink" href="#tensorflow" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>BF16 conversion during quantization in TensorFlow</p></li>
+</ul>
 <p><img alt="Mixed Precision" src="../_images/bf16_convert_tf.png" /></p>
-<div class="section" id="three-steps">
-<h4>Three steps<a class="headerlink" href="#three-steps" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>Three steps</p></li>
+</ul>
 <ol>
 <li><p>Convert to a <code class="docutils literal notranslate"><span class="pre">FP32</span> <span class="pre">+</span> <span class="pre">INT8</span></code> mixed precision Graph</p>
 <p>In this steps, TF adaptor will regard all fallback datatype as <code class="docutils literal notranslate"><span class="pre">FP32</span></code>. According to the per op datatype in tuning config passed by strategy, TF adaptor will generate a <code class="docutils literal notranslate"><span class="pre">FP32</span> <span class="pre">+</span> <span class="pre">INT8</span></code> mixed precision graph.</p>
@@ -127,16 +278,15 @@
 </li>
 </ol>
 </div>
-</div>
-</div>
 <div class="section" id="pytorch">
-<h2>PyTorch<a class="headerlink" href="#pytorch" title="Permalink to this headline">¶</a></h2>
-<p>Intel has also worked with the PyTorch development team to enhance PyTorch to include bfloat16 data support for CPUs.</p>
-<div class="section" id="bf16-convert-transformation-in-pytorch">
-<h3>BF16 Convert Transformation in PyTorch<a class="headerlink" href="#bf16-convert-transformation-in-pytorch" title="Permalink to this headline">¶</a></h3>
+<h3>PyTorch<a class="headerlink" href="#pytorch" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>BF16 conversion during quantization in PyTorch</p></li>
+</ul>
 <p><img alt="Mixed Precision" src="../_images/bf16_convert_pt.png" /></p>
-<div class="section" id="two-steps">
-<h4>Two steps<a class="headerlink" href="#two-steps" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>Two steps</p></li>
+</ul>
 <ol>
 <li><p>Convert to a <code class="docutils literal notranslate"><span class="pre">FP32</span> <span class="pre">+</span> <span class="pre">INT8</span></code> mixed precision Graph or Module</p>
 <p>In this steps, PT adaptor will combine the <code class="docutils literal notranslate"><span class="pre">INT8</span></code> ops and all fallback ops to <code class="docutils literal notranslate"><span class="pre">FP32</span> <span class="pre">+</span> <span class="pre">INT8</span></code> mixed precision Graph or Module no matter in Eager mode or Fx Graph mode.</p>
@@ -146,21 +296,6 @@
 </li>
 </ol>
 </div>
-</div>
-</div>
-<div class="section" id="using-bf16-convert">
-<h2>Using BF16 Convert<a class="headerlink" href="#using-bf16-convert" title="Permalink to this headline">¶</a></h2>
-<p>For <code class="docutils literal notranslate"><span class="pre">Tensorflow</span></code>, BF16 support has enabled in <code class="docutils literal notranslate"><span class="pre">intel-tensorflow</span></code> <a class="reference external" href="https://pypi.org/project/intel-tensorflow/2.3.0/"><code class="docutils literal notranslate"><span class="pre">2.3.0</span></code></a>/<a class="reference external" href="https://pypi.org/project/intel-tensorflow/2.4.0/"><code class="docutils literal notranslate"><span class="pre">2.4.0</span></code></a>/<a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up1"><code class="docutils literal notranslate"><span class="pre">1.15.0up1</span></code></a>/<a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up2"><code class="docutils literal notranslate"><span class="pre">1.15.0up2</span></code></a> and <code class="docutils literal notranslate"><span class="pre">intel-tensorflow-avx512</span></code> <a class="reference external" href="https://pypi.org/project/intel-tensorflow-avx512/2.3.0/"><code class="docutils literal notranslate"><span class="pre">2.3.0</span></code></a>/<a class="reference external" href="https://pypi.org/project/intel-tensorflow-avx512/2.4.0/"><code class="docutils literal notranslate"><span class="pre">2.4.0</span></code></a>. For <code class="docutils literal notranslate"><span class="pre">PyTorch</span></code>, the version higher than <a class="reference external" href="https://download.pytorch.org/whl/torch_stable.html"><code class="docutils literal notranslate"><span class="pre">1.11.0</span></code></a> is necessary. On hardware side, it need the CPU support <code class="docutils literal notranslate"><span class="pre">avx512_bf16</span></code> instruction set. We also support force enable it for debug usage by using set the environment variable <code class="docutils literal notranslate"><span class="pre">FORCE_BF16=1</span></code>. But without above 2 sides support, the poor performance or other problems may expect.</p>
-<p>For now this feature will be auto enabled in the env with <code class="docutils literal notranslate"><span class="pre">intel-tensorflow</span></code> <code class="docutils literal notranslate"><span class="pre">&gt;=2.3.0</span></code> and <code class="docutils literal notranslate"><span class="pre">avx512_bf16</span></code> instruction set support platform. To get better performance with <code class="docutils literal notranslate"><span class="pre">BF16</span></code> datatype, the <code class="docutils literal notranslate"><span class="pre">intel-tensorflow-avx512</span></code> is recommended, or build intel tensorflow (take <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up2">tag <code class="docutils literal notranslate"><span class="pre">v1.15.0up2</span></code></a> as example) from source code by using below command,</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bazel build --cxxopt<span class="o">=</span>-D_GLIBCXX_USE_CXX11_ABI<span class="o">=</span><span class="m">0</span> --copt<span class="o">=</span>-O3 --copt<span class="o">=</span>-Wformat --copt<span class="o">=</span>-Wformat-security <span class="se">\</span>
-        --copt<span class="o">=</span>-fstack-protector --copt<span class="o">=</span>-fPIC --copt<span class="o">=</span>-fpic --linkopt<span class="o">=</span>-znoexecstack --linkopt<span class="o">=</span>-zrelro <span class="se">\</span>
-        --linkopt<span class="o">=</span>-znow --linkopt<span class="o">=</span>-fstack-protector --config<span class="o">=</span>mkl --define <span class="nv">build_with_mkl_dnn_v1_only</span><span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
-        --copt<span class="o">=</span>-DENABLE_INTEL_MKL_BFLOAT16 --copt<span class="o">=</span>-march<span class="o">=</span>native //tensorflow/tools/pip_package:build_pip_package
-
-./bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/
-</pre></div>
-</div>
-<p>By default, <code class="docutils literal notranslate"><span class="pre">BF16</span></code> has been added into activation and weight supported datatype if the tensorflow version and CPU meet the requirements. We can disable it in the yaml config file by specifying the datatype for activation and weight. For now, only the <code class="docutils literal notranslate"><span class="pre">Basic</span></code> strategy <code class="docutils literal notranslate"><span class="pre">BF16</span></code> support has been tested.</p>
 </div>
 </div>
 

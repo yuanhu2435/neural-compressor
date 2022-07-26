@@ -26,7 +26,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.12
+                1.13
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -38,7 +38,6 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../README.html">Intel® Neural Compressor</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples_readme.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api-documentation/apis.html">APIs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doclist.html">Developer Documentation</a></li>
@@ -85,8 +84,6 @@ library by installing the <a class="reference external" href="https://software.i
 <p>The following prerequisites and requirements must be satisfied for a successful installation:</p>
 <ul class="simple">
 <li><p>Python version: 3.7 or 3.8 or 3.9 or 3.10</p></li>
-<li><p>C++ compiler: 7.2.1 or above</p></li>
-<li><p>CMake: 3.12 or above</p></li>
 </ul>
 <blockquote>
 <div><p>If you get some build issues, please check <a class="reference internal" href="faq.html"><span class="doc">frequently asked questions</span></a> at first.</p>
@@ -94,16 +91,20 @@ library by installing the <a class="reference external" href="https://software.i
 </div>
 <div class="section" id="option-1-install-from-binary">
 <h3>Option 1 Install from binary<a class="headerlink" href="#option-1-install-from-binary" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-Shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># install stable version from pip</span>
+<div class="highlight-Shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># install stable basic version from pip</span>
 pip install neural-compressor
+<span class="c1"># install stable full version from pip (including GUI)</span>
+pip install neural-compressor-full
 
-<span class="c1"># install basic nightly version from pip</span>
+<span class="c1"># install nightly basic version from pip</span>
 pip install -i https://test.pypi.org/simple/ neural-compressor
-<span class="c1"># install full nightly version from pip (including GUI)</span>
+<span class="c1"># install nightly full version from pip (including GUI)</span>
 pip install -i https://test.pypi.org/simple/ neural-compressor-full
 
-<span class="c1"># install stable version from from conda</span>
-conda install neural-compressor -c conda-forge -c intel 
+<span class="c1"># install stable basic version from from conda</span>
+conda install neural-compressor -c conda-forge -c intel
+<span class="c1"># install stable full version from from conda (including GUI)</span>
+conda install neural-compressor-full -c conda-forge -c intel  
 </pre></div>
 </div>
 </div>
@@ -173,8 +174,6 @@ conda install neural-compressor -c conda-forge -c intel
 <h3>Option 2 Install from source<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/intel/neural-compressor.git
 <span class="nb">cd</span> neural-compressor
-git submodule sync
-git submodule update --init --recursive
 pip install -r requirements.txt
 python setup.py install
 </pre></div>

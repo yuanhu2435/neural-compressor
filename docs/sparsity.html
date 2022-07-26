@@ -26,7 +26,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.12
+                1.13
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -38,7 +38,6 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../README.html">Intel® Neural Compressor</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples_readme.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api-documentation/apis.html">APIs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doclist.html">Developer Documentation</a></li>
@@ -112,59 +111,59 @@
 </div>
 <div class="section" id="validated-models">
 <h2>Validated Models<a class="headerlink" href="#validated-models" title="Permalink to this headline">¶</a></h2>
-<p>We validate the sparsity on typical models across different domains (including CV, NLP, and Recommendation System). The below table shows the sparsity pattern, sparsity ratio, and accuracy of sparse and dense (Reference) model for each model. We also provide a simplified <a class="reference external" href="https://github.com/intel/neural-compressor/tree/045af0222c386602653ba7d36e1a2096086e17c8/docs/../examples/pytorch/nlp/huggingface_models/question-answering/pruning/group_lasso/eager">BERT example</a> with only one sparse layer.</p>
+<p>We validate the sparsity on typical models across different domains (including CV, NLP, and Recommendation System). The below table shows the sparsity pattern, sparsity ratio, and accuracy of sparse and dense (Reference) model for each model. We also provide a simplified <a class="reference external" href="https://github.com/intel/neural-compressor/tree/98d829a43ec1a0a798c950565e2e60ec39365303/docs/../examples/pytorch/nlp/huggingface_models/question-answering/pruning/group_lasso/eager">BERT example</a> with only one sparse layer.</p>
 <table border="1" class="docutils">
 <thead>
 <tr>
 <th>Model</th>
-<th align="center">Sparsity Pattern</th>
-<th align="center">Sparsity Ratio</th>
-<th align="center">Accuracy (Sparse Model)</th>
-<th align="center">Accuracy (Dense Model)</th>
+<th style="text-align: center;">Sparsity Pattern</th>
+<th style="text-align: center;">Sparsity Ratio</th>
+<th style="text-align: center;">Accuracy (Sparse Model)</th>
+<th style="text-align: center;">Accuracy (Dense Model)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Bert Large</td>
-<td align="center"><strong><em>2</em></strong>x1</td>
-<td align="center">70%</td>
-<td align="center">90.70%</td>
-<td align="center">91.34%</td>
+<td style="text-align: center;"><strong><em>2</em></strong>x1</td>
+<td style="text-align: center;">70%</td>
+<td style="text-align: center;">90.70%</td>
+<td style="text-align: center;">91.34%</td>
 </tr>
 <tr>
 <td>DLRM</td>
-<td align="center">4x<strong><em>16</em></strong></td>
-<td align="center">85%</td>
-<td align="center">80.29%</td>
-<td align="center">80.25%</td>
+<td style="text-align: center;">4x<strong><em>16</em></strong></td>
+<td style="text-align: center;">85%</td>
+<td style="text-align: center;">80.29%</td>
+<td style="text-align: center;">80.25%</td>
 </tr>
 <tr>
 <td>Bert Mini</td>
-<td align="center"><strong><em>16</em></strong>x1</td>
-<td align="center">81%</td>
-<td align="center">81.89%</td>
-<td align="center">82.93%</td>
+<td style="text-align: center;"><strong><em>16</em></strong>x1</td>
+<td style="text-align: center;">81%</td>
+<td style="text-align: center;">81.89%</td>
+<td style="text-align: center;">82.93%</td>
 </tr>
 <tr>
 <td>ResNet50 v1.5</td>
-<td align="center"><strong><em>2</em></strong>x1</td>
-<td align="center">78%</td>
-<td align="center">75.3%</td>
-<td align="center">76.13%</td>
+<td style="text-align: center;"><strong><em>2</em></strong>x1</td>
+<td style="text-align: center;">78%</td>
+<td style="text-align: center;">75.3%</td>
+<td style="text-align: center;">76.13%</td>
 </tr>
 <tr>
 <td>SSD-ResNet34</td>
-<td align="center"><strong><em>2</em></strong>x1</td>
-<td align="center">75%</td>
-<td align="center">22.85%</td>
-<td align="center">23%</td>
+<td style="text-align: center;"><strong><em>2</em></strong>x1</td>
+<td style="text-align: center;">75%</td>
+<td style="text-align: center;">22.85%</td>
+<td style="text-align: center;">23%</td>
 </tr>
 <tr>
 <td>ResNext101</td>
-<td align="center"><strong><em>2</em></strong>x1</td>
-<td align="center">73%</td>
-<td align="center">79.14%</td>
-<td align="center">79.37%</td>
+<td style="text-align: center;"><strong><em>2</em></strong>x1</td>
+<td style="text-align: center;">73%</td>
+<td style="text-align: center;">79.14%</td>
+<td style="text-align: center;">79.37%</td>
 </tr>
 </tbody>
 </table><p>Note: <em><strong>bold</strong></em> means the sparsity dimension (<code class="docutils literal notranslate"><span class="pre">OC</span></code>).</p>
@@ -176,29 +175,29 @@
 <thead>
 <tr>
 <th></th>
-<th align="center">Dense Model (FP32)</th>
-<th align="center">Dense Model (INT8)</th>
-<th align="center">Sparse Model (INT8)</th>
+<th style="text-align: center;">Dense Model (FP32)</th>
+<th style="text-align: center;">Dense Model (INT8)</th>
+<th style="text-align: center;">Sparse Model (INT8)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Accuracy</td>
-<td align="center">80.25% (100%)</td>
-<td align="center">80.21% (99.96%)</td>
-<td align="center">79.91% (99.57%)</td>
+<td style="text-align: center;">80.25% (100%)</td>
+<td style="text-align: center;">80.21% (99.96%)</td>
+<td style="text-align: center;">79.91% (99.57%)</td>
 </tr>
 <tr>
 <td>Offline QPS</td>
-<td align="center">5732</td>
-<td align="center">23174 (1.0x)</td>
-<td align="center">36883 (1.6x)</td>
+<td style="text-align: center;">5732</td>
+<td style="text-align: center;">23174 (1.0x)</td>
+<td style="text-align: center;">36883 (1.6x)</td>
 </tr>
 <tr>
 <td>Online QPS</td>
-<td align="center">NA</td>
-<td align="center">20245 (1.0x)</td>
-<td align="center">30396 (1.5x)</td>
+<td style="text-align: center;">NA</td>
+<td style="text-align: center;">20245 (1.0x)</td>
+<td style="text-align: center;">30396 (1.5x)</td>
 </tr>
 </tbody>
 </table></div>

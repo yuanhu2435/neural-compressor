@@ -26,7 +26,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.12
+                1.13
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -38,7 +38,6 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../README.html">Intel® Neural Compressor</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples_readme.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api-documentation/apis.html">APIs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doclist.html">Developer Documentation</a></li>
@@ -141,7 +140,7 @@
         <span class="c1"># The criterion used in training phase. It is optional if criterion is configured in user-define yaml.</span>
         <span class="o">...</span>
 
-    <span class="k">def</span> <span class="nf">pre_epoch_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">on_train_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># The hook point used by distillation algorithm</span>
         <span class="o">...</span>
 
@@ -149,7 +148,7 @@
         <span class="c1"># The hook point used by distillation algorithm</span>
         <span class="o">...</span>
 
-    <span class="k">def</span> <span class="nf">on_post_forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">teacher_output</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">on_after_compute_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">,</span> <span class="n">student_output</span><span class="p">,</span> <span class="n">student_loss</span><span class="p">,</span> <span class="n">teacher_output</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="c1"># The hook point used by distillation algorithm</span>
         <span class="o">...</span>
 </pre></div>
@@ -259,14 +258,14 @@
 <h3>Distillation with user-defined train_func()<a class="headerlink" href="#distillation-with-user-defined-train-func" title="Permalink to this headline">¶</a></h3>
 <p>User can pass the customized training/evaluation functions to <code class="docutils literal notranslate"><span class="pre">Distillation</span></code> for flexible scenarios. In this case, distillation process can be done by pre-defined hooks in Neural Compressor. User needs to put those hooks inside the training function.</p>
 <p>Neural Compressor defines several hooks for user pass</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pre_epoch_begin</span><span class="p">()</span> <span class="p">:</span> <span class="n">Hook</span> <span class="n">executed</span> <span class="n">before</span> <span class="n">training</span> <span class="n">begins</span>
-<span class="n">on_post_forward</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span> <span class="p">:</span> <span class="n">Hook</span> <span class="n">executed</span> <span class="n">after</span> <span class="n">each</span> <span class="n">batch</span> <span class="n">inference</span> <span class="n">of</span> <span class="n">student</span> <span class="n">model</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">on_train_begin</span><span class="p">()</span> <span class="p">:</span> <span class="n">Hook</span> <span class="n">executed</span> <span class="n">before</span> <span class="n">training</span> <span class="n">begins</span>
+<span class="n">on_after_compute_loss</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">student_output</span><span class="p">,</span> <span class="n">student_loss</span><span class="p">)</span> <span class="p">:</span> <span class="n">Hook</span> <span class="n">executed</span> <span class="n">after</span> <span class="n">each</span> <span class="n">batch</span> <span class="n">inference</span> <span class="n">of</span> <span class="n">student</span> <span class="n">model</span>
 <span class="n">on_epoch_end</span><span class="p">()</span> <span class="p">:</span> <span class="n">Hook</span> <span class="n">executed</span> <span class="n">at</span> <span class="n">each</span> <span class="n">epoch</span> <span class="n">end</span>
 </pre></div>
 </div>
 <p>Following section shows how to use hooks in user pass-in training function which is part of example from BlendCNN distillation:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">train_func</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
-    <span class="n">distiller</span><span class="o">.</span><span class="n">pre_epoch_begin</span><span class="p">()</span>
+    <span class="n">distiller</span><span class="o">.</span><span class="n">on_train_begin</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">nepoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
         <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
         <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
@@ -276,11 +275,12 @@
             <span class="n">teacher_logits</span><span class="p">,</span> <span class="n">input_ids</span><span class="p">,</span> <span class="n">segment_ids</span><span class="p">,</span> <span class="n">input_mask</span><span class="p">,</span> <span class="n">target</span> <span class="o">=</span> <span class="n">batch</span>
             <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">input_ids</span><span class="p">,</span> <span class="n">segment_ids</span><span class="p">,</span> <span class="n">input_mask</span><span class="p">)</span>
-            <span class="n">distiller</span><span class="o">.</span><span class="n">on_post_forward</span><span class="p">({</span><span class="s1">&#39;input_ids&#39;</span><span class="p">:</span><span class="n">input_ids</span><span class="p">,</span> 
-                                       <span class="s1">&#39;segment_ids&#39;</span><span class="p">:</span><span class="n">segment_ids</span><span class="p">,</span> 
-                                       <span class="s1">&#39;input_mask&#39;</span><span class="p">:</span><span class="n">input_mask</span><span class="p">},</span> \
-                                      <span class="n">teacher_logits</span><span class="p">)</span>
-            <span class="n">loss</span> <span class="o">=</span> <span class="n">distiller</span><span class="o">.</span><span class="n">criterion</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">distiller</span><span class="o">.</span><span class="n">on_after_compute_loss</span><span class="p">(</span>
+                <span class="p">{</span><span class="s1">&#39;input_ids&#39;</span><span class="p">:</span><span class="n">input_ids</span><span class="p">,</span> <span class="s1">&#39;segment_ids&#39;</span><span class="p">:</span><span class="n">segment_ids</span><span class="p">,</span> <span class="s1">&#39;input_mask&#39;</span><span class="p">:</span><span class="n">input_mask</span><span class="p">},</span>
+                <span class="n">output</span><span class="p">,</span>
+                <span class="n">loss</span><span class="p">,</span>
+                <span class="n">teacher_logits</span><span class="p">)</span>
             <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
             <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
             <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>

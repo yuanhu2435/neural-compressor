@@ -26,7 +26,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.12
+                1.13
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -38,7 +38,6 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../README.html">Intel® Neural Compressor</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples_readme.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api-documentation/apis.html">APIs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="doclist.html">Developer Documentation</a></li>
@@ -95,8 +94,8 @@
         <span class="c1"># This attribute needs to be set before invoking self.__call__().</span>
         <span class="o">...</span>
 
-    <span class="nd">@pruning_func</span><span class="o">.</span><span class="n">setter</span>
-    <span class="k">def</span> <span class="nf">pruning_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_pruning_func</span><span class="p">)</span>
+    <span class="nd">@train_func</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">train_func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_pruning_func</span><span class="p">)</span>
         <span class="c1"># The training function provided by user. This function takes framework runtime model object as input parameter,</span>
         <span class="c1"># and executes entire training process with self contained training hyper-parameters.</span>
         <span class="c1"># It is optional if training could be configured by neural_compressor built-in dataloader/optimizer/criterion.</span>
@@ -126,15 +125,15 @@
         <span class="c1"># The hook point used by pruning algorithm</span>
         <span class="o">...</span>
 
-    <span class="k">def</span> <span class="nf">on_batch_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">on_step_begin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
         <span class="c1"># The hook point used by pruning algorithm</span>
         <span class="o">...</span>
 
-    <span class="k">def</span> <span class="nf">on_batch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">on_step_end</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># The hook point used by pruning algorithm</span>
         <span class="o">...</span>
 
-    <span class="k">def</span> <span class="nf">on_post_grad</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">on_before_optimizer_step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># The hook point used by pruning algorithm</span>
         <span class="o">...</span>
 </pre></div>
