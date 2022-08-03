@@ -55,8 +55,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#introduction">Introduction</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#pre-requirements">Pre-requirements</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#methods-to-enable-disable-bf16-support">Methods to enable &amp; disable BF16 support</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#direct-mixed-precision-conversion">Direct mixed precision conversion</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#mixed-precision-during-quantization">Mixed precision during quantization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#how-to-use">How to use</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="graph_optimization.html">Graph Optimization</a></li>
@@ -105,11 +104,7 @@
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <p>The recent growth of Deep Learning has driven the development of more complex models that require significantly more compute and memory capabilities. Several low precision numeric formats have been proposed to address the problem. Google’s <a class="reference external" href="https://cloud.google.com/tpu/docs/bfloat16">bfloat16</a> and the <a class="reference external" href="https://en.wikipedia.org/wiki/Half-precision_floating-point_format">FP16: IEEE</a> half-precision format are two of the most widely used sixteen bit formats. <a class="reference external" href="https://arxiv.org/abs/1710.03740">Mixed precision</a> training and inference using low precision formats have been developed to reduce compute and bandwidth requirements.</p>
 <p>The recently launched 3rd Gen Intel® Xeon® Scalable processor (codenamed Cooper Lake), featuring Intel® Deep Learning Boost, is the first general-purpose x86 CPU to support the bfloat16 format. Specifically, three new bfloat16 instructions are added as a part of the AVX512_BF16 extension within Intel Deep Learning Boost: VCVTNE2PS2BF16, VCVTNEPS2BF16, and VDPBF16PS. The first two instructions allow converting to and from bfloat16 data type, while the last one performs a dot product of bfloat16 pairs. Further details can be found in the <a class="reference external" href="https://software.intel.com/content/www/us/en/develop/download/bfloat16-hardware-numerics-definition.html">hardware numerics document</a> published by Intel.</p>
-<p>Intel® Neural Compressor (INC) supports two use cases for mixed precision:</p>
-<ol class="simple">
-<li><p>Direct mixed precision conversion: Mix <code class="docutils literal notranslate"><span class="pre">BF16</span> <span class="pre">+</span> <span class="pre">FP32</span></code> and be executed by MixedPrecision API</p></li>
-<li><p>Mixed precision during quantization: Mix <code class="docutils literal notranslate"><span class="pre">BF16</span> <span class="pre">+</span> <span class="pre">FP32</span> <span class="pre">+</span> <span class="pre">INT8</span></code> and occur during quantization</p></li>
-</ol>
+<p>Intel® Neural Compressor (INC) supports <code class="docutils literal notranslate"><span class="pre">BF16</span> <span class="pre">+</span> <span class="pre">FP32</span></code> mixed precision conversion by MixedPrecision API.</p>
 <p>Its support status:</p>
 <table border="1" class="docutils">
 <thead>
@@ -146,24 +141,9 @@
 <div class="section" id="software">
 <h3>Software<a class="headerlink" href="#software" title="Permalink to this headline">¶</a></h3>
 <p>Intel has worked with the PyTorch &amp; TensorFlow development teams to enhance PyTorch &amp; TensorFlow to include bfloat16 data support for CPUs.</p>
-<ul>
+<ul class="simple">
 <li><p>For PyTorch, the version higher than <a class="reference external" href="https://download.pytorch.org/whl/torch_stable.html">1.11.0</a> is necessary.</p></li>
-<li><p>For Tensorflow, BF16 support has been enabled in intel-tensorflow <a class="reference external" href="https://pypi.org/project/intel-tensorflow/2.3.0/">2.3.0</a>/<a class="reference external" href="https://pypi.org/project/intel-tensorflow/2.4.0/">2.4.0</a>/<a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up1">1.15.0up1</a>/<a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up2">1.15.0up2</a> and intel-tensorflow-avx512<a class="reference external" href="https://pypi.org/project/intel-tensorflow-avx512/2.3.0/">2.3.0</a>/<a class="reference external" href="https://pypi.org/project/intel-tensorflow-avx512/2.4.0/">2.4.0</a>.</p>
-<blockquote>
-<div><p>For more information about BF16 in TensorFlow, please read <a class="reference external" href="https://blog.tensorflow.org/2020/06/accelerating-ai-performance-on-3rd-gen-processors-with-tensorflow-bfloat16.html">Accelerating AI performance on 3rd Gen Intel® Xeon® Scalable processors with TensorFlow and Bfloat16</a>.</p>
-</div></blockquote>
-<blockquote>
-<div><p>To get better performance with BF16 datatype, the intel-tensorflow-avx512 is recommended, or build intel tensorflow (take <a class="reference external" href="https://github.com/Intel-tensorflow/tensorflow/tree/v1.15.0up2">tag v1.15.0up2</a> as example) from source code by using below command:</p>
-</div></blockquote>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>bazel build --cxxopt<span class="o">=</span>-D_GLIBCXX_USE_CXX11_ABI<span class="o">=</span><span class="m">0</span> --copt<span class="o">=</span>-O3 --copt<span class="o">=</span>-Wformat --copt<span class="o">=</span>-Wformat-security <span class="se">\</span>
-      --copt<span class="o">=</span>-fstack-protector --copt<span class="o">=</span>-fPIC --copt<span class="o">=</span>-fpic --linkopt<span class="o">=</span>-znoexecstack --linkopt<span class="o">=</span>-zrelro <span class="se">\</span>
-      --linkopt<span class="o">=</span>-znow --linkopt<span class="o">=</span>-fstack-protector --config<span class="o">=</span>mkl --define <span class="nv">build_with_mkl_dnn_v1_only</span><span class="o">=</span><span class="nb">true</span> <span class="se">\</span>
-      --copt<span class="o">=</span>-DENABLE_INTEL_MKL_BFLOAT16 --copt<span class="o">=</span>-march<span class="o">=</span>native //tensorflow/tools/pip_package:build_pip_package
-
-./bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/
-</pre></div>
-</div>
-</li>
+<li><p>For Tensorflow, the version higher than <a class="reference external" href="https://pypi.org/project/intel-tensorflow/2.3.0/">2.3.0</a> is necessary.</p></li>
 </ul>
 </div>
 </div>
@@ -177,12 +157,13 @@
 <blockquote>
 <div><p>⚠️Without hardware or software support, the poor performance or other problems may expect for force enabling.</p>
 </div></blockquote>
+<blockquote>
+<div><p>During quantization, BF16 conversion will be executed automatically as well if pre-requirements are met or force enable it. Please refer to this <a class="reference internal" href="quantization_mixed_precision.html"><span class="doc">document</span></a> for its workflow.</p>
+</div></blockquote>
 </div>
-<div class="section" id="direct-mixed-precision-conversion">
-<h2>Direct mixed precision conversion<a class="headerlink" href="#direct-mixed-precision-conversion" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="how-to-use">
+<h2>How to use<a class="headerlink" href="#how-to-use" title="Permalink to this headline">¶</a></h2>
 <p>INC queries framework capability and user-defined precision to generate an op-wise config based on the pre-optimized fp32 model. Direct mixed precision conversion will be implemented under the direction of config. Further, if users add necessary evaluation components, INC will tune accuracy during conversion.</p>
-<div class="section" id="how-to-use-it">
-<h3>How to use it<a class="headerlink" href="#how-to-use-it" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><p>Convert as many nodes as possible to target dtype</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_compressor.experimental</span> <span class="kn">import</span> <span class="n">MixedPrecision</span>
@@ -252,50 +233,6 @@ output_model = converter()
 </div>
 </li>
 </ul>
-</div>
-</div>
-<div class="section" id="mixed-precision-during-quantization">
-<h2>Mixed precision during quantization<a class="headerlink" href="#mixed-precision-during-quantization" title="Permalink to this headline">¶</a></h2>
-<p>This use case is only executed during quantization. Currently, only the Basic strategy with BF16 support has been validated.</p>
-<div class="section" id="tensorflow">
-<h3>Tensorflow<a class="headerlink" href="#tensorflow" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>BF16 conversion during quantization in TensorFlow</p></li>
-</ul>
-<p><img alt="Mixed Precision" src="../_images/bf16_convert_tf.png" /></p>
-<ul class="simple">
-<li><p>Three steps</p></li>
-</ul>
-<ol>
-<li><p>Convert to a <code class="docutils literal notranslate"><span class="pre">FP32</span> <span class="pre">+</span> <span class="pre">INT8</span></code> mixed precision Graph</p>
-<p>In this steps, TF adaptor will regard all fallback datatype as <code class="docutils literal notranslate"><span class="pre">FP32</span></code>. According to the per op datatype in tuning config passed by strategy, TF adaptor will generate a <code class="docutils literal notranslate"><span class="pre">FP32</span> <span class="pre">+</span> <span class="pre">INT8</span></code> mixed precision graph.</p>
-</li>
-<li><p>Convert to a <code class="docutils literal notranslate"><span class="pre">BF16</span> <span class="pre">+</span> <span class="pre">FP32</span> <span class="pre">+</span> <span class="pre">INT8</span></code> mixed precision Graph</p>
-<p>In this phase, adaptor will convert some <code class="docutils literal notranslate"><span class="pre">FP32</span></code> ops to <code class="docutils literal notranslate"><span class="pre">BF16</span></code> according to <code class="docutils literal notranslate"><span class="pre">bf16_ops</span></code> list in tuning config.</p>
-</li>
-<li><p>Optimize the <code class="docutils literal notranslate"><span class="pre">BF16</span> <span class="pre">+</span> <span class="pre">FP32</span> <span class="pre">+</span> <span class="pre">INT8</span></code> mixed precision Graph</p>
-<p>After the mixed precision graph generated, there are still some optimization need to be applied to improved the performance, for example <code class="docutils literal notranslate"><span class="pre">Cast</span> <span class="pre">+</span> <span class="pre">Cast</span></code> and so on. The <code class="docutils literal notranslate"><span class="pre">BF16Convert</span></code> transformer also apply a depth-first method to make it possible to take the ops use <code class="docutils literal notranslate"><span class="pre">BF16</span></code> which can support <code class="docutils literal notranslate"><span class="pre">BF16</span></code> datatype to reduce the insertion of <code class="docutils literal notranslate"><span class="pre">Cast</span></code> op.</p>
-</li>
-</ol>
-</div>
-<div class="section" id="pytorch">
-<h3>PyTorch<a class="headerlink" href="#pytorch" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>BF16 conversion during quantization in PyTorch</p></li>
-</ul>
-<p><img alt="Mixed Precision" src="../_images/bf16_convert_pt.png" /></p>
-<ul class="simple">
-<li><p>Two steps</p></li>
-</ul>
-<ol>
-<li><p>Convert to a <code class="docutils literal notranslate"><span class="pre">FP32</span> <span class="pre">+</span> <span class="pre">INT8</span></code> mixed precision Graph or Module</p>
-<p>In this steps, PT adaptor will combine the <code class="docutils literal notranslate"><span class="pre">INT8</span></code> ops and all fallback ops to <code class="docutils literal notranslate"><span class="pre">FP32</span> <span class="pre">+</span> <span class="pre">INT8</span></code> mixed precision Graph or Module no matter in Eager mode or Fx Graph mode.</p>
-</li>
-<li><p>Convert to a <code class="docutils literal notranslate"><span class="pre">BF16</span> <span class="pre">+</span> <span class="pre">FP32</span> <span class="pre">+</span> <span class="pre">INT8</span></code> mixed precision Graph or Module</p>
-<p>In this phase, adaptor will according to <code class="docutils literal notranslate"><span class="pre">BF16</span></code> op list from strategy tune config to wrapper the <code class="docutils literal notranslate"><span class="pre">FP32</span></code> module with <code class="docutils literal notranslate"><span class="pre">BF16Wrapper</span></code> to realize the <code class="docutils literal notranslate"><span class="pre">BF16</span> <span class="pre">+</span> <span class="pre">FP32</span> <span class="pre">+</span> <span class="pre">INT8</span></code> mixed precision Graph or Module. adaptor will do retrace the <code class="docutils literal notranslate"><span class="pre">GraphModule</span></code> again if using Fx Graph mode.</p>
-</li>
-</ol>
-</div>
 </div>
 </div>
 
