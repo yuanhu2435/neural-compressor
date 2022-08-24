@@ -167,13 +167,12 @@ inc_bench
 </ul>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_coder</span> <span class="kn">import</span> <span class="n">auto_quant</span>
 <span class="n">auto_quant</span><span class="p">(</span>
-    <span class="n">code</span><span class="o">=</span><span class="s2">&quot;neural_coder/examples/nlp/run_glue.py&quot;</span><span class="p">,</span>
-    <span class="n">entry_code_args</span><span class="o">=</span><span class="s2">&quot; </span><span class="se">\</span>
-<span class="s2">        --model_name_or_path albert-base-v2 </span><span class="se">\</span>
-<span class="s2">        --task_name sst2 </span><span class="se">\</span>
-<span class="s2">        --do_eval </span><span class="se">\</span>
-<span class="s2">        --output_dir result </span><span class="se">\</span>
-<span class="s2">        --overwrite_output_dir&quot;</span><span class="p">,</span>
+    <span class="n">code</span><span class="o">=</span><span class="s2">&quot;https://github.com/huggingface/transformers/blob/v4.21-release/examples/pytorch/text-classification/run_glue.py&quot;</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="s2">&quot;--model_name_or_path albert-base-v2 </span><span class="se">\</span>
+<span class="s2">          --task_name sst2 </span><span class="se">\</span>
+<span class="s2">          --do_eval </span><span class="se">\</span>
+<span class="s2">          --output_dir result </span><span class="se">\</span>
+<span class="s2">          --overwrite_output_dir&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -233,7 +232,7 @@ Please set the environment variable TF_ENABLE_ONEDNN_OPTS=1 to enable oneDNN opt
 </div>
 <div class="section" id="validated-models">
 <h3>Validated Models<a class="headerlink" href="#validated-models" title="Permalink to this headline">¶</a></h3>
-<p>Intel® Neural Compressor validated 420+ <a class="reference external" href="https://github.com/intel/neural-compressor/tree/158c7f41f40c7b18ef0eb9f295e9f82b57491ebd/./examples">examples</a> for quantization with performance speedup geomean 2.2x and up to 4.2x on VNNI while minimizing the accuracy loss. And also provided 30+ pruning and knowledge distillation samples.<br />More details for validated models are available <a class="reference internal" href="docs/validated_model_list.html"><span class="doc">here</span></a>.</p>
+<p>Intel® Neural Compressor validated 420+ <a class="reference external" href="https://github.com/intel/neural-compressor/tree/6015262e0190230a6064c4fb224acdb98e4c4a85/./examples">examples</a> for quantization with performance speedup geomean 2.2x and up to 4.2x on VNNI while minimizing the accuracy loss. And also provided 30+ pruning and knowledge distillation samples.<br />More details for validated models are available <a class="reference internal" href="docs/validated_model_list.html"><span class="doc">here</span></a>.</p>
 <a target="_blank" href="./docs/imgs/release_data.png">
   <img src="./docs/imgs/release_data.png" alt="Architecture" width=800 height=600>
 </a></div>
@@ -306,13 +305,14 @@ Please set the environment variable TF_ENABLE_ONEDNN_OPTS=1 to enable oneDNN opt
 <div class="section" id="selected-publications">
 <h2>Selected Publications<a class="headerlink" href="#selected-publications" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
+<li><p><a class="reference external" href="https://zhuanlan.zhihu.com/p/552484413?utm_source=ZHShareTargetIDMore&amp;utm_medium=social&amp;utm_oi=667097517833981952">地址标准化服务AI深度学习模型推理优化实践</a> (Aug 2022)</p></li>
+<li><p><a class="reference external" href="https://www.intel.com/content/www/us/en/developer/videos/accelerate-inference-without-sacrificing-accuracy.html#gs.9yottx">Accelerate AI Inference without Sacrificing Accuracy</a></p></li>
+<li><p><a class="reference external" href="https://www.intel.com/content/www/us/en/developer/videos/accelerate-deep-learning-with-intel-tensorflow.html#gs.9yrw90">Accelerate Deep Learning with Intel® Extension for TensorFlow*</a></p></li>
 <li><p><a class="reference external" href="https://medium.com/pytorch/pytorch-inference-acceleration-with-intel-neural-compressor-842ef4210d7d">PyTorch Inference Acceleration with Intel® Neural Compressor</a> (Jun 2022)</p></li>
 <li><p><a class="reference external" href="https://huggingface.co/blog/intel">Intel and Hugging Face Partner to Democratize Machine Learning Hardware Acceleration</a> (Jun 2022)</p></li>
 <li><p><a class="reference external" href="https://networkbuilders.intel.com/solutionslibrary/intel-deep-learning-boost-boost-network-security-ai-inference-performance-in-google-cloud-platform-gcp-technology-guide">Intel® Deep Learning Boost - Boost Network Security AI Inference Performance in Google Cloud Platform (GCP)</a> (Apr 2022)</p></li>
 <li><p><a class="reference external" href="https://pytorch.org/ecosystem/">Intel® Neural Compressor joined PyTorch ecosystem tool </a> (Apr 2022)</p></li>
-<li><p><a class="reference external" href="https://builders.intel.com/docs/networkbuilders/ai-technologies-unleash-ai-innovation-in-network-applications-solution-brief-1637303210.pdf">New instructions in the Intel® Xeon® Scalable processors combined with optimized software frameworks enable real-time AI within network workloads</a> (Feb 2022)</p></li>
-<li><p><a class="reference external" href="https://community.intel.com/t5/Blogs/Tech-Innovation/Artificial-Intelligence-AI/Quantizing-ONNX-Models-using-Intel-Neural-Compressor/post/1355237">Quantizing ONNX Models using Intel® Neural Compressor</a> (Feb 2022)</p></li>
-<li><p><a class="reference external" href="https://www.intel.com/content/www/us/en/developer/articles/technical/quantize-ai-by-oneapi-analytics-on-alibaba-cloud.html">Quantize AI Model by Intel® oneAPI AI Analytics Toolkit on Alibaba Cloud</a> (Feb 2022)</p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=-_2ha2CNWXA">Dynamic Quantization with Intel Neural Compressor and Transformers</a> (Mar 2022)</p></li>
 </ul>
 <blockquote>
 <div><p>Please check out our <a class="reference internal" href="docs/publication_list.html"><span class="doc">full publication list</span></a>.</p>

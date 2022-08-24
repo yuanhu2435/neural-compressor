@@ -102,24 +102,19 @@
 <h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="pypi-distribution">
 <h3>PyPI distribution:<a class="headerlink" href="#pypi-distribution" title="Permalink to this headline">¶</a></h3>
-<p>HuggingFace <a class="reference external" href="https://github.com/huggingface/transformers">Transformers</a> models: <a class="reference external" href="https://github.com/huggingface/transformers/blob/main/examples/pytorch/text-classification/run_glue.py">text-classification/run_glue.py</a></p>
+<p>HuggingFace <a class="reference external" href="https://github.com/huggingface/transformers">Transformers</a> models: <a class="reference external" href="https://github.com/huggingface/transformers/blob/v4.21-release/examples/pytorch/text-classification/run_glue.py">text-classification/run_glue.py</a></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_coder</span> <span class="k">import</span> <span class="n">auto_quant</span>
 <span class="n">auto_quant</span><span class="p">(</span>
-    <span class="n">code</span><span class="o">=</span><span class="s2">&quot;neural_coder/examples/nlp/run_glue.py&quot;</span><span class="p">,</span>
-    <span class="n">entry_code_args</span><span class="o">=</span><span class="s2">&quot; </span><span class="se">\</span>
-<span class="s2">        --model_name_or_path albert-base-v2 </span><span class="se">\</span>
-<span class="s2">        --task_name sst2 </span><span class="se">\</span>
-<span class="s2">        --do_eval </span><span class="se">\</span>
-<span class="s2">        --output_dir result </span><span class="se">\</span>
-<span class="s2">        --overwrite_output_dir&quot;</span><span class="p">,</span>
+    <span class="n">code</span><span class="o">=</span><span class="s2">&quot;https://github.com/huggingface/transformers/blob/v4.21-release/examples/pytorch/text-classification/run_glue.py&quot;</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="s2">&quot;--model_name_or_path albert-base-v2 --task_name sst2 --do_eval --output_dir result&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 <p><a class="reference external" href="https://pytorch.org/vision/stable/index.html">torchvision</a> models: <a class="reference external" href="https://github.com/pytorch/examples/blob/main/imagenet/main.py">imagenet/main.py</a></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_coder</span> <span class="k">import</span> <span class="n">auto_quant</span>
 <span class="n">auto_quant</span><span class="p">(</span>
-    <span class="n">code</span><span class="o">=</span><span class="s2">&quot;neural_coder/examples/vision/main.py&quot;</span><span class="p">,</span>
-    <span class="n">entry_code_args</span><span class="o">=</span><span class="s2">&quot;-a alexnet -e /path/to/imagenet/&quot;</span><span class="p">,</span>
+    <span class="n">code</span><span class="o">=</span><span class="s2">&quot;https://github.com/pytorch/examples/blob/main/imagenet/main.py&quot;</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="s2">&quot;-a alexnet --pretrained -e /path/to/imagenet/&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>

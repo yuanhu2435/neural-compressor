@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Integration Testing &mdash; Intel® Neural Compressor  documentation</title><link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../../index.html" class="icon icon-home"> Intel® Neural Compressor
+          </a>
+              <div class="version">
+                1.13
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../README.html">Intel® Neural Compressor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs/examples_readme.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api-documentation/apis.html">APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs/doclist.html">Developer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs/releases_info.html">Release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs/contributions.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs/legal_information.html">Legal Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../docs/security_policy.html">Security Policy</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/intel/neural-compressor">Intel® Neural Compressor repository</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Intel® Neural Compressor</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Integration Testing</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../_sources/neural_coder/extensions/neural-compressor-ext-lab/ui-tests/README.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="integration-testing">
+<h1>Integration Testing<a class="headerlink" href="#integration-testing" title="Permalink to this headline">¶</a></h1>
+<p>This folder contains the integration tests of the extension.</p>
+<p>They are defined using <a class="reference external" href="https://playwright.dev/docs/intro">Playwright</a> test runner
+and <a class="reference external" href="https://github.com/jupyterlab/jupyterlab/tree/master/galata">Galata</a> helper.</p>
+<p>The Playwright configuration is defined in <a class="reference external" href="https://github.com/intel/neural-compressor/blob/6015262e0190230a6064c4fb224acdb98e4c4a85/neural_coder/extensions/neural-compressor-ext-lab/ui-tests/./playwright.config.js">playwright.config.js</a>.</p>
+<p>The JupyterLab server configuration to use for the integration test is defined
+in <a class="reference external" href="https://github.com/intel/neural-compressor/blob/6015262e0190230a6064c4fb224acdb98e4c4a85/neural_coder/extensions/neural-compressor-ext-lab/ui-tests/./jupyter_server_test_config.py">jupyter_server_test_config.py</a>.</p>
+<p>The default configuration will produce video for failing tests and an HTML report.</p>
+<div class="section" id="run-the-tests">
+<h2>Run the tests<a class="headerlink" href="#run-the-tests" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>All commands are assumed to be executed from the root directory</p>
+</div></blockquote>
+<p>To run the tests, you need to:</p>
+<ol class="simple">
+<li><p>Compile the extension:</p></li>
+</ol>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>jlpm install
+jlpm build:prod
+</pre></div>
+</div>
+<blockquote>
+<div><p>Check the extension is installed in JupyterLab.</p>
+</div></blockquote>
+<ol class="simple">
+<li><p>Install test dependencies (needed only once):</p></li>
+</ol>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ./ui-tests
+jlpm install
+jlpm playwright install
+<span class="nb">cd</span> ..
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>Execute the <a class="reference external" href="https://playwright.dev/docs/intro">Playwright</a> tests:</p></li>
+</ol>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ./ui-tests
+jlpm playwright <span class="nb">test</span>
+</pre></div>
+</div>
+<p>Test results will be shown in the terminal. In case of any test failures, the test report
+will be opened in your browser at the end of the tests execution; see
+<a class="reference external" href="https://playwright.dev/docs/test-reporters#html-reporter">Playwright documentation</a>
+for configuring that behavior.</p>
+</div>
+<div class="section" id="update-the-tests-snapshots">
+<h2>Update the tests snapshots<a class="headerlink" href="#update-the-tests-snapshots" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>All commands are assumed to be executed from the root directory</p>
+</div></blockquote>
+<p>If you are comparing snapshots to validate your tests, you may need to update
+the reference snapshots stored in the repository. To do that, you need to:</p>
+<ol class="simple">
+<li><p>Compile the extension:</p></li>
+</ol>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>jlpm install
+jlpm build:prod
+</pre></div>
+</div>
+<blockquote>
+<div><p>Check the extension is installed in JupyterLab.</p>
+</div></blockquote>
+<ol class="simple">
+<li><p>Install test dependencies (needed only once):</p></li>
+</ol>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ./ui-tests
+jlpm install
+jlpm playwright install
+<span class="nb">cd</span> ..
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>Execute the <a class="reference external" href="https://playwright.dev/docs/intro">Playwright</a> command:</p></li>
+</ol>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ./ui-tests
+jlpm playwright <span class="nb">test</span> -u
+</pre></div>
+</div>
+<blockquote>
+<div><p>Some discrepancy may occurs between the snapshots generated on your computer and
+the one generated on the CI. To ease updating the snapshots on a PR, you can
+type <code class="docutils literal notranslate"><span class="pre">please</span> <span class="pre">update</span> <span class="pre">playwright</span> <span class="pre">snapshots</span></code> to trigger the update by a bot on the CI.
+Once the bot has computed new snapshots, it will commit them to the PR branch.</p>
+</div></blockquote>
+</div>
+<div class="section" id="create-tests">
+<h2>Create tests<a class="headerlink" href="#create-tests" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>All commands are assumed to be executed from the root directory</p>
+</div></blockquote>
+<p>To create tests, the easiest way is to use the code generator tool of playwright:</p>
+<ol class="simple">
+<li><p>Compile the extension:</p></li>
+</ol>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>jlpm install
+jlpm build:prod
+</pre></div>
+</div>
+<blockquote>
+<div><p>Check the extension is installed in JupyterLab.</p>
+</div></blockquote>
+<ol class="simple">
+<li><p>Install test dependencies (needed only once):</p></li>
+</ol>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ./ui-tests
+jlpm install
+jlpm playwright install
+<span class="nb">cd</span> ..
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>Execute the <a class="reference external" href="https://playwright.dev/docs/codegen">Playwright code generator</a>:</p></li>
+</ol>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ./ui-tests
+jlpm playwright codegen localhost:8888
+</pre></div>
+</div>
+</div>
+<div class="section" id="debug-tests">
+<h2>Debug tests<a class="headerlink" href="#debug-tests" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>All commands are assumed to be executed from the root directory</p>
+</div></blockquote>
+<p>To debug tests, a good way is to use the inspector tool of playwright:</p>
+<ol class="simple">
+<li><p>Compile the extension:</p></li>
+</ol>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>jlpm install
+jlpm build:prod
+</pre></div>
+</div>
+<blockquote>
+<div><p>Check the extension is installed in JupyterLab.</p>
+</div></blockquote>
+<ol class="simple">
+<li><p>Install test dependencies (needed only once):</p></li>
+</ol>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ./ui-tests
+jlpm install
+jlpm playwright install
+<span class="nb">cd</span> ..
+</pre></div>
+</div>
+<ol class="simple">
+<li><p>Execute the Playwright tests in <a class="reference external" href="https://playwright.dev/docs/debug">debug mode</a>:</p></li>
+</ol>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ./ui-tests
+<span class="nv">PWDEBUG</span><span class="o">=</span><span class="m">1</span> jlpm playwright <span class="nb">test</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Intel® Neural Compressor.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
