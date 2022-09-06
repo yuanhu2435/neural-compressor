@@ -26,7 +26,7 @@
             <a href="../../../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.13
+                1.14.0a0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -99,6 +99,7 @@
 <ul>
 <li><p><a class="reference external" href="#add-optimization-to-project">Add optimization to project</a></p></li>
 <li><p><a class="reference external" href="#get-optimization-details">Get optimization details</a></p></li>
+<li><p><a class="reference external" href="#edit-optimization">Edit optimization</a></p></li>
 <li><p><a class="reference external" href="#list-optimizations">List optimizations</a></p></li>
 <li><p><a class="reference external" href="#execute-optimization">Execute optimization</a></p></li>
 <li><p><a class="reference external" href="#pin-accuracy-benchmark-to-optimization">Pin accuracy benchmark to optimization</a></p></li>
@@ -109,6 +110,7 @@
 <ul>
 <li><p><a class="reference external" href="#add-benchmark-to-project">Add benchmark to project</a></p></li>
 <li><p><a class="reference external" href="#get-benchmark-details">Get benchmark details</a></p></li>
+<li><p><a class="reference external" href="#edit-benchmark">Edit benchmark</a></p></li>
 <li><p><a class="reference external" href="#list-benchmarks">List benchmarks</a></p></li>
 <li><p><a class="reference external" href="#execute-benchmark">Execute benchmark</a></p></li>
 </ul>
@@ -117,6 +119,8 @@
 <ul>
 <li><p><a class="reference external" href="#add-profiling-to-project">Add profiling to project</a></p></li>
 <li><p><a class="reference external" href="#get-profiling-details">Get profiling details</a></p></li>
+<li><p><a class="reference external" href="#edit-profiling">Edit profiling</a></p></li>
+<li><p><a class="reference external" href="#get-profiling-result-as-csv">Get profiling result as csv</a></p></li>
 <li><p><a class="reference external" href="#list-profilings">List profilings</a></p></li>
 <li><p><a class="reference external" href="#execute-profiling">Execute profiling</a></p></li>
 </ul>
@@ -797,6 +801,125 @@
         &quot;modified_at&quot;: null
     }
 }
+</pre></div>
+</div>
+</div>
+<div class="section" id="edit-optimization">
+<h4>Edit optimization<a class="headerlink" href="#edit-optimization" title="Permalink to this headline">¶</a></h4>
+<p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">api/optimization/edit</span></code><br>
+<strong>Method</strong>: <code class="docutils literal notranslate"><span class="pre">POST</span></code></p>
+<p><strong>Parameters description:</strong></p>
+<table border>
+    <thead>
+        <tr>
+            <th colspan=3>Parameter</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan=3><b>id</b></td>
+            <td>Optimization id</td>
+            <td align="center">&#x2611;</td>
+        </tr>
+        <tr>
+            <td colspan=3><b>precision_id</b></td>
+            <td>Precision id</td>
+            <td align="center">&#x2610;</td>
+        </tr>
+        <tr>
+            <td colspan=3><b>dataset_id</b></td>
+            <td>Dataset id</td>
+            <td align="center">&#x2610;</td>
+        </tr>
+        <tr>
+            <td rowspan=9><b>tuning_details</b></td>
+            <td colspan=2><b>batch_size</b></td>
+            <td>Optimization batch size</td>
+            <td align="center">&#x2610;</td>
+        </tr>
+        <tr>
+            <td colspan=2><b>sampling_size</b></td>
+            <td>Optimization sampling size</td>
+            <td align="center">&#x2610;</td>
+        </tr>
+        <tr>
+            <td colspan=2><b>multi_objectives</b></td>
+            <td>Optimization objective</td>
+            <td align="center">&#x2610;</td>
+        </tr>
+        <tr>
+            <td colspan=2><b>strategy</b></td>
+            <td>Optimization strategy</td>
+            <td align="center">&#x2610;</td>
+        </tr>
+        <tr>
+            <td colspan=2><b>accuracy_criterion_type</b></td>
+            <td>Optimization accuracy criterion type</td>
+            <td align="center">&#x2610;</td>
+        </tr>
+        <tr>
+            <td colspan=2><b>accuracy_criterion_threshold</b></td>
+            <td>Optimization accuracy criterion threshold</td>
+            <td align="center">&#x2610;</td>
+        </tr>
+        <tr>
+            <td colspan=2><b>random_seed</b></td>
+            <td>Optimization random seed</td>
+            <td align="center">&#x2610;</td>
+        </tr>
+        <tr>
+            <td rowspan=2><b>exit_policy</b></td>
+            <td><b>timeout</b></td>
+            <td>Optimization timeout</td>
+            <td align="center">&#x2610;</td>
+        </tr>
+        <tr>
+            <td><b>max_trails</b></td>
+            <td>Optimization max trials</td>
+            <td align="center">&#x2610;</td>
+        </tr>
+    </tbody>
+</table><p><strong>Example body</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nt">&quot;tuning_details&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;batch_size&quot;</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>
+        <span class="nt">&quot;sampling_size&quot;</span><span class="p">:</span> <span class="mi">456</span><span class="p">,</span>
+        <span class="nt">&quot;strategy&quot;</span><span class="p">:</span> <span class="s2">&quot;mse&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;accuracy_criterion_type&quot;</span><span class="p">:</span> <span class="s2">&quot;absolute&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;accuracy_criterion_threshold&quot;</span><span class="p">:</span> <span class="mf">0.23</span><span class="p">,</span>
+        <span class="nt">&quot;multi_objectives&quot;</span><span class="p">:</span> <span class="s2">&quot;performance&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;exit_policy&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;timeout&quot;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span>
+            <span class="nt">&quot;max_trials&quot;</span><span class="p">:</span> <span class="mi">125</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;random_seed&quot;</span><span class="p">:</span> <span class="mi">95270</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nt">&quot;tuning_details&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nt">&quot;strategy&quot;</span><span class="p">:</span> <span class="s2">&quot;mse&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;accuracy_criterion_type&quot;</span><span class="p">:</span> <span class="s2">&quot;absolute&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;accuracy_criterion_threshold&quot;</span><span class="p">:</span> <span class="mf">0.23</span><span class="p">,</span>
+        <span class="nt">&quot;multi_objectives&quot;</span><span class="p">:</span> <span class="s2">&quot;performance&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;exit_policy&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;timeout&quot;</span><span class="p">:</span> <span class="s2">&quot;60&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;max_trials&quot;</span><span class="p">:</span> <span class="mi">125</span>
+        <span class="p">},</span>
+        <span class="nt">&quot;random_seed&quot;</span><span class="p">:</span> <span class="mi">95270</span><span class="p">,</span>
+        <span class="nt">&quot;created_at&quot;</span><span class="p">:</span> <span class="s2">&quot;2022-08-09 15:54:44&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;modified_at&quot;</span><span class="p">:</span> <span class="s2">&quot;2022-08-09 16:43:06&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;batch_size&quot;</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>
+    <span class="nt">&quot;sampling_size&quot;</span><span class="p">:</span> <span class="mi">456</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>
@@ -1701,6 +1824,74 @@
 </pre></div>
 </div>
 </div>
+<div class="section" id="edit-benchmark">
+<h4>Edit benchmark<a class="headerlink" href="#edit-benchmark" title="Permalink to this headline">¶</a></h4>
+<p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">api/benchmark/edit</span></code><br>
+<strong>Method</strong>: <code class="docutils literal notranslate"><span class="pre">POST</span></code></p>
+<p><strong>Parameters description:</strong></p>
+<table border>
+    <thead>
+        <tr>
+            <th>Parameter</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><b>id</b></td>
+            <td>Benchmark id</td>
+            <td align="center">&#x2611;</td>
+        </tr>
+        <tr>
+            <td><b>dataset_id</b></td>
+            <td>Dataset id</td>
+            <td align="center">&#x2610;</td>
+        </tr>
+        <tr>
+            <td><b>mode</b></td>
+            <td>Benchmark mode</td>
+            <td align="center">&#x2610;</td>
+        </tr>
+        <tr>
+            <td><b>batch_size</b></td>
+            <td>Benchmark batch size</td>
+            <td align="center">&#x2610;</td>
+        </tr>
+        <tr>
+            <td><b>number_of_instance</b></td>
+            <td>Optimization number of instance</td>
+            <td align="center">&#x2610;</td>
+        </tr>
+        <tr>
+            <td><b>cores_per_instance</b></td>
+            <td>Optimization cores per instance</td>
+            <td align="center">&#x2610;</td>
+        </tr>
+    </tbody>
+</table><p><strong>Example body</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nt">&quot;dataset_id&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="nt">&quot;mode&quot;</span><span class="p">:</span> <span class="s2">&quot;accuracy&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;batch_size&quot;</span><span class="p">:</span> <span class="mi">64</span><span class="p">,</span>
+    <span class="nt">&quot;cores_per_instance&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+    <span class="nt">&quot;number_of_instance&quot;</span><span class="p">:</span> <span class="mi">4</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nt">&quot;dataset_id&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="nt">&quot;batch_size&quot;</span><span class="p">:</span> <span class="mi">64</span><span class="p">,</span>
+    <span class="nt">&quot;mode&quot;</span><span class="p">:</span> <span class="s2">&quot;accuracy&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;cores_per_instance&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+    <span class="nt">&quot;number_of_instance&quot;</span><span class="p">:</span> <span class="mi">4</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="list-benchmarks">
 <h4>List benchmarks<a class="headerlink" href="#list-benchmarks" title="Permalink to this headline">¶</a></h4>
 <p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">api/benchmark/list</span></code><br>
@@ -2025,6 +2216,49 @@
     &quot;last_run_at&quot;: &quot;None&quot;,
     &quot;duration&quot;: null
 }
+</pre></div>
+</div>
+</div>
+<div class="section" id="edit-profiling">
+<h4>Edit profiling<a class="headerlink" href="#edit-profiling" title="Permalink to this headline">¶</a></h4>
+<p><strong>Path</strong>: <code class="docutils literal notranslate"><span class="pre">api/profiling/edit</span></code><br>
+<strong>Method</strong>: <code class="docutils literal notranslate"><span class="pre">POST</span></code></p>
+<p><strong>Parameters description:</strong></p>
+<table border>
+    <thead>
+        <tr>
+            <th>Parameter</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><b>id</b></td>
+            <td>Benchmark id</td>
+            <td align="center">&#x2611;</td>
+        </tr>
+        <tr>
+            <td><b>dataset_id</b></td>
+            <td>Dataset id</td>
+            <td align="center">&#x2610;</td>
+        </tr><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;/</span><span class="n">tbody</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</table><p><strong>Example body</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nt">&quot;dataset_id&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="nt">&quot;num_threads&quot;</span><span class="p">:</span> <span class="mi">14</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="nt">&quot;dataset_id&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="nt">&quot;num_threads&quot;</span><span class="p">:</span> <span class="mi">14</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>
