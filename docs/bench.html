@@ -82,12 +82,12 @@
 <li><p><a class="reference external" href="#home-screen">Home screen</a></p></li>
 <li><p><a class="reference external" href="#create-new-project">Create new project</a></p>
 <ul>
-<li><p><a class="reference external" href="#add-optimization">Add optimization</a></p></li>
-<li><p><a class="reference external" href="#add-benchmark">Add benchmark</a></p></li>
-<li><p><a class="reference external" href="#add-profiling">Add profiling</a></p></li>
-<li><p><a class="reference external" href="#display-model-graph">Display model graph</a></p></li>
-<li><p><a class="reference external" href="#add-dataset">Add dataset</a></p></li>
-<li><p><a class="reference external" href="#project-information">Project information</a></p></li>
+<li><p><a class="reference external" href="#optimization-tab">Optimization tab</a></p></li>
+<li><p><a class="reference external" href="#benchmark-tab">Benchmark tab</a></p></li>
+<li><p><a class="reference external" href="#profiling-tab">Profiling tab</a></p></li>
+<li><p><a class="reference external" href="#diagnosis-tab">Diagnosis tab</a></p></li>
+<li><p><a class="reference external" href="#dataset-tab">Dataset tab</a></p></li>
+<li><p><a class="reference external" href="#project-information-tab">Project information</a></p></li>
 </ul>
 </li>
 <li><p><a class="reference external" href="#system-information">System information</a></p></li>
@@ -97,6 +97,33 @@
 </div>
 <div class="section" id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="install-intel-neural-compressor-with-bench">
+<h2>Install Intel® Neural Compressor with Bench<a class="headerlink" href="#install-intel-neural-compressor-with-bench" title="Permalink to this headline">¶</a></h2>
+<p>To install Install Intel® Neural Compressor with GUI install full version of Intel® Neural Compressor in one of following ways:</p>
+<div class="section" id="option-1-install-from-binary">
+<h3>Option 1 Install from binary<a class="headerlink" href="#option-1-install-from-binary" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-Shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># install stable full version from pip (including GUI)</span>
+pip install neural-compressor-full
+
+<span class="c1"># install nightly full version from pip (including GUI)</span>
+pip install -i https://test.pypi.org/simple/ neural-compressor-full
+
+<span class="c1"># install stable full version from from conda (including GUI)</span>
+conda install neural-compressor-full -c conda-forge -c intel  
+</pre></div>
+</div>
+</div>
+<div class="section" id="option-2-install-from-source">
+<h3>Option 2 Install from source<a class="headerlink" href="#option-2-install-from-source" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-Shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/intel/neural-compressor.git
+<span class="nb">cd</span> neural-compressor
+pip install -r requirements.txt
+<span class="c1"># build with full functionality (including GUI)</span>
+python setup.py --full install
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="start-the-intel-neural-compressor-bench">
 <h2>Start the Intel® Neural Compressor Bench<a class="headerlink" href="#start-the-intel-neural-compressor-bench" title="Permalink to this headline">¶</a></h2>
 <p>To start the Intel® Neural Compressor Bench server execute <code class="docutils literal notranslate"><span class="pre">inc_bench</span></code> command:</p>
@@ -164,6 +191,11 @@ or specify different port that is already opened, for example 8080:</p>
 <p>First you have to choose the model path. When it is chosen, in most cases all other fields will be completed automatically. You can edit its input and output nodes, see the model graph (if it is available for this model) and set shape for synthetic dataset. If model domain was not detected, you need to choose it from the list. Model domain is used to set some default parameters for the model.</p>
 <p><img alt="Project3-custom" src="../_images/project3-custom.png" /></p>
 </div>
+<div class="section" id="display-model-graph">
+<h2>Display model graph<a class="headerlink" href="#display-model-graph" title="Permalink to this headline">¶</a></h2>
+<p>For several model types there will be a button available <img alt="Show graph" src="../_images/show_graph_button.png" /> in the project wizard. It is also possible to see the graph in Diagnosis tab. The graph by default is collapsed, but when you click on plus icon, sections will be unfolded.</p>
+<p><img alt="Bert model graph" src="../_images/graph_bert.png" />.</p>
+</div>
 </div>
 <div class="section" id="project-list">
 <h1>Project list<a class="headerlink" href="#project-list" title="Permalink to this headline">¶</a></h1>
@@ -179,8 +211,8 @@ or specify different port that is already opened, for example 8080:</p>
 </div>
 <div class="section" id="develop-the-project">
 <h1>Develop the project<a class="headerlink" href="#develop-the-project" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="add-optimization">
-<h2>Add optimization<a class="headerlink" href="#add-optimization" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="optimization-tab">
+<h2>Optimization tab<a class="headerlink" href="#optimization-tab" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="optimization-table">
 <h3>Optimization table<a class="headerlink" href="#optimization-table" title="Permalink to this headline">¶</a></h3>
 <p>In Optimizations tab you can see list of optimizations in the project. Currently UI supports three optimization precisions and two types of optimization.
@@ -191,14 +223,21 @@ or specify different port that is already opened, for example 8080:</p>
 <p>To add new optimization, click “Add new optimization” button at the bottom of the table and follow the steps.
 <img alt="Optimizations-wizard" src="../_images/optimizations-wizard.png" /></p>
 </div>
+<div class="section" id="editing-optimization-entries">
+<h3>Editing optimization entries<a class="headerlink" href="#editing-optimization-entries" title="Permalink to this headline">¶</a></h3>
+<p>There is a possibility to modify some optimization parameters even after exit from Wizard.
+If optimization has not been run yet, the pencil icon on the right hand side should be in light blue color. That indicates that it can be modified. After click on that pencil icon you can select different precision or dataset.</p>
+<p>For Quantization you can also modify Tuning details before optimizing model.
+<img alt="Optimization-tuning-details" src="../_images/optimization-tuning-details.png" /></p>
+</div>
 <div class="section" id="optimization-details">
 <h3>Optimization details<a class="headerlink" href="#optimization-details" title="Permalink to this headline">¶</a></h3>
 <p>To perform optimization click “Run” button. Once process is finished you can click on row with specific optimization to display details about optimization parameters and optimized model. When you click on blue arrow icon in model path line, you can download optimized model.
 <img alt="Optimization-details" src="../_images/optimization-details.png" /></p>
 </div>
 </div>
-<div class="section" id="add-benchmark">
-<h2>Add benchmark<a class="headerlink" href="#add-benchmark" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="benchmark-tab">
+<h2>Benchmark tab<a class="headerlink" href="#benchmark-tab" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="benchmark-table">
 <h3>Benchmark table<a class="headerlink" href="#benchmark-table" title="Permalink to this headline">¶</a></h3>
 <p>For each optimization and input model you can add benchmark. Benchmark have 2 modes: accuracy and performance. In benchmark tab you can see all your benchmarks. When you check checkboxes in the last column you can choose benchmark you want to compare in the chart (visible after clicking “Compare selected”).</p>
@@ -209,14 +248,19 @@ or specify different port that is already opened, for example 8080:</p>
 <p>To add new benchmark, click “Add new benchmark” button at the bottom of the table and follow the steps.</p>
 <p><img alt="Benchmarks-wizard" src="../_images/benchmarks-wizard.png" /></p>
 </div>
+<div class="section" id="editing-benchmark-entries">
+<h3>Editing benchmark entries<a class="headerlink" href="#editing-benchmark-entries" title="Permalink to this headline">¶</a></h3>
+<p>As for optimizations you can also modify benchmark parameters. You can modify benchmark mode, dataset and benchmark parameters like batch size, number of instances and number of cores per instance.
+<img alt="Benchmark-edit-wizard" src="../_images/benchmark-edit-wizard.png" /></p>
+</div>
 <div class="section" id="benchmark-details">
 <h3>Benchmark details<a class="headerlink" href="#benchmark-details" title="Permalink to this headline">¶</a></h3>
 <p>When the benchmark is added, you can click “Run” button to execute it. Results will be filled in the table and in details view visible after clicking row in the table. You can also see config and output logs when clicking links highlighted in blue.</p>
 <p><img alt="Benchmark-details" src="../_images/benchmark-details.png" /></p>
 </div>
 </div>
-<div class="section" id="add-profiling">
-<h2>Add profiling<a class="headerlink" href="#add-profiling" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="profiling-tab">
+<h2>Profiling tab<a class="headerlink" href="#profiling-tab" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="profiling-table">
 <h3>Profiling table<a class="headerlink" href="#profiling-table" title="Permalink to this headline">¶</a></h3>
 <p>It is also possible to do profiling of all Tensorflow frozen models in project.
@@ -227,6 +271,11 @@ or specify different port that is already opened, for example 8080:</p>
 <p>To profile model, click “Add new profiling” button at the bottom of the table and follow the steps.
 <img alt="Profiling-wizard" src="../_images/profiling-wizard.png" /></p>
 </div>
+<div class="section" id="editing-profiling-entries">
+<h3>Editing profiling entries<a class="headerlink" href="#editing-profiling-entries" title="Permalink to this headline">¶</a></h3>
+<p>In Profiling tab you can edit dataset and number or threads.
+<img alt="Profiling-edit-wizard" src="../_images/profiling-edit-wizard.png" /></p>
+</div>
 <div class="section" id="profiling-details">
 <h3>Profiling details<a class="headerlink" href="#profiling-details" title="Permalink to this headline">¶</a></h3>
 <p>Once profiling entry is added, you can click “Run” button to execute it. After completing the process, the results will appear in the form of a bar chart and a table with full profiling data. The table is also used to control which operations are included in the chart. Check the box next to the selected row and click “Update chart” button to include it in the bar chart.
@@ -234,13 +283,18 @@ Click “Download .csv file” button to get profiling data in .csv file.
 <img alt="Profiling-details" src="../_images/profiling-details.png" /></p>
 </div>
 </div>
-<div class="section" id="display-model-graph">
-<h2>Display model graph<a class="headerlink" href="#display-model-graph" title="Permalink to this headline">¶</a></h2>
-<p>For Tensorflow frozen pb models there will be a button available <img alt="Show graph" src="../_images/show_graph_button.png" /> in the project wizard. It is also possible to see the graph in Diagnosis tab. The graph by default is collapsed, but when you click on plus icon, sections will be unfolded.</p>
-<p><img alt="Bert model graph" src="../_images/graph_bert.png" />.</p>
 </div>
-<div class="section" id="add-dataset">
-<h2>Add dataset<a class="headerlink" href="#add-dataset" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="diagnosis-tab">
+<h1>Diagnosis tab<a class="headerlink" href="#diagnosis-tab" title="Permalink to this headline">¶</a></h1>
+<p>Diagnosis tab offers convenient debug information for optimizations with easy way for generating new one with requested variations.</p>
+<p>To get OP list you need to execute quantization optimization and select optimized model on left hand side. In OP table you can see list of OPs with MSE and min/max activation values. Selecting one of OP in table highlights its position in graph. Configuration for currently selected OP can be set in section under OP table.</p>
+<p><img alt="Diagnosis-tab" src="../_images/diagnosis-tab.png" /></p>
+<p>You can set model wise parameters that apply to whole model by clicking button with “Model wise”. When you set specific configuration you can view summary and generate new optimization config.</p>
+<p><img alt="Diagnosis-actions" src="../_images/diagnosis-actions.png" /></p>
+<p>Model wise configuration provides separate settings for weights and activations.
+<img alt="Diagnosis-model-wise-wizard" src="../_images/diagnosis-model-wise-wizard.png" /></p>
+<div class="section" id="dataset-tab">
+<h2>Dataset tab<a class="headerlink" href="#dataset-tab" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="dataset-list">
 <h3>Dataset list<a class="headerlink" href="#dataset-list" title="Permalink to this headline">¶</a></h3>
 <p>Dataset tab presents list of datasets assigned to a project. In most cases the “dummy” dataset consisting of synthetic data should be automatically added while creating a project.
