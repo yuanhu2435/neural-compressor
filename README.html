@@ -110,22 +110,27 @@ GPU support is under development.</p>
 <li><p>Python version: 3.7 or 3.8 or 3.9 or 3.10</p></li>
 </ul>
 <p><strong>Install on Linux</strong></p>
+<ul>
+<li><p>Release binary install</p>
 <div class="highlight-Shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># install stable basic version from pip</span>
 pip install neural-compressor
-<span class="c1"># install stable full version from pip (including GUI)</span>
+<span class="c1"># Or install stable full version from pip (including GUI)</span>
 pip install neural-compressor-full
-
-<span class="c1"># install nightly basic version from pip</span>
-pip install -i https://test.pypi.org/simple/ neural-compressor
-<span class="c1"># install nightly full version from pip (including GUI)</span>
-pip install -i https://test.pypi.org/simple/ neural-compressor-full
-
-<span class="c1"># install stable basic version from from conda</span>
-conda install neural-compressor -c conda-forge -c intel
-<span class="c1"># install stable full version from from conda (including GUI)</span>
-conda install neural-compressor-full -c conda-forge -c intel  
 </pre></div>
 </div>
+</li>
+<li><p>Nightly binary install</p>
+<div class="highlight-Shell notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/intel/neural-compressor.git
+<span class="nb">cd</span> neural-compressor
+pip install -r requirements.txt
+<span class="c1"># install nightly basic version from pip</span>
+pip install -i https://test.pypi.org/simple/ neural-compressor
+<span class="c1"># Or install nightly full version from pip (including GUI)</span>
+pip install -i https://test.pypi.org/simple/ neural-compressor-full
+</pre></div>
+</div>
+</li>
+</ul>
 <p>More installation methods can be found at <a class="reference internal" href="docs/installation_guide.html"><span class="doc">Installation Guide</span></a>. Please check out our <a class="reference internal" href="docs/faq.html"><span class="doc">FAQ</span></a> for more details.</p>
 </div>
 <div class="section" id="getting-started">
@@ -232,7 +237,7 @@ Please set the environment variable TF_ENABLE_ONEDNN_OPTS=1 to enable oneDNN opt
 </div>
 <div class="section" id="validated-models">
 <h3>Validated Models<a class="headerlink" href="#validated-models" title="Permalink to this headline">¶</a></h3>
-<p>Intel® Neural Compressor validated 420+ <a class="reference external" href="https://github.com/intel/neural-compressor/tree/98019c6597e6b6c3cd5bad1d39a70ef66a93a81d/./examples">examples</a> for quantization with performance speedup geomean 2.2x and up to 4.2x on VNNI while minimizing the accuracy loss. And also provided 30+ pruning and knowledge distillation samples.<br />More details for validated models are available <a class="reference internal" href="docs/validated_model_list.html"><span class="doc">here</span></a>.</p>
+<p>Intel® Neural Compressor validated 420+ <a class="reference external" href="https://github.com/intel/neural-compressor/tree/5f6f38b96d45d0253b8de239df51c09b2471a8fb/./examples">examples</a> for quantization with performance speedup geomean 2.2x and up to 4.2x on VNNI while minimizing the accuracy loss. And also provided 30+ pruning and knowledge distillation samples.<br />More details for validated models are available <a class="reference internal" href="docs/validated_model_list.html"><span class="doc">here</span></a>.</p>
 <a target="_blank" href="./docs/imgs/release_data.png">
   <img src="./docs/imgs/release_data.png" alt="Architecture" width=800 height=600>
 </a></div>
@@ -279,8 +284,9 @@ Please set the environment variable TF_ENABLE_ONEDNN_OPTS=1 to enable oneDNN opt
     <tr>
         <td colspan="2" align="center"><a href="docs/Quantization.md">Quantization</a></td>
         <td colspan="1" align="center"><a href="docs/pruning.md">Pruning</a> <a href="docs/sparsity.md">(Sparsity)</a> </td> 
-        <td colspan="3" align="center"><a href="docs/distillation.md">Knowledge Distillation</a></td>
-        <td colspan="3" align="center"><a href="docs/mixed_precision.md">Mixed Precision</a></td>
+        <td colspan="2" align="center"><a href="docs/distillation.md">Knowledge Distillation</a></td>
+        <td colspan="2" align="center"><a href="docs/mixed_precision.md">Mixed Precision</a></td>
+        <td colspan="2" align="center"><a href="docs/orchestration.md">Orchestration</a></td>
     </tr>
     <tr>
         <td colspan="2" align="center"><a href="docs/benchmark.md">Benchmarking</a></td>

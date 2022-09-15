@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Making a new release of Neural_Coder &mdash; Intel® Neural Compressor  documentation</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <title>Making a new release of neural_compressor_ext_lab_alibaba &mdash; Intel® Neural Compressor  documentation</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -62,9 +62,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Making a new release of Neural_Coder</li>
+      <li>Making a new release of neural_compressor_ext_lab_alibaba</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../../_sources/neural_coder/extensions/neural-compressor-ext-lab/RELEASE.md.txt" rel="nofollow"> View page source</a>
+            <a href="../../../_sources/neural_coder/extensions/neurl_compressor_ext_lab_alibaba/RELEASE.md.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -72,8 +72,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="making-a-new-release-of-neural-coder">
-<h1>Making a new release of Neural_Coder<a class="headerlink" href="#making-a-new-release-of-neural-coder" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="making-a-new-release-of-neural-compressor-ext-lab-alibaba">
+<h1>Making a new release of neural_compressor_ext_lab_alibaba<a class="headerlink" href="#making-a-new-release-of-neural-compressor-ext-lab-alibaba" title="Permalink to this headline">¶</a></h1>
 <p>The extension can be published to <code class="docutils literal notranslate"><span class="pre">PyPI</span></code> and <code class="docutils literal notranslate"><span class="pre">npm</span></code> manually or using the <a class="reference external" href="https://github.com/jupyter-server/jupyter_releaser">Jupyter Releaser</a>.</p>
 <div class="section" id="manual-release">
 <h2>Manual release<a class="headerlink" href="#manual-release" title="Permalink to this headline">¶</a></h2>
@@ -83,7 +83,7 @@
 packages. All of the Python
 packaging instructions in the <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> file to wrap your extension in a
 Python package. Before generating a package, we first need to install <code class="docutils literal notranslate"><span class="pre">build</span></code>.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install build twine
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install build twine hatch
 </pre></div>
 </div>
 <p>To create a Python source package (<code class="docutils literal notranslate"><span class="pre">.tar.gz</span></code>) and the binary package (<code class="docutils literal notranslate"><span class="pre">.whl</span></code>) in the <code class="docutils literal notranslate"><span class="pre">dist/</span></code> directory, do:</p>

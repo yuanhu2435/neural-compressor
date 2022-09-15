@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Neural-Compressor-EXT-LAB &mdash; Intel® Neural Compressor  documentation</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <title>neural_compressor_ext_lab &mdash; Intel® Neural Compressor  documentation</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -62,9 +62,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Neural-Compressor-EXT-LAB</li>
+      <li>neural_compressor_ext_lab</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../../_sources/neural_coder/extensions/neural-compressor-ext-lab/README.md.txt" rel="nofollow"> View page source</a>
+            <a href="../../../_sources/neural_coder/extensions/neural_compressor_ext_lab/README.md.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -73,7 +73,8 @@
            <div itemprop="articleBody">
              
   <div class="section" id="neural-compressor-ext-lab">
-<h1>Neural-Compressor-EXT-LAB<a class="headerlink" href="#neural-compressor-ext-lab" title="Permalink to this headline">¶</a></h1>
+<h1>neural_compressor_ext_lab<a class="headerlink" href="#neural-compressor-ext-lab" title="Permalink to this headline">¶</a></h1>
+<p>A JupyterLab extension.</p>
 <div class="section" id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
@@ -82,57 +83,15 @@
 </div>
 <div class="section" id="install">
 <h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="python-backend">
-<h3>Python Backend<a class="headerlink" href="#python-backend" title="Permalink to this headline">¶</a></h3>
-<p>To install the Python source code, execute:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python setup.py install
-</pre></div>
-</div>
-<p>Note: After the extension is published to the PyPI or conda-forge repositories, you can easily install the extension using pip or conda, such as:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install neural-compressor-ext-lab
-</pre></div>
-</div>
-</div>
-<div class="section" id="javascript-typescript-front-end">
-<h3>Javascript/Typescript Front-end<a class="headerlink" href="#javascript-typescript-front-end" title="Permalink to this headline">¶</a></h3>
-<p>Install lab extension from source code with:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>jupyter labextension install --py neural-compressor-ext-lab
-</pre></div>
-</div>
-<p>Note: After the extension is published to the NPM repositories, you can easily install the extension from jupyter lab extension market and don’t need to execute the above command manually.</p>
-</div>
-</div>
-<div class="section" id="debugging">
-<h2>Debugging<a class="headerlink" href="#debugging" title="Permalink to this headline">¶</a></h2>
-<p>Check if the package has been added into the extension list:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>jupyter labextension list
-jupyter serverextension list
-</pre></div>
-</div>
-<p>If the neural-compressor-ext-lab is not in <code class="docutils literal notranslate"><span class="pre">serverextension</span></code> list, try to enable the package to become a server extension:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>jupyter serverextension <span class="nb">enable</span> --py neural-compressor-ext-lab
-</pre></div>
-</div>
-<p><em>debugging tip</em> ：if the enable fails, try running:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>jupyter lab --ServerAPP.jpserver_extension<span class="o">=</span><span class="s2">&quot;{&#39;neural-compressor-ext-lab&#39;:True}&quot;</span> --debug
+<p>To install the extension, execute:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install neural_compressor_ext_lab
 </pre></div>
 </div>
 </div>
 <div class="section" id="uninstall">
 <h2>Uninstall<a class="headerlink" href="#uninstall" title="Permalink to this headline">¶</a></h2>
 <p>To remove the extension, execute:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip uninstall neural-compressor-ext-lab
-</pre></div>
-</div>
-</div>
-<div class="section" id="access-jupyter-lab-remotely-using-ssh">
-<h2>Access jupyter lab remotely using SSH<a class="headerlink" href="#access-jupyter-lab-remotely-using-ssh" title="Permalink to this headline">¶</a></h2>
-<p>Launch the jupyter lab service on the remote server:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>jupyter lab --no-browser --port<span class="o">=</span><span class="m">8889</span>
-</pre></div>
-</div>
-<p>Start SSH in a local terminal:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh -N -f -L localhost:8888:localhost:8889 username@serverIP
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip uninstall neural_compressor_ext_lab
 </pre></div>
 </div>
 </div>
@@ -145,7 +104,7 @@ jupyter serverextension list
 <a class="reference external" href="https://yarnpkg.com/">yarn</a> that is installed with JupyterLab. You may use
 <code class="docutils literal notranslate"><span class="pre">yarn</span></code> or <code class="docutils literal notranslate"><span class="pre">npm</span></code> in lieu of <code class="docutils literal notranslate"><span class="pre">jlpm</span></code> below.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Clone the repo to your local environment</span>
-<span class="c1"># Change directory to the Neural_Coder directory</span>
+<span class="c1"># Change directory to the neural_compressor_ext_lab directory</span>
 <span class="c1"># Install package in development mode</span>
 pip install -e .
 <span class="c1"># Link your development version of the extension with JupyterLab</span>
@@ -169,30 +128,12 @@ jupyter lab
 </div>
 <div class="section" id="development-uninstall">
 <h3>Development uninstall<a class="headerlink" href="#development-uninstall" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip uninstall neural-compressor-ext-lab
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip uninstall neural_compressor_ext_lab
 </pre></div>
 </div>
 <p>In development mode, you will also need to remove the symlink created by <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">labextension</span> <span class="pre">develop</span></code>
 command. To find its location, you can run <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">labextension</span> <span class="pre">list</span></code> to figure out where the <code class="docutils literal notranslate"><span class="pre">labextensions</span></code>
-folder is located. Then you can remove the symlink named <code class="docutils literal notranslate"><span class="pre">Neural_Coder</span></code> within that folder.</p>
-</div>
-<div class="section" id="testing-the-extension">
-<h3>Testing the extension<a class="headerlink" href="#testing-the-extension" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="frontend-tests">
-<h4>Frontend tests<a class="headerlink" href="#frontend-tests" title="Permalink to this headline">¶</a></h4>
-<p>This extension is using <a class="reference external" href="https://jestjs.io/">Jest</a> for JavaScript code testing.</p>
-<p>To execute them, execute:</p>
-<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>jlpm
-jlpm <span class="nb">test</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="integration-tests">
-<h4>Integration tests<a class="headerlink" href="#integration-tests" title="Permalink to this headline">¶</a></h4>
-<p>This extension uses <a class="reference external" href="https://playwright.dev/docs/intro/">Playwright</a> for the integration tests (aka user level tests).
-More precisely, the JupyterLab helper <a class="reference external" href="https://github.com/jupyterlab/jupyterlab/tree/master/galata">Galata</a> is used to handle testing the extension in JupyterLab.</p>
-<p>More information are provided within the <a class="reference internal" href="ui-tests/README.html"><span class="doc">ui-tests</span></a> README.</p>
-</div>
+folder is located. Then you can remove the symlink named <code class="docutils literal notranslate"><span class="pre">neural_compressor_ext_lab</span></code> within that folder.</p>
 </div>
 <div class="section" id="packaging-the-extension">
 <h3>Packaging the extension<a class="headerlink" href="#packaging-the-extension" title="Permalink to this headline">¶</a></h3>
