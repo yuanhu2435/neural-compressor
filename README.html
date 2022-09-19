@@ -28,7 +28,7 @@
             <a href="index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.14.0a0
+                1.14
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -158,7 +158,7 @@ wget https://storage.googleapis.com/intel-optimized-tensorflow/models/v1_6/mobil
 <li><p>Quantization with <a class="reference internal" href="docs/bench.html"><span class="doc">GUI</span></a></p></li>
 </ul>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># An ONNX Example</span>
-pip install <span class="nv">onnx</span><span class="o">==</span><span class="m">1</span>.9.0 <span class="nv">onnxruntime</span><span class="o">==</span><span class="m">1</span>.10.0 onnxruntime-extensions
+pip install <span class="nv">onnx</span><span class="o">==</span><span class="m">1</span>.12.0 <span class="nv">onnxruntime</span><span class="o">==</span><span class="m">1</span>.12.1 onnxruntime-extensions
 <span class="c1"># Prepare fp32 model</span>
 wget https://github.com/onnx/models/raw/main/vision/classification/resnet/model/resnet50-v1-12.onnx
 <span class="c1"># Start GUI</span>
@@ -237,7 +237,7 @@ Please set the environment variable TF_ENABLE_ONEDNN_OPTS=1 to enable oneDNN opt
 </div>
 <div class="section" id="validated-models">
 <h3>Validated Models<a class="headerlink" href="#validated-models" title="Permalink to this headline">¶</a></h3>
-<p>Intel® Neural Compressor validated 420+ <a class="reference external" href="https://github.com/intel/neural-compressor/tree/5f6f38b96d45d0253b8de239df51c09b2471a8fb/./examples">examples</a> for quantization with performance speedup geomean 2.2x and up to 4.2x on VNNI while minimizing the accuracy loss. And also provided 30+ pruning and knowledge distillation samples.<br />More details for validated models are available <a class="reference internal" href="docs/validated_model_list.html"><span class="doc">here</span></a>.</p>
+<p>Intel® Neural Compressor validated 420+ <a class="reference external" href="https://github.com/intel/neural-compressor/tree/5f0adfee344abf60e6779d05bc77cebc27ab6aed/./examples">examples</a> for quantization with performance speedup geomean 2.2x and up to 4.2x on VNNI while minimizing the accuracy loss. And also provided 30+ pruning and knowledge distillation samples.<br />More details for validated models are available <a class="reference internal" href="docs/validated_model_list.html"><span class="doc">here</span></a>.</p>
 <a target="_blank" href="./docs/imgs/release_data.png">
   <img src="./docs/imgs/release_data.png" alt="Architecture" width=800 height=600>
 </a></div>
