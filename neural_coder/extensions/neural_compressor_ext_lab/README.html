@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>neural_compressor_ext_lab &mdash; Intel® Neural Compressor  documentation</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <title>Intel® Neural Compressor as JupyterLab Extension &mdash; Intel® Neural Compressor  documentation</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -62,7 +62,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>neural_compressor_ext_lab</li>
+      <li>Intel® Neural Compressor as JupyterLab Extension</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../../_sources/neural_coder/extensions/neural_compressor_ext_lab/README.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -72,72 +72,39 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="neural-compressor-ext-lab">
-<h1>neural_compressor_ext_lab<a class="headerlink" href="#neural-compressor-ext-lab" title="Permalink to this headline">¶</a></h1>
-<p>A JupyterLab extension.</p>
-<div class="section" id="requirements">
-<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>JupyterLab &gt;= 3.0</p></li>
-</ul>
-</div>
-<div class="section" id="install">
-<h2>Install<a class="headerlink" href="#install" title="Permalink to this headline">¶</a></h2>
-<p>To install the extension, execute:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install neural_compressor_ext_lab
+  <div class="section" id="intel-neural-compressor-as-jupyterlab-extension">
+<h1>Intel® Neural Compressor as JupyterLab Extension<a class="headerlink" href="#intel-neural-compressor-as-jupyterlab-extension" title="Permalink to this headline">¶</a></h1>
+<p>A JupyterLab Extension library supporting Neural Coder, a novel feature powered by Intel® Neural Compressor providing automatic quantization to further simplify computing performance optimizations of Deep Learning models.</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p><strong>By Extension Manager in JupyterLab (Recommended)</strong></p>
+<p>Search for <code class="docutils literal notranslate"><span class="pre">jupyter-lab-neural-compressor</span></code> in the Extension Manager in JupyterLab.</p>
+<p><strong>By Linux Terminal</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>npm i jupyter-lab-neural-compressor
+jupyter labextension install jupyter-lab-neural-compressor
 </pre></div>
 </div>
 </div>
-<div class="section" id="uninstall">
-<h2>Uninstall<a class="headerlink" href="#uninstall" title="Permalink to this headline">¶</a></h2>
-<p>To remove the extension, execute:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip uninstall neural_compressor_ext_lab
+<div class="section" id="getting-started">
+<h2>Getting Started!<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>As shown in the drop-down list, the supported features include “INT8 (Static Quantization)”, “INT8 (Dynamic Quantization)”, “BF16”, and “Auto Enable &amp; Benchmark”. Each of the first three options enables a specific quantization feature into your Deep Learning scripts. The last option automatically enables all quantization features on a Deep Learning script and automatically evaluates the best performance on the model. It is a code-free solution that can help users enable quantization algorithms on a Deep Learning model with no manual coding needed.</p>
+<img src="../screenshots/1.png" alt="Architecture" width="75%" height="75%"><div class="section" id="auto-enable-a-feature">
+<h3>Auto-enable a feature<a class="headerlink" href="#auto-enable-a-feature" title="Permalink to this headline">¶</a></h3>
+<p>Click the run button on the left side of the drop-down list to start. After finishing, you can see the code changes for the specific optimization enabling as shown in the figure below:</p>
+<img src="../screenshots/2.png" alt="Architecture" width="75%" height="75%"></div>
+<div class="section" id="or-let-us-help-you-auto-select-the-best-feature">
+<h3>Or let us help you auto-select the best feature<a class="headerlink" href="#or-let-us-help-you-auto-select-the-best-feature" title="Permalink to this headline">¶</a></h3>
+<p>The last option automatically enables each quantization feature on your Deep Learning script and automatically evaluates for the best performance among all features on your Deep Learning model. Since it will automatically run the Python script for benchmark, it requires you to enter additional parameters needed to run your Python script. If there is no additional parameter needed, you can just leave it blank:</p>
+<img src="../screenshots/3.png" alt="Architecture" width="35%" height="35%"><p>In the new cell box appeared below your Code cell boxes, you can see the execution progress, and at the end you can see which one turns out to be the best optimization and how much performance gain can it bring to your Deep Learning model:</p>
+<img src="../screenshots/4.png" alt="Architecture" width="55%" height="55%"><p>When it is finished, you can also see that the code changes for the best optimization are automatically enabled into your script:</p>
+<img src="../screenshots/5.png" alt="Architecture" width="55%" height="55%"></div>
+</div>
+<div class="section" id="pre-requisites">
+<h2>Pre-requisites<a class="headerlink" href="#pre-requisites" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>apt-get update <span class="o">&amp;&amp;</span> apt-get install bc numactl
+conda install mkl mkl-include jemalloc
+pip3 install neural-compressor opencv-python-headless
 </pre></div>
-</div>
-</div>
-<div class="section" id="contributing">
-<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="development-install">
-<h3>Development install<a class="headerlink" href="#development-install" title="Permalink to this headline">¶</a></h3>
-<p>Note: You will need NodeJS to build the extension package.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">jlpm</span></code> command is JupyterLab’s pinned version of
-<a class="reference external" href="https://yarnpkg.com/">yarn</a> that is installed with JupyterLab. You may use
-<code class="docutils literal notranslate"><span class="pre">yarn</span></code> or <code class="docutils literal notranslate"><span class="pre">npm</span></code> in lieu of <code class="docutils literal notranslate"><span class="pre">jlpm</span></code> below.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Clone the repo to your local environment</span>
-<span class="c1"># Change directory to the neural_compressor_ext_lab directory</span>
-<span class="c1"># Install package in development mode</span>
-pip install -e .
-<span class="c1"># Link your development version of the extension with JupyterLab</span>
-jupyter labextension develop . --overwrite
-<span class="c1"># Rebuild extension Typescript source after making changes</span>
-jlpm build
-</pre></div>
-</div>
-<p>You can watch the source directory and run JupyterLab at the same time in different terminals to watch for changes in the extension’s source and automatically rebuild the extension.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Watch the source directory in one terminal, automatically rebuilding when needed</span>
-jlpm watch
-<span class="c1"># Run JupyterLab in another terminal</span>
-jupyter lab
-</pre></div>
-</div>
-<p>With the watch command running, every saved change will immediately be built locally and available in your running JupyterLab. Refresh JupyterLab to load the change in your browser (you may need to wait several seconds for the extension to be rebuilt).</p>
-<p>By default, the <code class="docutils literal notranslate"><span class="pre">jlpm</span> <span class="pre">build</span></code> command generates the source maps for this extension to make it easier to debug using the browser dev tools. To also generate source maps for the JupyterLab core extensions, you can run the following command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>jupyter lab build --minimize<span class="o">=</span>False
-</pre></div>
-</div>
-</div>
-<div class="section" id="development-uninstall">
-<h3>Development uninstall<a class="headerlink" href="#development-uninstall" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip uninstall neural_compressor_ext_lab
-</pre></div>
-</div>
-<p>In development mode, you will also need to remove the symlink created by <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">labextension</span> <span class="pre">develop</span></code>
-command. To find its location, you can run <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">labextension</span> <span class="pre">list</span></code> to figure out where the <code class="docutils literal notranslate"><span class="pre">labextensions</span></code>
-folder is located. Then you can remove the symlink named <code class="docutils literal notranslate"><span class="pre">neural_compressor_ext_lab</span></code> within that folder.</p>
-</div>
-<div class="section" id="packaging-the-extension">
-<h3>Packaging the extension<a class="headerlink" href="#packaging-the-extension" title="Permalink to this headline">¶</a></h3>
-<p>See <a class="reference internal" href="RELEASE.html"><span class="doc">RELEASE</span></a></p>
 </div>
 </div>
 </div>

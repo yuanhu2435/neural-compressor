@@ -40,8 +40,17 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Intel® Neural Compressor</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#install-on-linux">Install on Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#quantization-with-python-api">Quantization with Python API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#quantization-with-gui">Quantization with GUI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#quantization-with-auto-coding-api-experimental">Quantization with Auto-coding API (Experimental)</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#system-requirements">System Requirements</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#validated-software-environment">Validated Software Environment</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#validated-models">Validated Models</a></li>
@@ -50,7 +59,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#selected-publications">Selected Publications</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#additional-content">Additional Content</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#hiring-star">Hiring :star:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hiring">Hiring</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="docs/examples_readme.html">Examples</a></li>
@@ -96,8 +105,8 @@
 <a class="reference external" href="https://github.com/intel/neural-compressor"><img alt="coverage" src="https://img.shields.io/badge/coverage-90%25-green" /></a>
 <a class="reference external" href="https://pepy.tech/project/neural-compressor"><img alt="Downloads" src="https://static.pepy.tech/personalized-badge/neural-compressor?period=total&amp;units=international_system&amp;left_color=grey&amp;right_color=green&amp;left_text=downloads" /></a></p>
 </div><hr class="docutils" />
-<p>Intel® Neural Compressor, formerly known as Intel® Low Precision Optimization Tool, an open-source Python library running on Intel CPUs and GPUs, which delivers unified interfaces across multiple deep learning frameworks for popular network compression technologies, such as quantization, pruning, knowledge distillation. This tool supports automatic accuracy-driven tuning strategies to help user quickly find out the best quantized model. It also implements different weight pruning algorithms to generate pruned model with predefined sparsity goal and supports knowledge distillation to distill the knowledge from the teacher model to the student model.
-Intel® Neural Compressor has been one of the critical AI software components in <a class="reference external" href="https://software.intel.com/content/www/us/en/develop/tools/oneapi/ai-analytics-toolkit.html">Intel® oneAPI AI Analytics Toolkit</a>.</p>
+<div align="left"><p>Intel® Neural Compressor, formerly known as Intel® Low Precision Optimization Tool, is an open-source Python library that runs on Intel CPUs and GPUs, which delivers unified interfaces across multiple deep-learning frameworks for popular network compression technologies such as quantization, pruning, and knowledge distillation. This tool supports automatic accuracy-driven tuning strategies to help the user quickly find out the best quantized model. It also implements different weight-pruning algorithms to generate a pruned model with predefined sparsity goal. It also supports knowledge distillation to distill the knowledge from the teacher model to the student model.
+Intel® Neural Compressor is a critical AI software component in the <a class="reference external" href="https://software.intel.com/content/www/us/en/develop/tools/oneapi/ai-analytics-toolkit.html">Intel® oneAPI AI Analytics Toolkit</a>.</p>
 <blockquote>
 <div><p><strong>Note:</strong>
 GPU support is under development.</p>
@@ -105,11 +114,12 @@ GPU support is under development.</p>
 <p><strong>Visit the Intel® Neural Compressor online document website at: <a class="reference external" href="https://intel.github.io/neural-compressor">https://intel.github.io/neural-compressor</a>.</strong></p>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p><strong>Prerequisites</strong></p>
-<ul class="simple">
-<li><p>Python version: 3.7 or 3.8 or 3.9 or 3.10</p></li>
-</ul>
-<p><strong>Install on Linux</strong></p>
+<div class="section" id="prerequisites">
+<h3>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h3>
+<p>Python version: 3.7, 3.8, 3.9, 3.10</p>
+</div>
+<div class="section" id="install-on-linux">
+<h3>Install on Linux<a class="headerlink" href="#install-on-linux" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><p>Release binary install</p>
 <div class="highlight-Shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># install stable basic version from pip</span>
@@ -133,11 +143,11 @@ pip install -i https://test.pypi.org/simple/ neural-compressor-full
 </ul>
 <p>More installation methods can be found at <a class="reference internal" href="docs/installation_guide.html"><span class="doc">Installation Guide</span></a>. Please check out our <a class="reference internal" href="docs/faq.html"><span class="doc">FAQ</span></a> for more details.</p>
 </div>
+</div>
 <div class="section" id="getting-started">
 <h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>Quantization with Python API</p></li>
-</ul>
+<div class="section" id="quantization-with-python-api">
+<h3>Quantization with Python API<a class="headerlink" href="#quantization-with-python-api" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># A TensorFlow Example</span>
 pip install tensorflow
 <span class="c1"># Prepare fp32 model</span>
@@ -154,9 +164,9 @@ wget https://storage.googleapis.com/intel-optimized-tensorflow/models/v1_6/mobil
 <span class="n">quantizer</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 </pre></div>
 </div>
-<ul class="simple">
-<li><p>Quantization with <a class="reference internal" href="docs/bench.html"><span class="doc">GUI</span></a></p></li>
-</ul>
+</div>
+<div class="section" id="quantization-with-gui">
+<h3>Quantization with <a class="reference internal" href="docs/bench.html"><span class="doc">GUI</span></a><a class="headerlink" href="#quantization-with-gui" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># An ONNX Example</span>
 pip install <span class="nv">onnx</span><span class="o">==</span><span class="m">1</span>.12.0 <span class="nv">onnxruntime</span><span class="o">==</span><span class="m">1</span>.12.1 onnxruntime-extensions
 <span class="c1"># Prepare fp32 model</span>
@@ -167,9 +177,9 @@ inc_bench
 </div>
 <a target="_blank" href="./docs/imgs/INC_GUI.gif">
   <img src="./docs/imgs/INC_GUI.gif" alt="Architecture">
-</a><ul class="simple">
-<li><p>Quantization with <a class="reference internal" href="neural_coder/docs/AutoQuant.html"><span class="doc">Auto-coding API</span></a> (Experimental)</p></li>
-</ul>
+</a></div>
+<div class="section" id="quantization-with-auto-coding-api-experimental">
+<h3>Quantization with <a class="reference internal" href="neural_coder/docs/AutoQuant.html"><span class="doc">Auto-coding API</span></a> (Experimental)<a class="headerlink" href="#quantization-with-auto-coding-api-experimental" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">neural_coder</span> <span class="kn">import</span> <span class="n">auto_quant</span>
 <span class="n">auto_quant</span><span class="p">(</span>
     <span class="n">code</span><span class="o">=</span><span class="s2">&quot;https://github.com/huggingface/transformers/blob/v4.21-release/examples/pytorch/text-classification/run_glue.py&quot;</span><span class="p">,</span>
@@ -182,9 +192,10 @@ inc_bench
 </pre></div>
 </div>
 </div>
+</div>
 <div class="section" id="system-requirements">
 <h2>System Requirements<a class="headerlink" href="#system-requirements" title="Permalink to this headline">¶</a></h2>
-<p>Intel® Neural Compressor supports systems based on <a class="reference external" href="https://en.wikipedia.org/wiki/X86-64">Intel 64 architecture or compatible processors</a>, specially optimized for the following CPUs:</p>
+<p>Intel® Neural Compressor supports systems based on <a class="reference external" href="https://en.wikipedia.org/wiki/X86-64">Intel 64 architecture or compatible processors</a> that are specifically optimized for the following CPUs:</p>
 <ul class="simple">
 <li><p>Intel Xeon Scalable processor (formerly Skylake, Cascade Lake, Cooper Lake, and Icelake)</p></li>
 <li><p>Future Intel Xeon Scalable processor (code name Sapphire Rapids)</p></li>
@@ -232,15 +243,17 @@ inc_bench
 </tbody>
 </table><blockquote>
 <div><p><strong>Note:</strong>
-Please set the environment variable TF_ENABLE_ONEDNN_OPTS=1 to enable oneDNN optimizations if you are using TensorFlow from v2.6 to v2.8. oneDNN has been fully default from TensorFlow v2.9.</p>
+Set the environment variable <code class="docutils literal notranslate"><span class="pre">TF_ENABLE_ONEDNN_OPTS=1</span></code> to enable oneDNN optimizations if you are using TensorFlow v2.6 to v2.8. oneDNN is the default for TensorFlow v2.9.</p>
 </div></blockquote>
 </div>
 <div class="section" id="validated-models">
 <h3>Validated Models<a class="headerlink" href="#validated-models" title="Permalink to this headline">¶</a></h3>
-<p>Intel® Neural Compressor validated 420+ <a class="reference external" href="https://github.com/intel/neural-compressor/tree/5f0adfee344abf60e6779d05bc77cebc27ab6aed/./examples">examples</a> for quantization with performance speedup geomean 2.2x and up to 4.2x on VNNI while minimizing the accuracy loss. And also provided 30+ pruning and knowledge distillation samples.<br />More details for validated models are available <a class="reference internal" href="docs/validated_model_list.html"><span class="doc">here</span></a>.</p>
-<a target="_blank" href="./docs/imgs/release_data.png">
-  <img src="./docs/imgs/release_data.png" alt="Architecture" width=800 height=600>
-</a></div>
+<p>Intel® Neural Compressor validated 420+ <a class="reference external" href="https://github.com/intel/neural-compressor/tree/be70558a44933ff91a1bca993780fc5bec234dda/./examples">examples</a> for quantization with a performance speedup geomean of 2.2x and up to 4.2x on VNNI while minimizing accuracy loss. Over 30 pruning and knowledge distillation samples are also available. More details for validated models are available <a class="reference internal" href="docs/validated_model_list.html"><span class="doc">here</span></a>.</p>
+<div style = "width: 77%; margin-bottom: 2%;">
+  <a target="_blank" href="./docs/imgs/release_data.png">
+    <img src="./docs/imgs/release_data.png" alt="Architecture" width=800 height=600>
+  </a>
+</div></div>
 </div>
 <div class="section" id="documentation">
 <h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
@@ -311,17 +324,17 @@ Please set the environment variable TF_ENABLE_ONEDNN_OPTS=1 to enable oneDNN opt
 <div class="section" id="selected-publications">
 <h2>Selected Publications<a class="headerlink" href="#selected-publications" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
+<li><p><a class="reference external" href="https://medium.com/intel-analytics-software/alibaba-cloud-collaborates-with-intel-neural-compressor-for-better-productivity-and-performance-83cdb6500420">Alibaba Cloud and Intel Neural Compressor Deliver Better Productivity for PyTorch Users</a> (Sep 2022)</p></li>
+<li><p><a class="reference external" href="https://medium.com/intel-analytics-software/efficient-text-classification-with-intel-neural-compressor-4853296deeac">Efficient Text Classification with Intel Neural Compressor</a> (Sep 2022)</p></li>
+<li><p><a class="reference external" href="https://medium.com/intel-analytics-software/dynamic-neural-architecture-search-with-intel-neural-compressor-7b05eaf325f3">Dynamic Neural Architecture Search with Intel Neural Compressor</a> (Sep 2022)</p></li>
+<li><p><a class="reference external" href="https://medium.com/intel-analytics-software/easy-quantization-in-pytorch-using-fine-grained-fx-80be2c4bc2d6">Easy Quantization in PyTorch Using Fine-Grained FX</a> (Sep 2022)</p></li>
+<li><p><a class="reference external" href="https://medium.com/intel-analytics-software/one-click-enable-intel-neural-compressor-features-in-pytorch-scripts-5d4e31f5a22b">One-Click Enabling of Intel Neural Compressor Features in PyTorch Scripts</a> (Aug 2022)</p></li>
 <li><p><a class="reference external" href="https://zhuanlan.zhihu.com/p/552484413?utm_source=ZHShareTargetIDMore&amp;utm_medium=social&amp;utm_oi=667097517833981952">Deep learning inference optimization for Address Purification</a> (Aug 2022)</p></li>
 <li><p><a class="reference external" href="https://www.intel.com/content/www/us/en/developer/videos/accelerate-inference-without-sacrificing-accuracy.html#gs.9yottx">Accelerate AI Inference without Sacrificing Accuracy</a></p></li>
 <li><p><a class="reference external" href="https://www.intel.com/content/www/us/en/developer/videos/accelerate-deep-learning-with-intel-tensorflow.html#gs.9yrw90">Accelerate Deep Learning with Intel® Extension for TensorFlow*</a></p></li>
-<li><p><a class="reference external" href="https://medium.com/pytorch/pytorch-inference-acceleration-with-intel-neural-compressor-842ef4210d7d">PyTorch Inference Acceleration with Intel® Neural Compressor</a> (Jun 2022)</p></li>
-<li><p><a class="reference external" href="https://huggingface.co/blog/intel">Intel and Hugging Face Partner to Democratize Machine Learning Hardware Acceleration</a> (Jun 2022)</p></li>
-<li><p><a class="reference external" href="https://networkbuilders.intel.com/solutionslibrary/intel-deep-learning-boost-boost-network-security-ai-inference-performance-in-google-cloud-platform-gcp-technology-guide">Intel® Deep Learning Boost - Boost Network Security AI Inference Performance in Google Cloud Platform (GCP)</a> (Apr 2022)</p></li>
-<li><p><a class="reference external" href="https://pytorch.org/ecosystem/">Intel® Neural Compressor joined PyTorch ecosystem tool </a> (Apr 2022)</p></li>
-<li><p><a class="reference external" href="https://www.youtube.com/watch?v=-_2ha2CNWXA">Dynamic Quantization with Intel Neural Compressor and Transformers</a> (Mar 2022)</p></li>
 </ul>
 <blockquote>
-<div><p>Please check out our <a class="reference internal" href="docs/publication_list.html"><span class="doc">full publication list</span></a>.</p>
+<div><p>View our <a class="reference internal" href="docs/publication_list.html"><span class="doc">full publication list</span></a>.</p>
 </div></blockquote>
 </div>
 <div class="section" id="additional-content">
@@ -334,9 +347,9 @@ Please set the environment variable TF_ENABLE_ONEDNN_OPTS=1 to enable oneDNN opt
 <li><p><a class="reference external" href="https://intel.github.io/neural-compressor">Intel® Neural Compressor Website</a></p></li>
 </ul>
 </div>
-<div class="section" id="hiring-star">
-<h2>Hiring :star:<a class="headerlink" href="#hiring-star" title="Permalink to this headline">¶</a></h2>
-<p>We are actively hiring. Please send your resume to inc.maintainers&#64;intel.com if you have interests in model compression techniques.</p>
+<div class="section" id="hiring">
+<h2>Hiring<a class="headerlink" href="#hiring" title="Permalink to this headline">¶</a></h2>
+<p>We are actively hiring. Send your resume to inc.maintainers&#64;intel.com if you are interested in model compression techniques.</p>
 </div>
 </div>
 
