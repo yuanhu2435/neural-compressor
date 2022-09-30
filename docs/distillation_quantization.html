@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>APIs &mdash; Intel® Neural Compressor  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <title>Distillation for Quantization &mdash; Intel® Neural Compressor  documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -15,9 +15,7 @@
         <script src="../_static/doctools.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="API Reference" href="api-reference.html" />
-    <link rel="prev" title="Examples" href="../docs/examples_readme.html" /> 
+    <link rel="search" title="Search" href="../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -38,19 +36,15 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul class="current">
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="../README.html">Intel® Neural Compressor</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../docs/examples_readme.html">Examples</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">APIs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api-reference.html">API Reference</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../docs/api-introduction.html">API Documentation</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../docs/doclist.html">Developer Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../docs/releases_info.html">Release</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../docs/contributions.html">Contribution Guidelines</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../docs/legal_information.html">Legal Information</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../docs/security_policy.html">Security Policy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples_readme.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-documentation/apis.html">APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="doclist.html">Developer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="releases_info.html">Release</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributions.html">Contribution Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="legal_information.html">Legal Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security_policy.html">Security Policy</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/intel/neural-compressor">Intel® Neural Compressor repository</a></li>
 </ul>
 
@@ -68,9 +62,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>APIs</li>
+      <li>Distillation for Quantization</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/api-documentation/apis.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/docs/distillation_quantization.md.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -78,24 +72,27 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="apis">
-<h1>APIs<a class="headerlink" href="#apis" title="Permalink to this headline">¶</a></h1>
-<p>The following API information is available:</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="api-reference.html">API Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../docs/api-introduction.html">API Documentation</a></li>
-</ul>
+  <div class="section" id="distillation-for-quantization">
+<h1>Distillation for Quantization<a class="headerlink" href="#distillation-for-quantization" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Distillation and quantization are both promising methods to reduce the computational and memory footprint that huge transformer-based networks require. Quantization refers to a process of reducing the bit precision for both activations and weights. Distillation method transfers knowledge from a heavy teacher model to a light one (student) and it could be used as a performance-booster in lower-bits quantizations. Quantization-aware training recovers accuracy degradation from representation loss in the retraining process and typically provides better performance compared to post-training quantization.
+Intel provides a quantization-aware training (QAT) method that incorporates a novel layer-by-layer knowledge distillation step for INT8 quantization pipelines.</p>
+</div>
+<div class="section" id="user-defined-yaml">
+<h2>User-defined yaml<a class="headerlink" href="#user-defined-yaml" title="Permalink to this headline">¶</a></h2>
+<p>The configurations of distillation and QAT are specified in distillation.yaml and qat.yaml, respectively.</p>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>For examples of distillation for quantization, please refer to <a class="reference external" href="../examples/pytorch/nlp/huggingface_models/text-classification/optimization_pipeline/distillation_for_quantization/fx/README">distillation-for-quantization examples</a></p>
 </div>
 </div>
 
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../docs/examples_readme.html" class="btn btn-neutral float-left" title="Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="api-reference.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 

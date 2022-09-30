@@ -26,7 +26,7 @@
             <a href="../index.html" class="icon icon-home"> Intel® Neural Compressor
           </a>
               <div class="version">
-                1.14
+                1.14.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -83,6 +83,7 @@ pruning and then distillation and then quantization.</p>
 <h2>Validated Orchestration Types<a class="headerlink" href="#validated-orchestration-types" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="one-shot">
 <h3>One-shot<a class="headerlink" href="#one-shot" title="Permalink to this headline">¶</a></h3>
+<p>Since quantization-aware training, pruning and distillation all have training processes, we can achieve the goal of optimization through one shot training.</p>
 <ul class="simple">
 <li><p>Pruning during quantization-aware training</p></li>
 <li><p>Distillation with pattern lock pruning</p></li>
@@ -91,9 +92,11 @@ pruning and then distillation and then quantization.</p>
 </div>
 <div class="section" id="multi-shot">
 <h3>Multi-shot<a class="headerlink" href="#multi-shot" title="Permalink to this headline">¶</a></h3>
+<p>Of course, besides one-shot, we also support separate execution of each optimization process.</p>
 <ul class="simple">
 <li><p>Pruning and then post-training quantization</p></li>
 <li><p>Distillation and then post-training quantization</p></li>
+<li><p>Distillation, then pruning and post-training quantization</p></li>
 </ul>
 </div>
 </div>
@@ -126,7 +129,12 @@ those separate optimization objects into scheduler’s pipeline, the scheduler A
 </div>
 <div class="section" id="examples">
 <h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
-<p>For orchestration related examples, please refer to <a class="reference external" href="../examples/README">Orchestration examples</a>.</p>
+<p>For orchestration one-shot related examples, please refer to <a class="reference external" href="../examples/pytorch/nlp/huggingface_models/question-answering/optimization_pipeline/prune_once_for_all/fx/README">One-shot examples</a>.</p>
+<p>For orchestration multi-shot related examples, please refer to <a class="reference external" href="https://github.com/intel/neural-compressor/tree/0839847aac4e4ee403bc57b3ffa6111dd3bdf170/docs/../examples/pytorch/image_recognition/torchvision_models/optimization_pipeline/">Multi-shot examples</a>.</p>
+</div>
+<div class="section" id="publications">
+<h3>Publications<a class="headerlink" href="#publications" title="Permalink to this headline">¶</a></h3>
+<p>All the experiments from <a class="reference external" href="https://arxiv.org/abs/2111.05754">Prune Once for ALL</a> can be reproduced using <a class="reference external" href="https://github.com/huggingface/optimum-intel">Optimum-Intel</a> with Intel Neural Compressor.</p>
 </div>
 </div>
 </div>
