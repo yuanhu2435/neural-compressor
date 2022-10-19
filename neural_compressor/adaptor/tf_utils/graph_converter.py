@@ -24,24 +24,20 @@ import tensorflow as tf
 
 from collections import OrderedDict, UserDict
 from tensorflow.core.framework import graph_pb2
-from tensorflow.python.framework import tensor_util
 from tensorflow.python.platform import gfile
 from neural_compressor.utils.utility import get_all_fp32_data
 from neural_compressor.utils.utility import get_tensor_histogram
 from neural_compressor.utils.utility import combine_histogram
 from neural_compressor.utils.utility import CaptureOutputToFile
-from neural_compressor.utils.utility import str2array
-from neural_compressor.utils.utility import Dequantize, DequantizeWeight
 from neural_compressor.conf.dotdict import deep_get
 from neural_compressor.experimental.common import Model
 from .transform_graph.insert_logging import InsertLogging
 from .transform_graph.rerange_quantized_concat import RerangeQuantizedConcat
 from .transform_graph.bias_correction import BiasCorrection
-from .util import iterator_sess_run,version1_gt_version2,version1_eq_version2,version1_lt_version2
-from .util import version1_gte_version2,version1_lte_version2
+from .util import iterator_sess_run,version1_gt_version2,version1_eq_version2
+from .util import version1_gte_version2,version1_lte_version2,version1_lt_version2
 from .quantize_graph.quantize_graph_for_intel_cpu import QuantizeGraphForIntel
 from .quantize_graph_common import QuantizeGraphHelper
-from .quantize_graph.quantize_graph_conv import FuseNodeStartWithConv2d
 from .quantize_graph.qdq.optimize_qdq import OptimizeQDQGraph
 
 from .graph_util import GraphAnalyzer
@@ -59,12 +55,16 @@ from .graph_rewriter.int8.fuse_matmul_requantize import FuseMatMulRequantizeTran
 from .graph_rewriter.int8.fuse_matmul_requantize import FuseMatMulRequantizeDequantizeTransformer
 from .graph_rewriter.int8.fuse_matmul_requantize import FuseMatMulRequantizeNewAPITransformer
 from .graph_rewriter.int8.fuse_matmul_requantize import FuseMatMulRequantizeDequantizeNewAPITransformer
+from .graph_rewriter.int8.fuse_conv_redundant_dequantize import FuseConvRedundantDequantizeTransformer
+from .graph_rewriter.int8.fuse_matmul_redundant_dequantize import FuseMatMulRedundantDequantizeTransformer
 from .graph_rewriter.int8.scale_propagation import ScaleProPagationTransformer
 from .graph_rewriter.bf16.bf16_convert import BF16Convert
 from .graph_rewriter.int8.post_quantized_op_cse import PostCseOptimizer
 from .graph_rewriter.int8.post_hostconst_converter import PostHostConstConverter
 from .graph_rewriter.int8.meta_op_optimizer import MetaInfoChangingMemOpOptimizer
 from .graph_rewriter.qdq.insert_qdq_pattern import GenerateGraphWithQDQPattern
+from .graph_rewriter.qdq.share_qdq_y_pattern import ShareQDQForItexYPatternOptimizer
+from .graph_rewriter.qdq.merge_duplicated_qdq import MergeDuplicatedQDQOptimizer
 from neural_compressor.adaptor.tf_utils.graph_rewriter.generic.insert_print_node import InsertPrintMinMaxNode
 from .graph_util import GraphRewriterHelper as Helper
 
@@ -232,6 +232,7 @@ class GraphConverter:
 
     def _check_tf_version(self):
         is_supported_version = False
+        is_sprbase_version = False
         try:
             from tensorflow import python
             if (hasattr(python, "pywrap_tensorflow")
@@ -249,35 +250,37 @@ class GraphConverter:
 
             if version1_gte_version2(tf.version.VERSION, '2.9.0'):
                 is_supported_version = True
-                 
+
             if version1_eq_version2(tf.version.VERSION, '1.15.0-up3'):
                 is_supported_version = True
-                
+
+            if version1_eq_version2(tf.version.VERSION, '2.11.0202242'):
+                is_supported_version = True
+                is_sprbase_version = True
+
         except Exception as e:
             raise ValueError(e)
         finally:
-            if version1_gt_version2(tf.version.VERSION, TF_SUPPORTED_MAX_VERSION):
+            if version1_gt_version2(tf.version.VERSION, TF_SUPPORTED_MAX_VERSION) and not is_sprbase_version:
                 logger.warning(
-                    str('Please note the {} version of Intel® Optimizations for '
-                        'TensorFlow is not fully verified! '
-                        'Suggest to use the versions '
-                        'between {} and {} if meet problem.').format(tf.version.VERSION,
-                                                                     TF_SUPPORTED_MIN_VERSION,
-                                                                     TF_SUPPORTED_MAX_VERSION))
+                    str('Please note the {} version of TensorFlow is not fully verified! '
+                        'Suggest to use the versions between {} and {} if meet problem.')
+                        .format(tf.version.VERSION, TF_SUPPORTED_MIN_VERSION, TF_SUPPORTED_MAX_VERSION))
+
             if version1_eq_version2(tf.version.VERSION, '2.5.0') and os.getenv('TF_ENABLE_MKL_NATIVE_FORMAT') != '0':
                 logger.fatal("Please set environment variable TF_ENABLE_MKL_NATIVE_FORMAT=0 "
                              "when TensorFlow 2.5.0 installed.")
 
-            if version1_gte_version2(tf.version.VERSION, '2.6.0') and os.getenv('TF_ENABLE_ONEDNN_OPTS') != '1':
+            if version1_gte_version2(tf.version.VERSION, '2.6.0') and \
+               version1_lt_version2(tf.version.VERSION, '2.9.0') and \
+               os.getenv('TF_ENABLE_ONEDNN_OPTS') != '1':
                 logger.fatal("Please set environment variable TF_ENABLE_ONEDNN_OPTS=1 "
                              "when TensorFlow >= 2.6.0 and < 2.9.0 installed.")
 
             if not is_supported_version:
                 raise ValueError(
-                    str('Please install Intel® Optimizations for TensorFlow '
-                        'or MKL enabled TensorFlow from source code '
-                        'within version >={} and <={}.').format(TF_SUPPORTED_MIN_VERSION,
-                                                                TF_SUPPORTED_MAX_VERSION))
+                    str('Please install TensorFlow within version >={} and <={}.')
+                    .format(TF_SUPPORTED_MIN_VERSION, TF_SUPPORTED_MAX_VERSION))
 
     def _check_args(self):
         if self.model.workspace_path and not os.path.isdir(self.model.workspace_path) \
@@ -331,6 +334,10 @@ class GraphConverter:
         if (len(self.bf16_ops) > 0 and self.performance_only) or \
            (os.getenv('MIX_PRECISION_TEST') == '1'):
             model = self.bf16_convert()
+
+        if self.new_api:
+            model.graph_def = FuseConvRedundantDequantizeTransformer(model.graph_def).do_transformation()
+            model.graph_def = FuseMatMulRedundantDequantizeTransformer(model.graph_def).do_transformation()
         post_cse_graph_def = PostCseOptimizer(model.graph_def).do_transformation()
         post_hostconst_graph_def = PostHostConstConverter(post_cse_graph_def).do_transformation()
         post_hostconst_graph_def.library.CopyFrom(self.model.graph_def.library)
@@ -410,7 +417,7 @@ class GraphConverter:
         g = GraphAnalyzer()
         g.graph = self._fp32_model.graph_def
         g.parse_graph()
-        y_pattern = [['Conv2D', 'MatMul'], ['BiasAdd'], ['Add'], ('Relu',)]
+        y_pattern = [['Conv2D', 'MatMul'], ['BiasAdd'], ['Add', 'AddV2'], ('Relu',)]
         target_nodes = g.query_fusion_pattern_nodes(y_pattern)
 
         res = {}
@@ -446,17 +453,18 @@ class GraphConverter:
                 sampling_graph_def = copy.deepcopy(self._fp32_model.graph_def)
                 # TODO: this is a workaround to make Min/Max node be completly eliminated in int8 graph 
                 # after enabling pad+conv2d in new API.
-                if self.new_api:
-                    non_pad_ops = list(list(set(self.fp32_ops).union(set(self.bf16_ops))))
-                    sampling_graph_def = FusePadWithFP32Conv2DOptimizer(
-                        sampling_graph_def,
-                        non_pad_ops,
-                        self._tmp_model.input_node_names,
-                        self.op_wise_config).do_transformation()
+                
+                non_pad_ops = list(list(set(self.fp32_ops).union(set(self.bf16_ops))))
+                sampling_graph_def = FusePadWithFP32Conv2DOptimizer(
+                    sampling_graph_def,
+                    non_pad_ops,
+                    self._tmp_model.input_node_names,
+                    self.op_wise_config,
+                    self.new_api).do_transformation()
 
                 for i in self.quantized_node_info:
                     sampling_graph_def, output_names = InsertPrintMinMaxNode(
-                        sampling_graph_def, i[0], i[-1]).do_transformation()
+                        sampling_graph_def, i[0], i[-1], self.new_api).do_transformation()
                     output_tensor_names.extend(output_names)
                 if self.quantized_node_info:
                     sampling_graph_def.library.CopyFrom(self.model.graph_def.library)
@@ -533,7 +541,8 @@ class GraphConverter:
             self.device,
             self.fake_quant,
             self.new_api,
-            self.performance_only).do_transform()
+            self.performance_only,
+            self.itex_mode).do_transform()
         self.exclude_node_names = exclude_node_names
         self._tmp_graph_def.library.CopyFrom(self.model.graph_def.library)
         if debug:
@@ -718,7 +727,8 @@ class GraphConverter:
                                                self.device,
                                                self.fake_quant,
                                                self.new_api,
-                                               self.performance_only).get_quantized_nodes()
+                                               self.performance_only,
+                                               self.itex_mode).get_quantized_nodes()
 
         if self.itex_mode:
             self.quantized_node_info.extend(self._search_y_pattern_for_itex())
@@ -739,12 +749,15 @@ class GraphConverter:
                                     sampling_graph_def,
                                     non_pad_ops,
                                     self._tmp_model.input_node_names,
-                                    self.op_wise_config).do_transformation()
+                                    self.op_wise_config,
+                                    self.new_api,
+                                    True).do_transformation()
 
         for i in self.quantized_node_info:
             sampling_graph_def, output_names = InsertPrintMinMaxNode(
-                sampling_graph_def, i[0], i[-1]).do_transformation()
+                sampling_graph_def, i[0], i[-1], self.new_api).do_transformation()
             output_tensor_names.extend(output_names)
+
 
         if self.quantized_node_info:
             sampling_graph_def.library.CopyFrom(self.model.graph_def.library)
@@ -755,32 +768,31 @@ class GraphConverter:
                 self._inference(self._sampling_model)
             self._calibration_data = Helper.gen_valid_sampling_log(tmp_dump_file)
 
-        self._tmp_graph_def.library.CopyFrom(self.model.graph_def.library)
-        self._tmp_model.graph_def = self._tmp_graph_def
-
         # Insert QDQ pattern
         self._tmp_graph_def = GenerateGraphWithQDQPattern(
-              self._tmp_model, self._calibration_data,
-              self.op_wise_config, self.fake_quant, self.fp32_ops, self.bf16_ops, \
-              self.quantized_node_info, self.device, self.performance_only).do_transformation()
+              self._tmp_graph_def, self._calibration_data, self.op_wise_config,
+              self.fake_quant, self.fp32_ops, self.bf16_ops, self.quantized_node_info, 
+              self.device, self.performance_only, self.itex_mode).do_transformation()
 
     def _convert_qdq(self):
         if self.itex_mode:
             self._tmp_graph_def, quantizev2_max = FreezeValueTransformer(
                 self._tmp_graph_def,
                 self._calibration_data,
-                '__max:').do_transformation()
+                '__max:',
+                self.itex_mode).do_transformation()
             self._tmp_graph_def, quantizev2_min = FreezeValueTransformer(
                 self._tmp_graph_def,
                 self._calibration_data,
-                '__min:').do_transformation()
+                '__min:',
+                self.itex_mode).do_transformation()
             self._tmp_graph_def, requant_min_max= FreezeValueTransformer(
                 self._tmp_graph_def,
                 self._calibration_data,
                 '__requant_min_max',
                 tensor_data= self._kl_op_dict,
                 device=self.device,
-                ).do_transformation()
+                itex_mode=self.itex_mode).do_transformation()
 
             self.scale_info.update(quantizev2_max)
             self.scale_info.update(quantizev2_min)
@@ -790,6 +802,9 @@ class GraphConverter:
                 self._tmp_graph_def,
                 self._tmp_model.input_node_names,
                 self._tmp_model.output_node_names).do_transformation()
+
+            self._tmp_graph_def = ShareQDQForItexYPatternOptimizer(self._tmp_graph_def).do_transformation()
+            self._tmp_graph_def = MergeDuplicatedQDQOptimizer(self._tmp_graph_def).do_transformation()
 
             self._tmp_graph_def.library.CopyFrom(self.model.graph_def.library)
             self._itex_model.graph_def = self._tmp_graph_def
@@ -803,9 +818,10 @@ class GraphConverter:
                                                    self.device,
                                                    self.fake_quant,
                                                    self.new_api,
-                                                   self.performance_only).do_transform()
+                                                   self.performance_only,
+                                                   self.itex_mode).do_transform()
             self.exclude_node_names=exclude_node_names
+
             if len(self._calibration_data) > 0:
                 self._freeze_requantization_ranges(self._kl_op_dict)
                 self._fuse_requantize_with_fused_quantized_node()
-

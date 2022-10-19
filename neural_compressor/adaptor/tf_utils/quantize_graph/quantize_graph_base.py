@@ -87,6 +87,7 @@ class QuantizeNodeBase():
         self.device = kwargs['device']
         self.new_api = kwargs['new_api']
         self.performance_only = kwargs['performance_only']
+        self.itex_mode = kwargs['itex_mode']
         self.enable_s8 = bool(version1_gt_version2(tf.version.VERSION, '2.1.0') or \
                     version1_eq_version2(tf.version.VERSION, '2.1.0') or \
             tf.version.VERSION.find('1.15.0-up') != -1)
@@ -264,7 +265,8 @@ class QuantizeNodeBase():
     def _need_to_check(self, node_type):
         op_list = ("ConcatV2", "Conv2D", "Conv3D", "DepthwiseConv2D", "QuantizeV2", "DepthwiseConv2dNative",
                    "MaxPool", "MaxPool3D", "FusedBatchNormV3", "Requantize", "RequantizePerChannel", "AvgPool", "Pad",
-                   "CropAndResize", "Dequantize", "Mean", "MatMul", "BatchMatMulV2", "FakeQuantWithMinMaxVars")
+                   "CropAndResize", "Dequantize", "Mean", "MatMul", "BatchMatMulV2", "FakeQuantWithMinMaxVars",
+                   "_MklFusedInstanceNorm")
         return any([node_type.find(i) != -1 for i in op_list])
 
     def _find_relu_node(self, node):
@@ -321,7 +323,8 @@ class QuantizeNodeBase():
                                               quantized_output_name,
                                               original_node_name,
                                               dtype=dtypes.quint8,
-                                              min_tensor_index=1):
+                                              min_tensor_index=1,
+                                              performance_only=False):
         min_max_inputs = [
             "%s:%s" % (quantized_output_name, min_tensor_index),
             "%s:%s" % (quantized_output_name, min_tensor_index + 1)
@@ -332,8 +335,11 @@ class QuantizeNodeBase():
             "Dequantize", dequantize_name,
             [quantized_output_name, min_max_inputs[0], min_max_inputs[1]])
         helper.set_attr_dtype(dequantize_node, "T", dtype)
-        helper.set_attr_string(dequantize_node, "mode",
-                               b"MIN_FIRST" if self.is_asymmetric else b"SCALED")
+        if performance_only:
+            helper.set_attr_string(dequantize_node, "mode", b"SCALED")
+        else:
+            helper.set_attr_string(dequantize_node, "mode",
+                                b"MIN_FIRST" if self.is_asymmetric else b"SCALED")
         self.add_output_graph_node(dequantize_node)
 
     def eightbitize_single_input_tensor_node(self, original_node,

@@ -23,17 +23,18 @@ from tensorflow.python.framework import tensor_util as tu
 from ..graph_base import GraphRewriterBase
 from neural_compressor.adaptor.tf_utils.graph_util import GraphAnalyzer
 from neural_compressor.adaptor.tf_utils.graph_util import GraphRewriterHelper as Helper
-
+from neural_compressor.adaptor.tf_utils.util import version1_gt_version2
 
 class InsertPrintMinMaxNode(GraphRewriterBase):
     """InsertPrintMinMaxNode Pass for tensorflow sampling.
     """
 
-    def __init__(self, model, pre_node_name, post_node_name):
+    def __init__(self, model, pre_node_name, post_node_name, new_api):
         super().__init__(model)
         self.pre_node_name = pre_node_name
         self.post_node_name = post_node_name
         self.signature = pre_node_name + post_node_name
+        self.new_api = new_api
 
     def do_transformation(self):
         cur_graph = GraphAnalyzer()
@@ -45,10 +46,12 @@ class InsertPrintMinMaxNode(GraphRewriterBase):
         if top_node.op == 'ConcatV2':
             for i in range(top_node.attr['N'].i):
                 insert_node_pairs.append([top_node.input[i], self.post_node_name])
-        elif top_node.op == 'BatchMatMulV2':
+        elif top_node.op in ('BatchMatMul', 'BatchMatMulV2'):
             insert_node_pairs.append([top_node.input[0], self.post_node_name])
             if graph_info[top_node.input[1]].node.op != 'Const':
-                insert_node_pairs.append([top_node.input[1], self.post_node_name])  
+                insert_node_pairs.append([top_node.input[1], self.post_node_name])
+        elif top_node.op in ('Conv2DBackpropInput', 'Conv3DBackpropInputV2'):
+            insert_node_pairs.append([top_node.input[2], self.post_node_name])
         else:
             refresh_pre_node_name = graph_info[self.pre_node_name].node.input[0]
             # Check the Conv2D could be fused with previous Pad or not.
@@ -59,7 +62,8 @@ class InsertPrintMinMaxNode(GraphRewriterBase):
                 pad_const_node = graph_info[pad_const_node_name].node
                 padding_tensor = tu.MakeNdarray(pad_const_node.attr["value"].tensor).flatten()
                 if not any(padding_tensor) or \
-                    (any(padding_tensor) and tf.version.VERSION in ( '1.15.0-up3', '2.8.0202151')):
+                    (any(padding_tensor) and (tf.version.VERSION == '1.15.0-up3' or self.new_api)):
+                    insert_node_pairs.append([refresh_pre_node_name, self.post_node_name])
                     refresh_pre_node_name = refresh_pre_node.input[0]
 
             insert_node_pairs.append([refresh_pre_node_name, self.post_node_name])
@@ -149,6 +153,8 @@ class InsertPrintMinMaxNode(GraphRewriterBase):
                 if post_node_names:
                     for post_node_name in post_node_names:
                         post_node = graph_info[post_node_name].node
+                        if each_node_name not in post_node.input:
+                            continue
                         if post_node.op == 'FusedBatchNormV3':
                             if "_print_identity" in \
                                graph_info[Helper.node_name_from_input(post_node.name)].node.input[0]:

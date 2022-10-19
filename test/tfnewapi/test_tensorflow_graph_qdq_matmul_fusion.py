@@ -14,7 +14,7 @@ def build_fake_yaml():
     fake_yaml = '''
         model:
           name: fake_yaml
-          framework: inteltensorflow
+          framework: tensorflow
           inputs: x
           outputs: op_to_store
         device: cpu
@@ -43,7 +43,7 @@ class TestGraphMatMulFusion(unittest.TestCase):
     def setUpClass(self):
         build_fake_yaml()
         self.op_wise_sequences = TensorflowQuery(local_config_file=os.path.join(
-            os.path.dirname(__file__), "../../neural_compressor/adaptor/inteltensorflow.yaml")).get_eightbit_patterns(True)
+        os.path.dirname(__file__), "../../neural_compressor/adaptor/tensorflow.yaml")).get_eightbit_patterns(True)
 
     @classmethod
     def tearDownClass(self):
@@ -75,7 +75,7 @@ class TestGraphMatMulFusion(unittest.TestCase):
 
                 for i in output_graph.graph_def.node:
                     if i.op == '_QuantizedMatMul' and \
-                       i.attr['fused_ops'].list.s == [b'BiasAdd', b'Relu', b'Requantize']:
+                       i.attr['fused_ops'].list.s == [b'BiasAdd', b'Relu', b'Dequantize']:
                         found_quantized_matmul = True
                         break
                 self.assertEqual(found_quantized_matmul, True)
@@ -829,7 +829,7 @@ class TestGraphMatMulFusion(unittest.TestCase):
 
                 for i in output_graph.graph_def.node:
                     if i.op == '_QuantizedMatMul' and \
-                       i.attr['fused_ops'].list.s == [b'BiasAdd', b'Relu', b'Requantize']:
+                       i.attr['fused_ops'].list.s == [b'BiasAdd', b'Relu', b'Dequantize']:
                         found_quantized_matmul = True
                         break
                 self.assertEqual(found_quantized_matmul, True)
@@ -1106,7 +1106,7 @@ class TestGraphMatMulFusion(unittest.TestCase):
 
                 for i in output_graph.graph_def.node:
                     if i.op == '_QuantizedMatMul' and \
-                       i.attr['fused_ops'].list.s == [b'BiasAdd', b'Dequantize']:
+                       i.attr['fused_ops'].list.s == [b'Dequantize']:
                         found_quantized_matmul = True
                         break
                 self.assertEqual(found_quantized_matmul, True)

@@ -16,6 +16,7 @@
 # limitations under the License.
 
 import os
+import re
 import sys
 import numpy as np
 import subprocess
@@ -38,6 +39,7 @@ from .common import Metric as NCMetric
 from .common import Postprocess as NCPostprocess
 from .common import _generate_common_dataloader
 from ..model.model import get_model_fwk_name
+from ..conf.pythonic_config import Config
 
 def set_env_var(env_var, value, overwrite_existing=False):
     """Sets the specified environment variable. Only set new env in two cases:
@@ -82,10 +84,14 @@ class Benchmark(object):
         self._model = None
         self._b_dataloader = None
         self._b_func = None
+        self._custom_b_func = False
         self._metric = None
         self._results = {}
         if isinstance(conf_fname_or_obj, BenchmarkConf):
             self.conf = conf_fname_or_obj
+        elif isinstance(conf_fname_or_obj, Config):
+            self.conf = BenchmarkConf()
+            self.conf.map_pyconfig_to_cfg(conf_fname_or_obj)
         else:
             self.conf = BenchmarkConf(conf_fname_or_obj)
         if self.conf.usr_cfg.model.framework != 'NA':
@@ -95,9 +101,6 @@ class Benchmark(object):
     def __call__(self, mode='performance'):
         cfg = self.conf.usr_cfg
         assert cfg.evaluation is not None, 'benchmark evaluation filed should not be None...'
-        # use first eval config in yaml if mode from __call__not same with yaml config
-        if not mode in cfg.evaluation:
-            mode = list(cfg.evaluation.keys())[0]
         assert sys.platform in ['linux', 'win32'], 'only support platform windows and linux...'
         set_all_env_var(deep_get(cfg, 'evaluation.{}.configs'.format(mode)))
         # disable multi-instance for accuracy mode
@@ -108,7 +111,26 @@ class Benchmark(object):
         if os.environ.get('NC_ENV_CONF') == 'True':
             return self.run_instance(mode)
         else:
-            return self.config_instance()
+            self.config_instance()
+
+            num_of_instance = int(os.environ.get('NUM_OF_INSTANCE'))
+            cores_per_instance = int(os.environ.get('CORES_PER_INSTANCE'))
+            latency_l = []
+            throughput_l = []
+            for i in range(0, num_of_instance):
+                log = '{}_{}_{}.log'.format(num_of_instance, cores_per_instance, i)
+                with open(log, "r") as f:
+                    for line in f:
+                        latency = re.search(r"Latency:\s+(\d+(\.\d+)?)", line)
+                        latency_l.append(float(latency.group(1))) if latency and latency.group(1) else None
+                        throughput = re.search(r"Throughput:\s+(\d+(\.\d+)?)", line)
+                        throughput_l.append(float(throughput.group(1))) if throughput and throughput.group(1) else None
+            assert len(latency_l)==len(throughput_l)==num_of_instance, \
+                "Multiple instance benchmark failed with some instance!"
+            logger.info("\n\nMultiple instance benchmark summary: ")
+            logger.info("Latency average: {:.3f} ms".format(sum(latency_l)/len(latency_l)))
+            logger.info("Throughput sum: {:.3f} images/sec".format(sum(throughput_l)))
+            return None
 
     fit = __call__
 
@@ -200,7 +222,7 @@ class Benchmark(object):
                     deep_get(cfg, 'evaluation.{}.metric'.format(mode))
         b_postprocess_cfg = deep_get(cfg, 'evaluation.{}.postprocess'.format(mode))
 
-        if self._b_dataloader is None:
+        if self._b_func is None and self._b_dataloader is None:
             assert deep_get(cfg, 'evaluation.{}.dataloader'.format(mode)) is not None, \
                 'dataloader field of yaml file is missing'
 
@@ -214,6 +236,8 @@ class Benchmark(object):
                                     metric, \
                                     b_postprocess_cfg,
                                     iteration=iteration)
+        else:
+            self._custom_b_func = True
 
         objectives = [i.lower() for i in cfg.tuning.multi_objectives.objective] if \
             deep_get(cfg, 'tuning.multi_objectives') else [cfg.tuning.objective]
@@ -222,7 +246,10 @@ class Benchmark(object):
                               cfg.tuning.accuracy_criterion,
                               is_measure=True)
 
-        val = self.objectives.evaluate(self._b_func, self._model)
+        if self._custom_b_func:
+            val = self.objectives.evaluate(self._b_func, self._model.model)
+        else:
+            val = self.objectives.evaluate(self._b_func, self._model)
         # measurer contain info not only performance(eg, memory, model_size)
         # also measurer have result list among steps
         acc, _ = val

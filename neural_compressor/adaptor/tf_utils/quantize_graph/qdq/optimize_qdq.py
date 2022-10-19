@@ -23,9 +23,11 @@ from ..quantize_graph_base import QuantizeGraphBase
 from neural_compressor.adaptor.tf_utils.quantize_graph_common import QuantizeGraphHelper
 from .fuse_qdq_conv import FuseNodeStartWithConv2d
 from .fuse_qdq_bn import FuseNodeStartWithFusedBatchNormV3
+from .fuse_qdq_in import FuseNodeStartWithFusedInstanceNorm
 from .fuse_qdq_concatv2 import FuseNodeStartWithConcatV2
 from .fuse_qdq_matmul import FuseNodeStartWithMatmul
 from .fuse_qdq_pooling import FuseNodeStartWithPooling
+from .fuse_qdq_deconv import FuseNodeStartWithDeconv2d
 
 class OptimizeQDQGraph(QuantizeGraphBase):
     """
@@ -33,7 +35,7 @@ class OptimizeQDQGraph(QuantizeGraphBase):
     """
 
     def __init__(self, input_graph, input_node_names, output_node_names, op_wise_config, op_wise_sequences, device, \
-                 fake_quant=False, new_api=False, performance_only=False):
+                 fake_quant=False, new_api=False, performance_only=False, itex_mode=False):
         """Optimize QDQ Graph
 
         Arguments:
@@ -64,6 +66,8 @@ class OptimizeQDQGraph(QuantizeGraphBase):
         self.fake_quant = fake_quant
         self.new_api = new_api
         self.performance_only = performance_only
+        self.itex_mode = itex_mode
+        self.exclude_node_list = []
 
         self.all_quantizable_node = []
         self.register_transformer("MaxPool", FuseNodeStartWithPooling)
@@ -72,11 +76,14 @@ class OptimizeQDQGraph(QuantizeGraphBase):
         self.register_transformer("Conv3D", FuseNodeStartWithConv2d)
         self.register_transformer("DepthwiseConv2dNative", FuseNodeStartWithConv2d)
         self.register_transformer("FusedBatchNormV3", FuseNodeStartWithFusedBatchNormV3)
+        self.register_transformer("_MklFusedInstanceNorm", FuseNodeStartWithFusedInstanceNorm)
         self.register_transformer("AvgPool", FuseNodeStartWithPooling)
         self.register_transformer("ConcatV2", FuseNodeStartWithConcatV2)
         self.register_transformer("MatMul", FuseNodeStartWithMatmul)
         self.register_transformer("BatchMatMul", FuseNodeStartWithMatmul)
         self.register_transformer("BatchMatMulV2", FuseNodeStartWithMatmul)
+        self.register_transformer("Conv2DBackpropInput", FuseNodeStartWithDeconv2d)
+        self.register_transformer("Conv3DBackpropInputV2", FuseNodeStartWithDeconv2d)
 
     def get_quantized_nodes(self):
         count = 0
@@ -96,7 +103,8 @@ class OptimizeQDQGraph(QuantizeGraphBase):
                      op_wise_cfg=self.op_wise_config[node.name],
                      start_node_name=node.name, device=self.device,
                      fake_quant=self.fake_quant, new_api=self.new_api,
-                     performance_only=self.performance_only).get_longest_fuse()
+                     performance_only=self.performance_only,
+                     itex_mode=self.itex_mode).get_longest_fuse()
                 
                 if quantizable_nodes:
                     if quantizable_nodes[-1] == "QuantizeV2":
@@ -131,6 +139,11 @@ class OptimizeQDQGraph(QuantizeGraphBase):
                     start_node_name=node.name, device=self.device,
                     fake_quant=self.fake_quant,
                     new_api=self.new_api,
-                    performance_only=self.performance_only).apply_the_transform()
+                    performance_only=self.performance_only,
+                    itex_mode=self.itex_mode).apply_the_transform()
+                    
+                if exclude_nodes:
+                    self.exclude_node_list.extend(exclude_nodes)
 
-        return self.remove_dead_nodes(self.input_graph, self.output_node_names), exclude_nodes
+
+        return self.remove_dead_nodes(self.input_graph, self.output_node_names), self.exclude_node_list

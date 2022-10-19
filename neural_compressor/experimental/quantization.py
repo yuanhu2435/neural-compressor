@@ -27,6 +27,7 @@ from ..utils.utility import time_limit
 from ..utils.create_obj_from_config import create_dataloader
 from ..model import BaseModel
 from ..conf.config import QuantConf
+from ..conf.pythonic_config import Config
 from warnings import warn
 
 class Quantization(Component):
@@ -54,6 +55,9 @@ class Quantization(Component):
         super(Quantization, self).__init__()
         if isinstance(conf_fname_or_obj, QuantConf):
             self.conf = conf_fname_or_obj
+        elif isinstance(conf_fname_or_obj, Config):
+            self.conf = QuantConf()
+            self.conf.map_pyconfig_to_cfg(conf_fname_or_obj)
         else:
             self.conf = QuantConf(conf_fname_or_obj)
         self._init_with_conf()
@@ -94,11 +98,16 @@ class Quantization(Component):
                    'set for {}'.format(approach_cfg)
 
         if self._calib_dataloader is None and self._train_func is None:
-            if approach_cfg == 'post_training_static_quant':
+            if approach_cfg in ['post_training_static_quant', 'post_training_auto_quant']:
                 calib_dataloader_cfg = deep_get(cfg, 'quantization.calibration.dataloader')
+
+                if approach_cfg == "post_training_auto_quant" and calib_dataloader_cfg == None:
+                    logger.error("dataloader is required for 'post_training_auto_quant'. "
+                                 "use 'post_training_dynamic_quant' instead if no dataloader provided.")
                 assert calib_dataloader_cfg is not None, \
                        'dataloader field of calibration field of quantization section ' \
                        'in yaml file should be configured as calib_dataloader property is NOT set!'
+                
                 if deep_get(calib_dataloader_cfg, 'shuffle'):
                     logger.warning("Reset `shuffle` field to False when post_training_static_quant"
                                    " is selected.")
