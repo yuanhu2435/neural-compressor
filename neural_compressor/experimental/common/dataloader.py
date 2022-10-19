@@ -71,7 +71,7 @@ class DataLoader(object):
         self.distributed = distributed
 
 def _generate_common_dataloader(dataloader, framework, distributed=False):
-    """_summary_
+    """Generate common dataloader
 
     Args:
         dataloader (generator): A dataloader which can yield tuple of (input, label)/(input, _) 

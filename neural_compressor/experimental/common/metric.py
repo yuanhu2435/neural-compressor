@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""common Metric just collects the information to construct a Metric
+"""common Metric just collects the information to construct a Metric.
 """
 
 class Metric(object):
