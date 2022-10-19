@@ -15,8 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""common Metric just collects the information to construct a Metric.
-"""
+"""common Metric just collects the information to construct a Metric."""
 
 class Metric(object):
     """A wrapper of the information needed to construct a Metric.
@@ -25,6 +24,7 @@ class Metric(object):
     neural_compressor built-in metric always take (predictions, labels) as inputs, it's
     recommended to design metric_cls to take (predictions, labels) as inputs.
     """
+    
     def __init__(self, metric_cls, name='user_metric', **kwargs):
         """Initialize a Metric with needed information.
 

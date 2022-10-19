@@ -15,8 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""common Model just collects the information to construct a Model
-"""
+"""common Model just collects the information to construct a Model."""
 
 import sys
 from neural_compressor.model.model import get_model_fwk_name, MODELS, get_model_type
@@ -24,8 +23,8 @@ from neural_compressor.utils import logger
 from neural_compressor.utils.utility import get_backend
 
 class Model(object):
-    """A wrapper of the information needed to construct a Model.
-    """
+    """A wrapper of the information needed to construct a Model."""
+    
     def __new__(cls, root, **kwargs):
         """Create a new instance object of Model.
 

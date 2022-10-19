@@ -15,8 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""common DataLoader just collects the information to construct a dataloader
-"""
+"""common DataLoader just collects the information to construct a dataloader."""
 
 from ..data import DATALOADERS
 
@@ -29,6 +28,7 @@ class DataLoader(object):
     object created then framework infomation can be known. Future we will support
     creating iterable dataloader from neural_compressor.experimental.common.DataLoader
     """
+
     def __init__(self, dataset, batch_size=1, collate_fn=None,
                  last_batch='rollover', sampler=None, batch_sampler=None,
                  num_workers=0, pin_memory=False, shuffle=False, distributed=False):
@@ -71,7 +71,7 @@ class DataLoader(object):
         self.distributed = distributed
 
 def _generate_common_dataloader(dataloader, framework, distributed=False):
-    """Generate common dataloader
+    """Generate common dataloader.
 
     Args:
         dataloader (generator): A dataloader which can yield tuple of (input, label)/(input, _) 
