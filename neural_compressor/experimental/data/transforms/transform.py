@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-"""INC built-in Transforms on multiple framework backends."""
+"""Neural Compressor built-in Transforms on multiple framework backends."""
 
 import numpy as np
 import collections

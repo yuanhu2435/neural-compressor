@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ==============================================================================
-"""Built-in transforms for multiple framework backends."""
+"""Neural Compressor Built-in transforms for multiple framework backends."""
 
 from .transform import TRANSFORMS, BaseTransform, transform_registry
 from os.path import dirname, basename, isfile, join
