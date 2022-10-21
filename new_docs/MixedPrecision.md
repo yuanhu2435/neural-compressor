@@ -79,7 +79,7 @@ INC provides MixedPrecision API to do mixed-precision conversion.
 There are 2 pre-requirements to run BF16 mixed-precision examples:
 
 - Hardware: CPU supports `avx512_bf16` instruction set.
-- Software: intel-tensorflow >= [2.3.0](https://pypi.org/project/intel-tensorflow/2.3.0/) or torch > [1.11.0](https://download.pytorch.org/whl/torch_stable.html).
+- Software: intel-tensorflow >= [2.3.0](https://pypi.org/project/intel-tensorflow/2.3.0/) or torch >= [1.11.0](https://download.pytorch.org/whl/torch_stable.html).
 
 If either pre-requirement can't be met, the program would exit consequently. Otherwise, we can force enable BF16 conversion for debug usage by setting the environment variable `FORCE_BF16=1`:
 ```shell
@@ -93,3 +93,16 @@ FORCE_BF16=1 /path/to/executable_nc_wrapper
 
 ## 5.2 PyTorch simple example
 
+```
+# use INC to get a mixed precision model with Pytorch
+def eval_func(model):
+    return 0.5
+from neural_compressor.experimental import MixedPrecision
+from neural_compressor import config
+config.quantization.framework = "pytorch"
+converter = MixedPrecision(config)
+converter.precisions = 'bf16'
+converter.model = pt_fp32_model   # fp32 model, model type is torch.nn.Module
+converter.eval_func = eval_func
+output_model = converter.fit()
+```
