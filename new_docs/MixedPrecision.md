@@ -58,12 +58,12 @@ evaluation:
 
 INC provides MixedPrecision API to do mixed-precision conversion.
 
-|Parameters       |             |
+|Parameters       |Description             |
 |---------------- |:-----------|
 |conf_fname_or_obj| Optional. It supports yaml file path, INC config class and None|
 
 
-|Attributes      |             |
+|Attributes      |Description             |
 |----------------|:-----------|
 |precisions      |Target precision     |
 |input           |User-specified input     |
