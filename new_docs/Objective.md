@@ -34,7 +34,7 @@ class Objective(object):
     representation = ''
 
     def __init__(self):
-        """Initialize `Objective` class""""
+        """Initialize `Objective` class"""
         ...
 
     @abstractmethod
