@@ -44,14 +44,14 @@ evaluation:
 
 |Field       |Description             |
 |---------------- |:-----------|
-|mixed_precision (optional)| Contains mixed_precision sub-field which can be used to set target precision. If users define target precision with python API, mixed_precision filed can be removed.|
-|evaluation (optional)|Contains accuracy sub-field which can be used to set metric and dataloader. If users use their own evaluation function (or dataloader and metric) by python code, evaluation filed can be removed.|
+|mixed_precision | Optional. Contains mixed_precision sub-field which can be used to set target precision. If users define target precision with python API, mixed_precision filed can be removed.|
+|evaluation | Optional. Contains accuracy sub-field which can be used to set metric and dataloader. If users use their own evaluation function (or dataloader and metric) by python code, evaluation filed can be removed.|
 
 
 |Sub-field       |Description             |
 |---------------- |:-----------|
-|precisions (optional)| Target precision for conversion, INC will convert as many ops as possible to target precision. It supports str and list of str.|
-|accuracy (optional)|Set built-in dataloader and metric which are used to do accuracy-aware tuning for mixed-precision. |
+|precisions | Optional.Target precision for conversion, INC will convert as many ops as possible to target precision. It supports str and list of str.|
+|accuracy | Optional. Set built-in dataloader and metric which are used to do accuracy-aware tuning for mixed-precision. Please refer to [dataloader doc](./dataloader.md) and [metric doc](./metric.md) to learn how to use built-in dataloader and metric.|
 
 
 ## 4.2 API Introduction
@@ -60,7 +60,7 @@ INC provides MixedPrecision API to do mixed-precision conversion.
 
 |Parameters       |             |
 |---------------- |:-----------|
-|conf_fname_or_obj| Optional, it supports yaml file path, INC config class and None|
+|conf_fname_or_obj| Optional. It supports yaml file path, INC config class and None|
 
 
 |Attributes      |             |
