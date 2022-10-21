@@ -89,7 +89,19 @@ FORCE_BF16=1 /path/to/executable_nc_wrapper
 
 ## 5.1 TensorFlow Simple Example
 
-
+```
+# use INC to get a mixed precision model with TensorFlow
+def eval_func(model):
+    return 0.5
+from neural_compressor.experimental import MixedPrecision
+from neural_compressor import config
+config.quantization.framework = "tensorflow"
+converter = MixedPrecision(config)
+converter.precisions = 'bf16'
+converter.model = tf_fp32_model   # fp32 model, model type is graphdef
+converter.eval_func = eval_func
+output_model = converter.fit()
+```
 
 ## 5.2 PyTorch simple example
 
