@@ -3,9 +3,39 @@ Metrics
 
 In terms of evaluating the performance of a specific model, we should have general metrics to measure the performance of different models. Different frameworks always have their own Metric module but with different features and APIs. Neural Compressor Metrics supports code-free configuration through a yaml file, with built-in metrics, so that Neural Compressor can achieve performance and accuracy without code changes from the user. In special cases, users can also register their own metric classes through below method.
 
+## Built-in metric API
+
+Please refer to [Metrics code](../neural_compressor/experimental/metric)
+```python
+class BaseMetric(object):
+    def __init__(self, ...):
+        .....
+
+    def __call__(self, *args, **kwargs):
+        ......
+
+    @abstractmethod
+    def update(self, preds, labels=None, sample_weight=None):
+        """add preds and labels to storage for every iteration inference.
+        
+        Some metric will use sample_weight to Calculate metric.
+        """
+        ......
+
+    @abstractmethod
+    def reset(self):
+        """Reset outputs"""
+        ......
+
+    @abstractmethod
+    def result(self):
+        """Calculate the metric with all outputs and return."""
+        ......
+```
+
 ## How to use Metrics
 
-### Config built-in metric in a yaml file
+### Config built-in single metric in a yaml file
 
 Users can specify an Neural Compressor built-in metric such as shown below:
 
@@ -22,7 +52,7 @@ evaluation:
 Users can also register their own metric as follows:
 
 ```python
-class Metric(object):
+class NewMetric(object):
     def __init__(self):
         # init code here
 
@@ -53,12 +83,12 @@ q_model = quantizer.fit()
 
 ```
 
-## Multi-metrics support
+### Multi-metrics support
 
 In some cases, users want to use more than one metric to evaluate the performance of a specific model and they can realize it with multi_metrics of Neural Compressor. Currently multi_metrics supports built-in metrics.
 
 
-### Usage
+#### Usage
 
 There are two usages for multi_metrics of Neural Compressor:
 
