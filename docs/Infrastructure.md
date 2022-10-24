@@ -6,6 +6,24 @@ Neural Coder automatically insert quantization code on a PyTorch model script wi
 
 
 # Architecture
+<a target="_blank" href="imgs/architecture.png">
+  <img src="imgs/architecture.png" alt="Architecture" width=914 height=370>
+</a>
+
 Intel® Neural Compressor has unified interfaces and dispatch to different frameworks via adaptors. Each adaptor have own strategies and the strategy module contains model configs and tuning configs. Model configs define the quantization approach, if it's post-training static quantization, users need to set more parameters like calibration and others. There are several tuning strategies like basic (default) and tuning configs should choose one of them.
 
- 
+# Supported feature matrix
+* Quantization - QAT, PTQ, Dynamic Quantization
+* Mixed precision - int8, bf16
+* Distillation
+* NAS - basic and DyNAS
+* Orchestration - One-shot and Multi-shot for combination of optimizations
+* Pruning/Sparsity - unstructured and structured (n in m, nxm...)
+* Neural Coder
+
+# Advanced items
+## Strategy 
+* Default(basic) strategy: try to go through all tuning configs and select best one, if the accuracy loss exceeded the requirement, fallback each op to bf16 or fp32 and sort the ops with impact. Finally, fallback the ops 
+* Bayesian: Constructing posterior distribution of functions (gaussian process) that best describes the function you want to optimize. As the number of observations grows, the posterior distribution improves, certain regions in parameter space are worth exploring and the algorithm will focus on them. Then choose the configuration that maximizes the expected improvement.  
+* MSE:  Get the tensors for each operator of raw FP32 models and the quantized model with best tuning configuration. Calculates the MSE (Mean Squared Error) for each operator, sorts those operators according to the MSE value, and performs the op-wise fallback in this order.
+* SigOpt: SigOpt Experiments can optimize any real-valued objective function and understand which metric or metrics to optimize. In Neural Compressor sigopt strategy, the metrics add accuracy as constraint and optimize for latency.
