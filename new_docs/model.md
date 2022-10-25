@@ -67,7 +67,7 @@ q_model = quantizer.fit()
 
 | Model format | Parameters | Comments | Usage |
 | ------ | ------ |------|------|
-| frozen onnx | **model**(str): path to frozen onnx <br> **framework_specific_info**(dict): information about model and framework <br> **kwargs**(dict): other required parameters | **Save format**: <br> frozen onnx | from neural_compressor.experimental import Quantization, common <br> quantizer = Quantization(args.config) <br> quantizer.model = model <br> q_model = quantizer.fit() <br> **model is the path of model, like ./path/to/frozen.pb** |
+| frozen onnx | **model**(str): path to frozen onnx <br> **framework_specific_info**(dict): information about model and framework <br> **kwargs**(dict): other required parameters | **Save format**: <br> frozen onnx | from neural_compressor.experimental import Quantization, common <br> quantizer = Quantization(args.config) <br> quantizer.model = model <br> q_model = quantizer.fit() <br> **model is the path of model, like ./path/to/frozen.onnx** |
 | onnx.onnx_ml_pb2.ModelProto | **model**(onnx.onnx_ml_pb2.ModelProto): onnx.onnx_ml_pb2.ModelProto object <br> **framework_specific_info**(dict): information about model and framework <br> **kwargs**(dict): other required parameters | **Save format**: <br> frozen onnx | from neural_compressor.experimental import Quantization, common <br> quantizer = Quantization(args.config) <br> quantizer.model = model <br> q_model = quantizer.fit() <br> **model is onnx.onnx_ml_pb2.ModelProto object** |
 
 
