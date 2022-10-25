@@ -14,7 +14,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
+
 
 """Wrappers for third party pycocotools to be used within object_detection.
 
@@ -46,6 +46,7 @@ then evaluation (in multi-class mode) can be invoked as follows:
 
 import copy
 import time
+
 import numpy as np
 
 from collections import OrderedDict
