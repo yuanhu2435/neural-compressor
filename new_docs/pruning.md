@@ -95,7 +95,7 @@ In general, structured sparsity has lower accuracy due to restrictive structure 
 
   - The algorithm improves original SNIP algorithms and introduces weights' score maps which updates in a momentum way.\
   In the following formula, $n$ is the pruning step and $W$ and $G$ are model's weights and gradients respectively.
-  $$Score_{n} = \alpha \times Score_{n-1} + (1 - \alpha) \times W_{n} \times G_{n}$$
+  $$Score_{n} = \times Score_{n-1} + 0.9 \times |W_{n} \times G_{n}|$$
 
 ## 3 Pruning API Summary
 
