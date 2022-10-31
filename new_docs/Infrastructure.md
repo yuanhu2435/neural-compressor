@@ -13,13 +13,24 @@ Neural Coder automatically insert quantization code on a PyTorch model script wi
 Intel® Neural Compressor has unified interfaces and dispatch to different frameworks via adaptors. Each adaptor have own strategies and the strategy module contains model configs and tuning configs. Model configs define the quantization approach, if it's post-training static quantization, users need to set more parameters like calibration and others. There are several tuning strategies like basic (default) and tuning configs should choose one of them.
 
 # Supported feature matrix
-* Quantization - QAT, PTQ, Dynamic Quantization
-* Mixed precision - int8, bf16
-* Distillation
-* NAS - basic and DyNAS
-* Orchestration - One-shot and Multi-shot for combination of optimizations
-* Pruning/Sparsity - unstructured and structured (n in m, nxm...)
-* Neural Coder
+|Quantization     |         |
+|--------------|:-----------:|
+|QAT    |&#10004;     |
+|PTQ       |&#10004;     |
+|Dynamic Quantization          |&#10004; |
+
+|Pruning/Sparsity     |         |
+|--------------|:-----------:|
+|unstructured    |&#10004;     |
+|structured n in m       |&#10004;     |
+|structured n x m          |&#10004; |
+
+|other features     |         |
+|--------------|:-----------:|
+|Distillation    |&#10004;     |
+|NAS       |&#10004;     |
+|Mixed precision          |&#10004; |
+|Orchestration          |&#10004; |
 
 # Advanced items
 ## Strategy 
