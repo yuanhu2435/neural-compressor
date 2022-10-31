@@ -11,7 +11,11 @@ Unstructured pruning means finding and removing the less salient connection in t
 
 ### 1.2 Structured Pruning
 
-Structured pruning means finding parameters in groups, deleting entire blocks, filters, or channels according to some pruning criterions.
+Structured pruning means finding parameters in groups, deleting entire blocks, filters, or channels according to some pruning criterions. \
+Here is a figure showing a matrix with ```IC``` = 32 and ```OC``` = 16 dimension, and a block-wise sparsity pattern with block size 4 on ```OC``` dimension.
+<a target="_blank" href="./docs/imgs/sparse_dim.png">
+    <img src="../docs/imgs/sparse_dim.png" width=854 height=479 alt="Sparsity Pattern">
+</a>
 
 In general, structured sparsity has lower accuracy due to restrictive structure than unstructured sparsity; however, it can accelerate the model execution significantly with software or hardware sparsity.
 
@@ -120,7 +124,7 @@ model = prune.fit()
 #### User-defined yaml
 
 The user-defined yaml follows below syntax, note `train` section is optional if user implements `pruning_func` and sets to `pruning_func` attribute of pruning instance.
-User could refer to [the yaml template file](../docs/pruning.yaml) to know field meanings.
+User could refer to the yaml files in examples to know field meanings.
 
 ##### `train`
 
@@ -136,7 +140,7 @@ The `approach` section defines which pruning algorithm is used and how to apply 
   - `end_epoch`: on which epoch pruning ends
   - `initial_sparsity`: initial sparsity goal, default 0.
   - `target_sparsity`: target sparsity goal
-  - `frequency`: frequency to updating sparsity
+  - `frequency`: frequency to update sparsity.
 
 - `Pruner`:
 
