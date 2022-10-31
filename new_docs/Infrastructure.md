@@ -6,8 +6,8 @@ Neural Coder automatically insert quantization code on a PyTorch model script wi
 
 
 # Architecture
-<a target="_blank" href="imgs/architecture.png">
-  <img src="imgs/architecture.png" alt="Architecture" width=914 height=370>
+<a target="_blank" href="../docs/imgs/architecture.png">
+  <img src="../docs/imgs/architecture.png" alt="Architecture" width=914 height=370>
 </a>
 
 Intel® Neural Compressor has unified interfaces and dispatch to different frameworks via adaptors. Each adaptor have own strategies and the strategy module contains model configs and tuning configs. Model configs define the quantization approach, if it's post-training static quantization, users need to set more parameters like calibration and others. There are several tuning strategies like basic (default) and tuning configs should choose one of them.
