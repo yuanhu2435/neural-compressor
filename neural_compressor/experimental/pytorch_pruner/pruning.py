@@ -1,3 +1,4 @@
+"""pruning module."""
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
@@ -22,13 +23,36 @@ from .pruner import get_pruner
 from .logger import logger
 
 class Pruning:
+    """Pruning.
+
+    The main class that users will used in codes to do pruning.
+    Contain at least one Pruner object.
+
+    Args:
+        config: a string. The path to a config file. For config file template, please refer to
+            https://github.com/intel/neural-compressor/tree/master/examples/pytorch/nlp/huggingface_models/text-classification/pruning/pytorch_pruner/eager/
+    
+    Attributes:
+        model: The model object to prune.
+        config_file_path: A string. The path to a config file.
+        pruners: A list. A list of Pruner objects.
+        pruner_info: A config dict object. Contains pruners' information.    
+    """
+
     def __init__(self, config):
+        """Initialize."""
         self.model = None
         self.config_file_path = config
         self.pruners = []
         self.pruner_info = process_config(self.config_file_path)
 
     def update_items_for_all_pruners(self, **kwargs):
+        """Functions which add User-defined arguments to the original configurations.
+
+        The original config of pruning is read from a file. 
+        However, users can still modify configurations by passing key-value arguments in this function.
+        Please note that the key-value arguments' keys are analysable in current configuration.
+        """
         for item in self.pruner_info:
             for key in kwargs:
                 if key in item.keys():
@@ -45,6 +69,7 @@ class Pruning:
     #    return warpper
 
     def _generate_pruners(self):
+        """Functions that obtain Pruner objects."""
         assert isinstance(self.model, torch.nn.Module)
 
         for info in self.pruner_info:
@@ -60,39 +85,50 @@ class Pruning:
 
     #@_call_pruners
     def on_train_begin(self):
+        """Functions called in the beginning of training process.
+
+        Before training, ensure that pruners are generated.
+        """
         self._generate_pruners()  ##TODO is there better place to place
 
     #@_call_pruners
     def on_epoch_begin(self, epoch):
+        """Functions called in the beginning of every epoch."""
         for pruner in self.pruners:
             pruner.on_epoch_begin(epoch)      
 
     #@_call_pruners
     def on_step_begin(self, local_step):
+        """Functions called in the beginning of every step."""
         for pruner in self.pruners:
             pruner.on_step_begin(local_step)
 
     #@_call_pruners
     def on_before_optimizer_step(self):
+        """Functions called before optimizer.step()."""
         for pruner in self.pruners:
             pruner.on_before_optimizer_step()
 
     #@_call_pruners
     def on_step_end(self):
+        """Functions called in the end of every step."""
         for pruner in self.pruners:
             pruner.on_step_end()
 
     #@_call_pruners
     def on_epoch_end(self):
+        """Functions called in the end of every epoch."""
         for pruner in self.pruners:
             pruner.on_epoch_end()
 
     #@_call_pruners
     def on_train_end(self):
+        """Functions called in the end of training."""
         for pruner in self.pruners:
             pruner.on_train_end()
 
     #@_call_pruners
     def on_after_optimizer_step(self):
+        """Functions called after optimizer.step()."""
         for pruner in self.pruners:
             pruner.on_after_optimizer_step()
