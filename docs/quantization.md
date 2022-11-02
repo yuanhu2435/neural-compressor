@@ -76,7 +76,7 @@ This approach is major quantization approach people should try because it could 
 
 #### Quantization aware training
 
-Quantization aware training emulates inference-time quantization by inserting `fake quant` ops before those quantizable ops, and requests fine-tune training on this modified model. This approach usually provides better model accuracy than `post training quantization`.
+Quantization aware training emulates inference-time quantization in the forward pass of the training process by inserting `fake quant` ops before those quantizable ops. With `quantization aware training`, all weights and activations are `fake quantized` during both the forward and backward passes of training: that is, float values are rounded to mimic int8 values, but all computations are still done with floating point numbers. Thus, all the weight adjustments during training are made while aware of the fact that the model will ultimately be quantized; after quantizing, therefore, this method will usually yield higher accuracy than either dynamic quantization or post-training static quantization.
 
 ## Accuracy aware tuning
 
@@ -84,7 +84,7 @@ Accuracy aware tuning is one of unique features provided by Intel(R) Neural Comp
 
 This tuning algorithm creates a tuning space by querying framework quantization capability and model structure, selects the ops to be quantized by some strategy, generates quantized graph, and evalutes the accuracy of this quantized graph. The optimal model will be yielded if the pre-defined accuracy goal is met.
 
-### working flow
+### Working flow
 
 Currently `accuracy aware tuning` supports `post training quantization`, `quantization aware training`, and `pruning`. Other during-training optimization tuning is under development.
 
@@ -94,6 +94,124 @@ User could refer to below chart to understand the whole tuning flow.
 
 ## Supported feature matrix
 
-## Quantization API summary
+Quantization methods include the following three types:
+<table class="center">
+    <thead>
+        <tr>
+            <th>Types</th>
+            <th>Quantization</th>
+            <th>Dataset Requirements</th>
+            <th>Framework</th>
+            <th>Backend</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan="3" align="center">Post-Training Static Quantization (PTQ)</td>
+            <td rowspan="3" align="center">weights and activations</td>
+            <td rowspan="3" align="center">calibration</td>
+            <td align="center">PyTorch</td>
+            <td align="center"><a href="https://pytorch.org/docs/stable/quantization.html#eager-mode-quantization">PyTorch Eager</a>/<a href="https://pytorch.org/docs/stable/quantization.html#prototype-fx-graph-mode-quantization">PyTorch FX</a>/<a href="https://github.com/intel/intel-extension-for-pytorch">IPEX</a></td>
+        </tr>
+        <tr>
+            <td align="center">TensorFlow</td>
+            <td align="center"><a href="https://github.com/tensorflow/tensorflow">TensorFlow</a>/<a href="https://github.com/Intel-tensorflow/tensorflow">Intel TensorFlow</a></td>
+        </tr>
+        <tr>
+            <td align="center">ONNX Runtime</td>
+            <td align="center"><a href="https://github.com/microsoft/onnxruntime/blob/master/onnxruntime/python/tools/quantization/quantize.py">QLinearops/QDQ</a></td>
+        </tr>
+        <tr>
+            <td rowspan="2" align="center">Post-Training Dynamic Quantization</td>
+            <td rowspan="2" align="center">weights</td>
+            <td rowspan="2" align="center">none</td>
+            <td align="center">PyTorch</td>
+            <td align="center"><a href="https://pytorch.org/docs/stable/quantization.html#eager-mode-quantization">PyTorch eager mode</a>/<a href="https://pytorch.org/docs/stable/quantization.html#prototype-fx-graph-mode-quantization">PyTorch fx mode</a>/<a href="https://github.com/intel/intel-extension-for-pytorch">IPEX</a></td>
+        </tr>
+        <tr>
+            <td align="center">ONNX Runtime</td>
+            <td align="center"><a href="https://github.com/microsoft/onnxruntime/blob/master/onnxruntime/python/tools/quantization/quantize.py">QIntegerops</a></td>
+        </tr>  
+        <tr>
+            <td rowspan="2" align="center">Quantization-aware Training (QAT)</td>
+            <td rowspan="2" align="center">weights and activations</td>
+            <td rowspan="2" align="center">fine-tuning</td>
+            <td align="center">PyTorch</td>
+            <td align="center"><a href="https://pytorch.org/docs/stable/quantization.html#eager-mode-quantization">PyTorch eager mode</a>/<a href="https://pytorch.org/docs/stable/quantization.html#prototype-fx-graph-mode-quantization">PyTorch fx mode</a>/<a href="https://github.com/intel/intel-extension-for-pytorch">IPEX</a></td>
+        </tr>
+        <tr>
+            <td align="center">TensorFlow</td>
+            <td align="center"><a href="https://github.com/tensorflow/tensorflow">TensorFlow</a>/<a href="https://github.com/Intel-tensorflow/tensorflow">Intel TensorFlow</a></td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<br>
+
+## First glance on Intel(R) Neural Compressor quantization usage
+
+The design philosophy of the quantization interface of Intel(R) Neural Compressor is easy-of-use. It requests user to provide `model`, `calibration dataloader`, and `evaluation function`. Those paramters would be used to quantize and tune the model. 
+
+`model` is the framework model location or the framework model object.
+
+`calibration dataloader` is used to load the data samples for calibration phase. In most cases, it could be part of evalutaion dataset.
+
+`evaluation function` is a function used to evaluation model accuracy. This function should be same with how user makes evaluation on fp32 model, just taking `model` as input and returning a scalar value represented the evaluation accuracy.
+
+User could execute:
+
+1. Quantization without tuning
+
+This means user could leverage Intel(R) Neural Compressor to directly generate a fully quantized model without accuracy aware tuning. It's user responsibility to ensure the accuracy of the quantized model meets expectation.
+
+```
+# main.py
+
+# Original code
+model = ResNet50()
+val_dataset = ...
+val_dataloder = torch.utils.data.Dataloader(
+                    val_dataset,
+                    batch_size=args.batch_size, shuffle=False,
+                    num_workers=args.workers, ping_memory=True)
+
+# Quantization code
+from neural_compressor import quantization
+q_model = quantization.fit(model, calib_dataloader=val_dataloader)
+q_model.save('./output')
+
+```
+
+2. Quantization with accuracy aware tuning
+
+This means user could leverage the advance feature of Intel(R) Neural Compressor to tune out a best quantized model which has best accuracy and good performance.
+
+```
+# main.py
+
+# Original code
+model = ResNet50()
+val_dataset = ...
+val_dataloder = torch.utils.data.Dataloader(
+                    val_dataset,
+                    batch_size=args.batch_size, shuffle=False,
+                    num_workers=args.workers, ping_memory=True)
+criterion = ...
+
+def validate(val_loader, model, criterion, args):
+    ...
+    return top1.avg
+
+# Quantization code
+def eval_func(model):
+    return validate(val_dataloader, model, criterion, args)
+
+from neural_compressor import quantization
+q_model = quantization.fit(model, calib_dataloader=val_dataloader, eval_func=eval_func)
+q_model.save('./output')
+
+```
 
 ## Examples
+
+User could refer to [examples](https://github.com/intel/neural-compressor/blob/master/examples/README.md) on how to quantize a new model.
