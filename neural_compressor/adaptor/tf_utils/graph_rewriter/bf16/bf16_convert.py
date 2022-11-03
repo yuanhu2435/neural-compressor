@@ -55,7 +55,7 @@ class BF16Convert(GraphRewriterBase):
         self.device = ["CPU", "DEFAULT"]  #TODO support differnt device types, such as GPU
 
     def _dtype(self, node):
-        op_def = op_def_registry.get(node.op)
+        op_def = op_def_registry.get_registered_ops().get(node.op)
         inputs_dt = []
         outputs_dt = []
         for i in op_def.input_arg:
@@ -75,7 +75,7 @@ class BF16Convert(GraphRewriterBase):
         return inputs_dt, outputs_dt
 
     def _dtype_val(self, node):
-        op_def = op_def_registry.get(node.op)
+        op_def = op_def_registry.get_registered_ops().get(node.op)
         inputs_dt_val = []
         outputs_dt_val = []
         for i in op_def.input_arg:
@@ -95,7 +95,7 @@ class BF16Convert(GraphRewriterBase):
         return inputs_dt_val, outputs_dt_val
 
     def _allowed_dtype_val(self, node):
-        op_def = op_def_registry.get(node.op)
+        op_def = op_def_registry.get_registered_ops().get(node.op)
         allowed_dt_val = {}
         for attr_def in op_def.attr:
             if attr_def.type != "type":

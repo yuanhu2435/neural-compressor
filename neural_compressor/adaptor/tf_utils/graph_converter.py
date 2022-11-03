@@ -249,6 +249,10 @@ class GraphConverter:
                 from tensorflow.python.util._pywrap_util_port import IsMklEnabled
             else:
                 from tensorflow.python._pywrap_util_port import IsMklEnabled
+
+            logger.info('tf version = %s' % (tf.version.VERSION))
+            logger.info('mkl enbale = %s' % (IsMklEnabled()))
+
             if IsMklEnabled() and (version1_lte_version2(TF_SUPPORTED_MIN_VERSION, tf.version.VERSION)):
                 is_supported_version = True
 
